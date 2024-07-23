@@ -12,7 +12,7 @@
           Password
         </h1>
         <div
-          class="bg-white h-exd-150 rounded-xl text-center grid place-items-center text-exd-6081.72 text-exd-red w-full"
+          class="bg-white h-exd-150 rounded-xl text-center grid place-items-center text-exd-6081.72 text-exd-red w-full font-bold"
         >
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">1234</p>
         </div>
