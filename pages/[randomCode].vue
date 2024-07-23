@@ -5,7 +5,10 @@
     <div class="flex-1 items-center justify-center flex flex-col gap-11">
       <NuxtImg src="/logo.webp" alt="logo" width="190" height="71" preload />
       <div class="flex flex-col gap-8 mx-8 justify-start items-center">
-        <h1 class="text-center font-bold text-exd-1824.52 text-white">
+        <h1
+          class="text-center font-bold text-exd-1824.52 text-white"
+          style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
+        >
           Password
         </h1>
         <div
@@ -14,10 +17,10 @@
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">1234</p>
         </div>
         <div class="text-white font-bold text-xs text-start">
-          <p style="text-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)">
+          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             ※ガチャラリーのパスワードは本日限り有効です。
           </p>
-          <p style="text-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)">
+          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             ※Gacharary password is valid only for today.
           </p>
         </div>
