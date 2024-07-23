@@ -1,17 +1,30 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import path from 'path'
+import Aura from '@primevue/themes/aura'
+
 export default defineNuxtConfig({
   app: {
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap',
+        },
+      ],
     },
+  },
+  image: {
+    dir: 'assets/images',
   },
   typescript: {
     strict: false,
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
+    '@nuxt/image',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
@@ -25,8 +38,13 @@ export default defineNuxtConfig({
       ripple: true,
       inputVariant: 'filled',
       theme: {
+        preset: Aura,
         options: {
-          cssLayer: false,
+          darkModeSelector: 'system',
+          cssLayer: {
+            name: 'primevue',
+            order: 'tailwind-base, primevue, tailwind-utilities',
+          },
         },
       },
     },
@@ -36,5 +54,4 @@ export default defineNuxtConfig({
     configPath: 'tailwind.config.js',
     exposeConfig: false,
   },
-  srcDir: 'src/',
 })
