@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50;
+  }
+
+  ::-webkit-scrollbar {
+    @apply hidden;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply hidden;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply hidden;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply hidden;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    @apply appearance-none m-0;
+  }
+}
