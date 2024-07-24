@@ -3,8 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --dark-red: 5 60% 32%;
+    --gold: 40 67% 53%;
+
+    --noto-sans: 'Noto Sans', sans-serif;
+  }
+
   body {
-    @apply bg-gray-50;
+    @apply bg-gray-50 antialiased h-full w-full;
+    font-family: 'Noto Sans', sans-serif;
   }
 
   ::-webkit-scrollbar {
@@ -28,3 +36,4 @@
     @apply appearance-none m-0;
   }
 }
+
