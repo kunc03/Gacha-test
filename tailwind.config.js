@@ -6,12 +6,18 @@ function pxToEm($px) {
 const padding = {
   'exd-42': pxToEm(42),
   'exd-15': pxToEm(15),
+  'exd-60': pxToEm(60),
+  'exd-81': pxToEm(81),
 }
 
 const height = {
   'exd-150': pxToEm(150),
+  'exd-40': pxToEm(40),
+  'exd-50': pxToEm(50),
 }
 const width = {
+  'exd-40': pxToEm(40),
+  'exd-50': pxToEm(50),
   'exd-312': pxToEm(312),
 }
 
@@ -43,6 +49,15 @@ module.exports = {
         },
         'exd-gold': {
           DEFAULT: 'hsla(var(--gold))', //#D7A237
+        },
+        'exd-gray-scorpion': {
+          DEFAULT: 'hsla(var(--gray-scorpion))', //#606060
+        },
+        'exd-banana': {
+          DEFAULT: 'hsla(var(--banana))', //#FFE9BC
+        },
+        'exd-gray-44': {
+          DEFAULT: 'hsla(var(--gray-44))', //#707070
         },
       },
       height: {
