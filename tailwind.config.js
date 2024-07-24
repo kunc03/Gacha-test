@@ -11,9 +11,10 @@ const padding = {
 }
 
 const height = {
-  'exd-150': pxToEm(150),
   'exd-40': pxToEm(40),
   'exd-50': pxToEm(50),
+  'exd-150': pxToEm(150),
+  'exd-394': pxToEm(394),
 }
 const width = {
   'exd-40': pxToEm(40),
