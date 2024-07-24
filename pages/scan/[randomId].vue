@@ -82,6 +82,7 @@
       </div>
     </template>
   </Dialog>
+  <div class="overlay" v-if="isRequestingLocation" />
 </template>
 
 <script setup>
@@ -89,7 +90,26 @@ import InputOtp from 'primevue/inputotp'
 import Header from '~/components/header.vue'
 import Dialog from 'primevue/dialog'
 
-const isNotAllowed = ref(true)
+const isNotAllowed = ref(false)
+const isRequestingLocation = ref(false)
+
+onMounted(() => {
+  if ('geolocation' in navigator) {
+    isRequestingLocation.value = true
+    navigator.geolocation.getCurrentPosition(
+      () => {
+        isRequestingLocation.value = false
+      },
+      () => {
+        isRequestingLocation.value = false
+        isNotAllowed.value = true
+      }
+    )
+  } else {
+    // Geolocation tidak tersedia, tampilkan dialog atau lakukan sesuatu
+    isNotAllowed.value = true
+  }
+})
 </script>
 
 <style scoped>
@@ -99,5 +119,18 @@ const isNotAllowed = ref(true)
 
 ::v-deep(.p-dialog-header) {
   @apply hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
