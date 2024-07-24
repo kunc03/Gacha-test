@@ -3,6 +3,11 @@ function pxToEm($px) {
   return $px / 16 + 'rem'
 }
 
+const padding = {
+  'exd-42': pxToEm(42),
+  'exd-15': pxToEm(15),
+}
+
 const height = {
   'exd-150': pxToEm(150),
 }
@@ -31,6 +36,7 @@ module.exports = {
     },
 
     extend: {
+      padding: { ...padding },
       colors: {
         'exd-red': {
           DEFAULT: 'hsla(var(--dark-red))', //#822820
