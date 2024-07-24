@@ -23,6 +23,7 @@ const width = {
 }
 
 const fontSize = {
+  'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
   'exd-1424': [pxToEm(14), { lineHeight: pxToEm(24) }],
   'exd-1824.52': [pxToEm(18), { lineHeight: pxToEm(24.52) }],
   'exd-6081.72': [pxToEm(60), { lineHeight: pxToEm(81.72) }],

@@ -14,7 +14,7 @@
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p>パスワードを入力してください</p>
-        <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
+        npm <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
@@ -24,58 +24,18 @@
         </div>
         <div class="w-full grow bg-gray-100 p-5 relative flex flex-col">
           <div class="overflow-y-auto grow max-h-[calc(100dvh-550px)]">
-            <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
               注意事項
             </p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas
-            in hic temporibus vel maxime fuga distinctio consequatur ut odio
-            possimus, neque aperiam at, quis molestiae iusto, mollitia quo
-            eveniet? Facilis pariatur natus voluptatibus modi dolorem. Beatae
-            eos reiciendis doloribus, laboriosam similique amet tempore ab
-            reprehenderit adipisci. Illo iusto praesentium enim. Iste, commodi
-            excepturi. Illum, quam doloribus itaque quo repudiandae debitis a
-            harum ea nisi quis repellendus vero nostrum facere corporis, ullam
-            accusantium! Sit mollitia hic suscipit nisi facere a? Nostrum
-            commodi, ipsum aperiam corrupti nihil, at laboriosam vitae eos
-            magnam fugit consectetur quis porro? Ullam qui tenetur
-            exercitationem. Exercitationem ab itaque incidunt pariatur vitae
-            atque cum quam dolores fugiat tempore? Recusandae sint officiis
-            unde. Ex sunt doloremque assumenda, dicta reprehenderit quos
-            consequuntur delectus porro suscipit temporibus repellendus
-            voluptatem fugit maxime ipsa illo quod iure eveniet fuga in unde
-            excepturi, totam, nemo explicabo nostrum? Asperiores harum eos fugit
-            beatae! Numquam autem corrupti labore, iste libero fugit beatae!
-            Facere veritatis maxime, deserunt perspiciatis explicabo corporis
-            itaque. Iusto ipsum repellat maxime culpa? Quae, voluptatem nostrum
-            corrupti quibusdam nesciunt eveniet exercitationem! Voluptatibus et
-            natus aliquid a. Ipsum, voluptatibus similique consectetur qui
-            praesentium impedit. Accusantium voluptatum aspernatur, illum odit
-            veritatis doloribus, magnam maiores dicta laborum, doloremque ipsa
-            hic! Fugiat velit repudiandae similique explicabo, nobis officia
-            rerum illo voluptatem eius? Distinctio sunt vel fugit rerum
-            corporis, qui quibusdam veritatis pariatur rem blanditiis, mollitia
-            adipisci voluptates consequatur est autem expedita tempore, quod ea!
-            Qui repellat pariatur in, harum dicta aperiam dolore dignissimos
-            alias consequuntur, temporibus voluptatem quibusdam blanditiis
-            dolorum animi laboriosam, delectus dolorem tempora illo rerum quo.
-            Doloremque soluta minima impedit adipisci rerum consectetur
-            doloribus necessitatibus perferendis quam deleniti ex nemo,
-            laudantium quae voluptas reprehenderit magni neque in vel ea? Ullam
-            dolores nemo a soluta enim eaque exercitationem accusantium
-            recusandae explicabo quisquam quos aut consequatur adipisci facere,
-            minima cumque temporibus voluptas ab quia eum ipsam quod
-            necessitatibus magnam sint. Veritatis obcaecati repudiandae impedit
-            totam magni cumque minus laborum repellendus cupiditate voluptas
-            magnam adipisci earum dolores, explicabo deleniti vero? Nesciunt eum
-            nostrum quibusdam incidunt omnis consequuntur deserunt. Delectus
-            consectetur suscipit possimus soluta distinctio dolorem, repellat
-            dolore ratione nemo aliquid ab, blanditiis laborum error omnis
-            ducimus eius maiores ipsum corporis similique labore corrupti eaque.
-            Cupiditate nihil ipsum debitis officia veritatis, provident
-            repudiandae obcaecati? Sapiente, quas voluptatem ut dolores
-            similique explicabo adipisci velit debitis aperiam molestiae
-            deleniti, commodi vero. Hic, velit quam illo temporibus atque eum
-            laborum repellendus odio distinctio.
+            <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
+              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
+            </p>
+            <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
+              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
+            </p>
+            <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
+              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
+            </p>
           </div>
 
           <Button
@@ -96,15 +56,48 @@
       </div>
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="isNotAllowed"
+    modal
+    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
+  >
+    <template #container>
+      <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
+        <NuxtImg
+          src="/warning.svg"
+          alt="warning"
+          width="40"
+          height="40"
+          preload
+        />
+        <div class="text-center w-10/12">
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            エラーが発生しました
+          </p>
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            もう一度やりなおしてください
+          </p>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
 import InputOtp from 'primevue/inputotp'
 import Header from '~/components/header.vue'
+import Dialog from 'primevue/dialog'
+
+const isNotAllowed = ref(true)
 </script>
 
 <style scoped>
 ::v-deep(.p-inputtext) {
   @apply border border-exd-gray-44 bg-white w-exd-40 h-exd-50;
+}
+
+::v-deep(.p-dialog-header) {
+  @apply hidden;
 }
 </style>
