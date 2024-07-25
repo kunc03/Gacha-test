@@ -18,6 +18,7 @@
       <Button
         class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
         raised
+        @click="goToSpinPoint"
       >
         <span class="grow text-center">ガチャを回す</span>
         <NuxtImg
@@ -32,3 +33,11 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const router = useRouter()
+
+const goToSpinPoint = () => {
+  router.push('/spin/point/tokyo')
+}
+</script>
