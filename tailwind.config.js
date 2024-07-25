@@ -44,6 +44,9 @@ module.exports = {
     },
 
     extend: {
+      screens: {
+        small: { min: '150px', max: '375px' },
+      },
       padding: { ...padding },
       colors: {
         'exd-red': {
