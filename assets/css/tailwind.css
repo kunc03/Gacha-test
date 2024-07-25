@@ -6,6 +6,9 @@
   :root {
     --dark-red: 5 60% 32%;
     --gold: 40 67% 53%;
+    --gray-scorpion: 0 0% 38%;
+    --banana: 40 100% 87%;
+    --gray-44: 0 0% 44%;
 
     --noto-sans: 'Noto Sans', sans-serif;
   }
@@ -36,4 +39,3 @@
     @apply appearance-none m-0;
   }
 }
-
