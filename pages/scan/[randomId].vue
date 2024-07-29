@@ -102,20 +102,64 @@ const goToScanTokyo = () => {
 }
 
 onMounted(() => {
-  if ('geolocation' in navigator) {
-    isRequestingLocation.value = true
-    navigator.geolocation.getCurrentPosition(
-      () => {
-        isRequestingLocation.value = false
-      },
-      () => {
-        isRequestingLocation.value = false
-        isNotAllowed.value = true
-      }
-    )
+  if ('permissions' in navigator) {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        if (permissionStatus.state === 'granted') {
+          isRequestingLocation.value = false
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              console.log(position)
+            },
+            (error) => {
+              console.error(error)
+            }
+          )
+        } else if (permissionStatus.state === 'prompt') {
+          if ('geolocation' in navigator) {
+            isRequestingLocation.value = true
+            navigator.geolocation.getCurrentPosition(
+              () => {
+                isRequestingLocation.value = false
+              },
+              () => {
+                isRequestingLocation.value = false
+                isNotAllowed.value = true
+              }
+            )
+          } else {
+            isNotAllowed.value = true
+          }
+        } else if (permissionStatus.state === 'denied') {
+          isNotAllowed.value = true
+        }
+
+        // Listen for changes to the permission status
+        permissionStatus.onchange = () => {
+          if (permissionStatus.state === 'granted') {
+            isNotAllowed.value = false
+          } else if (permissionStatus.state === 'denied') {
+            isNotAllowed.value = true
+          }
+        }
+      })
   } else {
-    // Geolocation tidak tersedia, tampilkan dialog atau lakukan sesuatu
-    isNotAllowed.value = true
+    if ('geolocation' in navigator) {
+      isRequestingLocation.value = true
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          isRequestingLocation.value = false
+        },
+        () => {
+          isRequestingLocation.value = false
+          isNotAllowed.value = true
+        }
+      )
+    } else {
+      // Geolocation is not available, show a dialog or handle accordingly
+      isNotAllowed.value = true
+    }
   }
 })
 </script>
