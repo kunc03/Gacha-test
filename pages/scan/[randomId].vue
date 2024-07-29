@@ -64,14 +64,17 @@
     class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
   >
     <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleCloseDialog"
+      />
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
-        <NuxtImg
-          src="/warning.svg"
-          alt="warning"
-          width="40"
-          height="40"
-          preload
-        />
+        <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             エラーが発生しました
@@ -87,18 +90,46 @@
 </template>
 
 <script setup>
+import warning from '~/assets/images/warning.svg'
+import close from '~/assets/images/close.svg'
+
 import InputOtp from 'primevue/inputotp'
 import Header from '~/components/header.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
 
 const value = ref('')
+const route = useRoute()
 const router = useRouter()
 const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
+const handleCloseDialog = () => (isNotAllowed.value = false)
+const isLoading = ref(false)
 
-const goToScanTokyo = () => {
-  router.push('/spin/tokyo')
+const codes = {
+  tokyo: '44a6b488-7c98-496a-827e-23803b3d8c71',
+  osaka: '2b0e67d5-98d5-4227-93e2-273802b7eb46',
+}
+
+const checkPassword = async (id) => {
+  try {
+    isLoading.value = true
+    const { status } = await useFetchApi('GET', id)
+
+    isLoading.value = false
+    return status
+  } catch (error) {
+    console.log("Error: Can't check password")
+  }
+}
+
+const goToScanTokyo = async () => {
+  const location = route.params.randomId
+  const id = codes[location]
+  const isTrue = await checkPassword(id)
+
+  if (isTrue) router.push('/spin/tokyo')
+  else isNotAllowed.value = true
 }
 
 onMounted(() => {
@@ -125,22 +156,21 @@ onMounted(() => {
               },
               () => {
                 isRequestingLocation.value = false
-                isNotAllowed.value = true
               }
             )
           } else {
-            isNotAllowed.value = true
+            isRequestingLocation.value = false
           }
         } else if (permissionStatus.state === 'denied') {
-          isNotAllowed.value = true
+          isRequestingLocation.value = true
         }
 
         // Listen for changes to the permission status
         permissionStatus.onchange = () => {
           if (permissionStatus.state === 'granted') {
-            isNotAllowed.value = false
+            isRequestingLocation.value = false
           } else if (permissionStatus.state === 'denied') {
-            isNotAllowed.value = true
+            isRequestingLocation.value = false
           }
         }
       })
@@ -153,7 +183,6 @@ onMounted(() => {
         },
         () => {
           isRequestingLocation.value = false
-          isNotAllowed.value = true
         }
       )
     } else {

@@ -64,7 +64,7 @@ const getPassword = async (id) => {
     isLoading.value = false
     return value
   } catch (error) {
-    console.log("Error: Can't get companies")
+    console.log("Error: Can't get password")
   }
 }
 
