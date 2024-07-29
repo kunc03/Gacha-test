@@ -3,7 +3,7 @@
     class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col"
   >
     <div class="flex-1 items-center justify-center flex flex-col gap-11">
-      <NuxtImg src="/logo.webp" alt="logo" width="190" height="71" preload />
+      <img :src="logo" alt="logo" width="190" height="71" preload />
       <div class="flex flex-col gap-8 mx-8 justify-start items-center">
         <h1
           class="text-center font-bold text-exd-1824.52 text-white"
@@ -45,6 +45,7 @@
 
 <script setup>
 import Button from 'primevue/button'
+import logo from '~/assets/images/logo.webp'
 
 const route = useRoute()
 const password = ref(null)

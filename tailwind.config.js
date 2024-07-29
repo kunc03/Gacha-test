@@ -54,6 +54,9 @@ module.exports = {
         'exd-red': {
           DEFAULT: 'hsla(var(--dark-red))', //#822820
         },
+        'exd-red-vermilion': {
+          DEFAULT: 'hsla(var(--red-vermilion))', //#D44D20
+        },
         'exd-gold': {
           DEFAULT: 'hsla(var(--gold))', //#D7A237
         },

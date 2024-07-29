@@ -2,14 +2,14 @@
   <div
     class="grow bg-[url('assets/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
   >
-    <NuxtImg
-      src="/gacha2.webp"
+    <img
+      :src="gacha2"
       alt="gacha2"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"
       preload
     />
-    <NuxtImg
-      src="/sparkling.svg"
+    <img
+      :src="sparkling"
       alt="sparkling"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10"
       preload
@@ -18,14 +18,14 @@
       class="left-1/2 top-[30%] transform -translate-x-1/2 -translate-y-1/2 z-20 absolute bg-[url('assets/images/circle-white.svg')] bg-contain bg-center w-full h-full bg-no-repeat"
     >
       <div class="relative h-full w-full">
-        <NuxtImg
-          src="/duck.svg"
+        <img
+          :src="duck"
           alt="duck"
           class="absolute w-3/4 object-fill h-full left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
           preload
         />
-        <NuxtImg
-          src="/jackpot.svg"
+        <img
+          :src="jackpot"
           alt="jackpot"
           preload
           class="absolute -bottom-2 md:-bottom-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-1/4 object-scale-down small:h-3/4"
@@ -39,8 +39,8 @@
       @click="handleShowDialog"
     >
       <span class="grow text-center">次へ</span>
-      <NuxtImg
-        src="/arrow.svg"
+      <img
+        :src="arrow"
         alt="arrow"
         width="10"
         height="10"
@@ -56,13 +56,13 @@
     class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
   >
     <template #container>
-      <NuxtImg
-        src="/close.svg"
-        alt="warning"
+      <img
+        :src="close"
+        alt="close"
         width="30"
         height="30"
         preload
-        class="absolute right-1 top-1 cursor-auto"
+        class="absolute right-1 top-1 cursor-pointer z-50"
         @click="handleCloseDialog"
       />
       <div
@@ -79,8 +79,8 @@
           raised
         >
           <span class="grow text-center">新規会員登録</span>
-          <NuxtImg
-            src="/arrow.svg"
+          <img
+            :src="arrow"
             alt="arrow"
             width="10"
             height="10"
@@ -93,8 +93,8 @@
           raised
         >
           <span class="grow text-center">マイページから引き換え</span>
-          <NuxtImg
-            src="/arrow.svg"
+          <img
+            :src="arrow"
             alt="arrow"
             width="10"
             height="10"
@@ -110,8 +110,8 @@
           </p>
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             こちら
-            <NuxtImg
-              src="/export.svg"
+            <img
+              :src="exportImg"
               alt="export"
               width="15"
               height="15"
@@ -126,6 +126,14 @@
 </template>
 
 <script setup>
+import gacha2 from '~/assets/images/gacha2.webp'
+import sparkling from '~/assets/images/sparkling.svg'
+import duck from '~/assets/images/duck.svg'
+import jackpot from '~/assets/images/jackpot.svg'
+import arrow from '~/assets/images/arrow.svg'
+import close from '~/assets/images/close.svg'
+import exportImg from '~/assets/images/export.svg'
+
 const router = useRouter()
 const hasModal = ref(false)
 const handleShowDialog = () => (hasModal.value = true)
