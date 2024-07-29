@@ -41,6 +41,7 @@
           <Button
             class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
             raised
+            @click="goToScanTokyo"
           >
             <span class="grow text-center">GO!</span>
             <NuxtImg
@@ -89,9 +90,16 @@
 import InputOtp from 'primevue/inputotp'
 import Header from '~/components/header.vue'
 import Dialog from 'primevue/dialog'
+import { useRouter } from 'vue-router'
 
+const value = ref('')
+const router = useRouter()
 const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
+
+const goToScanTokyo = () => {
+  router.push('/spin/tokyo')
+}
 
 onMounted(() => {
   if ('geolocation' in navigator) {
@@ -114,7 +122,7 @@ onMounted(() => {
 
 <style scoped>
 ::v-deep(.p-inputtext) {
-  @apply border border-exd-gray-44 bg-white w-exd-40 h-exd-50;
+  @apply border border-exd-gray-44 bg-white w-exd-40 h-exd-50 text-exd-gray-scorpion;
 }
 
 ::v-deep(.p-dialog-header) {

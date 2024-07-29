@@ -13,10 +13,16 @@
         class="cursor-pointer"
       />
     </div>
-    <div class="grow text-center">
+    <div class="grow text-center" v-if="!withLogo">
       <slot />
     </div>
-    <div class="pr-5">
+    <div
+      class="grow text-center w-full justify-center items-center flex"
+      v-else
+    >
+      <NuxtImg src="/logo.webp" alt="intl" width="130" height="48" preload />
+    </div>
+    <div class="pr-5 shrink-0">
       <NuxtImg
         src="/intl-icon.svg"
         alt="intl"
@@ -32,6 +38,10 @@
 <script setup>
 defineProps({
   hasBack: {
+    type: Boolean,
+    default: false,
+  },
+  withLogo: {
     type: Boolean,
     default: false,
   },
