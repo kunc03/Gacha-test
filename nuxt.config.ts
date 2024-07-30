@@ -15,13 +15,17 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   image: {
     dir: 'assets/images',
   },
+
   typescript: {
     strict: false,
   },
+
   devtools: { enabled: false },
+
   modules: [
     '@nuxt/image',
     '@pinia/nuxt',
@@ -29,9 +33,11 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
   ],
+
   pinia: {
     disableVuex: true,
   },
+
   primevue: {
     options: {
       ripple: true,
@@ -48,9 +54,19 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  runtimeConfig: {
+    public: {
+      BASE_API: process.env.NUXT_BASE_API,
+      API_URL: process.env.API_URL,
+    },
+  },
+
   tailwindcss: {
     cssPath: 'assets/css/tailwind.css',
     configPath: 'tailwind.config.js',
     exposeConfig: false,
   },
+
+  compatibilityDate: '2024-07-29',
 })

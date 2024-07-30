@@ -8,8 +8,8 @@
       <div
         class="grow w-full flex flex-col items-center justify-center relative mb-4"
       >
-        <NuxtImg
-          src="/gacha2.webp"
+        <img
+          :src="gacha2"
           alt="gacha2"
           class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-full h-full object-scale-down small:h-3/4"
           preload
@@ -21,8 +21,8 @@
         @click="goToSpinPoint"
       >
         <span class="grow text-center">ガチャを回す</span>
-        <NuxtImg
-          src="/arrow.svg"
+        <img
+          :src="arrow"
           alt="arrow"
           width="10"
           height="10"
@@ -36,6 +36,8 @@
 
 <script setup>
 const router = useRouter()
+import gacha2 from '~/assets/images/gacha2.webp'
+import arrow from '~/assets/images/arrow.svg'
 
 const goToSpinPoint = () => {
   router.push('/spin/point/tokyo')

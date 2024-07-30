@@ -14,7 +14,7 @@
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p>パスワードを入力してください</p>
-        npm <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
+         <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
@@ -64,14 +64,17 @@
     class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
   >
     <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleCloseDialog"
+      />
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
-        <NuxtImg
-          src="/warning.svg"
-          alt="warning"
-          width="40"
-          height="40"
-          preload
-        />
+        <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             エラーが発生しました
@@ -87,35 +90,111 @@
 </template>
 
 <script setup>
+import warning from '~/assets/images/warning.svg'
+import close from '~/assets/images/close.svg'
+
 import InputOtp from 'primevue/inputotp'
 import Header from '~/components/header.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
 
 const value = ref('')
+const route = useRoute()
 const router = useRouter()
 const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
+const handleCloseDialog = () => (isNotAllowed.value = false)
+const isLoading = ref(false)
 
-const goToScanTokyo = () => {
-  router.push('/spin/tokyo')
+const codes = {
+  'true': '44a6b488-7c98-496a-827e-23803b3d8c71',
+  'false': '2b0e67d5-98d5-4227-93e2-273802b7eb46',
+}
+
+const checkPassword = async (id) => {
+  try {
+    isLoading.value = true
+    const { status } = await useFetchApi('GET', id)
+
+    isLoading.value = false
+    return status
+  } catch (error) {
+    console.log("Error: Can't check password")
+  }
+}
+
+const goToScanTokyo = async () => {
+  const location = route.params.randomId
+  const passwordValue = value.value; 
+  
+  //addition from DEWI
+  //FOR DEMO PURPOSE ONLY
+  //If the password is 1234 it will call API Mocki with true response https://mocki.io/v1/44a6b488-7c98-496a-827e-23803b3d8c71
+  //Otherwise, it will call API Mocki with false response https://mocki.io/v1/2b0e67d5-98d5-4227-93e2-273802b7eb46
+  const id = passwordValue == '1234' ? codes['true'] : codes['false'];
+  const isTrue = await checkPassword(id)
+
+  if (isTrue) router.push('/spin/tokyo')
+  else isNotAllowed.value = true
 }
 
 onMounted(() => {
-  if ('geolocation' in navigator) {
-    isRequestingLocation.value = true
-    navigator.geolocation.getCurrentPosition(
-      () => {
-        isRequestingLocation.value = false
-      },
-      () => {
-        isRequestingLocation.value = false
-        isNotAllowed.value = true
-      }
-    )
+  if ('permissions' in navigator) {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        if (permissionStatus.state === 'granted') {
+          isRequestingLocation.value = false
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              console.log(position)
+            },
+            (error) => {
+              console.error(error)
+            }
+          )
+        } else if (permissionStatus.state === 'prompt') {
+          if ('geolocation' in navigator) {
+            isRequestingLocation.value = true
+            navigator.geolocation.getCurrentPosition(
+              () => {
+                isRequestingLocation.value = false
+              },
+              () => {
+                isRequestingLocation.value = false
+              }
+            )
+          } else {
+            isRequestingLocation.value = false
+          }
+        } else if (permissionStatus.state === 'denied') {
+          isRequestingLocation.value = true
+        }
+
+        // Listen for changes to the permission status
+        permissionStatus.onchange = () => {
+          if (permissionStatus.state === 'granted') {
+            isRequestingLocation.value = false
+          } else if (permissionStatus.state === 'denied') {
+            isRequestingLocation.value = false
+          }
+        }
+      })
   } else {
-    // Geolocation tidak tersedia, tampilkan dialog atau lakukan sesuatu
-    isNotAllowed.value = true
+    if ('geolocation' in navigator) {
+      isRequestingLocation.value = true
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          isRequestingLocation.value = false
+        },
+        () => {
+          isRequestingLocation.value = false
+        }
+      )
+    } else {
+      // Geolocation is not available, show a dialog or handle accordingly
+      isNotAllowed.value = true
+    }
   }
 })
 </script>

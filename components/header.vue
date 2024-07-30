@@ -4,8 +4,8 @@
     style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
   >
     <div class="pl-5" v-if="hasBack">
-      <NuxtImg
-        src="/back-button.svg"
+      <img
+        :src="backButton"
         alt="back"
         width="40"
         height="40"
@@ -20,11 +20,11 @@
       class="grow text-center w-full justify-center items-center flex"
       v-else
     >
-      <NuxtImg src="/logo.webp" alt="intl" width="130" height="48" preload />
+      <img :src="logo" alt="intl" width="130" height="48" preload />
     </div>
     <div class="pr-5 shrink-0">
-      <NuxtImg
-        src="/intl-icon.svg"
+      <img
+        :src="intlIcon"
         alt="intl"
         width="40"
         height="40"
@@ -36,6 +36,10 @@
 </template>
 
 <script setup>
+import intlIcon from '~/assets/images/intl-icon.svg'
+import logo from '~/assets/images/logo.webp'
+import backButton from '~/assets/images/back-button.svg'
+
 defineProps({
   hasBack: {
     type: Boolean,
