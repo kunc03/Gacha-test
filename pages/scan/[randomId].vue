@@ -107,14 +107,14 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 const isLoading = ref(false)
 
 const codes = {
-  tokyo: '44a6b488-7c98-496a-827e-23803b3d8c71',
-  osaka: '2b0e67d5-98d5-4227-93e2-273802b7eb46',
+  'true': '44a6b488-7c98-496a-827e-23803b3d8c71',
+  'false': '2b0e67d5-98d5-4227-93e2-273802b7eb46',
 }
 
 const checkPassword = async (id) => {
   try {
     isLoading.value = true
-    const { status } = await useFetchApi('GET', id)
+    const { status } = await useFetchApi('GET', 'https://mocki.io/v1/'+id)
 
     isLoading.value = false
     return status
@@ -125,7 +125,12 @@ const checkPassword = async (id) => {
 
 const goToScanTokyo = async () => {
   const location = route.params.randomId
-  const id = codes[location]
+  const passwordValue = value.value; 
+  //addition from DEWI
+  //FOR DEMO PURPOSE ONLY
+  //If the password is 1234 it will call API Mocki with true response https://mocki.io/v1/44a6b488-7c98-496a-827e-23803b3d8c71
+  //Otherwise, it will call API Mocki with false response https://mocki.io/v1/2b0e67d5-98d5-4227-93e2-273802b7eb46
+  const id = passwordValue == '1234' ? codes['true'] : codes['false'];
   const isTrue = await checkPassword(id)
 
   if (isTrue) router.push('/spin/tokyo')
