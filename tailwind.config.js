@@ -27,6 +27,7 @@ const fontSize = {
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
   'exd-1424': [pxToEm(14), { lineHeight: pxToEm(24) }],
+  'exd-1724': [pxToEm(17), { lineHeight: pxToEm(24) }],
   'exd-1824.52': [pxToEm(18), { lineHeight: pxToEm(24.52) }],
   'exd-6081.72': [pxToEm(60), { lineHeight: pxToEm(81.72) }],
 }
@@ -63,11 +64,21 @@ module.exports = {
         'exd-gray-scorpion': {
           DEFAULT: 'hsla(var(--gray-scorpion))', //#606060
         },
+        'exd-stone-300': {
+          DEFAULT: 'hsla(var(--stone-300))', //#C3C3C3
+        },
+        'exd-zinc-100': {
+          DEFAULT: 'hsla(var(--zinc-100))', //#F3F3F3
+        },
+
         'exd-banana': {
           DEFAULT: 'hsla(var(--banana))', //#FFE9BC
         },
         'exd-gray-44': {
           DEFAULT: 'hsla(var(--gray-44))', //#707070
+        },
+        'exd-light-grey': {
+          DEFAULT: 'hsla(var(--light-grey))', //#D0D0D0
         },
       },
       height: {
