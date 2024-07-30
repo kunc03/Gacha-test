@@ -114,7 +114,7 @@ const codes = {
 const checkPassword = async (id) => {
   try {
     isLoading.value = true
-    const { status } = await useFetchApi('GET', 'https://mocki.io/v1/'+id)
+    const { status } = await useFetchApi('GET', id)
 
     isLoading.value = false
     return status

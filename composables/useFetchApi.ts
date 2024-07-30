@@ -4,7 +4,7 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
   return $fetch(url, {
     ...opts,
     method,
-    baseURL: config.public.BASE_API as string,
+    baseURL: config.public.API_URL as string,
     async onRequest({ request, options }) {
       // You can add any additional headers or logic here if needed
     },
