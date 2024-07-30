@@ -14,7 +14,7 @@
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p>パスワードを入力してください</p>
-        npm <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
+         <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
@@ -126,6 +126,7 @@ const checkPassword = async (id) => {
 const goToScanTokyo = async () => {
   const location = route.params.randomId
   const passwordValue = value.value; 
+  
   //addition from DEWI
   //FOR DEMO PURPOSE ONLY
   //If the password is 1234 it will call API Mocki with true response https://mocki.io/v1/44a6b488-7c98-496a-827e-23803b3d8c71
