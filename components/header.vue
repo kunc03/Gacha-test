@@ -55,5 +55,11 @@ defineProps({
   },
 })
 
-const handleGoBack = () => router.back()
+const handleGoBack = () => {
+  if (window.history.length > 2) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
 </script>
