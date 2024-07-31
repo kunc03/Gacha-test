@@ -7,7 +7,7 @@
       >{{ label }}</label
     >
     <div
-      class="inline-flex rounded-xl bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center"
+      class="inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full"
     >
       <span v-if="prefix !== ''" class="mr-2 text-exd-1424 font-bold">{{
         prefix
@@ -20,7 +20,7 @@
         @blur="validate"
         :invalid="error !== '' ? true : false"
         :aria-describedby="`${model}-help`"
-        class="grow w-full bg-gray-100"
+        class="grow w-full bg-gray-100 focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none"
       />
       <span v-if="suffix !== ''" class="ml-2 text-exd-1424 font-bold">{{
         suffix
@@ -88,3 +88,9 @@ const validate = () => {
   emit('validate', modelValue.value)
 }
 </script>
+
+<style scoped>
+::v-deep(.p-inputtext) {
+  box-shadow: none !important;
+}
+</style>

@@ -72,15 +72,15 @@
           >
             <Button
               label="男性"
-              class="bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none"
+              class="bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion"
             />
             <Button
               label="女性"
-              class="bg-white w-4/12 h-full border-t border-b border-t-exd-stone-300 border-b-exd-stone-300 rounded-none"
+              class="bg-white w-4/12 h-full border-t border-b border-t-exd-stone-300 border-b-exd-stone-300 rounded-none !text-exd-gray-scorpion"
             />
             <Button
               label="無回答"
-              class="bg-exd-banana w-4/12 h-full border border-exd-stone-300 rounded-none"
+              class="bg-exd-banana w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion"
             />
           </ButtonGroup>
         </div>
@@ -93,16 +93,16 @@
             >居住地</label
           >
           <ButtonGroup
-            class="text-exd-gray-scorpion w-full h-10 rounded-none"
+            class="w-full h-10 rounded-none"
             style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
           >
             <Button
               label="無回答"
-              class="bg-exd-banana w-1/2 h-full border border-exd-stone-300 rounded-none"
+              class="bg-exd-banana w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion"
             />
             <Button
               label="女性"
-              class="bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none"
+              class="bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion"
             />
           </ButtonGroup>
         </div>

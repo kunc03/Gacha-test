@@ -19,6 +19,7 @@ const height = {
 const width = {
   'exd-40': pxToEm(40),
   'exd-50': pxToEm(50),
+  'exd-148': pxToEm(148),
   'exd-312': pxToEm(312),
 }
 
