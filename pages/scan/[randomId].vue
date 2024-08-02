@@ -94,7 +94,7 @@ import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
 
 import InputOtp from 'primevue/inputotp'
-import Header from '~/components/header.vue'
+import Header from '~/components/Header.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
 

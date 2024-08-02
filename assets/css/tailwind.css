@@ -10,6 +10,9 @@
     --banana: 40 100% 87%;
     --gray-44: 0 0% 44%;
     --red-vermilion: 15 74% 48%;
+    --light-grey: 0 0% 82%;
+    --stone-300: 0 0% 76%;
+    --zinc-100: 0 0% 95%;
 
     --noto-sans: 'Noto Sans', sans-serif;
   }
@@ -38,5 +41,15 @@
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
     @apply appearance-none m-0;
+  }
+}
+
+@layer components {
+  .p-error {
+    @apply text-red-500;
+  }
+
+  .p-error:first-letter {
+    @apply uppercase;
   }
 }
