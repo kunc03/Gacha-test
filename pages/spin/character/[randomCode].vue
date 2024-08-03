@@ -126,7 +126,7 @@
 </template>
 
 <script setup>
-import gacha2 from '~/assets/images/gacha2.webp'
+import gacha2 from '~/assets/images/gacha2.png'
 import sparkling from '~/assets/images/sparkling.svg'
 import duck from '~/assets/images/duck.svg'
 import jackpot from '~/assets/images/jackpot.svg'

@@ -3,7 +3,7 @@
     <Header withLogo />
 
     <div
-      class="flex flex-col grow bg-[url('assets/images/bg-red2.webp')] bg-cover bg-center relative"
+      class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center relative"
     >
       <div
         class="grow w-full flex flex-col items-center justify-center relative mb-4"
@@ -36,7 +36,7 @@
 
 <script setup>
 const router = useRouter()
-import gacha2 from '~/assets/images/gacha2.webp'
+import gacha2 from '~/assets/images/gacha2.png'
 import arrow from '~/assets/images/arrow.svg'
 
 const goToSpinPoint = () => {

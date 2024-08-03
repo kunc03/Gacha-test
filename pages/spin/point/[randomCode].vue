@@ -53,7 +53,7 @@
 
 <script setup>
 import point from '~/assets/images/10point.svg'
-import gacha2 from '~/assets/images/gacha2.webp'
+import gacha2 from '~/assets/images/gacha2.png'
 import sparkling from '~/assets/images/sparkling.svg'
 import hatchedEgg from '~/assets/images/hatched-egg.svg'
 import arrow from '~/assets/images/arrow.svg'
