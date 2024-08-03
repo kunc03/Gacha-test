@@ -91,4 +91,8 @@ const handleSubmit = () => {
   }
   isSuccessSendResetPassword.value = true
 }
+
+useHead({
+  title: 'Reset Password',
+})
 </script>
