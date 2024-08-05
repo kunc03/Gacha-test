@@ -67,7 +67,7 @@
 
 <script setup>
 import InputText from '~/components/InputText.vue'
-import Header from '~/components/Header.vue'
+import Header from '~/components/header.vue'
 import { useRouter } from 'vue-router'
 
 const route = useRoute()
