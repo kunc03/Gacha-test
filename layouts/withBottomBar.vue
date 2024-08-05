@@ -11,7 +11,9 @@
       </p>
     </Header>
 
-    <slot />
+    <section class="min-h-dvh max-h-[calc(100dvh-30px)] overflow-y-auto pb-32">
+      <slot />
+    </section>
     <BottomBar />
   </main>
 </template>

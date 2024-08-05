@@ -7,9 +7,7 @@
       マイページ
     </p>
   </Header>
-  <div
-    class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center text-red-50"
-  >
+  <div class="flex flex-col bg-center">
     <div class="flex flex-col mt-[40%] items-center">
       <p class="text-white text-exd-2856 font-bold">現在のポイント</p>
       <p class="text-white text-exd-56112 font-bold relative -top-7">
@@ -30,6 +28,9 @@
           preload
           class="text-center cursor-pointer"
         />
+        <p class="text-exd-gray-scorpion text-exd-1424 font-bold">
+          景品一覧・交換
+        </p>
       </div>
       <div
         class="bg-white rounded-xl p-6 w-exd-148 h-exd-130 flex flex-col justify-center items-center"
