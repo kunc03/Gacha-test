@@ -45,7 +45,7 @@
 
 <script setup>
 import Button from 'primevue/button'
-import logo from '~/assets/images/logo.webp'
+import logo from '~/assets/images/logo.png'
 
 const route = useRoute()
 const password = ref(null)
