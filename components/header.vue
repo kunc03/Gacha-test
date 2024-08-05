@@ -39,7 +39,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
 import intlIcon from '~/assets/images/intl-icon.svg'
-import logo from '~/assets/images/logo.webp'
+import logo from '~/assets/images/logo.png'
 import backButton from '~/assets/images/back-button.svg'
 const router = useRouter()
 const route = useRoute()

@@ -20,6 +20,7 @@
         @blur="validate"
         :invalid="error !== '' ? true : false"
         :aria-describedby="`${model}-help`"
+        :placeholder="placeholder"
         class="grow w-full bg-gray-100 focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none"
       />
       <span v-if="suffix !== ''" class="ml-2 text-exd-1424 font-bold">{{
@@ -63,6 +64,10 @@ const props = defineProps({
     default: '',
   },
   label: {
+    type: String,
+    default: '',
+  },
+  placeholder: {
     type: String,
     default: '',
   },
