@@ -1,14 +1,17 @@
 <template>
   <div class="bg-white bottom-0 left-0 right-0 absolute h-16 z-10">
     <div class="inline-flex gap-3 w-full pt-3">
-      <img
-        :src="pointNavbar"
-        alt="point-navbar"
-        width="104"
-        height="104"
-        preload
-        class="absolute -top-10"
-      />
+      <div
+        class="absolute -top-10 bg-[url('assets/images/point_navbar.svg')] bg-cover bg-center w-[104px] h-[104px] flex flex-col justify-center items-center"
+      >
+        <p class="text-white text-exd-1020 font-bold mt-10 -ml-4">
+          現在のポイント
+        </p>
+        <p class="text-white text-exd-2856 font-bold relative -top-2 -ml-4">
+          0000<span class="text-exd-1020">pt</span>
+        </p>
+      </div>
+
       <div class="inline-flex flex-row gap-7 ml-28 justify-evenly w-full">
         <div class="flex flex-col items-center justify-center">
           <img

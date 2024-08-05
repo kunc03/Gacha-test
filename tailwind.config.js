@@ -13,6 +13,7 @@ const padding = {
 const height = {
   'exd-40': pxToEm(40),
   'exd-50': pxToEm(50),
+  'exd-130': pxToEm(130),
   'exd-150': pxToEm(150),
   'exd-394': pxToEm(394),
 }
@@ -31,6 +32,8 @@ const fontSize = {
   'exd-1424': [pxToEm(14), { lineHeight: pxToEm(24) }],
   'exd-1724': [pxToEm(17), { lineHeight: pxToEm(24) }],
   'exd-1824.52': [pxToEm(18), { lineHeight: pxToEm(24.52) }],
+  'exd-2856': [pxToEm(28), { lineHeight: pxToEm(56) }],
+  'exd-56112': [pxToEm(56), { lineHeight: pxToEm(112) }],
   'exd-6081.72': [pxToEm(60), { lineHeight: pxToEm(81.72) }],
 }
 
@@ -81,6 +84,9 @@ module.exports = {
         },
         'exd-light-grey': {
           DEFAULT: 'hsla(var(--light-grey))', //#D0D0D0
+        },
+        'exd-neutral-400': {
+          DEFAULT: 'hsla(var(--neutral-400))', //#8A9595
         },
       },
       height: {
