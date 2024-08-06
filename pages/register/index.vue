@@ -10,7 +10,7 @@
     </Header>
 
     <div
-      class="flex flex-col grow px-3 mt-12 pb-3 justify-between gap-6 w-full"
+      class="flex flex-col grow px-3 mt-28 pb-3 justify-between gap-6 w-full"
     >
       <div class="flex flex-col grow">
         <div
@@ -38,22 +38,25 @@
             >生年月日</label
           >
           <div class="inline-flex gap-4">
-            <InputText
+            <Dropdown
               :model="form.yearOfBirth"
               @update:model="updateModel('yearOfBirth', $event)"
               @validate="validateInput('yearOfBirth', $event)"
+              :options="yearOptions"
               suffix="年"
             />
-            <InputText
+            <Dropdown
               :model="form.monthOfBirth"
               @update:model="updateModel('monthOfBirth', $event)"
               @validate="validateInput('monthOfBirth', $event)"
+              :options="monthOptions"
               suffix="月"
             />
-            <InputText
+            <Dropdown
               :model="form.dateOfBirth"
               @update:model="updateModel('dateOfBirth', $event)"
               @validate="validateInput('dateOfBirth', $event)"
+              :options="dayOptions"
               suffix="日"
             />
           </div>
@@ -71,16 +74,29 @@
             style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
           >
             <Button
+              @click="updateModel('gender', 'Male')"
               label="男性"
-              class="bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion"
+              :class="[
+                'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.gender === 'Male' && '!border-exd-red-vermilion border-2',
+              ]"
             />
             <Button
+              @click="updateModel('gender', 'Female')"
               label="女性"
-              class="bg-white w-4/12 h-full border-t border-b border-t-exd-stone-300 border-b-exd-stone-300 rounded-none !text-exd-gray-scorpion"
+              :class="[
+                'bg-white w-4/12 h-full border-t border-b border-t-exd-stone-300 border-b-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.gender === 'Female' &&
+                  '!border-exd-red-vermilion border-2 border-t-2 border-b-2',
+              ]"
             />
             <Button
+              @click="updateModel('gender', '')"
               label="無回答"
-              class="bg-exd-banana w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion"
+              :class="[
+                'bg-exd-banana w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.gender === '' && '!border-exd-red-vermilion border-2',
+              ]"
             />
           </ButtonGroup>
         </div>
@@ -97,12 +113,22 @@
             style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
           >
             <Button
+              @click="updateModel('residenceType', '')"
               label="無回答"
-              class="bg-exd-banana w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion"
+              :class="[
+                'bg-exd-banana w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.residenceType === '' &&
+                  '!border-exd-red-vermilion border-2',
+              ]"
             />
             <Button
-              label="女性"
-              class="bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion"
+              @click="updateModel('residenceType', 'oversease')"
+              label="海外"
+              :class="[
+                'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.residenceType === 'oversease' &&
+                  '!border-exd-red-vermilion border-2 border-b-2 border-t-2 border-r-2',
+              ]"
             />
           </ButtonGroup>
         </div>
@@ -112,7 +138,12 @@
           <InputText
             :model="form.postCode"
             label="郵便番号（ハイフンなし"
-            @update:model="updateModel('postCode', $event)"
+            @update:model="
+              ($event) => {
+                updateModel('postCode', $event)
+                checkPostalCode($event)
+              }
+            "
             @validate="validateInput('postCode', $event)"
           />
         </div>
@@ -120,16 +151,17 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
-            :model="form.Address1"
+            :model="form.address1"
             label="住所1"
-            @update:model="updateModel('Address1', $event)"
-            @validate="validateInput('Address1', $event)"
+            disabled
+            @update:model="updateModel('address1', $event)"
+            @validate="validateInput('address1', $event)"
           />
           <InputText
-            :model="form.Address2"
+            :model="form.address2"
             label="住所２"
-            @update:model="updateModel('Address2', $event)"
-            @validate="validateInput('Address2', $event)"
+            @update:model="updateModel('address2', $event)"
+            @validate="validateInput('address2', $event)"
           />
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
             景品送付に使用する場合があるため正しく入力してください
@@ -140,6 +172,7 @@
         >
           <InputText
             :model="form.phoneNumber"
+            :onlyNumeric="true"
             label="電話番号（ハイフンなし"
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
@@ -149,6 +182,7 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
+            type="email"
             :model="form.email"
             label="メールアドレス"
             @update:model="updateModel('email', $event)"
@@ -159,12 +193,14 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
+            type="password"
             :model="form.password"
             label="アンケート"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
           />
           <InputText
+            type="password"
             :model="form.confPassword"
             label="パスワード（再入力）"
             @update:model="updateModel('confPassword', $event)"
@@ -215,9 +251,14 @@
       <Button
         class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
         raised
+        :disabled="!form.checked"
+        :loading="isLoading"
+        @click="handleSubmit"
       >
         <span class="grow text-center">登録する</span>
+        <LoadingIcon v-if="isLoading" />
         <NuxtImg
+          v-else
           src="/arrow.svg"
           alt="arrow"
           width="10"
@@ -228,20 +269,59 @@
       </Button>
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="isErrorMessage"
+    modal
+    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleCloseDialog"
+      />
+      <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
+        <img :src="warning" alt="warning" width="40" height="40" preload />
+        <div class="text-center w-10/12">
+          <p
+            v-for="item in errorMessages"
+            class="font-bold text-exd-1424 text-exd-gray-scorpion"
+          >
+            {{ item }}
+          </p>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
+import warning from '~/assets/images/warning.svg'
+import close from '~/assets/images/close.svg'
+
+import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
+import JapanPostalCode from 'japan-postal-code'
+
+const isLoading = ref(false)
+const isErrorMessage = ref(false)
 const form = ref({
   surname: '',
   givenName: '',
   yearOfBirth: '',
   monthOfBirth: '',
   dateOfBirth: '',
+  gender: '',
+  residenceType: '',
   postCode: '',
-  Address1: '',
-  Address2: '',
+  address1: '',
+  address2: '',
   phoneNumber: '',
   email: '',
   password: '',
@@ -251,13 +331,93 @@ const form = ref({
   questionnaire3: '',
   checked: false,
 })
+const errorMessages = ref([])
+
+const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const updateModel = (field, value) => {
   form.value[field] = value
 }
 
 const validateInput = (field, value) => {
-  console.log(`Validated ${field}:`, value)
+  // console.log(`Validated ${field}:`, value)
+}
+
+const yearOptions = computed(() => {
+  const currentYear = new Date().getFullYear()
+  return [...new Array(100)].map((item, index) => currentYear - index)
+})
+
+const monthOptions = computed(() => {
+  return [...new Array(12)].map((item, index) =>
+    String(index + 1).padStart(2, '0')
+  )
+})
+
+const dayOptions = computed(() => {
+  return [...new Array(31)].map((item, index) =>
+    String(index + 1).padStart(2, '0')
+  )
+})
+
+const handleSubmit = async () => {
+  if (isLoading.value) return
+  isLoading.value = true
+
+  let payload = {
+    name: form.value.surname + ' ' + form.value.givenName,
+    birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
+    gender: form.value.gender,
+    postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
+    residence: form.value.address1,
+    address: form.value.address2,
+    phone_number: form.value.phoneNumber,
+    email: form.value.email,
+    password: form.value.password,
+    password_confirmation: form.value.confPassword,
+    questionnaire_1: form.value.questionnaire1,
+    questionnaire_2: form.value.questionnaire2,
+    questionnaire_3: form.value.questionnaire3,
+  }
+
+  try {
+    const { data } = await useFetchApi('POST', 'register', { body: payload })
+
+    sessionStorage.setItem('USER_ID', data.user.id)
+    navigateTo('/register/complete')
+  } catch (error) {
+    console.log("Error: Can't register")
+    const errors = error._data.errors
+
+    if (errors) {
+      const message = Object.keys(errors).map((item) => errors[item][0])
+      errorMessages.value = message
+      isErrorMessage.value = true
+    }
+  } finally {
+    isLoading.value = false
+  }
+}
+
+let postCodeBounds
+const checkPostalCode = async (code) => {
+  clearTimeout(postCodeBounds)
+  try {
+    const address = await new Promise((resolve, reject) => {
+      JapanPostalCode.get(code, function (address) {
+        return resolve(address)
+      })
+
+      postCodeBounds = setTimeout(() => {
+        reject(new Error('Postal code not found'))
+      }, 800)
+    })
+
+    form.value.address1 = `${address.prefecture}, ${address.city}`
+  } catch (error) {
+    console.log(error)
+    form.value.address1 = ''
+  }
 }
 </script>
 
