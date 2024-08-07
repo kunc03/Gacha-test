@@ -59,13 +59,17 @@ const codes = {
 const getPassword = async (id) => {
   try {
     isLoading.value = true
-    const { password: value } = await useFetchApi(
-      'GET',
-      'https://mocki.io/v1/' + id
+    let password = null;
+    
+    const { status, data } = await useFetchApi(
+      'GET', '/api/location/password/'+id
     )
+    if (data) {
+      password = data.password
+    }
 
     isLoading.value = false
-    return value
+    return password
   } catch (error) {
     console.log("Error: Can't get password")
   }
@@ -75,7 +79,7 @@ onMounted(async () => {
   const location = route.params.randomCode
   const id = codes[location]
 
-  const passVal = await getPassword(id)
+  const passVal = await getPassword(location)
   password.value = passVal ?? Math.floor(1000 + Math.random() * 9000).toString()
 })
 </script>
