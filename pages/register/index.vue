@@ -10,7 +10,7 @@
     </Header>
 
     <div
-      class="flex flex-col grow px-3 mt-28 pb-3 justify-between gap-6 w-full"
+      class="flex flex-col grow px-3 mt-32 pb-3 justify-between gap-6 w-full"
     >
       <div class="flex flex-col grow">
         <div
@@ -78,7 +78,7 @@
               label="男性"
               :class="[
                 'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.gender === 'Male' && '!border-exd-red-vermilion border-2',
+                form.gender === 'Male' && '!bg-exd-banana',
               ]"
             />
             <Button
@@ -86,16 +86,15 @@
               label="女性"
               :class="[
                 'bg-white w-4/12 h-full border-t border-b border-t-exd-stone-300 border-b-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.gender === 'Female' &&
-                  '!border-exd-red-vermilion border-2 border-t-2 border-b-2',
+                form.gender === 'Female' && '!bg-exd-banana',
               ]"
             />
             <Button
               @click="updateModel('gender', '')"
               label="無回答"
               :class="[
-                'bg-exd-banana w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.gender === '' && '!border-exd-red-vermilion border-2',
+                'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.gender === '' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -116,9 +115,8 @@
               @click="updateModel('residenceType', '')"
               label="無回答"
               :class="[
-                'bg-exd-banana w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === '' &&
-                  '!border-exd-red-vermilion border-2',
+                'bg-white w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                form.residenceType === '' && '!bg-exd-banana',
               ]"
             />
             <Button
@@ -126,8 +124,7 @@
               label="海外"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === 'oversease' &&
-                  '!border-exd-red-vermilion border-2 border-b-2 border-t-2 border-r-2',
+                form.residenceType === 'oversease' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -137,7 +134,7 @@
         >
           <InputText
             :model="form.postCode"
-            label="郵便番号（ハイフンなし"
+            label="郵便番号（ハイフンなし)"
             @update:model="
               ($event) => {
                 updateModel('postCode', $event)
@@ -173,7 +170,7 @@
           <InputText
             :model="form.phoneNumber"
             :onlyNumeric="true"
-            label="電話番号（ハイフンなし"
+            label="電話番号（ハイフンなし)"
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
           />
@@ -195,7 +192,7 @@
           <InputText
             type="password"
             :model="form.password"
-            label="アンケート"
+            label="パスワード"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
           />

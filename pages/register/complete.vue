@@ -10,11 +10,11 @@
     </Header>
 
     <div
-      class="flex flex-col grow px-3 mt-28 pb-3 justify-between gap-6 w-full"
+      class="flex flex-col grow px-3 mt-32 pb-3 justify-between gap-6 w-full"
     >
       <div class="flex flex-col grow">
         <p
-          class="text-exd-gray-scorpion font-semibold text-exd-1420 text-center mt-12"
+          class="text-exd-gray-scorpion font-semibold text-exd-1420 text-center mt-8"
         >
           会員登録が完了しました
         </p>
