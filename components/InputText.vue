@@ -14,23 +14,35 @@
       }}</span>
       <InputText
         :type="type"
-        :id="`id-${model}`"
+        :id="`id-${model}-${label}--${prefix}-${suffix}`"
         :value="modelValue"
+        v-only-numeric="onlyNumeric"
         @input="updateValue($event.target.value)"
         @blur="validate"
         :invalid="error !== '' ? true : false"
-        :aria-describedby="`${model}-help`"
+        :aria-describedby="`${model}-${label}--${prefix}-${suffix}-help`"
         :placeholder="placeholder"
-        class="grow w-full bg-gray-100 focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none"
+        :disabled="disabled"
+        :class="[
+          'grow w-full bg-gray-100 focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none',
+          disabled && '!text-gray-400',
+        ]"
       />
       <span v-if="suffix !== ''" class="ml-2 text-exd-1424 font-bold">{{
         suffix
       }}</span>
     </div>
-    <small v-if="hasHelper" :id="`${model}-help`">{{ helperText }}</small>
-    <small v-if="error !== ''" :id="`${model}-error`" :class="['p-error']">{{
-      error
-    }}</small>
+    <small
+      v-if="hasHelper"
+      :id="`${model}-${label}--${prefix}-${suffix}-help`"
+      >{{ helperText }}</small
+    >
+    <small
+      v-if="error !== ''"
+      :id="`${model}-${label}--${prefix}-${suffix}-error`"
+      :class="['p-error']"
+      >{{ error }}</small
+    >
   </div>
 </template>
 
@@ -74,6 +86,14 @@ const props = defineProps({
   model: {
     type: String,
     default: '',
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  onlyNumeric: {
+    type: Boolean,
+    default: false,
   },
 })
 

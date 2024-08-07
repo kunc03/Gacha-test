@@ -77,6 +77,7 @@
         <Button
           class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
           raised
+          @click="navigateTo('/register')"
         >
           <span class="grow text-center">新規会員登録</span>
           <img

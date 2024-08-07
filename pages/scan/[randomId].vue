@@ -14,7 +14,7 @@
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p>パスワードを入力してください</p>
-         <InputOtp v-model="value" class="!flex !flex-row !gap-3" />
+        <InputOtp v-model="value" integerOnly class="!flex !flex-row !gap-3" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
@@ -41,10 +41,13 @@
           <Button
             class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
             raised
+            :loading="isLoading"
             @click="goToScanTokyo"
           >
             <span class="grow text-center">GO!</span>
+            <LoadingIcon v-if="isLoading" />
             <NuxtImg
+              v-else
               src="/arrow.svg"
               alt="arrow"
               width="10"
@@ -103,36 +106,36 @@ const route = useRoute()
 const router = useRouter()
 const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
-const handleCloseDialog = () => (isNotAllowed.value = false)
 const isLoading = ref(false)
+const handleCloseDialog = () => (isNotAllowed.value = false)
 
-const codes = {
-  'true': '44a6b488-7c98-496a-827e-23803b3d8c71',
-  'false': '2b0e67d5-98d5-4227-93e2-273802b7eb46',
-}
-
-const checkPassword = async (id) => {
+const checkPassword = async (params) => {
   try {
     isLoading.value = true
-    const { status } = await useFetchApi('GET', id)
+    const { status, data } = await useFetchApi('GET', 'gacha/spin', { params })
+
+    sessionStorage.setItem('POINT_ID', data.point.id)
+    sessionStorage.setItem('LOCATION_ID', data.location.id)
 
     isLoading.value = false
     return status
   } catch (error) {
     console.log("Error: Can't check password")
+
+    isLoading.value = false
+    sessionStorage.removeItem('POINT_ID')
+    sessionStorage.removeItem('LOCATION_ID')
   }
 }
 
 const goToScanTokyo = async () => {
   const location = route.params.randomId
-  const passwordValue = value.value; 
-  
-  //addition from DEWI
-  //FOR DEMO PURPOSE ONLY
-  //If the password is 1234 it will call API Mocki with true response https://mocki.io/v1/44a6b488-7c98-496a-827e-23803b3d8c71
-  //Otherwise, it will call API Mocki with false response https://mocki.io/v1/2b0e67d5-98d5-4227-93e2-273802b7eb46
-  const id = passwordValue == '1234' ? codes['true'] : codes['false'];
-  const isTrue = await checkPassword(id)
+  const passwordValue = value.value
+
+  const isTrue = await checkPassword({
+    slug: location,
+    password: passwordValue,
+  })
 
   if (isTrue) router.push('/spin/tokyo')
   else isNotAllowed.value = true

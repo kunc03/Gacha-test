@@ -20,6 +20,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "japan-postal-code": "^0.3.0",
     "moment": "^2.29.4",
     "nuxt": "^3.12.4",
     "nuxt-icon": "^0.2.11",
