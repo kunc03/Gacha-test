@@ -39,12 +39,13 @@
           @validate="validateInput('password', $event)"
         />
 
-        <p
-          class="underline text-exd-1220 font-medium text-exd-gray-scorpion"
+        <a
+          class="underline text-exd-1220 font-medium text-exd-gray-scorpion cursor-pointer"
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
+          @click="navigateTo('/forgot-password')"
         >
           パスワードを忘れた方
-        </p>
+        </a>
         <Button
           class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
           raised

@@ -10,7 +10,7 @@
     </Header>
 
     <div
-      class="flex flex-col grow px-8 mt-12 pb-3 justify-between gap-6 w-full"
+      class="flex flex-col grow px-8 mt-32 pb-3 justify-between gap-6 w-full"
     >
       <template v-if="isSuccessSendLinkResetPassword">
         <div class="flex flex-col grow gap-6 items-center">
