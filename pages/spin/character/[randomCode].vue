@@ -92,6 +92,12 @@
         <Button
           class="!bg-exd-red-vermilion !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
           raised
+          @click="
+            () => {
+              hasModal = false
+              modalLogin = true
+            }
+          "
         >
           <span class="grow text-center">マイページから引き換え</span>
           <img
@@ -124,6 +130,8 @@
       </div>
     </template>
   </Dialog>
+
+  <ModalLogin v-model="modalLogin" />
 </template>
 
 <script setup>
@@ -137,6 +145,7 @@ import exportImg from '~/assets/images/export.svg'
 
 const router = useRouter()
 const hasModal = ref(false)
+const modalLogin = ref(false)
 const handleShowDialog = () => (hasModal.value = true)
 const handleCloseDialog = () => (hasModal.value = false)
 </script>

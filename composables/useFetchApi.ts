@@ -6,7 +6,12 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
     method,
     baseURL: config.public.API_URL as string,
     async onRequest({ request, options }) {
-      // You can add any additional headers or logic here if needed
+      const TOKEN = sessionStorage.getItem('TOKEN')
+      const USER = sessionStorage.getItem('USER')
+
+      if (TOKEN && USER) {
+        options.headers = { Authorization: `Bearer ${TOKEN}` }
+      }
     },
     onRequestError({ request, options, error }) {
       return Promise.reject(error)
