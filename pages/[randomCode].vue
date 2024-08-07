@@ -62,7 +62,7 @@ const getPassword = async (id) => {
     let password = null;
     
     const { status, data } = await useFetchApi(
-      'GET', '/api/location/password/'+id
+      'GET', '/location/password/'+id
     )
     if (data) {
       password = data.password
