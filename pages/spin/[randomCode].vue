@@ -35,11 +35,12 @@
 </template>
 
 <script setup>
+const route = useRoute()
 const router = useRouter()
 import gacha2 from '~/assets/images/gacha2.png'
 import arrow from '~/assets/images/arrow.svg'
 
 const goToSpinPoint = () => {
-  router.push('/spin/point/tokyo')
+  router.push(`/spin/point/${route.params.randomCode}`)
 }
 </script>

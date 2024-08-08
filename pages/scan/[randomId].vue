@@ -137,7 +137,7 @@ const goToScanTokyo = async () => {
     password: passwordValue,
   })
 
-  if (isTrue) router.push('/spin/tokyo')
+  if (isTrue) router.push(`/spin/${route.params.randomId}`)
   else isNotAllowed.value = true
 }
 
