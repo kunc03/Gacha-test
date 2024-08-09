@@ -17,8 +17,9 @@
 
     <div class="inline-flex gap-4 items-center justify-center">
       <div
-        class="bg-white rounded-xl p-6 w-exd-148 h-exd-130 flex flex-col justify-center items-center"
+        class="bg-white rounded-xl p-6 w-exd-148 h-exd-130 flex flex-col justify-center items-center cursor-pointer"
         style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+        @click="handleGoToHistory"
       >
         <img
           :src="iconStar"
@@ -123,7 +124,13 @@ import iconStar from '~/assets/images/icon-star.svg'
 import iconGift from '~/assets/images/icon-gift.svg'
 import arrow from '~/assets/images/arrow.svg'
 import exportIcon from '~/assets/images/export.svg'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 definePageMeta({
   layout: 'with-bottom-bar',
 })
+
+const handleGoToHistory = () => router.push('/reset/tokyo')
 </script>
