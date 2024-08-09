@@ -88,6 +88,9 @@ module.exports = {
         'exd-neutral-400': {
           DEFAULT: 'hsla(var(--neutral-400))', //#8A9595
         },
+        'exd-orange-700': {
+          DEFAULT: 'hsla(var(--orange-700))', //#D44D20
+        },
       },
       height: {
         ...height,
