@@ -132,5 +132,9 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
+useHead({
+  title: 'Dashboard',
+})
+
 const handleGoToHistory = () => router.push('/reset/tokyo')
 </script>
