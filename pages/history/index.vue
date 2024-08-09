@@ -9,8 +9,9 @@
   </Header>
   <div class="flex flex-col bg-center text-black mt-[30%] px-8 gap-3">
     <PagesHistoryCard
-      v-for="index in Array.from({ length: 100 })"
+      v-for="(value, index) in Array.from({ length: 100 })"
       :key="index"
+      :id="index + 1"
     />
   </div>
 </template>

@@ -1,6 +1,7 @@
 <template>
   <div
     class="bg-white w-full rounded-xl p-2 inline-flex justify-between cursor-pointer"
+    @click="handleGoToDetailHistory"
   >
     <div class="inline-flex gap-2 justify-center items-center">
       <div
@@ -35,6 +36,19 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import duck from '~/assets/images/duck.svg'
 import arrow from '~/assets/images/arrow.svg'
+
+const props = defineProps({
+  id: {
+    type: [String, Number],
+    required: true,
+  },
+})
+
+console.log('id', props.id)
+
+const router = useRouter()
+const handleGoToDetailHistory = () => router.push(`/history/${props.id}`)
 </script>
