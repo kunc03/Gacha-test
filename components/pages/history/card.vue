@@ -47,8 +47,6 @@ const props = defineProps({
   },
 })
 
-console.log('id', props.id)
-
 const router = useRouter()
 const handleGoToDetailHistory = () => router.push(`/history/${props.id}`)
 </script>
