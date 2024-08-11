@@ -24,7 +24,11 @@
 </template>
 
 <script setup>
+import useRegister from '~/composables/useRegister'
+const { isTop } = useRegister()
 const saveSpin = async () => {
+  if (!isTop) return
+
   try {
     const response = await useFetchApi('POST', 'gacha/save/temp', {
       body: {

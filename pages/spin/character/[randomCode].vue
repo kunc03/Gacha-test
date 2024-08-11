@@ -77,7 +77,7 @@
         <Button
           class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
           raised
-          @click="navigateTo('/register')"
+          @click="handleToRegister"
         >
           <span class="grow text-center">新規会員登録</span>
           <img
@@ -142,12 +142,19 @@ import jackpot from '~/assets/images/jackpot.svg'
 import arrow from '~/assets/images/arrow.svg'
 import close from '~/assets/images/close.svg'
 import exportImg from '~/assets/images/export.svg'
+import useRegister from '~/composables/useRegister'
 
+const { setSourceFrom } = useRegister()
 const router = useRouter()
 const hasModal = ref(false)
 const modalLogin = ref(false)
 const handleShowDialog = () => (hasModal.value = true)
 const handleCloseDialog = () => (hasModal.value = false)
+
+const handleToRegister = () => {
+  setSourceFrom('spin')
+  navigateTo('/register')
+}
 </script>
 
 <style scoped>

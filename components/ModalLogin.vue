@@ -49,7 +49,7 @@
         <Button
           class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
           raised
-          @click="navigateTo('/register')"
+          @click="handleToRegister"
         >
           <span class="grow text-center">新規会員登録</span>
           <img
@@ -103,8 +103,9 @@
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p
-            v-for="item in errorMessages"
+            v-for="(item, index) in errorMessages"
             class="font-bold text-exd-1424 text-exd-gray-scorpion"
+            :key="index"
           >
             {{ item }}
           </p>
@@ -119,7 +120,9 @@ import close from '~/assets/images/close.svg'
 import arrow from '~/assets/images/arrow.svg'
 import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
+import useRegister from '~/composables/useRegister'
 
+const { setSourceFrom, isTop } = useRegister()
 const props = defineProps(['modelValue'])
 const emits = defineEmits(['update:modelValue', 'callback'])
 
@@ -144,6 +147,10 @@ const validateInput = (field, value) => {
   console.log(`Validated ${field}:`, value)
 }
 
+const handleToRegister = () => {
+  setSourceFrom('top')
+  navigateTo('/register')
+}
 const handleSubmit = async () => {
   if (isLoading.value) return
   isLoading.value = true
@@ -180,6 +187,7 @@ const handleSubmit = async () => {
 }
 
 const saveSpin = async () => {
+  if (!isTop) return
   try {
     const response = await useFetchApi('POST', 'gacha/save', {
       body: {
