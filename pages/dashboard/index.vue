@@ -11,7 +11,7 @@
     <div class="flex flex-col mt-[40%] items-center">
       <p class="text-white text-exd-2856 font-bold">現在のポイント</p>
       <p class="text-white text-exd-56112 font-bold relative -top-7">
-        0000<span class="text-exd-1020">pt</span>
+        {{ point }}<span class="text-exd-1020">pt</span>
       </p>
     </div>
 
@@ -129,6 +129,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 definePageMeta({
+  middleware: 'auth',
   layout: 'with-bottom-bar',
 })
 
@@ -136,5 +137,21 @@ useHead({
   title: 'Dashboard',
 })
 
+const point = ref(0)
+
 const handleGoToHistory = () => router.push('/reset/tokyo')
+
+const fetchingDashboardData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'dashboard')
+
+    point.value = data.point
+  } catch (error) {
+    console.log("Error: Can't save spin result")
+  }
+}
+
+onMounted(() => {
+  fetchingDashboardData()
+})
 </script>
