@@ -22,6 +22,5 @@
 const layoutCustomProps = useAttrs()
 
 const hasBack = ref(layoutCustomProps.hasBack ?? false)
-console.log(hasBack.value)
 const title = ref(layoutCustomProps.title)
 </script>

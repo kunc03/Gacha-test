@@ -19,7 +19,7 @@
       :aria-describedby="`${model}-help`"
       :placeholder="placeholder"
       :editable="editable"
-      class="grow w-full bg-gray-100 !rounded-lg !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none"
+      class="grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none"
       inputClass="!text-exd-gray-scorpion"
       overlayClass="bg-white"
       :ptOptions="{ mergeSections: true, mergeProps: true }"
@@ -123,6 +123,7 @@ const validate = () => {
 
 :global(.p-select-option.p-focus) {
   color: white !important;
+  background: black;
 }
 
 :global(.p-select-option.p-select-option-selected.p-focus) {

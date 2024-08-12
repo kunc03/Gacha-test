@@ -286,7 +286,8 @@
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p
-            v-for="item in errorMessages"
+            v-for="(item, index) in errorMessages"
+            :key="index"
             class="font-bold text-exd-1424 text-exd-gray-scorpion"
           >
             {{ item }}
@@ -305,6 +306,10 @@ import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
 import JapanPostalCode from 'japan-postal-code'
+
+useHead({
+  title: 'Register',
+})
 
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
@@ -383,6 +388,7 @@ const handleSubmit = async () => {
     sessionStorage.setItem('USER_ID', data.user.id)
     navigateTo('/register/complete')
   } catch (error) {
+    console.log(error)
     console.log("Error: Can't register")
     const errors = error._data.errors
 
@@ -421,6 +427,10 @@ const checkPostalCode = async (code) => {
 <style scoped>
 ::v-deep(.p-checkbox-box) {
   @apply !bg-white !size-5 !border !border-exd-gray-44 !rounded-none;
+}
+
+::v-deep(.p-checkbox-checked .p-checkbox-icon) {
+  @apply !text-black;
 }
 
 .scrollable-content::-webkit-scrollbar {

@@ -6,7 +6,7 @@
       class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center relative"
     >
       <div
-        class="grow w-full flex flex-col items-center justify-center relative mb-4"
+        class="grow w-full flex flex-col items-center justify-center relative mb-4 mt-[15%]"
       >
         <img
           :src="gacha2"
