@@ -129,6 +129,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 definePageMeta({
+  middleware: 'auth',
   layout: 'with-bottom-bar',
 })
 
