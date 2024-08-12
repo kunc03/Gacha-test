@@ -1,9 +1,8 @@
 export default defineNuxtRouteMiddleware(() => {
   //to do replace with proper condition
   if (process.client) {
-    const userId = sessionStorage.getItem('user_id')
-    if (!userId) {
-      // Jika user_id tidak ada, arahkan ke halaman index
+    const TOKEN = sessionStorage.getItem('TOKEN')
+    if (!TOKEN) {
       return navigateTo({ name: 'index' })
     }
   }
