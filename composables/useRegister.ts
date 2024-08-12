@@ -1,16 +1,17 @@
 const useRegister = defineStore('useRegister', () => {
   const sourceFrom = ref<string>('')
 
-  const setSourceFrom = (value) => {
+  const setSourceFrom = (value: string) => {
+    console.log(value)
     sourceFrom.value = value
   }
 
-  const isTop = computed(() => {
-    return sourceFrom.value === 'top'
+  const isSpin = computed(() => {
+    return sourceFrom.value === 'spin'
   })
 
   return {
-    isTop,
+    isSpin,
     setSourceFrom,
   }
 })

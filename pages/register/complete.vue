@@ -25,9 +25,9 @@
 
 <script setup>
 import useRegister from '~/composables/useRegister'
-const { isTop } = useRegister()
+const { isSpin } = useRegister()
 const saveSpin = async () => {
-  if (!isTop) return
+  if (!isSpin) return
 
   try {
     const response = await useFetchApi('POST', 'gacha/save/temp', {
