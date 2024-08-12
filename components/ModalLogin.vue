@@ -122,7 +122,7 @@ import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import useRegister from '~/composables/useRegister'
 
-const { setSourceFrom, isTop } = useRegister()
+const { setSourceFrom, isSpin } = useRegister()
 const props = defineProps(['modelValue'])
 const emits = defineEmits(['update:modelValue', 'callback'])
 
@@ -187,7 +187,7 @@ const handleSubmit = async () => {
 }
 
 const saveSpin = async () => {
-  if (!isTop) return
+  if (!isSpin) return
   try {
     const response = await useFetchApi('POST', 'gacha/save', {
       body: {
