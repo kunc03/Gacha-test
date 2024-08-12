@@ -139,7 +139,7 @@ useHead({
 
 const point = ref(0)
 
-const handleGoToHistory = () => router.push('/reset/tokyo')
+const handleGoToHistory = () => router.push('/history')
 
 const fetchingDashboardData = async () => {
   try {
