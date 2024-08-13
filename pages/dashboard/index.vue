@@ -19,6 +19,7 @@
       <div
         class="bg-white rounded-xl p-6 w-exd-148 h-exd-130 flex flex-col justify-center items-center cursor-pointer"
         style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+        @click="handleGoToRedeem"
       >
         <img
           :src="iconStar"
@@ -138,11 +139,10 @@ useHead({
   title: 'Dashboard',
 })
 
-const point = ref(0)
-
 const handleGoToHistory = () => router.push('/history')
+const handleGoToRedeem = () => router.push('/redeem')
 
 onMounted(() => {
-  store.fetchingDashboardData();
+  store.fetchingDashboardData()
 })
 </script>
