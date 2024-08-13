@@ -120,7 +120,7 @@ const checkPassword = async (params) => {
         body: { ...params },
       })
 
-      localStorage.setItem('POINT_ID', data.userPoint.id)
+      localStorage.setItem('POINT_ID', data.userPoint.prize_id)
       localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
 
       isLoading.value = false
@@ -140,8 +140,8 @@ const checkPassword = async (params) => {
     console.log("Error: Can't check password")
 
     isLoading.value = false
-    localStorage.removeItem('POINT_ID')
-    localStorage.removeItem('LOCATION_ID')
+    // localStorage.removeItem('POINT_ID')
+    // localStorage.removeItem('LOCATION_ID')
   }
 }
 

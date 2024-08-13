@@ -122,7 +122,10 @@ import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import useRegister from '~/composables/useRegister'
 
-const { setSourceFrom, isSpin } = useRegister()
+const register = useRegister()
+const { isSpin } = storeToRefs(register)
+const { setSourceFrom } = register
+
 const props = defineProps(['modelValue'])
 const emits = defineEmits(['update:modelValue', 'callback'])
 
@@ -144,7 +147,7 @@ const updateModel = (field, value) => {
 }
 
 const validateInput = (field, value) => {
-  console.log(`Validated ${field}:`, value)
+  // console.log(`Validated ${field}:`, value)
 }
 
 const handleToRegister = () => {

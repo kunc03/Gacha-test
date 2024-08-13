@@ -36,7 +36,7 @@
     <Button
       class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
       raised
-      @click="handleShowDialog"
+      @click="nextAction"
     >
       <span class="grow text-center">次へ</span>
       <img
@@ -92,12 +92,7 @@
         <Button
           class="!bg-exd-red-vermilion !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
           raised
-          @click="
-            () => {
-              hasModal = false
-              modalLogin = true
-            }
-          "
+          @click="handleToLogin"
         >
           <span class="grow text-center">マイページから引き換え</span>
           <img
@@ -145,6 +140,7 @@ import exportImg from '~/assets/images/export.svg'
 import useRegister from '~/composables/useRegister'
 
 const { setSourceFrom } = useRegister()
+
 const router = useRouter()
 const hasModal = ref(false)
 const modalLogin = ref(false)
@@ -154,6 +150,22 @@ const handleCloseDialog = () => (hasModal.value = false)
 const handleToRegister = () => {
   setSourceFrom('spin')
   navigateTo('/register')
+}
+
+const handleToLogin = () => {
+  setSourceFrom('spin')
+  hasModal.value = false
+  modalLogin.value = true
+}
+
+const nextAction = () => {
+  const token = localStorage.getItem('TOKEN')
+  const user = localStorage.getItem('USER')
+  if (token && user) {
+    navigateTo('/dashboard')
+  } else {
+    handleShowDialog()
+  }
 }
 </script>
 
