@@ -111,10 +111,10 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
   isLoading.value = true
-  try {
-    const token = localStorage.getItem('TOKEN')
-    const user = localStorage.getItem('USER')
+  const token = localStorage.getItem('TOKEN')
+  const user = localStorage.getItem('USER')
 
+  try {
     if (token && user) {
       const { data, status } = await useFetchApi('POST', 'gacha/spin', {
         body: { ...params },
@@ -140,8 +140,10 @@ const checkPassword = async (params) => {
     console.log("Error: Can't check password")
 
     isLoading.value = false
-    // localStorage.removeItem('POINT_ID')
-    // localStorage.removeItem('LOCATION_ID')
+    if (!token && !user) {
+      localStorage.removeItem('POINT_ID')
+      localStorage.removeItem('LOCATION_ID')
+    }
   }
 }
 
