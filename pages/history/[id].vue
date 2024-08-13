@@ -24,33 +24,28 @@
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             キャラ名キャラ名キャラ名
           </p>
-          <p class="font-bold text-exd-1424 text-exd-gold">10pt</p>
+          <p class="font-bold text-exd-1824.52 text-exd-gold">{{ historyDetailData.point_amount }}pt</p>
         </div>
-        <p class="font-medium text-exd-1218 text-exd-gray-scorpion">
+        <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4">
           ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
         </p>
-        <div class="inline-flex gap-3 w-full justify-center">
+        <!-- <div class="inline-flex gap-3 w-full justify-center">
           <img :src="download" alt="download" class="size-8" preload />
           <img :src="line" alt="line" class="size-8" preload />
           <img :src="x" alt="x" class="size-8" preload />
           <img :src="facebook" alt="facebook" class="size-8" preload />
-        </div>
-        <div class="flex flex-col gap-2">
+        </div> -->
+        <div class="flex flex-col gap-2 mb-2">
           <div class="w-full h-5 bg-exd-gray-44 pl-3">
-            <p class="text-white text-exd-1220 font-bold">スポット</p>
+            <p class="text-white text-exd-1220 font-bold">{{ historyDetailData.location_name }}</p>
           </div>
           <p class="text-exd-gray-scorpion font-medium text-exd-1218">
             ダミーダミーダミーダミーダミーダミーダミー
             ダミーダミーダミーダミーダミーダミーダミー
           </p>
         </div>
-        <div class="w-full h-72">
-          <img
-            :src="maps"
-            alt="maps"
-            class="w-full h-full object-cover"
-            preload
-          />
+        <div class="w-full">
+          <div id="map" ref="mapContainer" class="map-container"></div>
         </div>
       </div>
     </div>
@@ -64,6 +59,8 @@ import facebook from '~/assets/images/facebook.svg'
 import line from '~/assets/images/line.svg'
 import x from '~/assets/images/x.svg'
 import maps from '~/assets/images/maps.svg'
+import { useRoute } from 'nuxt/app';
+import mapboxgl from 'mapbox-gl';
 
 definePageMeta({
   layout: 'with-bottom-bar',
@@ -72,4 +69,58 @@ definePageMeta({
 useHead({
   title: 'History',
 })
+
+const props = defineProps(["id"])
+
+const historyDetailData = ref({});
+const map = ref(null);
+const marker = ref(null);
+const mapContainer = ref(null);
+
+const route = useRoute();
+const id = route.params.id
+
+const fetchingHistoryData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'history/'+id)
+    historyDetailData.value = data
+    console.log(historyDetailData.value)
+    let lat = historyDetailData.value.latitude;
+    let long = historyDetailData.value.longitude;
+  
+    initializeMap(lat, long);
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const initializeMap = async (lat, long) => {
+      mapboxgl.accessToken = 'pk.eyJ1IjoiaXJmYW5zeWFoMDIiLCJhIjoiY2x6aTZheXp1MDliYTJqcHFmaWZlN2hraCJ9.vQeo8YYTIH94loWw0ONoJw';
+
+      map = new mapboxgl.Map({
+        container: mapContainer.value,
+        style: 'mapbox://styles/mapbox/streets-v11?language=ja',
+        center: [long, lat],
+        zoom: 12,
+        attributionControl: false
+      });
+
+      marker = new mapboxgl.Marker()
+        .setLngLat([long, lat])
+        .addTo(map);
+
+      // Change labels to Japanese
+      map.on('style.load', () => {
+        map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ja']);
+        map.setLayoutProperty('place-city-lg-n', 'text-field', ['get', 'name_ja']);
+        map.setLayoutProperty('place-city-md-s', 'text-field', ['get', 'name_ja']);
+        map.setLayoutProperty('place-city-sm', 'text-field', ['get', 'name_ja']);
+      });
+    };
+
+onMounted(() => {
+  fetchingHistoryData()
+})
+
 </script>

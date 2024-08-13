@@ -9,9 +9,9 @@
   </Header>
   <div class="flex flex-col bg-center text-black mt-[30%] px-8 gap-3">
     <PagesHistoryCard
-      v-for="(_, index) in Array.from({ length: 100 })"
+      v-for="(history, index) in histories"
       :key="index"
-      :id="index + 1"
+      :data="history"
     />
   </div>
 </template>
@@ -25,4 +25,22 @@ definePageMeta({
 useHead({
   title: 'History',
 })
+
+const histories = ref([]);
+
+const fetchingHistoryData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'history')
+
+    histories.value = data
+    console.log(data);
+  } catch (error) {
+    console.log("Error: Can't save spin result")
+  }
+}
+
+onMounted(() => {
+  fetchingHistoryData()
+})
+
 </script>
