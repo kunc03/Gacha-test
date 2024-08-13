@@ -15,12 +15,12 @@
         />
       </div>
       <div>
-        <p class="text-exd-gold text-exd-1724 font-bold">10<span>pt</span></p>
+        <p class="text-exd-gold text-exd-1724 font-bold">{{ data.amount }}<span>pt</span></p>
         <p lass="text-exd-gray-scorpion font-medium text-exd-1020">
-          0000/00/00 00:00
+          {{ data.created_at }}
         </p>
         <p class="text-exd-gray-scorpion font-semibold text-exd-1218">
-          獲得スポット名獲得スポット名
+          {{ data.location }}
         </p>
       </div>
     </div>
@@ -40,13 +40,8 @@ import { useRouter } from 'vue-router'
 import duck from '~/assets/images/duck.svg'
 import arrow from '~/assets/images/arrow.svg'
 
-const props = defineProps({
-  id: {
-    type: [String, Number],
-    required: true,
-  },
-})
+const props = defineProps(["data","id"])
 
 const router = useRouter()
-const handleGoToDetailHistory = () => router.push(`/history/${props.id}`)
+const handleGoToDetailHistory = () => router.push(`/history/${props.data.id}`)
 </script>
