@@ -189,7 +189,7 @@ const handleSubmit = async () => {
 }
 
 const saveSpin = async () => {
-  if (!isSpin) return
+  if (!isSpin.value) return
   try {
     const response = await useFetchApi('POST', 'gacha/save', {
       body: {

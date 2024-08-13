@@ -42,7 +42,7 @@
             class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
             raised
             :loading="isLoading"
-            @click="goToScanTokyo"
+            @click="goToScan"
           >
             <span class="grow text-center">GO!</span>
             <LoadingIcon v-if="isLoading" />
@@ -111,43 +111,24 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
   isLoading.value = true
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
 
   try {
-    if (token && user) {
-      const { data, status } = await useFetchApi('POST', 'gacha/spin', {
-        body: { ...params },
-      })
+    const { data, status } = await useFetchApi('GET', 'gacha/check', {
+      params,
+    })
 
-      localStorage.setItem('POINT_ID', data.userPoint.prize_id)
-      localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
+    localStorage.setItem('VALID_PASSWORD', JSON.stringify(params))
 
-      isLoading.value = false
-      return status
-    } else {
-      const { data, status } = await useFetchApi('GET', 'gacha/spin', {
-        params,
-      })
-
-      localStorage.setItem('POINT_ID', data.point.id)
-      localStorage.setItem('LOCATION_ID', data.location.id)
-
-      isLoading.value = false
-      return status
-    }
+    isLoading.value = false
+    return status
   } catch (error) {
     console.log("Error: Can't check password")
 
     isLoading.value = false
-    if (!token && !user) {
-      localStorage.removeItem('POINT_ID')
-      localStorage.removeItem('LOCATION_ID')
-    }
   }
 }
 
-const goToScanTokyo = async () => {
+const goToScan = async () => {
   const location = route.params.randomId
   const passwordValue = value.value
 

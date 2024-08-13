@@ -101,11 +101,12 @@ import gacha2 from '~/assets/images/gacha2.png'
 import arrow from '~/assets/images/arrow.svg'
 import InputText from '~/components/InputText.vue'
 
+const { setSourceFrom } = useRegister()
 const hasModal = ref(false)
 
 const handleShowModal = () => {
   hasModal.value = true
-  console.log(hasModal.value)
+  setSourceFrom('top')
 }
 const handleCloseDialog = () => (hasModal.value = false)
 
