@@ -45,6 +45,9 @@
               ※お使いのメール及びメールソフトにより、自動的に迷惑メールフォルダに振り分けられる場合があります。
             </li>
           </ul>
+          <div>
+            <p>{{ message }}</p>
+          </div>
         </div>
       </template>
 
@@ -79,6 +82,8 @@ const form = ref({
   email: '',
 })
 
+const message = ref(null);
+
 const isSuccessSendLinkResetPassword = ref(false)
 const updateModel = (field, value) => {
   form.value[field] = value
@@ -88,14 +93,27 @@ const validateInput = (field, value) => {
   console.log(`Validated ${field}:`, value)
 }
 
-const handleSubmit = () => {
-  const isSuccess = isSuccessSendLinkResetPassword.value
-  if (isSuccess) {
-    router.push('/reset/tokyo')
-    isSuccessSendLinkResetPassword.value = false
-    return
+const handleSubmit = async () => {
+
+  if (isSuccessSendLinkResetPassword.value) {
+    navigateTo('/')
+  } else {
+    let payload = {
+      email: form.value.email
+    }
+    
+    try {
+      const { status, message } = await useFetchApi('POST', 'email/forgot', { body: payload});
+
+      if (status) {
+        isSuccessSendLinkResetPassword.value = true
+      }
+
+      // console.log(response)
+    } catch (error) {
+      console.log(error);
+    }
   }
-  isSuccessSendLinkResetPassword.value = true
 }
 
 useHead({

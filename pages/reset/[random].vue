@@ -21,20 +21,22 @@
             <InputText
               :model="form.email"
               label="ログインID（メールアドレス）"
-              @update:model="updateModel('email', $event)"
               @validate="validateInput('email', $event)"
+              disabled
             />
             <InputText
+              type="password"
               :model="form.password"
               label="パスワード"
-              @update:model="updateModel('password', $event)"
               @validate="validateInput('password', $event)"
+              @update:model="updateModel('password', $event)"
             />
             <InputText
-              :model="form.confPassword"
+              type="password"
+              :model="form.confirmPassword"
               label="パスワード（再入力"
-              @update:model="updateModel('confPassword', $event)"
               @validate="validateInput('confPassword', $event)"
+              @update:model="updateModel('confirmPassword', $event)"
             />
           </div>
         </div>
@@ -63,36 +65,112 @@
       </Button>
     </div>
   </div>
+  <Dialog
+    v-model:visible="isErrorMessage"
+    modal
+    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleCloseDialog"
+      />
+      <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
+        <img :src="warning" alt="warning" width="40" height="40" preload />
+        <div class="text-center w-10/12 text-exd-gray-scorpion">
+          <p>
+            {{ errorMessage }}
+          </p>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
 import InputText from '~/components/InputText.vue'
 import Header from '~/components/header.vue'
 import { useRouter } from 'vue-router'
+import warning from '~/assets/images/warning.svg'
+import close from '~/assets/images/close.svg'
 
 const route = useRoute()
 const router = useRouter()
 const isLoading = ref(false)
+const token = route.params.random;
+const isErrorMessage = ref(false)
+const errorMessage = ref(null)
+
 
 const isSuccessSendResetPassword = ref(false)
+const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const form = ref({
-  email: '',
-  password: '',
-  confPassword: '',
+  email: null,
+  password: null,
+  confirmPassword: null,
 })
 
-const handleSubmit = () => {
-  const isSuccess = isSuccessSendResetPassword.value
-  if (isSuccess) {
-    router.push('/dashboard')
-    isSuccessSendResetPassword.value = false
-    return
+const updateModel = (field, value) => {
+  form.value[field] = value
+}
+
+
+const handleSubmit = async () => {
+  if (isSuccessSendResetPassword.value) {
+    navigateTo('/')
+  } else {
+    let payload = {
+      token: token,
+      email: form.value.email,
+      password: form.value.password,
+      password_confirmation: form.value.confirmPassword
+    }
+    
+    try {
+      const { status, message } = await useFetchApi('POST', 'email/reset', { body: payload });
+
+      if (status) {
+        isSuccessSendResetPassword.value = true
+      }
+
+      // console.log(response)
+    } catch (error) {
+      const message = error._data.message
+      console.log(errorMessage.value);
+      
+      if (error) {
+        errorMessage.value = message
+        isErrorMessage.value = true
+      }
+    }
   }
-  isSuccessSendResetPassword.value = true
 }
 
 useHead({
   title: 'Reset Password',
+})
+
+const fetchingEmailData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'email/decrypt?token='+token)
+    form.value.email = data.email
+  
+  } catch (error) {
+    console.log("Error: Can't save spin result")
+  }
+}
+
+const validateInput = (field, value) => {
+  // console.log(`Validated ${field}:`, value)
+}
+
+onMounted(() => {
+  fetchingEmailData();
 })
 </script>
