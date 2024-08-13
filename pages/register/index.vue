@@ -385,7 +385,7 @@ const handleSubmit = async () => {
   try {
     const { data } = await useFetchApi('POST', 'register', { body: payload })
 
-    sessionStorage.setItem('USER_ID', data.user.id)
+    localStorage.setItem('USER_ID', data.user.id)
     navigateTo('/register/complete')
   } catch (error) {
     console.log(error)

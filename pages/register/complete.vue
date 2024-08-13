@@ -32,9 +32,9 @@ const saveSpin = async () => {
   try {
     const response = await useFetchApi('POST', 'gacha/save/temp', {
       body: {
-        point_id: sessionStorage.getItem('POINT_ID'),
-        location_id: sessionStorage.getItem('LOCATION_ID'),
-        temporary_user_id: sessionStorage.getItem('USER_ID'),
+        point_id: localStorage.getItem('POINT_ID'),
+        location_id: localStorage.getItem('LOCATION_ID'),
+        temporary_user_id: localStorage.getItem('USER_ID'),
       },
     })
 

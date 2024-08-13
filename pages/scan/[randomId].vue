@@ -112,33 +112,36 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 const checkPassword = async (params) => {
   isLoading.value = true
   try {
-    const token = sessionStorage.getItem('TOKEN')
-    const user = sessionStorage.getItem('USER')
+    const token = localStorage.getItem('TOKEN')
+    const user = localStorage.getItem('USER')
 
     if (token && user) {
-      const { data } = await useFetchApi('POST', 'gacha/spin', {
+      const { data, status } = await useFetchApi('POST', 'gacha/spin', {
         body: { ...params },
       })
 
-      sessionStorage.setItem('POINT_ID', data.userPoint.id)
-      sessionStorage.setItem('LOCATION_ID', data.userPoint.location_id)
+      localStorage.setItem('POINT_ID', data.userPoint.id)
+      localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
+
+      isLoading.value = false
+      return status
     } else {
-      const { data } = await useFetchApi('GET', 'gacha/spin', {
+      const { data, status } = await useFetchApi('GET', 'gacha/spin', {
         params,
       })
 
-      sessionStorage.setItem('POINT_ID', data.point.id)
-      sessionStorage.setItem('LOCATION_ID', data.location.id)
-    }
+      localStorage.setItem('POINT_ID', data.point.id)
+      localStorage.setItem('LOCATION_ID', data.location.id)
 
-    isLoading.value = false
-    return status
+      isLoading.value = false
+      return status
+    }
   } catch (error) {
     console.log("Error: Can't check password")
 
     isLoading.value = false
-    sessionStorage.removeItem('POINT_ID')
-    sessionStorage.removeItem('LOCATION_ID')
+    localStorage.removeItem('POINT_ID')
+    localStorage.removeItem('LOCATION_ID')
   }
 }
 

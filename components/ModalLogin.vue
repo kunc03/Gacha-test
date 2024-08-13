@@ -160,9 +160,8 @@ const handleSubmit = async () => {
       body: { ...form.value },
     })
 
-    console.log(response)
-    sessionStorage.setItem('TOKEN', response.data.token)
-    sessionStorage.setItem('USER', JSON.stringify(response.data.user))
+    localStorage.setItem('TOKEN', response.data.token)
+    localStorage.setItem('USER', JSON.stringify(response.data.user))
 
     await saveSpin()
     navigateTo('/dashboard')
@@ -191,8 +190,8 @@ const saveSpin = async () => {
   try {
     const response = await useFetchApi('POST', 'gacha/save', {
       body: {
-        point_id: sessionStorage.getItem('POINT_ID'),
-        location_id: sessionStorage.getItem('LOCATION_ID'),
+        point_id: localStorage.getItem('POINT_ID'),
+        location_id: localStorage.getItem('LOCATION_ID'),
       },
     })
 
