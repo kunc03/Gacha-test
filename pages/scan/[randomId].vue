@@ -110,12 +110,26 @@ const isLoading = ref(false)
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
+  isLoading.value = true
   try {
-    isLoading.value = true
-    const { status, data } = await useFetchApi('GET', 'gacha/spin', { params })
+    const token = sessionStorage.getItem('TOKEN')
+    const user = sessionStorage.getItem('USER')
 
-    sessionStorage.setItem('POINT_ID', data.point.id)
-    sessionStorage.setItem('LOCATION_ID', data.location.id)
+    if (token && user) {
+      const { data } = await useFetchApi('POST', 'gacha/spin', {
+        body: { ...params },
+      })
+
+      sessionStorage.setItem('POINT_ID', data.userPoint.id)
+      sessionStorage.setItem('LOCATION_ID', data.userPoint.location_id)
+    } else {
+      const { data } = await useFetchApi('GET', 'gacha/spin', {
+        params,
+      })
+
+      sessionStorage.setItem('POINT_ID', data.point.id)
+      sessionStorage.setItem('LOCATION_ID', data.location.id)
+    }
 
     isLoading.value = false
     return status
