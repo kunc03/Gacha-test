@@ -11,7 +11,7 @@
     <div class="flex flex-col mt-[40%] items-center">
       <p class="text-white text-exd-2856 font-bold">現在のポイント</p>
       <p class="text-white text-exd-56112 font-bold relative -top-7">
-        {{ point }}<span class="text-exd-1020">pt</span>
+        {{ store.point }}<span class="text-exd-1020">pt</span>
       </p>
     </div>
 
@@ -125,6 +125,7 @@ import iconGift from '~/assets/images/icon-gift.svg'
 import arrow from '~/assets/images/arrow.svg'
 import exportIcon from '~/assets/images/export.svg'
 import { useRouter } from 'vue-router'
+import { store } from '~/stores/dashboard.js'
 
 const router = useRouter()
 
@@ -141,17 +142,7 @@ const point = ref(0)
 
 const handleGoToHistory = () => router.push('/history')
 
-const fetchingDashboardData = async () => {
-  try {
-    const { data } = await useFetchApi('GET', 'dashboard')
-
-    point.value = data.point
-  } catch (error) {
-    console.log("Error: Can't save spin result")
-  }
-}
-
 onMounted(() => {
-  fetchingDashboardData()
+  store.fetchingDashboardData();
 })
 </script>

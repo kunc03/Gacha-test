@@ -8,7 +8,7 @@
           現在のポイント
         </p>
         <p class="text-white text-exd-2856 font-bold relative -top-2 -ml-4">
-          0000<span class="text-exd-1020">pt</span>
+          {{ store.point }}<span class="text-exd-1020">pt</span>
         </p>
       </div>
 
@@ -56,4 +56,6 @@ import pointNavbar from '~/assets/images/point_navbar.svg'
 import iconPin from '~/assets/images/icon-pin.svg'
 import iconStar from '~/assets/images/icon-star.svg'
 import iconPerson from '~/assets/images/icon-person.svg'
+import { store } from '~/stores/dashboard.js'
+
 </script>
