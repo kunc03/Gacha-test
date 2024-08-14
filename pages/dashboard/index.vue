@@ -147,8 +147,9 @@ const handleGoToHistory = () => router.push('/history')
 const logout = async () => {
   try {
     const { data, status } = await useFetchApi('POST', 'logout');
-    console.log(status);
+    
     if (status) {
+      localStorage.clear();
       navigateTo('/');
     }
   } catch (error) {
