@@ -108,12 +108,14 @@
       ホーム画面に追加
     </p>
     <div
-      class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7"
+      class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7 cursor-pointer"
+      @click="logout"
     >
       <p
         class="text-white grow inline-flex items-center justify-center font-bold text-exd-1424"
       >
-        バナーリンク
+        <!-- バナーリンク -->
+        ログアウト
       </p>
     </div>
   </div>
@@ -141,6 +143,18 @@ useHead({
 const point = ref(0)
 
 const handleGoToHistory = () => router.push('/history')
+
+const logout = async () => {
+  try {
+    const { data, status } = await useFetchApi('POST', 'logout');
+    console.log(status);
+    if (status) {
+      navigateTo('/');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 onMounted(() => {
   store.fetchingDashboardData();
