@@ -123,6 +123,7 @@
 import duck from '~/assets/images/duck.svg'
 import close from '~/assets/images/close.svg'
 import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 definePageMeta({
   middleware: 'auth',
@@ -172,9 +173,10 @@ const getLocation = () => {
 }
 
 const hasModal = ref(false)
+const route = useRoute()
 const router = useRouter()
 const handleToggleModal = () => (hasModal.value = !hasModal.value)
-const handleGoToClaim = () => router.push('/claim')
+const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
 
 onMounted(() => {
   getLocation()
