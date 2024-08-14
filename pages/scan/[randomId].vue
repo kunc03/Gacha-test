@@ -42,7 +42,7 @@
             class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
             raised
             :loading="isLoading"
-            @click="goToScanTokyo"
+            @click="goToScan"
           >
             <span class="grow text-center">GO!</span>
             <LoadingIcon v-if="isLoading" />
@@ -110,12 +110,14 @@ const isLoading = ref(false)
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
-  try {
-    isLoading.value = true
-    const { status, data } = await useFetchApi('GET', 'gacha/spin', { params })
+  isLoading.value = true
 
-    sessionStorage.setItem('POINT_ID', data.point.id)
-    sessionStorage.setItem('LOCATION_ID', data.location.id)
+  try {
+    const { data, status } = await useFetchApi('GET', 'gacha/check', {
+      params,
+    })
+
+    localStorage.setItem('VALID_PASSWORD', JSON.stringify(params))
 
     isLoading.value = false
     return status
@@ -123,12 +125,10 @@ const checkPassword = async (params) => {
     console.log("Error: Can't check password")
 
     isLoading.value = false
-    sessionStorage.removeItem('POINT_ID')
-    sessionStorage.removeItem('LOCATION_ID')
   }
 }
 
-const goToScanTokyo = async () => {
+const goToScan = async () => {
   const location = route.params.randomId
   const passwordValue = value.value
 

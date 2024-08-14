@@ -122,7 +122,10 @@ import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import useRegister from '~/composables/useRegister'
 
-const { setSourceFrom, isSpin } = useRegister()
+const register = useRegister()
+const { isSpin } = storeToRefs(register)
+const { setSourceFrom } = register
+
 const props = defineProps(['modelValue'])
 const emits = defineEmits(['update:modelValue', 'callback'])
 
@@ -144,7 +147,7 @@ const updateModel = (field, value) => {
 }
 
 const validateInput = (field, value) => {
-  console.log(`Validated ${field}:`, value)
+  // console.log(`Validated ${field}:`, value)
 }
 
 const handleToRegister = () => {
@@ -160,9 +163,8 @@ const handleSubmit = async () => {
       body: { ...form.value },
     })
 
-    console.log(response)
-    sessionStorage.setItem('TOKEN', response.data.token)
-    sessionStorage.setItem('USER', JSON.stringify(response.data.user))
+    localStorage.setItem('TOKEN', response.data.token)
+    localStorage.setItem('USER', JSON.stringify(response.data.user))
 
     await saveSpin()
     navigateTo('/dashboard')
@@ -187,12 +189,12 @@ const handleSubmit = async () => {
 }
 
 const saveSpin = async () => {
-  if (!isSpin) return
+  if (!isSpin.value) return
   try {
     const response = await useFetchApi('POST', 'gacha/save', {
       body: {
-        point_id: sessionStorage.getItem('POINT_ID'),
-        location_id: sessionStorage.getItem('LOCATION_ID'),
+        point_id: localStorage.getItem('POINT_ID'),
+        location_id: localStorage.getItem('LOCATION_ID'),
       },
     })
 
