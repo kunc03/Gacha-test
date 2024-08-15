@@ -30,6 +30,7 @@
     "pinia": "^2.1.7",
     "prettier": "^2.8.3",
     "primevue": "^4.0.1",
+    "vue3-swipe-button": "^0.5.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {

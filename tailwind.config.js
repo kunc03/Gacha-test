@@ -25,6 +25,7 @@ const width = {
 }
 
 const fontSize = {
+  'exd-1013.62': [pxToEm(10), { lineHeight: pxToEm(13.62) }],
   'exd-1020': [pxToEm(10), { lineHeight: pxToEm(20) }],
   'exd-1218': [pxToEm(12), { lineHeight: pxToEm(18) }],
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
@@ -90,6 +91,15 @@ module.exports = {
         },
         'exd-orange-700': {
           DEFAULT: 'hsla(var(--orange-700))', //#D44D20
+        },
+        'exd-red-900': {
+          DEFAULT: 'hsla(var(--red-900))', //#822820
+        },
+        'exd-yellow-300': {
+          DEFAULT: 'hsla(var(--yellow-300))', //#FFF958
+        },
+        'exd-red-500': {
+          DEFAULT: 'hsla(var(--red-500))', //#D84F45
         },
       },
       height: {

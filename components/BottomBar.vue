@@ -24,7 +24,10 @@
           />
           <p class="text-exd-gray-scorpion text-exd-1020">デジタルマップ</p>
         </div>
-        <div class="flex flex-col items-center justify-center">
+        <div
+          class="flex flex-col items-center justify-center"
+          @click="handleGoToRedeem"
+        >
           <img
             :src="iconStar"
             alt="icon-star"
@@ -52,10 +55,12 @@
 </template>
 
 <script setup>
-import pointNavbar from '~/assets/images/point_navbar.svg'
 import iconPin from '~/assets/images/icon-pin.svg'
 import iconStar from '~/assets/images/icon-star.svg'
 import iconPerson from '~/assets/images/icon-person.svg'
 import { store } from '~/stores/dashboard.js'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
+const handleGoToRedeem = () => router.push('/redeem')
 </script>
