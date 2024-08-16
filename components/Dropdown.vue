@@ -19,7 +19,12 @@
       :aria-describedby="`${model}-help`"
       :placeholder="placeholder"
       :editable="editable"
-      class="grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300 !border-none"
+      :class="[
+        'grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300',
+        validateOnSubmit && !isLengthValid
+          ? 'border-2 border-exd-red-vermilion'
+          : '!border-none',
+      ]"
       inputClass="!text-exd-gray-scorpion"
       overlayClass="bg-white"
       :ptOptions="{ mergeSections: true, mergeProps: true }"
@@ -93,9 +98,12 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  validateOnSubmit: Boolean,
 })
 
 const emit = defineEmits(['update:model', 'validate'])
+
+const isLengthValid = ref(true)
 
 const modelValue = computed({
   get: () => props.model,
@@ -104,12 +112,23 @@ const modelValue = computed({
 
 const updateValue = (value) => {
   modelValue.value = value
+  validate()
   emit('validate', value)
 }
 
 const validate = () => {
+  isLengthValid.value = modelValue.value.length > 0
   emit('validate', modelValue.value)
 }
+
+watch(
+  () => props.validateOnSubmit,
+  (newValue) => {
+    if (newValue) {
+      validate()
+    }
+  }
+)
 </script>
 
 <style scoped>

@@ -20,7 +20,12 @@
       @blur="validate"
       :invalid="error !== '' ? true : false"
       :aria-describedby="`${model}-help`"
-      class="grow w-full bg-gray-100 text-exd-gray-scorpion px-4 py-2 resize-none focus:!outline-none focus:!ring-0 focus:!border-none border-1 !rounded-lg selection:!bg-gray-300 selection:!border-none"
+      :class="[
+        'grow w-full bg-gray-100 text-exd-gray-scorpion px-4 py-2 resize-none focus:!outline-none focus:!ring-0 focus:!border-none border-1 !rounded-lg selection:!bg-gray-300 selection:!border-none',
+        validateOnSubmit && !isLengthValid
+          ? 'border-2 border-exd-red-vermilion'
+          : '!border-none',
+      ]"
     />
     <small v-if="hasHelper" :id="`${model}-help`">{{ helperText }}</small>
     <small v-if="error !== ''" :id="`${model}-error`" :class="['p-error']">{{
@@ -70,9 +75,12 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  validateOnSubmit: Boolean,
 })
 
 const emit = defineEmits(['update:model', 'validate'])
+
+const isLengthValid = ref(true)
 
 const modelValue = computed({
   get: () => props.model,
@@ -81,10 +89,21 @@ const modelValue = computed({
 
 const updateValue = (value) => {
   modelValue.value = value
+  validate()
   emit('validate', value)
 }
 
 const validate = () => {
+  isLengthValid.value = modelValue.value.length > 0
   emit('validate', modelValue.value)
 }
+
+watch(
+  () => props.validateOnSubmit,
+  (newValue) => {
+    if (newValue) {
+      validate()
+    }
+  }
+)
 </script>
