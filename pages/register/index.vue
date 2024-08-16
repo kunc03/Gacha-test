@@ -253,29 +253,6 @@
           />
         </div>
 
-        <div
-          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputTextArea
-            :model="form.questionnaire1"
-            label="アンケート"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-          />
-          <InputTextArea
-            :model="form.questionnaire2"
-            label="アンケート"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
-          />
-          <InputTextArea
-            :model="form.questionnaire3"
-            label="アンケート"
-            @update:model="updateModel('questionnaire3', $event)"
-            @validate="validateInput('questionnaire3', $event)"
-          />
-        </div>
-
         <div class="w-full inline-flex gap-2 items-center justify-center mt-7">
           <Checkbox v-model="form.checked" :binary="true" />
           <p class="text-exd-gray-scorpion font-bold text-exd-1424">
