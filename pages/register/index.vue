@@ -12,6 +12,18 @@
     <div
       class="flex flex-col grow px-3 mt-32 pb-3 justify-between gap-6 w-full"
     >
+      <h1
+        class="text-center flex flex-col text-1416 text-exd-gray-scorpion pt-6 pb-10"
+      >
+        会員情報の変更は、内容を更新の上
+        <span>「変更する」ボタンをタップしてください</span>
+      </h1>
+      <div
+        class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
+      >
+        <h1>会員<span class="font-bold">ID</span></h1>
+        <p class="font-bold">00000000000</p>
+      </div>
       <div class="flex flex-col grow">
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4"
@@ -19,12 +31,14 @@
           <InputText
             :model="form.surname"
             label="姓"
+            required
             @update:model="updateModel('surname', $event)"
             @validate="validateInput('surname', $event)"
           />
           <InputText
             :model="form.givenName"
             label="名"
+            required
             @update:model="updateModel('givenName', $event)"
             @validate="validateInput('givenName', $event)"
           />
@@ -34,8 +48,12 @@
         >
           <label
             for="生年月日"
-            class="text-exd-gray-scorpion font-bold text-exd-1424"
-            >生年月日</label
+            class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+            >生年月日
+            <span
+              className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+              >必須</span
+            ></label
           >
           <div class="inline-flex gap-4">
             <Dropdown
@@ -66,8 +84,12 @@
         >
           <label
             for="性別"
-            class="text-exd-gray-scorpion font-bold text-exd-1424"
-            >性別</label
+            class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+            >性別
+            <span
+              className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+              >必須</span
+            ></label
           >
           <ButtonGroup
             class="text-exd-gray-scorpion w-full h-10 rounded-none"
@@ -104,8 +126,12 @@
         >
           <label
             for="性別"
-            class="text-exd-gray-scorpion font-bold text-exd-1424"
-            >居住地</label
+            class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+            >居住地
+            <span
+              className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+              >必須</span
+            ></label
           >
           <ButtonGroup
             class="w-full h-10 rounded-none"
@@ -130,11 +156,12 @@
           </ButtonGroup>
         </div>
         <div
-          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
+          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4 flex-col"
         >
           <InputText
             :model="form.postCode"
             label="郵便番号（ハイフンなし)"
+            required
             @update:model="
               ($event) => {
                 updateModel('postCode', $event)
@@ -143,23 +170,40 @@
             "
             @validate="validateInput('postCode', $event)"
           />
+          <p class="text-exd-gray-scorpion font-medium text-exd-1220">
+            郵便番号を入力すると住所の一部が自動的に表示されます
+          </p>
         </div>
         <div
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
-            :model="form.address1"
-            label="住所1"
+            :model="form.addressPrefecture"
+            required
+            label="都道府県"
             disabled
-            @update:model="updateModel('address1', $event)"
-            @validate="validateInput('address1', $event)"
+            @update:model="updateModel('addressPrefecture', $event)"
+            @validate="validateInput('addressPrefecture', $event)"
           />
+
           <InputText
-            :model="form.address2"
-            label="住所２"
-            @update:model="updateModel('address2', $event)"
-            @validate="validateInput('address2', $event)"
+            :model="form.addressCity"
+            required
+            label="市区町村"
+            disabled
+            @update:model="updateModel('addressCity', $event)"
+            @validate="validateInput('addressCity', $event)"
           />
+
+          <InputText
+            :model="form.addressArea"
+            required
+            label="面積"
+            disabled
+            @update:model="updateModel('addressArea', $event)"
+            @validate="validateInput('addressArea', $event)"
+          />
+
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
             景品送付に使用する場合があるため正しく入力してください
           </p>
@@ -169,6 +213,7 @@
         >
           <InputText
             :model="form.phoneNumber"
+            required
             :onlyNumeric="true"
             label="電話番号（ハイフンなし)"
             @update:model="updateModel('phoneNumber', $event)"
@@ -181,6 +226,7 @@
           <InputText
             type="email"
             :model="form.email"
+            required
             label="メールアドレス"
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
@@ -192,38 +238,18 @@
           <InputText
             type="password"
             :model="form.password"
+            required
             label="パスワード"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
           />
           <InputText
             type="password"
+            required
             :model="form.confPassword"
             label="パスワード（再入力）"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
-          />
-        </div>
-        <div
-          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputTextArea
-            :model="form.questionnaire1"
-            label="アンケート"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-          />
-          <InputTextArea
-            :model="form.questionnaire2"
-            label="アンケート"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
-          />
-          <InputTextArea
-            :model="form.questionnaire3"
-            label="アンケート"
-            @update:model="updateModel('questionnaire3', $event)"
-            @validate="validateInput('questionnaire3', $event)"
           />
         </div>
 
@@ -322,7 +348,9 @@ const form = ref({
   gender: '',
   residenceType: '',
   postCode: '',
-  address1: '',
+  addressPrefecture: '',
+  addressCity: '',
+  addressArea: '',
   address2: '',
   phoneNumber: '',
   email: '',
@@ -333,6 +361,7 @@ const form = ref({
   questionnaire3: '',
   checked: false,
 })
+
 const errorMessages = ref([])
 
 const handleCloseDialog = () => (isErrorMessage.value = false)
@@ -342,7 +371,7 @@ const updateModel = (field, value) => {
 }
 
 const validateInput = (field, value) => {
-  // console.log(`Validated ${field}:`, value)
+  //console.log(`Validated ${field}:`, value)
 }
 
 const yearOptions = computed(() => {
@@ -371,8 +400,12 @@ const handleSubmit = async () => {
     birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
-    residence: form.value.address1,
-    address: form.value.address2,
+    residence: [
+      form.value.addressPrefecture,
+      form.value.addressCity,
+      form.value.addressArea,
+    ].join(' '),
+    // address: form.value.address2,
     phone_number: form.value.phoneNumber,
     email: form.value.email,
     password: form.value.password,
@@ -416,10 +449,12 @@ const checkPostalCode = async (code) => {
       }, 800)
     })
 
-    form.value.address1 = `${address.prefecture}, ${address.city}`
+    form.value.addressPrefecture = address.prefecture
+    form.value.addressCity = address.city
+    form.value.addressArea = address.area
   } catch (error) {
     console.log(error)
-    form.value.address1 = ''
+    // form.value.postCode = ''
   }
 }
 </script>
