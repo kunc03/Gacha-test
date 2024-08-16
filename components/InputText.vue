@@ -2,9 +2,14 @@
   <div class="flex flex-col w-full">
     <label
       :for="`label-${label}`"
-      class="text-exd-gray-scorpion font-bold text-exd-1424"
+      class="text-exd-gray-scorpion font-bold text-exd-1424 flex gap-2 items-center py-0"
       v-if="label !== ''"
-      >{{ label }}</label
+      >{{ label }}
+      <span
+        v-if="required"
+        className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+        >必須</span
+      ></label
     >
     <div
       class="inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full"
@@ -92,6 +97,10 @@ const props = defineProps({
     default: false,
   },
   onlyNumeric: {
+    type: Boolean,
+    default: false,
+  },
+  required: {
     type: Boolean,
     default: false,
   },

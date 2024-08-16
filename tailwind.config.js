@@ -25,11 +25,13 @@ const width = {
 }
 
 const fontSize = {
+  'exd-0910': [pxToEm(9), { lineHeight: pxToEm(10.89) }],
   'exd-1013.62': [pxToEm(10), { lineHeight: pxToEm(13.62) }],
   'exd-1020': [pxToEm(10), { lineHeight: pxToEm(20) }],
   'exd-1218': [pxToEm(12), { lineHeight: pxToEm(18) }],
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
+  'exd-1416': [pxToEm(14), { lineHeight: pxToEm(16) }],
   'exd-1424': [pxToEm(14), { lineHeight: pxToEm(24) }],
   'exd-1724': [pxToEm(17), { lineHeight: pxToEm(24) }],
   'exd-1824.52': [pxToEm(18), { lineHeight: pxToEm(24.52) }],

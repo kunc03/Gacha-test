@@ -2,9 +2,14 @@
   <div class="flex flex-col w-full">
     <label
       :for="`label-${label}`"
-      class="text-exd-gray-scorpion font-bold text-exd-1424"
+      class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
       v-if="label !== ''"
-      >{{ label }}</label
+      >{{ label }}
+      <span
+        v-if="required"
+        className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+        >必須</span
+      ></label
     >
     <Textarea
       rows="2"
@@ -15,7 +20,7 @@
       @blur="validate"
       :invalid="error !== '' ? true : false"
       :aria-describedby="`${model}-help`"
-      class="grow w-full bg-gray-100 text-exd-gray-scorpion px-4 py-2 resize-none focus:!outline-none focus:!ring-0 focus:!border-none !border-none !rounded-lg selection:!bg-gray-300 selection:!border-none"
+      class="grow w-full bg-gray-100 text-exd-gray-scorpion px-4 py-2 resize-none focus:!outline-none focus:!ring-0 focus:!border-none border-1 !rounded-lg selection:!bg-gray-300 selection:!border-none"
     />
     <small v-if="hasHelper" :id="`${model}-help`">{{ helperText }}</small>
     <small v-if="error !== ''" :id="`${model}-error`" :class="['p-error']">{{
@@ -60,6 +65,10 @@ const props = defineProps({
   model: {
     type: String,
     default: '',
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 })
 
