@@ -12,7 +12,12 @@
       ></label
     >
     <div
-      class="inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full"
+      :class="[
+        'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
+        validateOnSubmit && !isLengthValid && !modelValue
+          ? '!border-2 !border-exd-red-vermilion'
+          : '!border-none',
+      ]"
     >
       <span v-if="prefix !== ''" class="mr-2 text-exd-1424 font-bold">{{
         prefix
@@ -24,7 +29,7 @@
         v-only-numeric="onlyNumeric"
         @input="updateValue($event.target.value)"
         @blur="validate"
-        :invalid="error !== '' ? true : false"
+        :invalid="error !== '' ? true : false || !isLengthValid"
         :aria-describedby="`${model}-${label}--${prefix}-${suffix}-help`"
         :placeholder="placeholder"
         :disabled="disabled"
@@ -104,9 +109,12 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  validateOnSubmit: Boolean,
 })
 
 const emit = defineEmits(['update:model', 'validate'])
+
+const isLengthValid = ref(true)
 
 const modelValue = computed({
   get: () => props.model,
@@ -115,12 +123,23 @@ const modelValue = computed({
 
 const updateValue = (value) => {
   modelValue.value = value
+  validate()
   emit('validate', value)
 }
 
 const validate = () => {
+  isLengthValid.value = modelValue.value.length > 0
   emit('validate', modelValue.value)
 }
+
+watch(
+  () => props.validateOnSubmit,
+  (newValue) => {
+    if (newValue) {
+      validate()
+    }
+  }
+)
 </script>
 
 <style scoped>

@@ -34,6 +34,7 @@
             required
             @update:model="updateModel('surname', $event)"
             @validate="validateInput('surname', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
           <InputText
             :model="form.givenName"
@@ -41,6 +42,7 @@
             required
             @update:model="updateModel('givenName', $event)"
             @validate="validateInput('givenName', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
         </div>
         <div
@@ -62,6 +64,7 @@
               @validate="validateInput('yearOfBirth', $event)"
               :options="yearOptions"
               suffix="年"
+              :validate-on-submit="validateOnSubmit"
             />
             <Dropdown
               :model="form.monthOfBirth"
@@ -69,6 +72,7 @@
               @validate="validateInput('monthOfBirth', $event)"
               :options="monthOptions"
               suffix="月"
+              :validate-on-submit="validateOnSubmit"
             />
             <Dropdown
               :model="form.dateOfBirth"
@@ -76,6 +80,7 @@
               @validate="validateInput('dateOfBirth', $event)"
               :options="dayOptions"
               suffix="日"
+              :validate-on-submit="validateOnSubmit"
             />
           </div>
         </div>
@@ -169,6 +174,7 @@
               }
             "
             @validate="validateInput('postCode', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
             郵便番号を入力すると住所の一部が自動的に表示されます
@@ -184,6 +190,7 @@
             disabled
             @update:model="updateModel('addressPrefecture', $event)"
             @validate="validateInput('addressPrefecture', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
@@ -193,15 +200,19 @@
             disabled
             @update:model="updateModel('addressCity', $event)"
             @validate="validateInput('addressCity', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
             :model="form.addressArea"
             required
+            v-model="inputValue"
             label="面積"
             disabled
+            @input="handleInputChange"
             @update:model="updateModel('addressArea', $event)"
             @validate="validateInput('addressArea', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
 
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
@@ -218,6 +229,7 @@
             label="電話番号（ハイフンなし)"
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
         </div>
         <div
@@ -230,6 +242,7 @@
             label="メールアドレス"
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
         </div>
         <div
@@ -242,6 +255,7 @@
             label="パスワード"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
           <InputText
             type="password"
@@ -250,6 +264,36 @@
             label="パスワード（再入力）"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
+            :validate-on-submit="validateOnSubmit"
+          />
+        </div>
+
+        <div
+          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <InputTextArea
+            :model="form.questionnaire1"
+            required
+            label="アンケート"
+            @update:model="updateModel('questionnaire1', $event)"
+            @validate="validateInput('questionnaire1', $event)"
+            :validate-on-submit="validateOnSubmit"
+          />
+          <InputTextArea
+            :model="form.questionnaire2"
+            required
+            label="アンケート"
+            @update:model="updateModel('questionnaire2', $event)"
+            @validate="validateInput('questionnaire2', $event)"
+            :validate-on-submit="validateOnSubmit"
+          />
+          <InputTextArea
+            :model="form.questionnaire3"
+            required
+            label="アンケート"
+            @update:model="updateModel('questionnaire3', $event)"
+            @validate="validateInput('questionnaire3', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
         </div>
 
@@ -337,6 +381,14 @@ useHead({
   title: 'Register',
 })
 
+const validateOnSubmit = ref(false)
+
+const inputValue = ref('')
+
+const handleInputChange = (event) => {
+  console.log('Input value changed to:', event.target.value)
+}
+
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
 const form = ref({
@@ -376,7 +428,10 @@ const validateInput = (field, value) => {
 
 const yearOptions = computed(() => {
   const currentYear = new Date().getFullYear()
-  return [...new Array(100)].map((item, index) => currentYear - index)
+  return [...new Array(100)].map((item, index) =>
+    // currentYear - index
+    String(currentYear - index).padStart(4, '0')
+  )
 })
 
 const monthOptions = computed(() => {
@@ -392,6 +447,8 @@ const dayOptions = computed(() => {
 })
 
 const handleSubmit = async () => {
+  validateOnSubmit.value = true
+
   if (isLoading.value) return
   isLoading.value = true
 
@@ -454,7 +511,7 @@ const checkPostalCode = async (code) => {
     form.value.addressArea = address.area
   } catch (error) {
     console.log(error)
-    // form.value.postCode = ''
+    form.value.addressPrefecture = ''
   }
 }
 </script>
