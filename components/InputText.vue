@@ -14,9 +14,9 @@
     <div
       :class="[
         'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
-        validateOnSubmit && !isLengthValid
-          ? '!border-2 !border-exd-red-vermilion'
-          : '!border-none',
+        validateOnSubmit && !isLengthValid && !modelValue
+          ? '!ring-2 !ring-exd-red-vermilion'
+          : '!ring-none',
       ]"
     >
       <span v-if="prefix !== ''" class="mr-2 text-exd-1424 font-bold">{{

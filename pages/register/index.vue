@@ -190,6 +190,7 @@
             disabled
             @update:model="updateModel('addressPrefecture', $event)"
             @validate="validateInput('addressPrefecture', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
@@ -199,6 +200,7 @@
             disabled
             @update:model="updateModel('addressCity', $event)"
             @validate="validateInput('addressCity', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
@@ -210,6 +212,7 @@
             @input="handleInputChange"
             @update:model="updateModel('addressArea', $event)"
             @validate="validateInput('addressArea', $event)"
+            :validate-on-submit="validateOnSubmit"
           />
 
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
