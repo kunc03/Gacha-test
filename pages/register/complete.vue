@@ -14,10 +14,17 @@
     >
       <div class="flex flex-col grow">
         <p
-          class="text-exd-gray-scorpion font-semibold text-exd-1420 text-center mt-8"
+          class="text-exd-gray-scorpion font-normal text-exd-1416 text-center mt-8"
         >
-          会員登録が完了しました
+          会員登録はまだ完了していません
         </p>
+        <div
+          class="text-exd-gray-scorpion font-normal text-exd-1416 text-start mt-8 max-w-xs mx-auto flex flex-col leading-loose"
+        >
+          <p>入力いただいたアドレスにメールを送信しました。</p>
+
+          <p>メールに記載のリンクをクリックの上、登録を完了してください。</p>
+        </div>
       </div>
     </div>
   </div>
