@@ -19,16 +19,16 @@
     >
       <div class="relative h-full w-full">
         <img
-          :src="duck"
+          :src="apiImageUrl"
           alt="duck"
-          class="absolute w-3/4 object-fill h-full left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+          class="absolute w-3/4 object-fill max-h-80 left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
           preload
         />
         <img
           :src="jackpot"
           alt="jackpot"
           preload
-          class="absolute -bottom-2 md:-bottom-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-1/4 object-scale-down small:h-3/4"
+          class="absolute -bottom-10 md:-bottom-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-1/4 object-scale-down small:h-3/4"
         />
       </div>
     </div>
@@ -146,6 +146,38 @@ const hasModal = ref(false)
 const modalLogin = ref(false)
 const handleShowDialog = () => (hasModal.value = true)
 const handleCloseDialog = () => (hasModal.value = false)
+const route = useRoute()
+
+const apiImageUrl = ref(null)
+
+const fetchImageFromApi = async () => {
+  const storedData = localStorage.getItem('VALID_PASSWORD')
+
+  if (!storedData) {
+    console.error('Tidak ada data yang diverifikasi ditemukan di localStorage')
+    return
+  }
+
+  const parsedData = JSON.parse(storedData)
+
+  const { data, error } = await useAsyncData('gachaData', () =>
+    $fetch('https://admin.per.talenavi.com/api/gacha/spin', {
+      params: {
+        slug: parsedData.slug,
+        password: parsedData.password,
+      },
+    })
+  )
+
+  if (error.value) {
+    console.error('Error fetching image:', error.value)
+    return
+  }
+
+  apiImageUrl.value = data.value.data.character.image
+}
+
+onMounted(fetchImageFromApi)
 
 const handleToRegister = () => {
   setSourceFrom('spin')

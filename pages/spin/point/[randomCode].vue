@@ -20,9 +20,9 @@
       <div class="relative h-full w-full flex items-center justify-center">
         <div class="relative w-exd-400 h-exd-400">
           <img
-            :src="point"
+            :src="apiImageUrl"
             alt="10point"
-            class="absolute w-3/4 object-fill h-full left-1/2 top-[40%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+            class="absolute w-3/4 object-fill h-56 left-1/2 top-[40%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
             preload
           />
           <img
@@ -54,7 +54,6 @@
 </template>
 
 <script setup>
-import point from '~/assets/images/10point.svg'
 import gacha2 from '~/assets/images/gacha2.png'
 import sparkling from '~/assets/images/sparkling.svg'
 import hatchedEgg from '~/assets/images/hatched-egg.svg'
@@ -62,6 +61,38 @@ import arrow from '~/assets/images/arrow.svg'
 
 const router = useRouter()
 const route = useRoute()
+
+const apiImageUrl = ref(null)
+
+const fetchImageFromApi = async () => {
+  const storedData = localStorage.getItem('VALID_PASSWORD')
+
+  if (!storedData) {
+    console.error('Tidak ada data yang diverifikasi ditemukan di localStorage')
+    return
+  }
+
+  const parsedData = JSON.parse(storedData)
+
+  const { data, error } = await useAsyncData('gachaData', () =>
+    $fetch('https://admin.per.talenavi.com/api/gacha/spin', {
+      params: {
+        slug: parsedData.slug,
+        password: parsedData.password,
+      },
+    })
+  )
+
+  if (error.value) {
+    console.error('Error fetching image:', error.value)
+    return
+  }
+
+  apiImageUrl.value = data.value.data.point.image
+}
+
+onMounted(fetchImageFromApi)
+
 const handleGoToCharacter = () =>
   router.push(`/spin/character/${route.params.randomCode}`)
 </script>
