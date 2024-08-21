@@ -59,14 +59,7 @@
         <span class="grow text-center">{{
           !isSuccessSendLinkResetPassword ? '登録する' : 'TOP'
         }}</span>
-        <NuxtImg
-          src="/arrow.svg"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
+        <img :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>
     </div>
   </div>
@@ -74,6 +67,7 @@
 
 <script setup>
 import InputText from '~/components/InputText.vue'
+import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

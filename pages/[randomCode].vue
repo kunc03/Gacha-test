@@ -44,7 +44,7 @@
         class="inline-flex justify-between bg w-full gap-3"
         v-if="responseData.description"
       >
-        <p class="text-white text-justify">
+        <p class="text-white text-justify" style="overflow-wrap: break-word;inline-size: 180px;">
           {{ responseData.description }}
         </p>
         <div class="size-5/12 shrink-0">

@@ -28,13 +28,7 @@
               注意事項
             </p>
             <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
-              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
-            </p>
-            <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
-              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
-            </p>
-            <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
-              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
+              {{ description }}
             </p>
           </div>
 
@@ -46,15 +40,7 @@
           >
             <span class="grow text-center">GO!</span>
             <LoadingIcon v-if="isLoading" />
-            <NuxtImg
-              v-else
-              src="/arrow.svg"
-              alt="arrow"
-              width="10"
-              height="10"
-              preload
-              class="shrink-0"
-            />
+            <img :src="arrow" alt="warning" width="10" height="10" preload />
           </Button>
         </div>
       </div>
@@ -95,6 +81,7 @@
 <script setup>
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
+import arrow from '~/assets/images/arrow.svg'
 
 import InputOtp from 'primevue/inputotp'
 import Header from '~/components/header.vue'
@@ -107,6 +94,7 @@ const router = useRouter()
 const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
 const isLoading = ref(false)
+const description = ref(null);
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
@@ -141,7 +129,23 @@ const goToScan = async () => {
   else isNotAllowed.value = true
 }
 
-onMounted(() => {
+const getPassword = async (id) => {
+  try {
+    isLoading.value = true
+
+    const { data } = await useFetchApi('GET', '/location/password/' + id)
+
+    if (data) {
+      description.value = data.description;
+    }
+
+    isLoading.value = false
+  } catch (error) {
+    console.log("Error: Can't get password")
+  }
+}
+
+onMounted(async () => {
   if ('permissions' in navigator) {
     navigator.permissions
       .query({ name: 'geolocation' })
@@ -199,6 +203,10 @@ onMounted(() => {
       isNotAllowed.value = true
     }
   }
+
+  const location = route.params.randomId
+  await getPassword(location)
+
 })
 </script>
 

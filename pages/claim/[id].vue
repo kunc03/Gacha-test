@@ -47,9 +47,9 @@
           </div>
         </div>
       </div>
-      <swipeButton text="スワイプ" @submit="handleSwipe" color="#d7a237" />
-      <!-- <button
-        class="cssbuttons-io-button"
+      <!-- <swipeButton text="スワイプ" @submit="handleSwipe" color="#d7a237" /> -->
+      <button
+        class="cssbuttons-io-button mt-8 mb-8"
         :class="{ 'is-clicked': isClicked }"
         @click="handleSwipe"
       >
@@ -69,7 +69,7 @@
           </svg>
         </div>
         <p class="w-full">スワイプ</p>
-      </button> -->
+      </button>
     </div>
   </div>
 </template>
@@ -89,34 +89,11 @@ useHead({
   title: 'Redeem',
 })
 
-const initializeMap = async (lat, long) => {
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoiaXJmYW5zeWFoMDIiLCJhIjoiY2x6aTZheXp1MDliYTJqcHFmaWZlN2hraCJ9.vQeo8YYTIH94loWw0ONoJw'
-
-  map = new mapboxgl.Map({
-    container: mapContainer.value,
-    style: 'mapbox://styles/mapbox/streets-v11?language=ja',
-    center: [long, lat],
-    zoom: 12,
-    attributionControl: false,
-  })
-
-  marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map)
-
-  // Change labels to Japanese
-  map.on('style.load', () => {
-    map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-lg-n', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-md-s', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-sm', 'text-field', ['get', 'name_ja'])
-  })
-}
-
 const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        initializeMap(position.coords.latitude, position.coords.longitude)
+        // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
         console.error('Error Code = ' + error.code + ' - ' + error.message)
@@ -132,9 +109,6 @@ const router = useRouter()
 const isClicked = ref(false)
 const handleSwipe = () => {
   isClicked.value = true
-  setTimeout(() => {
-    router.push('/success')
-  }, 500)
 }
 
 onMounted(() => {
@@ -184,7 +158,8 @@ onMounted(() => {
 }
 
 .cssbuttons-io-button.is-clicked .icon {
-  width: calc(100% - 0.6em);
+  /* width: calc(100% - 0.6em); */
+  transform: translate(700%, 0);
 }
 
 .cssbuttons-io-button .icon svg {
@@ -199,6 +174,6 @@ onMounted(() => {
 
 .cssbuttons-io-button:active .icon, /* Menyertakan :active untuk responsivitas tactile */
 .cssbuttons-io-button.is-clicked .icon {
-  transform: scale(0.95);
+  /* transform: scale(0.95); */
 }
 </style>

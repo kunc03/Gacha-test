@@ -13,7 +13,7 @@
         class="w-full h-80 relative bg-[url('assets/images/bg-orange-image.png')] bg-cover bg-center"
       >
         <img
-          :src="duck"
+          :src="historyDetailData.character_image != null ? historyDetailData.character_image : duck"
           alt="duck"
           class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
           preload
@@ -22,12 +22,12 @@
       <div class="p-5 flex flex-col gap-2">
         <div class="inline-flex justify-between w-full">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            キャラ名キャラ名キャラ名
+            {{ historyDetailData.location_name }}
           </p>
           <p class="font-bold text-exd-1824.52 text-exd-gold">{{ historyDetailData.point_amount }}pt</p>
         </div>
         <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4">
-          ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
+          {{ historyDetailData.character_description }}
         </p>
         <!-- <div class="inline-flex gap-3 w-full justify-center">
           <img :src="download" alt="download" class="size-8" preload />
@@ -40,8 +40,7 @@
             <p class="text-white text-exd-1220 font-bold">{{ historyDetailData.location_name }}</p>
           </div>
           <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-            ダミーダミーダミーダミーダミーダミーダミー
-            ダミーダミーダミーダミーダミーダミーダミー
+            {{ historyDetailData.location_description }}
           </p>
         </div>
         <div class="w-full">
