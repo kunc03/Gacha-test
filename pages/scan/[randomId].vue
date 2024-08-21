@@ -3,17 +3,17 @@
     <Header>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
-        class="text-black font-bold text-exd-1824.52"
+        class="absolute top-0 bottom-0 w-full flex items-end justify-center text-black font-bold text-exd-1824.52 pb-exd-22 pr-46 -z-10"
       >
         パスワード入力
       </p>
     </Header>
 
-    <div class="flex flex-col grow items-center justify-center">
+    <div class="flex flex-col grow items-center justify-center mt-20">
       <div
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
-        <p>パスワードを入力してください</p>
+        <p class="text-exd-gray-scorpion">パスワードを入力してください</p>
         <InputOtp v-model="value" integerOnly class="!flex !flex-row !gap-3" />
       </div>
       <div class="grow w-full flex flex-col gap-5">

@@ -17,19 +17,21 @@
     <div
       class="left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 absolute bg-[url('assets/images/circle-white.svg')] bg-contain bg-center w-full h-full md:h-1/2 bg-no-repeat"
     >
-      <div class="relative h-full w-full">
-        <img
-          :src="point"
-          alt="10point"
-          class="absolute w-3/4 object-fill h-full left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-          preload
-        />
-        <img
-          :src="hatchedEgg"
-          alt="10point"
-          preload
-          class="absolute bottom-10 md:-bottom-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-1/4 object-scale-down small:h-3/4"
-        />
+      <div class="relative h-full w-full flex items-center justify-center">
+        <div class="relative w-exd-400 h-exd-400">
+          <img
+            :src="point"
+            alt="10point"
+            class="absolute w-3/4 object-fill h-full left-1/2 top-[40%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+            preload
+          />
+          <img
+            :src="hatchedEgg"
+            alt="10point"
+            preload
+            class="absolute -bottom-8 small:-bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[30%] object-scale-down"
+          />
+        </div>
       </div>
     </div>
 

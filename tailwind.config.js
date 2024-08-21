@@ -4,6 +4,8 @@ function pxToEm($px) {
 }
 
 const padding = {
+  'exd-22': pxToEm(22),
+  'exd-46': pxToEm(46),
   'exd-42': pxToEm(42),
   'exd-15': pxToEm(15),
   'exd-60': pxToEm(60),
@@ -16,12 +18,16 @@ const height = {
   'exd-130': pxToEm(130),
   'exd-150': pxToEm(150),
   'exd-394': pxToEm(394),
+  'exd-400': pxToEm(400),
 }
 const width = {
   'exd-40': pxToEm(40),
   'exd-50': pxToEm(50),
   'exd-148': pxToEm(148),
+  'exd-190': pxToEm(190),
   'exd-312': pxToEm(312),
+  'exd-394': pxToEm(394),
+  'exd-400': pxToEm(400),
 }
 
 const fontSize = {
