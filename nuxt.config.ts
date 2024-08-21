@@ -61,6 +61,10 @@ export default defineNuxtConfig({
     },
   },
 
+  experimental: {
+    externalVue: false,
+  },
+
   tailwindcss: {
     cssPath: 'assets/css/tailwind.css',
     configPath: 'tailwind.config.js',

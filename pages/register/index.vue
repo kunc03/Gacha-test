@@ -184,34 +184,34 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
-            :model="form.addressPrefecture"
+            :model="form.prefecture"
             required
             label="都道府県"
             disabled
-            @update:model="updateModel('addressPrefecture', $event)"
-            @validate="validateInput('addressPrefecture', $event)"
+            @update:model="updateModel('prefecture', $event)"
+            @validate="validateInput('prefecture', $event)"
             :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
-            :model="form.addressCity"
+            :model="form.city"
             required
             label="市区町村"
             disabled
-            @update:model="updateModel('addressCity', $event)"
-            @validate="validateInput('addressCity', $event)"
+            @update:model="updateModel('city', $event)"
+            @validate="validateInput('city', $event)"
             :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
-            :model="form.addressArea"
+            :model="form.area"
             required
             v-model="inputValue"
             label="面積"
             disabled
             @input="handleInputChange"
-            @update:model="updateModel('addressArea', $event)"
-            @validate="validateInput('addressArea', $event)"
+            @update:model="updateModel('area', $event)"
+            @validate="validateInput('area', $event)"
             :validate-on-submit="validateOnSubmit"
           />
 
@@ -400,10 +400,10 @@ const form = ref({
   gender: '',
   residenceType: '',
   postCode: '',
-  addressPrefecture: '',
-  addressCity: '',
-  addressArea: '',
-  address2: '',
+  prefecture: '',
+  city: '',
+  area: '',
+  address: '',
   phoneNumber: '',
   email: '',
   password: '',
@@ -457,12 +457,15 @@ const handleSubmit = async () => {
     birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
-    residence: [
-      form.value.addressPrefecture,
-      form.value.addressCity,
-      form.value.addressArea,
-    ].join(' '),
-    // address: form.value.address2,
+    residence: [form.value.prefecture, form.value.city, form.value.area].join(
+      ' '
+    ),
+    prefecture: form.value.prefecture,
+    city: form.value.city,
+    area: form.value.area,
+    address: [form.value.prefecture, form.value.city, form.value.area].join(
+      ' '
+    ),
     phone_number: form.value.phoneNumber,
     email: form.value.email,
     password: form.value.password,
@@ -474,14 +477,12 @@ const handleSubmit = async () => {
 
   try {
     const { data } = await useFetchApi('POST', 'register', { body: payload })
-
-    localStorage.setItem('USER_ID', data.user.id)
+    sessionStorage.setItem('USER_ID', data.user.id)
     navigateTo('/register/complete')
   } catch (error) {
     console.log(error)
     console.log("Error: Can't register")
     const errors = error._data.errors
-
     if (errors) {
       const message = Object.keys(errors).map((item) => errors[item][0])
       errorMessages.value = message
@@ -506,12 +507,12 @@ const checkPostalCode = async (code) => {
       }, 800)
     })
 
-    form.value.addressPrefecture = address.prefecture
-    form.value.addressCity = address.city
-    form.value.addressArea = address.area
+    form.value.prefecture = address.prefecture
+    form.value.city = address.city
+    form.value.area = address.area
   } catch (error) {
     console.log(error)
-    form.value.addressPrefecture = ''
+    form.value.prefecture = ''
   }
 }
 </script>
