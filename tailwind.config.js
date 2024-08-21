@@ -17,6 +17,7 @@ const height = {
   'exd-50': pxToEm(50),
   'exd-130': pxToEm(130),
   'exd-150': pxToEm(150),
+  'exd-200': pxToEm(200),
   'exd-394': pxToEm(394),
   'exd-400': pxToEm(400),
 }
@@ -25,6 +26,7 @@ const width = {
   'exd-50': pxToEm(50),
   'exd-148': pxToEm(148),
   'exd-190': pxToEm(190),
+  'exd-300': pxToEm(300),
   'exd-312': pxToEm(312),
   'exd-394': pxToEm(394),
   'exd-400': pxToEm(400),
