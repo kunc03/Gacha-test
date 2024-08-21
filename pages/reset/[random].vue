@@ -54,14 +54,7 @@
         <span class="grow text-center">{{
           !isSuccessSendResetPassword ? '送信' : 'マイページ'
         }}</span>
-        <NuxtImg
-          src="/arrow.svg"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
+        <img :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>
     </div>
   </div>
@@ -98,6 +91,7 @@ import Header from '~/components/header.vue'
 import { useRouter } from 'vue-router'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
+import arrow from '~/assets/images/arrow.svg'
 
 const route = useRoute()
 const router = useRouter()

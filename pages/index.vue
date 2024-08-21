@@ -116,14 +116,7 @@
           >
             <span class="grow text-center">GO!</span>
             <!-- <LoadingIcon v-if="isLoading" /> -->
-            <NuxtImg
-              src="/arrow.svg"
-              alt="arrow"
-              width="10"
-              height="10"
-              preload
-              class="shrink-0"
-            />
+            <img :src="arrow" alt="warning" width="10" height="10" preload />
           </Button>
         </div>
       </div>

@@ -12,14 +12,7 @@
         raised
       >
         <span class="grow text-center">デジタルマップTOP</span>
-        <NuxtImg
-          src="/arrow.svg"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
+        <img :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>
 
       <Button
@@ -27,14 +20,7 @@
         raised
       >
         <span class="grow text-center">ガチャTOP</span>
-        <NuxtImg
-          src="/arrow.svg"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
+        <img :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>
     </div>
   </div>
@@ -42,6 +28,7 @@
 
 <script setup>
 import duck from '~/assets/images/duck.svg'
+import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 
 definePageMeta({

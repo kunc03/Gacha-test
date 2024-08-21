@@ -117,11 +117,11 @@
               ]"
             />
             <Button
-              @click="updateModel('gender', '')"
+              @click="updateModel('gender', 'Non-Binary')"
               label="無回答"
               :class="[
                 'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.gender === '' && '!bg-exd-banana',
+                form.gender === 'Non-Binary' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -324,15 +324,7 @@
       >
         <span class="grow text-center">登録する</span>
         <LoadingIcon v-if="isLoading" />
-        <NuxtImg
-          v-else
-          src="/arrow.svg"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
+        <img :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>
     </div>
   </div>
@@ -371,6 +363,7 @@
 <script setup>
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
+import arrow from '~/assets/images/arrow.svg'
 
 import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
@@ -397,7 +390,7 @@ const form = ref({
   yearOfBirth: '',
   monthOfBirth: '',
   dateOfBirth: '',
-  gender: '',
+  gender: 'Non-Binary',
   residenceType: '',
   postCode: '',
   prefecture: '',

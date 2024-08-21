@@ -61,14 +61,8 @@
           @click="handleToggleModal"
         >
           <span class="grow text-center">交換</span>
-          <NuxtImg
-            src="/arrow.svg"
-            alt="arrow"
-            width="10"
-            height="10"
-            preload
-            class="shrink-0"
-          />
+          <img :src="arrow" alt="warning" width="10" height="10" preload />
+          
         </Button>
       </div>
     </div>
@@ -105,14 +99,7 @@
           @click="handleGoToClaim"
         >
           <span class="grow text-center">到着しました</span>
-          <NuxtImg
-            src="/arrow.svg"
-            alt="arrow"
-            width="10"
-            height="10"
-            preload
-            class="shrink-0"
-          />
+          <img :src="arrow" alt="warning" width="10" height="10" preload />
         </Button>
       </div>
     </template>
@@ -122,6 +109,7 @@
 <script setup>
 import duck from '~/assets/images/duck.svg'
 import close from '~/assets/images/close.svg'
+import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 
