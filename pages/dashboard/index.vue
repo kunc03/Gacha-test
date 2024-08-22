@@ -162,7 +162,7 @@ const handleGoToRedeem = () => router.push('/redeem')
 
 const logout = async () => {
   try {
-    const { status } = await useFetchApi('POST', 'logout')
+    const { data, status } = await useFetchApi('POST', 'logout')
 
     if (status) {
       localStorage.clear()
