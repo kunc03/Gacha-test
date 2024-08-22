@@ -85,7 +85,7 @@
       />
     </div>
     <div
-      class="bg-white w-exd-312 h-exd-50 mx-auto rounded-bl-xl rounded-br-xl px-5 inline-flex justify-between items-center"
+      class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
     >
       <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
@@ -103,6 +103,23 @@
         class="invert"
       />
     </div>
+    <div
+      class="bg-white w-exd-312 h-exd-50 mx-auto rounded-bl-xl rounded-br-xl px-5 inline-flex justify-between items-center"
+      style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+      @click="logout"
+    >
+      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
+        バナーリンク
+      </p>
+      <img
+        :src="arrow"
+        alt="arrow"
+        width="12"
+        height="12"
+        preload
+        class="invert"
+      />
+    </div>
     <p
       class="underline text-white text-exd-1218 font-semibold text-center mt-5"
     >
@@ -110,7 +127,6 @@
     </p>
     <div
       class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7 cursor-pointer"
-      @click="logout"
     >
       <p
         class="text-white grow inline-flex items-center justify-center font-bold text-exd-1424"
@@ -146,14 +162,14 @@ const handleGoToRedeem = () => router.push('/redeem')
 
 const logout = async () => {
   try {
-    const { data, status } = await useFetchApi('POST', 'logout');
-    
+    const { status } = await useFetchApi('POST', 'logout')
+
     if (status) {
-      localStorage.clear();
-      navigateTo('/');
+      localStorage.clear()
+      navigateTo('/')
     }
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
