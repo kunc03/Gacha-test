@@ -315,7 +315,7 @@
         </div>
       </div>
       <Button
-        class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
+        class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
         raised
         :disabled="!form.checked"
         :loading="isLoading"
