@@ -324,7 +324,7 @@
       >
         <span class="grow text-center">登録する</span>
         <LoadingIcon v-if="isLoading" />
-        <img :src="arrow" alt="warning" width="10" height="10" preload />
+        <img v-else :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>
     </div>
   </div>
@@ -470,7 +470,7 @@ const handleSubmit = async () => {
 
   try {
     const { data } = await useFetchApi('POST', 'register', { body: payload })
-    sessionStorage.setItem('USER_ID', data.user.id)
+    localStorage.setItem('USER_ID', data.user.id)
     navigateTo('/register/complete')
   } catch (error) {
     console.log(error)
