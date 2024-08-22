@@ -3,9 +3,9 @@
     <Header hasBack>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
-        class="text-exd-gray-scorpion font-bold text-exd-1824.52"
+        class="text-exd-gray-scorpion text-exd-1824.52"
       >
-        新規会員登録
+        会員情報
       </p>
     </Header>
 
@@ -50,10 +50,10 @@
         >
           <label
             for="生年月日"
-            class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+            class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             >生年月日
             <span
-              className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+              className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >必須</span
             ></label
           >
@@ -89,10 +89,10 @@
         >
           <label
             for="性別"
-            class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+            class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             >性別
             <span
-              className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+              className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >必須</span
             ></label
           >
@@ -131,10 +131,10 @@
         >
           <label
             for="性別"
-            class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+            class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             >居住地
             <span
-              className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+              className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >必須</span
             ></label
           >
@@ -144,7 +144,7 @@
           >
             <Button
               @click="updateModel('residenceType', '')"
-              label="無回答"
+              label="国内"
               :class="[
                 'bg-white w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.residenceType === '' && '!bg-exd-banana',
@@ -194,24 +194,23 @@
           />
 
           <InputText
-            :model="form.city"
+            :model="form.cityArea"
             required
             label="市区町村"
             disabled
-            @update:model="updateModel('city', $event)"
-            @validate="validateInput('city', $event)"
+            @update:model="updateModel('cityArea', $event)"
+            @validate="validateInput('cityArea', $event)"
             :validate-on-submit="validateOnSubmit"
           />
 
           <InputText
-            :model="form.area"
+            :model="form.address"
             required
             v-model="inputValue"
-            label="面積"
-            disabled
+            label="番地・マンション名など"
             @input="handleInputChange"
-            @update:model="updateModel('area', $event)"
-            @validate="validateInput('area', $event)"
+            @update:model="updateModel('address', $event)"
+            @validate="validateInput('address', $event)"
             :validate-on-submit="validateOnSubmit"
           />
 
@@ -226,7 +225,7 @@
             :model="form.phoneNumber"
             required
             :onlyNumeric="true"
-            label="電話番号（ハイフンなし)"
+            label="電話番号（ハイフンなし）"
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
             :validate-on-submit="validateOnSubmit"
@@ -394,9 +393,10 @@ const form = ref({
   residenceType: '',
   postCode: '',
   prefecture: '',
+  cityArea: '',
+  address: '',
   city: '',
   area: '',
-  address: '',
   phoneNumber: '',
   email: '',
   password: '',
@@ -454,11 +454,10 @@ const handleSubmit = async () => {
       ' '
     ),
     prefecture: form.value.prefecture,
+    cityArea: [form.value.city, form.value.area].join(', '),
     city: form.value.city,
     area: form.value.area,
-    address: [form.value.prefecture, form.value.city, form.value.area].join(
-      ' '
-    ),
+    address: form.value.address,
     phone_number: form.value.phoneNumber,
     email: form.value.email,
     password: form.value.password,
@@ -501,8 +500,12 @@ const checkPostalCode = async (code) => {
     })
 
     form.value.prefecture = address.prefecture
+    form.value.cityArea = [address.city, address.area].join(', ')
     form.value.city = address.city
     form.value.area = address.area
+    console.log(form.value.prefecture)
+    console.log(form.value.cityArea)
+    console.log(form.value.address)
   } catch (error) {
     console.log(error)
     form.value.prefecture = ''

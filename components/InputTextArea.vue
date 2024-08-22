@@ -2,12 +2,12 @@
   <div class="flex flex-col w-full">
     <label
       :for="`label-${label}`"
-      class="text-exd-gray-scorpion font-bold text-exd-1424 flex items-center gap-2"
+      class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
       v-if="label !== ''"
       >{{ label }}
       <span
         v-if="required"
-        className="bg-exd-red-vermilion text-white text-exd-0910 p-1 rounded-sm"
+        className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
         >必須</span
       ></label
     >
