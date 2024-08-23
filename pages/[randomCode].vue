@@ -44,7 +44,10 @@
         class="inline-flex justify-between bg w-full gap-3"
         v-if="responseData.description"
       >
-        <p class="text-white text-justify" style="overflow-wrap: break-word;inline-size: 180px;">
+        <p
+          class="text-white text-justify"
+          style="overflow-wrap: break-word; inline-size: 180px"
+        >
           {{ responseData.description }}
         </p>
         <div class="size-5/12 shrink-0">
@@ -68,7 +71,7 @@
 <script setup>
 import Button from 'primevue/button'
 import logo from '~/assets/images/logo.png'
-import emptyImage from '~/assets/images/empty-image.jpg'
+import emptyImage from '~/assets/images/no-image.svg'
 
 const route = useRoute()
 const responseData = ref({
