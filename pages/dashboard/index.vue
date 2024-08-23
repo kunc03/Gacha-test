@@ -104,12 +104,12 @@
       />
     </div>
     <div
-      class="bg-white w-exd-312 h-exd-50 mx-auto rounded-bl-xl rounded-br-xl px-5 inline-flex justify-between items-center"
+      class="bg-white w-exd-312 h-exd-50 mx-auto rounded-bl-xl rounded-br-xl px-5 inline-flex justify-between items-center cursor-pointer"
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
       @click="logout"
     >
       <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
-        バナーリンク
+        ログアウト
       </p>
       <img
         :src="arrow"
@@ -126,13 +126,13 @@
       ホーム画面に追加
     </p>
     <div
-      class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7 cursor-pointer"
+      class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7"
     >
       <p
         class="text-white grow inline-flex items-center justify-center font-bold text-exd-1424"
       >
         <!-- バナーリンク -->
-        ログアウト
+        バナーリンク
       </p>
     </div>
   </div>
@@ -162,7 +162,7 @@ const handleGoToRedeem = () => router.push('/redeem')
 
 const logout = async () => {
   try {
-    const { status } = await useFetchApi('POST', 'logout')
+    const { data, status } = await useFetchApi('POST', 'logout')
 
     if (status) {
       localStorage.clear()
