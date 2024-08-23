@@ -40,7 +40,14 @@
           >
             <span class="grow text-center">GO!</span>
             <LoadingIcon v-if="isLoading" />
-            <img :src="arrow" alt="warning" width="10" height="10" preload />
+            <img
+              v-else
+              :src="arrow"
+              alt="warning"
+              width="10"
+              height="10"
+              preload
+            />
           </Button>
         </div>
       </div>
@@ -94,7 +101,7 @@ const router = useRouter()
 const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
 const isLoading = ref(false)
-const description = ref(null);
+const description = ref(null)
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
@@ -136,7 +143,7 @@ const getPassword = async (id) => {
     const { data } = await useFetchApi('GET', '/location/password/' + id)
 
     if (data) {
-      description.value = data.description;
+      description.value = data.description
     }
 
     isLoading.value = false
@@ -206,7 +213,6 @@ onMounted(async () => {
 
   const location = route.params.randomId
   await getPassword(location)
-
 })
 </script>
 

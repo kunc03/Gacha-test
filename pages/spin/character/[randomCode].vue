@@ -151,33 +151,49 @@ const route = useRoute()
 const apiImageUrl = ref(null)
 
 const fetchImageFromApi = async () => {
-  const storedData = localStorage.getItem('VALID_PASSWORD')
+  try {
+    const storedData = localStorage.getItem('VALID_PASSWORD')
 
-  if (!storedData) {
-    console.error('Tidak ada data yang diverifikasi ditemukan di localStorage')
-    return
+    if (!storedData) {
+      console.error('No verified data found in localStorage')
+      return
+    }
+
+    let parsedData
+    try {
+      parsedData = JSON.parse(storedData)
+    } catch (e) {
+      console.error('Error parsing stored data:', e)
+      return
+    }
+
+    const { data, error } = await useFetchApi(
+      'GET',
+      'https://admin.per.talenavi.com/api/gacha/spin',
+      {
+        params: {
+          slug: parsedData.slug,
+          password: parsedData.password,
+        },
+      }
+    )
+
+    if (error) {
+      console.error('Error fetching image:', error)
+      return
+    }
+
+    if (data.character.image) {
+      const imageUrl = data.character.image
+      apiImageUrl.value = imageUrl
+      localStorage.setItem('CACHED_IMAGE_CHARACTER', imageUrl)
+    } else {
+      console.error('Unexpected API response structure:', data)
+    }
+  } catch (e) {
+    console.error('Unexpected error:', e)
   }
-
-  const parsedData = JSON.parse(storedData)
-
-  const { data, error } = await useAsyncData('gachaData', () =>
-    $fetch('https://admin.per.talenavi.com/api/gacha/spin', {
-      params: {
-        slug: parsedData.slug,
-        password: parsedData.password,
-      },
-    })
-  )
-
-  if (error.value) {
-    console.error('Error fetching image:', error.value)
-    return
-  }
-
-  apiImageUrl.value = data.value.data.character.image
 }
-
-onMounted(fetchImageFromApi)
 
 const handleToRegister = () => {
   setSourceFrom('spin')
@@ -199,6 +215,15 @@ const nextAction = () => {
     handleShowDialog()
   }
 }
+
+onMounted(() => {
+  const cachedImageUrl = localStorage.getItem('CACHED_IMAGE_CHARACTER')
+  if (cachedImageUrl) {
+    apiImageUrl.value = cachedImageUrl
+  } else {
+    fetchImageFromApi()
+  }
+})
 </script>
 
 <style scoped>
