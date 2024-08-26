@@ -21,7 +21,7 @@
         <div
           class="text-exd-gray-scorpion font-normal text-exd-1416 text-start mt-8 max-w-xs mx-auto flex flex-col leading-loose"
         >
-          <p>入力いただいたアドレスにメールを送信しました。</p>
+          <p>ご入力のアドレスにメールを送信しました。</p>
 
           <p>メールに記載のリンクをクリックの上、登録を完了してください。</p>
         </div>
