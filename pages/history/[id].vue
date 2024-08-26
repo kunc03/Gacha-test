@@ -26,7 +26,7 @@
       <div class="p-5 flex flex-col gap-2">
         <div class="inline-flex justify-between w-full">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ historyDetailData.location_name }}
+            {{ historyDetailData.character_name }}
           </p>
           <p class="font-bold text-exd-1824.52 text-exd-gold">
             {{ historyDetailData.point_amount }}pt
@@ -47,12 +47,14 @@
               {{ historyDetailData.location_name }}
             </p>
           </div>
-          <p class="text-exd-gray-scorpion font-medium text-exd-1218">
+          <p
+            class="text-exd-gray-scorpion font-medium text-exd-1218 text-word-wrap"
+          >
             {{ historyDetailData.location_description }}
           </p>
         </div>
         <div class="w-full">
-          <div id="map" ref="mapContainer" class="map-container"></div>
+          <div ref="map" style="width: 100%; height: 300px"></div>
         </div>
       </div>
     </div>
@@ -74,8 +76,6 @@ definePageMeta({
 })
 
 const props = defineProps(['id'])
-
-const historyDetailData = ref({})
 
 const updateMeta = () => {
   useHead({
@@ -109,14 +109,27 @@ const updateMeta = () => {
   })
 }
 
-const map = ref(null)
 const marker = ref(null)
 const mapContainer = ref(null)
-
+const historyDetailData = ref({})
+const map = ref(null)
 const route = useRoute()
 const id = route.params.id
 
-console.log(route.params)
+const loadGoogleMaps = () => {
+  return new Promise((resolve, reject) => {
+    if (window.google) {
+      resolve()
+      return
+    }
+    const script = document.createElement('script')
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-_CN0BNZ53YPzV5TwP8KBpR1td2foCg&libraries=places&language=ja&region=ja`
+    script.async = true
+    script.onload = resolve
+    script.onerror = reject
+    document.head.appendChild(script)
+  })
+}
 
 const fetchingHistoryData = async () => {
   try {
@@ -135,29 +148,28 @@ const fetchingHistoryData = async () => {
 }
 
 const initializeMap = async (lat, long) => {
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoiaXJmYW5zeWFoMDIiLCJhIjoiY2x6aTZheXp1MDliYTJqcHFmaWZlN2hraCJ9.vQeo8YYTIH94loWw0ONoJw'
+  const mapOptions = {
+    center: { lat: lat, lng: long },
+    zoom: 15,
+    disableDefaultUI: true, // Disables all default controls like zoom and map type
+    draggable: false, // Disables dragging of the map
+    scrollwheel: false, // Disables zooming with the mouse scroll
+    disableDoubleClickZoom: true, // Disables zooming by double-clicking
+    zoomControl: false, // Disables zoom control buttons
+    mapTypeControl: false, // Disables map type control (e.g., satellite vs. roadmap)
+    streetViewControl: false, // Disables street view control
+    fullscreenControl: false, // Disables fullscreen control
+  }
+  map.value = new google.maps.Map(map.value, mapOptions)
 
-  map = new mapboxgl.Map({
-    container: mapContainer.value,
-    style: 'mapbox://styles/mapbox/streets-v11?language=ja',
-    center: [long, lat],
-    zoom: 12,
-    attributionControl: false,
-  })
-
-  marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map)
-
-  // Change labels to Japanese
-  map.on('style.load', () => {
-    map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-lg-n', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-md-s', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-sm', 'text-field', ['get', 'name_ja'])
+  new google.maps.Marker({
+    position: { lat: lat, lng: long },
+    map: map.value,
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await loadGoogleMaps()
   fetchingHistoryData()
 })
 </script>

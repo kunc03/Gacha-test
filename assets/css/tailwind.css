@@ -58,3 +58,7 @@
     @apply uppercase;
   }
 }
+
+.text-word-wrap {
+  overflow-wrap: break-word;
+}
