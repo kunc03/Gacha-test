@@ -8,14 +8,16 @@
         class="size-20 relative bg-[url('assets/images/bg-orange-image.png')] bg-cover bg-center"
       >
         <img
-          :src="duck"
-          alt="duck"
+          :src="characterImage"
+          alt="character"
           class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
           preload
         />
       </div>
       <div>
-        <p class="text-exd-gold text-exd-1724 font-bold">{{ data.amount }}<span>pt</span></p>
+        <p class="text-exd-gold text-exd-1724 font-bold">
+          {{ data.amount }}<span>pt</span>
+        </p>
         <p lass="text-exd-gray-scorpion font-medium text-exd-1020">
           {{ data.created_at }}
         </p>
@@ -37,10 +39,12 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import duck from '~/assets/images/duck.svg'
+import noImage from '~/assets/images/no-image.svg'
 import arrow from '~/assets/images/arrow.svg'
 
-const props = defineProps(["data","id"])
+const props = defineProps(['data', 'id'])
+
+const characterImage = props.data.character?.image || noImage
 
 const router = useRouter()
 const handleGoToDetailHistory = () => router.push(`/history/${props.data.id}`)
