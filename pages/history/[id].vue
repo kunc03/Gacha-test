@@ -13,7 +13,11 @@
         class="w-full h-80 relative bg-[url('assets/images/bg-orange-image.png')] bg-cover bg-center"
       >
         <img
-          :src="historyDetailData.character_image != null ? historyDetailData.character_image : duck"
+          :src="
+            historyDetailData.character_image != null
+              ? historyDetailData.character_image
+              : duck
+          "
           alt="duck"
           class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
           preload
@@ -24,7 +28,9 @@
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ historyDetailData.location_name }}
           </p>
-          <p class="font-bold text-exd-1824.52 text-exd-gold">{{ historyDetailData.point_amount }}pt</p>
+          <p class="font-bold text-exd-1824.52 text-exd-gold">
+            {{ historyDetailData.point_amount }}pt
+          </p>
         </div>
         <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4">
           {{ historyDetailData.character_description }}
@@ -37,7 +43,9 @@
         </div> -->
         <div class="flex flex-col gap-2 mb-2">
           <div class="w-full h-5 bg-exd-gray-44 pl-3">
-            <p class="text-white text-exd-1220 font-bold">{{ historyDetailData.location_name }}</p>
+            <p class="text-white text-exd-1220 font-bold">
+              {{ historyDetailData.location_name }}
+            </p>
           </div>
           <p class="text-exd-gray-scorpion font-medium text-exd-1218">
             {{ historyDetailData.location_description }}
@@ -58,68 +66,98 @@ import facebook from '~/assets/images/facebook.svg'
 import line from '~/assets/images/line.svg'
 import x from '~/assets/images/x.svg'
 import maps from '~/assets/images/maps.svg'
-import { useRoute } from 'nuxt/app';
-import mapboxgl from 'mapbox-gl';
+import { useRoute } from 'nuxt/app'
+import mapboxgl from 'mapbox-gl'
 
 definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-useHead({
-  title: 'History',
-})
+const props = defineProps(['id'])
 
-const props = defineProps(["id"])
+const historyDetailData = ref({})
 
-const historyDetailData = ref({});
-const map = ref(null);
-const marker = ref(null);
-const mapContainer = ref(null);
+const updateMeta = () => {
+  useHead({
+    meta: [
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:site_name',
+        content: 'Gacha',
+      },
 
-const route = useRoute();
+      {
+        property: 'og:description',
+        content: historyDetailData.value.character_description || 'Description',
+      },
+      {
+        property: 'og:title',
+        content: historyDetailData.value.location_name || 'History',
+      },
+      {
+        property: 'og:image',
+        content: historyDetailData.value.character_image || 'Character image',
+      },
+      {
+        property: 'og:site',
+        content: window.location.href,
+      },
+    ],
+  })
+}
+
+const map = ref(null)
+const marker = ref(null)
+const mapContainer = ref(null)
+
+const route = useRoute()
 const id = route.params.id
+
+console.log(route.params)
 
 const fetchingHistoryData = async () => {
   try {
-    const { data } = await useFetchApi('GET', 'history/'+id)
+    const { data } = await useFetchApi('GET', 'history/' + id)
     historyDetailData.value = data
     console.log(historyDetailData.value)
-    let lat = historyDetailData.value.latitude;
-    let long = historyDetailData.value.longitude;
-  
-    initializeMap(lat, long);
+    let lat = historyDetailData.value.latitude
+    let long = historyDetailData.value.longitude
 
+    initializeMap(lat, long)
+
+    updateMeta()
   } catch (error) {
     console.log(error)
   }
 }
 
 const initializeMap = async (lat, long) => {
-      mapboxgl.accessToken = 'pk.eyJ1IjoiaXJmYW5zeWFoMDIiLCJhIjoiY2x6aTZheXp1MDliYTJqcHFmaWZlN2hraCJ9.vQeo8YYTIH94loWw0ONoJw';
+  mapboxgl.accessToken =
+    'pk.eyJ1IjoiaXJmYW5zeWFoMDIiLCJhIjoiY2x6aTZheXp1MDliYTJqcHFmaWZlN2hraCJ9.vQeo8YYTIH94loWw0ONoJw'
 
-      map = new mapboxgl.Map({
-        container: mapContainer.value,
-        style: 'mapbox://styles/mapbox/streets-v11?language=ja',
-        center: [long, lat],
-        zoom: 12,
-        attributionControl: false
-      });
+  map = new mapboxgl.Map({
+    container: mapContainer.value,
+    style: 'mapbox://styles/mapbox/streets-v11?language=ja',
+    center: [long, lat],
+    zoom: 12,
+    attributionControl: false,
+  })
 
-      marker = new mapboxgl.Marker()
-        .setLngLat([long, lat])
-        .addTo(map);
+  marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map)
 
-      // Change labels to Japanese
-      map.on('style.load', () => {
-        map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ja']);
-        map.setLayoutProperty('place-city-lg-n', 'text-field', ['get', 'name_ja']);
-        map.setLayoutProperty('place-city-md-s', 'text-field', ['get', 'name_ja']);
-        map.setLayoutProperty('place-city-sm', 'text-field', ['get', 'name_ja']);
-      });
-    };
+  // Change labels to Japanese
+  map.on('style.load', () => {
+    map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ja'])
+    map.setLayoutProperty('place-city-lg-n', 'text-field', ['get', 'name_ja'])
+    map.setLayoutProperty('place-city-md-s', 'text-field', ['get', 'name_ja'])
+    map.setLayoutProperty('place-city-sm', 'text-field', ['get', 'name_ja'])
+  })
+}
 
 onMounted(() => {
   fetchingHistoryData()
 })
-
 </script>
