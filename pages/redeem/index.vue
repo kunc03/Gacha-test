@@ -17,10 +17,11 @@
 
     <div class="flex flex-col gap-8">
       <PagesRedeemCard
-        :data="{ id: 1, point: 20 }"
-        :body="[{ id: 1, name: 'asd', value: 'asd' }]"
+        v-for="(prize, key) in prizes"
+        :key="key"
+        :keyBody="key"
+        :body="prize"
       />
-      <PagesRedeemCard :data="{ id: 2, point: 30 }" :body="dummyData" />
     </div>
   </div>
 </template>
@@ -35,11 +36,32 @@ useHead({
   title: 'Redeem',
 })
 
-const dummyData = ref(
-  Array.from({ length: 100 }, (_, index) => ({
-    id: index + 1,
-    name: `Item ${index + 1}`,
-    value: `Value ${index + 1}`,
-  }))
-)
+const prizes = ref([])
+
+const fetchingPrizesData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'prizes')
+
+    prizes.value = dataArrays(data);
+    console.log(prizes.value);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const dataArrays = ((data) => {
+  return data.reduce((acc, obj) => {
+    const key = Object.keys(obj)[0];
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key] = acc[key].concat(obj[key]);
+    return acc;
+  }, {});
+});
+
+onMounted(() => {
+  fetchingPrizesData();
+})
+
 </script>

@@ -62,3 +62,7 @@
 .text-word-wrap {
   overflow-wrap: break-word;
 }
+
+.w-100 {
+  width: 100%;
+}
