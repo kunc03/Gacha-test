@@ -21,6 +21,7 @@
             height="30"
             preload
             class="text-center cursor-pointer"
+            @click="handleGoToMap"
           />
           <p class="text-exd-gray-scorpion text-exd-1020">デジタルマップ</p>
         </div>
@@ -46,6 +47,7 @@
             height="30"
             preload
             class="text-center cursor-pointer"
+            @click="handleGoToDashboard"
           />
           <p class="text-exd-gray-scorpion text-exd-1020">マイページ</p>
         </div>
@@ -63,4 +65,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const handleGoToRedeem = () => router.push('/redeem')
+const handleGoToDashboard = () => router.push('/dashboard')
+const handleGoToMap = () =>
+  window.open('https://www.nagoya-info.jp/#dmap', '_blank')
 </script>
