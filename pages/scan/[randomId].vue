@@ -132,7 +132,7 @@ const goToScan = async () => {
     password: passwordValue,
   })
 
-  if (isTrue) router.push(`/spin/${route.params.randomId}`)
+  if (isTrue) router.push(`/spin/point`)
   else isNotAllowed.value = true
 }
 

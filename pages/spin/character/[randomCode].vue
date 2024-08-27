@@ -36,7 +36,7 @@
     <Button
       class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
       raised
-      @click="nextAction"
+      @click="handleButton"
     >
       <span class="grow text-center">次へ</span>
       <img
@@ -127,6 +127,32 @@
   </Dialog>
 
   <ModalLogin v-model="modalLogin" />
+
+  <Dialog
+    v-model:visible="isNotAllowed"
+    modal
+    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleClose"
+      />
+      <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
+        <img :src="warning" alt="warning" width="40" height="40" preload />
+        <div class="text-center w-10/12">
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ errorMessages }}
+          </p>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -138,17 +164,63 @@ import arrow from '~/assets/images/arrow.svg'
 import close from '~/assets/images/close.svg'
 import exportImg from '~/assets/images/export.svg'
 import useRegister from '~/composables/useRegister'
+import warning from '~/assets/images/warning.svg'
 
 const { setSourceFrom } = useRegister()
 
 const router = useRouter()
 const hasModal = ref(false)
 const modalLogin = ref(false)
-const handleShowDialog = () => (hasModal.value = true)
-const handleCloseDialog = () => (hasModal.value = false)
+const isNotAllowed = ref(false)
 const route = useRoute()
+const isLoading = ref(false)
+const errorMessages = ref('')
 
 const apiImageUrl = ref(null)
+
+const handleCloseDialog = () => (hasModal.value = false)
+const handleShowDialog = () => (hasModal.value = true)
+const handleClose = () => (isNotAllowed.value = false)
+const handleOpenDialog = () => (isNotAllowed.value = true)
+
+const handleButton = async () => {
+  const token = localStorage.getItem('TOKEN')
+  const user = localStorage.getItem('USER')
+  const point = localStorage.getItem('POINT_ID')
+
+  let isSuccess
+
+  if (!token && !user) {
+    handleShowDialog()
+  } else {
+    if (point === 'undefined' || point === 'null') {
+      navigateTo('/dashboard')
+    } else {
+      isSuccess = await spinAfterLogin()
+    }
+  }
+}
+
+const nextAction = () => {
+  const token = localStorage.getItem('TOKEN')
+  const user = localStorage.getItem('USER')
+  if (token && user) {
+    navigateTo('/dashboard')
+  } else {
+    handleShowDialog()
+  }
+}
+
+const goToSpinPoint = async () => {
+  const token = localStorage.getItem('TOKEN')
+  const user = localStorage.getItem('USER')
+  let isSuccess
+  if (token && user) {
+    isSuccess = await spinAfterLogin()
+  } else {
+    isSuccess = await spinBeforeLogin()
+  }
+}
 
 const fetchImageFromApi = async () => {
   try {
@@ -186,7 +258,7 @@ const fetchImageFromApi = async () => {
     if (data.character.image) {
       const imageUrl = data.character.image
       apiImageUrl.value = imageUrl
-      localStorage.setItem('CACHED_IMAGE_CHARACTER', imageUrl)
+      localStorage.setItem('IMAGE_CHARACTER', imageUrl)
     } else {
       console.error('Unexpected API response structure:', data)
     }
@@ -206,18 +278,52 @@ const handleToLogin = () => {
   modalLogin.value = true
 }
 
-const nextAction = () => {
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
-  if (token && user) {
-    navigateTo('/dashboard')
-  } else {
-    handleShowDialog()
+const spinAfterLogin = async () => {
+  if (isLoading.value) return
+  isLoading.value = true
+  try {
+    const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
+    const { data, status } = await useFetchApi('POST', 'gacha/spin', {
+      body: { ...payload },
+    })
+    localStorage.setItem('POINT_ID', data.userPoint.prize_id)
+    localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
+    isLoading.value = false
+    return status
+  } catch (error) {
+    console.log("Error: Can't spin after login")
+    if (error?._data?.message) {
+      errorMessages.value = error._data.message
+      handleOpenDialog()
+    }
+    isLoading.value = false
+  }
+}
+
+const spinBeforeLogin = async () => {
+  if (isLoading.value) return
+  isLoading.value = true
+  try {
+    const params = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
+    const { data, status } = await useFetchApi('GET', 'gacha/spin', {
+      params,
+    })
+    localStorage.setItem('POINT_ID', data.point.id)
+    localStorage.setItem('LOCATION_ID', data.location.id)
+    isLoading.value = false
+    return status
+  } catch (error) {
+    console.log("Error: Can't spin before login")
+    if (error?._data?.message) {
+      errorMessages.value = error._data.message
+      handleOpenDialog()
+    }
+    isLoading.value = false
   }
 }
 
 onMounted(() => {
-  const cachedImageUrl = localStorage.getItem('CACHED_IMAGE_CHARACTER')
+  const cachedImageUrl = localStorage.getItem('IMAGE_CHARACTER')
   if (cachedImageUrl) {
     apiImageUrl.value = cachedImageUrl
   } else {
@@ -228,6 +334,6 @@ onMounted(() => {
 
 <style scoped>
 ::v-deep(.p-dialog-header) {
-  @apply hidden;
+  display: none;
 }
 </style>
