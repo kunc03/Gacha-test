@@ -69,7 +69,6 @@ import line from '~/assets/images/line.svg'
 import x from '~/assets/images/x.svg'
 import maps from '~/assets/images/maps.svg'
 import { useRoute } from 'nuxt/app'
-import mapboxgl from 'mapbox-gl'
 
 definePageMeta({
   layout: 'with-bottom-bar',
