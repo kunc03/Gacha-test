@@ -32,7 +32,7 @@
             {{ historyDetailData.point_amount }}pt
           </p>
         </div>
-        <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4">
+        <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap">
           {{ historyDetailData.character_description }}
         </p>
         <!-- <div class="inline-flex gap-3 w-full justify-center">
