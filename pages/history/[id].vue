@@ -78,16 +78,24 @@ definePageMeta({
 const props = defineProps(['id'])
 
 const updateMeta = (title, description, image, url) => {
-  useHead({
+  // useHead({
+  //   title: title || 'title',
+  //   meta: [
+  //     { property: 'og:type', content: 'website' },
+  //     { property: 'og:site_name', content: 'Gacha' },
+  //     { property: 'og:description', content: description || 'Description' },
+  //     { property: 'og:title', content: title || 'History' },
+  //     { property: 'og:image', content: image || 'Character image' },
+  //     { property: 'og:site', content: url }
+  //   ],
+  // })
+  useSeoMeta({
     title: title || 'title',
-    meta: [
-      { property: 'og:type', content: 'website' },
-      { property: 'og:site_name', content: 'Gacha' },
-      { property: 'og:description', content: description || 'Description' },
-      { property: 'og:title', content: title || 'History' },
-      { property: 'og:image', content: image || 'Character image' },
-      { property: 'og:site', content: url }
-    ],
+    ogTitle: title || 'title',
+    description: description || 'Description',
+    ogDescription: description || 'Description',
+    ogImage: image,
+    twitterCard: image,
   })
 }
 
@@ -156,8 +164,9 @@ const initializeMap = async (lat, long) => {
   })
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await loadGoogleMaps()
   fetchingHistoryData()
 })
+
 </script>
