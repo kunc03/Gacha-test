@@ -19,21 +19,21 @@
       <div class="flex flex-col gap-5">
         <div class="h-64 bg-white w-80 rounded-lg relative mx-auto">
           <img
-            :src="duck"
-            alt="duck"
-            class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
+            :src="prizeDetailData.image"
+            :alt="prizeDetailData.name"
+            class="claim-img absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
             preload
           />
         </div>
         <div class="flex flex-col gap-4">
           <div class="inline-flex justify-between w-full">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-              景品名景品名景品名景品名
+              {{ prizeDetailData.name }}
             </p>
             <p
               class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
             >
-              20pt
+              {{ prizeDetailData.point }}pt
             </p>
           </div>
           <div class="flex flex-col gap-2 mb-2">
@@ -41,8 +41,7 @@
               <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
             </div>
             <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              ダミーダミーダミーダミーダミーダミーダミー
-              ダミーダミーダミーダミーダミーダミーダミー
+              {{ prizeDetailData.how_to_win }}
             </p>
           </div>
         </div>
@@ -80,6 +79,7 @@ import 'vue3-swipe-button/dist/swipeButton.css'
 import duck from '~/assets/images/duck.svg'
 import { useRouter } from 'vue-router'
 
+
 definePageMeta({
   middleware: 'auth',
   layout: 'default',
@@ -93,6 +93,7 @@ const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        fetchingPrizeData();
         // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
@@ -105,14 +106,26 @@ const getLocation = () => {
 }
 
 const hasModal = ref(false)
+const route = useRoute()
 const router = useRouter()
 const isClicked = ref(false)
 const handleSwipe = () => {
   isClicked.value = true
 }
+const prizeDetailData = ref({})
+const id = route.params.id
+
+const fetchingPrizeData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'prizes/' + id)
+    prizeDetailData.value = data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 onMounted(() => {
-  getLocation()
+  getLocation();
 })
 </script>
 
