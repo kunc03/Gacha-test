@@ -13,22 +13,22 @@
         class="w-full h-80 relative bg-[url('assets/images/bg-orange-image.png')] bg-cover bg-center"
       >
         <img
-          :src="duck"
+          :src="prizeDetailData.image"
           alt="duck"
           class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
           preload
         />
       </div>
-      <div class="p-5 flex flex-col justify-between">
+      <div class="mt-5 p-5 flex flex-col justify-between">
         <div class="flex flex-col gap-2">
           <div class="inline-flex justify-between w-full">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40">
-              名古屋観光特使ぴよりんの オリジナルステッカー
+              {{ prizeDetailData.name }}
             </p>
             <p
               class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
             >
-              20pt
+              {{ prizeDetailData.point }}pt
             </p>
           </div>
           <div class="flex flex-col gap-2 mb-2">
@@ -36,8 +36,7 @@
               <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
             </div>
             <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              ダミーダミーダミーダミーダミーダミーダミー
-              ダミーダミーダミーダミーダミーダミーダミー
+              {{ prizeDetailData.how_to_win }}
             </p>
           </div>
 
@@ -46,12 +45,11 @@
               <p class="text-white text-exd-1220 font-bold">利用条件</p>
             </div>
             <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              ダミーダミーダミーダミーダミーダミーダミー
-              ダミーダミーダミーダミーダミーダミーダミー
+              {{ prizeDetailData.terms_of_use }}
             </p>
           </div>
-          <div class="w-full">
-            <div id="map" ref="mapContainer" class="map-container"></div>
+          <div class="w-full mb-5">
+            <div ref="map" style="width: 100%; height: 300px"></div>
           </div>
         </div>
 
@@ -122,26 +120,18 @@ useHead({
   title: 'Redeem',
 })
 
-const initializeMap = async (lat, long) => {
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoiaXJmYW5zeWFoMDIiLCJhIjoiY2x6aTZheXp1MDliYTJqcHFmaWZlN2hraCJ9.vQeo8YYTIH94loWw0ONoJw'
-
-  map = new mapboxgl.Map({
-    container: mapContainer.value,
-    style: 'mapbox://styles/mapbox/streets-v11?language=ja',
-    center: [long, lat],
-    zoom: 12,
-    attributionControl: false,
-  })
-
-  marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map)
-
-  // Change labels to Japanese
-  map.on('style.load', () => {
-    map.setLayoutProperty('country-label', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-lg-n', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-md-s', 'text-field', ['get', 'name_ja'])
-    map.setLayoutProperty('place-city-sm', 'text-field', ['get', 'name_ja'])
+const loadGoogleMaps = () => {
+  return new Promise((resolve, reject) => {
+    if (window.google) {
+      resolve()
+      return
+    }
+    const script = document.createElement('script')
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-_CN0BNZ53YPzV5TwP8KBpR1td2foCg&libraries=places&language=ja&region=ja`
+    script.async = true
+    script.onload = resolve
+    script.onerror = reject
+    document.head.appendChild(script)
   })
 }
 
@@ -149,7 +139,9 @@ const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        initializeMap(position.coords.latitude, position.coords.longitude)
+        loadGoogleMaps();
+        fetchingPrizeData();
+        // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
         console.error('Error Code = ' + error.code + ' - ' + error.message)
@@ -165,8 +157,44 @@ const route = useRoute()
 const router = useRouter()
 const handleToggleModal = () => (hasModal.value = !hasModal.value)
 const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
+const prizeDetailData = ref({})
+const id = route.params.id
+const map = ref(null)
+
+const fetchingPrizeData = async () => {
+  try {
+    const { data } = await useFetchApi('GET', 'prizes/' + id)
+    prizeDetailData.value = data
+    if (data.lat != null && data.lng != null) {
+      initializeMap(data.lat, data.lng);
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const initializeMap = async (lat, long) => {
+  const mapOptions = {
+    center: { lat: lat, lng: long },
+    zoom: 15,
+    disableDefaultUI: true, // Disables all default controls like zoom and map type
+    draggable: false, // Disables dragging of the map
+    scrollwheel: false, // Disables zooming with the mouse scroll
+    disableDoubleClickZoom: true, // Disables zooming by double-clicking
+    zoomControl: false, // Disables zoom control buttons
+    mapTypeControl: false, // Disables map type control (e.g., satellite vs. roadmap)
+    streetViewControl: false, // Disables street view control
+    fullscreenControl: false, // Disables fullscreen control
+  }
+  map.value = new google.maps.Map(map.value, mapOptions)
+
+  new google.maps.Marker({
+    position: { lat: lat, lng: long },
+    map: map.value,
+  })
+}
 
 onMounted(() => {
-  getLocation()
+  getLocation();
 })
 </script>
