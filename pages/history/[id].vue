@@ -62,6 +62,7 @@
 </template>
 
 <script setup>
+
 import duck from '~/assets/images/duck.svg'
 import download from '~/assets/images/download.svg'
 import facebook from '~/assets/images/facebook.svg'
@@ -76,34 +77,16 @@ definePageMeta({
 
 const props = defineProps(['id'])
 
-const updateMeta = () => {
+const updateMeta = (title, description, image, url) => {
   useHead({
+    title: title || 'title',
     meta: [
-      {
-        property: 'og:type',
-        content: 'website',
-      },
-      {
-        property: 'og:site_name',
-        content: 'Gacha',
-      },
-
-      {
-        property: 'og:description',
-        content: historyDetailData.value.character_description || 'Description',
-      },
-      {
-        property: 'og:title',
-        content: historyDetailData.value.location_name || 'History',
-      },
-      {
-        property: 'og:image',
-        content: historyDetailData.value.character_image || 'Character image',
-      },
-      {
-        property: 'og:site',
-        content: window.location.href,
-      },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:site_name', content: 'Gacha' },
+      { property: 'og:description', content: description || 'Description' },
+      { property: 'og:title', content: title || 'History' },
+      { property: 'og:image', content: image || 'Character image' },
+      { property: 'og:site', content: url }
     ],
   })
 }
@@ -134,13 +117,19 @@ const fetchingHistoryData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'history/' + id)
     historyDetailData.value = data
-    console.log(historyDetailData.value)
     let lat = historyDetailData.value.latitude
     let long = historyDetailData.value.longitude
 
-    initializeMap(lat, long)
+    if (lat != undefined && long != undefined) {
+      initializeMap(lat, long)      
+    }
+    let title = historyDetailData.value.character_name;
+    let description = historyDetailData.value.character_description;
+    let image = historyDetailData.value.character_image;
+    let website = window.location.href;
 
-    updateMeta()
+    updateMeta(title, description, image, website)
+
   } catch (error) {
     console.log(error)
   }
