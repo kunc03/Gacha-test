@@ -35,17 +35,14 @@
             <div class="w-full h-5 bg-exd-gray-44 pl-3">
               <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
             </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              {{ prizeDetailData.how_to_win }}
-            </p>
+            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.how_to_win"></p>
           </div>
 
           <div class="flex flex-col gap-2 mb-2">
             <div class="w-full h-5 bg-exd-gray-44 pl-3">
               <p class="text-white text-exd-1220 font-bold">利用条件</p>
             </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              {{ prizeDetailData.terms_of_use }}
+            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.terms_of_use">
             </p>
           </div>
           <div class="w-full mb-5">
@@ -139,8 +136,6 @@ const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        loadGoogleMaps();
-        fetchingPrizeData();
         // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
@@ -165,8 +160,8 @@ const fetchingPrizeData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
-    if (data.lat != null && data.lng != null) {
-      initializeMap(data.lat, data.lng);
+    if (data.lat != null && data.long != null) {
+      initializeMap(data.lat, data.long);
     }
   } catch (error) {
     console.log(error)
@@ -194,7 +189,9 @@ const initializeMap = async (lat, long) => {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
   getLocation();
+  await loadGoogleMaps();
+  fetchingPrizeData();
 })
 </script>

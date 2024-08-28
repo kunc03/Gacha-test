@@ -40,8 +40,7 @@
             <div class="w-full h-5 bg-exd-gray-44 pl-3">
               <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
             </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              {{ prizeDetailData.how_to_win }}
+            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.how_to_win">
             </p>
           </div>
         </div>
@@ -50,6 +49,7 @@
       <button
         class="cssbuttons-io-button mt-8 mb-8"
         :class="{ 'is-clicked': isClicked }"
+        :disabled="disableSwipe"
         @click="handleSwipe"
       >
         <div class="icon">
@@ -108,6 +108,34 @@
       </div>
     </template>
   </Dialog>
+
+  <Dialog
+    v-model:visible="insufficientDialogVisible"
+    modal
+    class="!bg-white !w-exd-300 h-exd-200 !max-w-sm border border-exd-gray-44 rounded-xl"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleClose"
+      />
+      <div
+        class="w-full h-full flex flex-col justify-center items-center gap-4 p-5"
+      >
+        <div class="w-full flex flex-col justify-center items-center gap-8">
+          <img :src="warning" alt="warning" width="40" height="40" preload />
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ errorMessage }}
+          </p>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -150,12 +178,17 @@ const router = useRouter()
 
 const isClicked = ref(false)
 const isReedemDialogVisible = ref(false)
-
+const insufficientDialogVisible = ref(false);
+const errorMessage = ref(null);
 const redeemDetailData = ref({})
 const redeemMessage = ref('')
+const isLoading = ref(false);
+const disableSwipe = ref(false);
 
 const fetchRedeem = async () => {
   try {
+    errorMessage.value = null;
+    disableSwipe.value = true;
     const response = await useFetchApi('POST', 'prizes/redeem', {
       params: {
         prize_id: id,
@@ -167,17 +200,22 @@ const fetchRedeem = async () => {
       // Ekstrak pesan dari _data
       const message = response._data.message
       redeemMessage.value = message
-      console.log('Pesan redeem:', message)
+      isReedemDialogVisible.value = true
+      setTimeout(() => {
+        router.push('/claim/success') // Redirect ke halaman yang diinginkan
+      }, 3000)
     } else {
-      throw new Error('Respons tidak memiliki struktur yang diharapkan')
+      const message = response._data.message
+      errorMessage.value = message;
+      insufficientDialogVisible.value = true;
     }
 
     // Tampilkan dialog dengan pesan
-    isReedemDialogVisible.value = true
+    
   } catch (error) {
-    console.error('Error in fetchRedeem:', error)
-    redeemMessage.value = 'エラーが発生しました。もう一度お試しください。'
-    isReedemDialogVisible.value = true // Tampilkan dialog dengan pesan error
+    console.error(error)
+    errorMessage.value = error._data.message;
+    insufficientDialogVisible.value = true;
   }
 }
 
@@ -185,14 +223,13 @@ const handleSwipe = () => {
   isClicked.value = true
   if (isClicked.value) {
     fetchRedeem()
-    setTimeout(() => {
-      router.push('/claim/success') // Redirect ke halaman yang diinginkan
-    }, 3000)
+    
   }
 }
 
 const handleClose = () => {
   isReedemDialogVisible.value = false
+  insufficientDialogVisible.value = false
 }
 
 const prizeDetailData = ref({})
