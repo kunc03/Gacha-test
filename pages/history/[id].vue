@@ -125,8 +125,8 @@ const fetchingHistoryData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'history/' + id)
     historyDetailData.value = data
-    let lat = historyDetailData.value.latitude
-    let long = historyDetailData.value.longitude
+    let lat = historyDetailData.value.lat
+    let long = historyDetailData.value.long
 
     if (lat != undefined && long != undefined) {
       initializeMap(lat, long)      

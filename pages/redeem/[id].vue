@@ -54,8 +54,9 @@
           class="!bg-exd-gold !py-4 !w-full !h-12 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
           raised
           @click="handleToggleModal"
+          :disabled="disableReedem"
         >
-          <span class="grow text-center">交換</span>
+          <span class="grow text-center" v-html="disableReedem ? '交換できません' : '交換'"></span>
           <img :src="arrow" alt="warning" width="10" height="10" preload />
           
         </Button>
@@ -107,6 +108,7 @@ import close from '~/assets/images/close.svg'
 import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
+import { store } from '~/stores/dashboard.js'
 
 definePageMeta({
   middleware: 'auth',
@@ -155,16 +157,30 @@ const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
 const prizeDetailData = ref({})
 const id = route.params.id
 const map = ref(null)
+const disableReedem = ref(false);
 
 const fetchingPrizeData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
+    checkPoint(data.point);
     if (data.lat != null && data.long != null) {
       initializeMap(data.lat, data.long);
     }
   } catch (error) {
     console.log(error)
+  }
+}
+
+const checkPoint = (point) => {
+  try {
+    const currentPoint = store.point;
+    console.log(currentPoint)
+    if (currentPoint < point) {
+      disableReedem.value = true;
+    }
+  } catch (error) {
+    
   }
 }
 
@@ -191,6 +207,7 @@ const initializeMap = async (lat, long) => {
 
 onMounted(async () => {
   getLocation();
+  store.fetchingDashboardData()
   await loadGoogleMaps();
   fetchingPrizeData();
 })

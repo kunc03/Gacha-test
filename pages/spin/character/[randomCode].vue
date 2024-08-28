@@ -19,7 +19,7 @@
     >
       <div class="relative h-full w-full">
         <img
-          :src="apiImageUrl"
+          :src="characterImageUrl"
           alt="duck"
           class="absolute w-3/4 object-fill max-h-80 left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
           preload
@@ -176,7 +176,7 @@ const route = useRoute()
 const isLoading = ref(false)
 const errorMessages = ref('')
 
-const apiImageUrl = ref(null)
+const characterImageUrl = ref(null)
 
 const handleCloseDialog = () => (hasModal.value = false)
 const handleShowDialog = () => (hasModal.value = true)
@@ -191,7 +191,8 @@ const handleButton = async () => {
   if (!token && !user) {
     handleShowDialog()
   } else {
-    goToSpinPoint()
+    checkPoint()
+    // goToSpinPoint()
   }
 }
 
@@ -202,6 +203,21 @@ const nextAction = () => {
     navigateTo('/dashboard')
   } else {
     handleShowDialog()
+  }
+}
+
+const checkPoint = () => {
+  try {
+    const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN');
+    if (!isAlreadySpin) {
+      errorMessages.value = error._data.message
+      handleOpenDialog()
+    } else {
+      navigateTo('/dashboard')
+    }
+    
+  } catch (error) {
+    console.log()
   }
 }
 
@@ -216,7 +232,7 @@ const goToSpinPoint = async () => {
   }
 }
 
-const fetchImageFromApi = async () => {
+const fetchImage = async () => {
   try {
     const storedData = localStorage.getItem('VALID_PASSWORD')
 
@@ -233,29 +249,8 @@ const fetchImageFromApi = async () => {
       return
     }
 
-    const { data, error } = await useFetchApi(
-      'GET',
-      'https://admin.per.talenavi.com/api/gacha/spin',
-      {
-        params: {
-          slug: parsedData.slug,
-          password: parsedData.password,
-        },
-      }
-    )
-
-    if (error) {
-      console.error('Error fetching image:', error)
-      return
-    }
-
-    if (data.character.image) {
-      const imageUrl = data.character.image
-      apiImageUrl.value = imageUrl
-      localStorage.setItem('IMAGE_CHARACTER', imageUrl)
-    } else {
-      console.error('Unexpected API response structure:', data)
-    }
+    const imageUrl = localStorage.getItem('CHARACTER_IMAGE')
+    characterImageUrl.value = imageUrl;
   } catch (e) {
     console.error('Unexpected error:', e)
   }
@@ -318,12 +313,7 @@ const spinBeforeLogin = async () => {
 }
 
 onMounted(() => {
-  const cachedImageUrl = localStorage.getItem('IMAGE_CHARACTER')
-  if (cachedImageUrl) {
-    apiImageUrl.value = cachedImageUrl
-  } else {
-    fetchImageFromApi()
-  }
+  fetchImage();
 })
 </script>
 

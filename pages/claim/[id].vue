@@ -189,23 +189,21 @@ const fetchRedeem = async () => {
   try {
     errorMessage.value = null;
     disableSwipe.value = true;
-    const response = await useFetchApi('POST', 'prizes/redeem', {
+    const { message, status } = await useFetchApi('POST', 'prizes/redeem', {
       params: {
         prize_id: id,
       },
     })
 
     // Periksa apakah response memiliki properti _data
-    if (response && response._data) {
+    if (status) {
       // Ekstrak pesan dari _data
-      const message = response._data.message
       redeemMessage.value = message
       isReedemDialogVisible.value = true
       setTimeout(() => {
         router.push('/claim/success') // Redirect ke halaman yang diinginkan
       }, 3000)
     } else {
-      const message = response._data.message
       errorMessage.value = message;
       insufficientDialogVisible.value = true;
     }

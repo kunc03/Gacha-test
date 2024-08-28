@@ -20,7 +20,7 @@
           class="relative w-exd-400 h-exd-400 flex flex-col items-center justify-center"
         >
           <img
-            :src="apiImageUrl || point"
+            :src="pointImageUrl || point"
             alt="10point"
             class="absolute top-10 z-10"
             preload
@@ -63,8 +63,10 @@ import point from '~/assets/images/10point.svg'
 const router = useRouter()
 const route = useRoute()
 
-const apiImageUrl = ref(null)
+const pointImageUrl = ref(null)
 const apiPoint = ref(null)
+const token = localStorage.getItem('TOKEN')
+const user = localStorage.getItem('USER')
 
 const fetchImageFromApi = async () => {
   try {
@@ -83,30 +85,46 @@ const fetchImageFromApi = async () => {
       return
     }
 
-    const { data, error } = await useFetchApi('GET', 'gacha/spin', {
-      params: {
-        slug: parsedData.slug,
-        password: parsedData.password,
-      },
-    })
+    if (token && user) {
+      const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
+
+      const { data, status } = await useFetchApi('POST', 'gacha/spin', {
+        body: { ...payload },
+      })
+
+      localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin);
+      localStorage.setItem('LOCATION_ID', data.userPoint.location.id)
+      localStorage.setItem('POINT_ID', data.userPoint.point.id)
+      localStorage.setItem('POINT_IMAGE', data.userPoint.point.image)
+      localStorage.setItem('CHARACTER_ID', data.userCollection.gacha_character.id)
+      localStorage.setItem('CHARACTER_IMAGE', data.userCollection.gacha_character.image)
+      localStorage.setItem('POINT', data.userPoint.point.point.value)
+
+      
+    } else {
+      const { data, error } = await useFetchApi('GET', 'gacha/spin', {
+        params: {
+          slug: parsedData.slug,
+          password: parsedData.password,
+        },
+      })
+
+      localStorage.setItem('LOCATION_ID', data.location.id)
+      localStorage.setItem('POINT_ID', data.point.id)
+      localStorage.setItem('POINT_IMAGE', data.point.image)
+      localStorage.setItem('CHARACTER_ID', data.character.id)
+      localStorage.setItem('CHARACTER_IMAGE', data.character.image)
+      localStorage.setItem('POINT', apiPoint.value)
+    }
+
+    
 
     if (error) {
       console.error('Error fetching image:', error)
       return
     }
 
-    if (data.point.image) {
-      const imageUrl = data.point.image
-      apiImageUrl.value = imageUrl
-      apiPoint.value = data.point.amount
-      localStorage.setItem('IMAGE_POINT', imageUrl)
-      localStorage.setItem('POINT', apiPoint.value)
-      console.log('Image URL:', imageUrl)
-    } else if (!data.point.image) {
-      console.error('Unexpected API response structure:', data)
-      apiImageUrl.value = point
-      localStorage.setItem('IMAGE_POINT', imageUrl)
-    }
+    
   } catch (e) {
     console.error('Unexpected error:', e)
   }
@@ -117,13 +135,6 @@ const handleGoToCharacter = () => {
 }
 
 onMounted(() => {
-  const cachedImageUrl = localStorage.getItem('IMAGE_POINT')
-  const cachedPoint = localStorage.getItem('POINT')
-  if (cachedImageUrl && cachedPoint) {
-    apiPoint.value = cachedPoint
-    apiImageUrl.value = cachedImageUrl
-  } else {
-    fetchImageFromApi()
-  }
+  fetchImageFromApi()
 })
 </script>
