@@ -75,20 +75,21 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 
 const goToSpinPoint = async () => {
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
+  // const token = localStorage.getItem('TOKEN')
+  // const user = localStorage.getItem('USER')
 
-  let isSuccess
+  // let isSuccess
 
-  if (token && user) {
-    isSuccess = await spinAfterLogin()
-  } else {
-    isSuccess = await spinBeforeLogin()
-  }
+  // if (token && user) {
+  //   isSuccess = await spinAfterLogin()
+  // } else {
+  //   isSuccess = await spinBeforeLogin()
+  // }
 
-  if (isSuccess) {
-    router.push(`/spin/point/${route.params.randomCode}`)
-  }
+  // if (isSuccess) {
+  router.push(`/spin/point/`)
+  // console.log('Success')
+  // }
 }
 
 const spinAfterLogin = async () => {

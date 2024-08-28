@@ -71,6 +71,43 @@
       </button>
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="isReedemDialogVisible"
+    modal
+    class="!bg-white !w-exd-300 h-exd-200 !max-w-sm border border-exd-gray-44 rounded-xl"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleClose"
+      />
+      <div
+        class="w-full h-full flex flex-col justify-end items-center gap-4 p-5"
+      >
+        <div class="w-full flex flex-col justify-center items-center gap-8">
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ redeemMessage }}
+          </p>
+
+          <Button
+            class="!bg-exd-gold !py-4 w-full !max-w-exd-312 !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
+            raised
+            :loading="isLoading"
+            @click="handleDialog"
+          >
+            <span class="grow text-center">GO!</span>
+            <img :src="arrow" alt="warning" width="10" height="10" preload />
+          </Button>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -78,7 +115,9 @@ import swipeButton from 'vue3-swipe-button'
 import 'vue3-swipe-button/dist/swipeButton.css'
 import duck from '~/assets/images/duck.svg'
 import { useRouter } from 'vue-router'
-
+import warning from '~/assets/images/warning.svg'
+import close from '~/assets/images/close.svg'
+import arrow from '~/assets/images/arrow.svg'
 
 definePageMeta({
   middleware: 'auth',
@@ -93,7 +132,7 @@ const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        fetchingPrizeData();
+        fetchingPrizeData()
         // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
@@ -108,10 +147,54 @@ const getLocation = () => {
 const hasModal = ref(false)
 const route = useRoute()
 const router = useRouter()
+
 const isClicked = ref(false)
+const isReedemDialogVisible = ref(false)
+
+const redeemDetailData = ref({})
+const redeemMessage = ref('')
+
+const fetchRedeem = async () => {
+  try {
+    const response = await useFetchApi('POST', 'prizes/redeem', {
+      params: {
+        prize_id: id,
+      },
+    })
+
+    // Periksa apakah response memiliki properti _data
+    if (response && response._data) {
+      // Ekstrak pesan dari _data
+      const message = response._data.message
+      redeemMessage.value = message
+      console.log('Pesan redeem:', message)
+    } else {
+      throw new Error('Respons tidak memiliki struktur yang diharapkan')
+    }
+
+    // Tampilkan dialog dengan pesan
+    isReedemDialogVisible.value = true
+  } catch (error) {
+    console.error('Error in fetchRedeem:', error)
+    redeemMessage.value = 'エラーが発生しました。もう一度お試しください。'
+    isReedemDialogVisible.value = true // Tampilkan dialog dengan pesan error
+  }
+}
+
 const handleSwipe = () => {
   isClicked.value = true
+  if (isClicked.value) {
+    fetchRedeem()
+    setTimeout(() => {
+      router.push('/claim/success') // Redirect ke halaman yang diinginkan
+    }, 3000)
+  }
 }
+
+const handleClose = () => {
+  isReedemDialogVisible.value = false
+}
+
 const prizeDetailData = ref({})
 const id = route.params.id
 
@@ -119,13 +202,15 @@ const fetchingPrizeData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
+
+    console.log('prize:', prizeDetailData.value)
   } catch (error) {
     console.log(error)
   }
 }
 
 onMounted(() => {
-  getLocation();
+  getLocation()
 })
 </script>
 

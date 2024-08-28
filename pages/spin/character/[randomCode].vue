@@ -188,16 +188,10 @@ const handleButton = async () => {
   const user = localStorage.getItem('USER')
   const point = localStorage.getItem('POINT_ID')
 
-  let isSuccess
-
   if (!token && !user) {
     handleShowDialog()
   } else {
-    if (point === 'undefined' || point === 'null') {
-      navigateTo('/dashboard')
-    } else {
-      isSuccess = await spinAfterLogin()
-    }
+    goToSpinPoint()
   }
 }
 
@@ -289,6 +283,7 @@ const spinAfterLogin = async () => {
     localStorage.setItem('POINT_ID', data.userPoint.prize_id)
     localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
     isLoading.value = false
+
     return status
   } catch (error) {
     console.log("Error: Can't spin after login")

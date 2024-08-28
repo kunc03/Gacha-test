@@ -83,16 +83,12 @@ const fetchImageFromApi = async () => {
       return
     }
 
-    const { data, error } = await useFetchApi(
-      'GET',
-      'https://admin.per.talenavi.com/api/gacha/spin',
-      {
-        params: {
-          slug: parsedData.slug,
-          password: parsedData.password,
-        },
-      }
-    )
+    const { data, error } = await useFetchApi('GET', 'gacha/spin', {
+      params: {
+        slug: parsedData.slug,
+        password: parsedData.password,
+      },
+    })
 
     if (error) {
       console.error('Error fetching image:', error)
@@ -102,9 +98,9 @@ const fetchImageFromApi = async () => {
     if (data.point.image) {
       const imageUrl = data.point.image
       apiImageUrl.value = imageUrl
-      apiPoint.value = data.point.amount // Menyimpan jumlah poin yang diterima
+      apiPoint.value = data.point.amount
       localStorage.setItem('IMAGE_POINT', imageUrl)
-      localStorage.setItem('POINT', apiPoint.value) // Menyimpan poin di localStorage
+      localStorage.setItem('POINT', apiPoint.value)
       console.log('Image URL:', imageUrl)
     } else if (!data.point.image) {
       console.error('Unexpected API response structure:', data)
