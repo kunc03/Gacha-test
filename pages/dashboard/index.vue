@@ -164,11 +164,12 @@ const logout = async () => {
   try {
     const { data, status } = await useFetchApi('POST', 'logout')
 
-    if (status) {
-      localStorage.clear()
-      navigateTo('/')
-    }
+    localStorage.clear()
+    navigateTo('/');
+    
   } catch (error) {
+    localStorage.clear()
+    navigateTo('/')
     console.log(error)
   }
 }
