@@ -14,22 +14,22 @@
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10"
       preload
     />
-    <div
-      class="left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 absolute bg-[url('assets/images/circle-white.svg')] bg-contain bg-center w-full h-full md:h-1/2 bg-no-repeat"
-    >
+    <div class="absolute rounded-full bg-white bg-contain bg-center z-20">
       <div class="relative h-full w-full flex items-center justify-center">
-        <div class="relative w-exd-400 h-exd-400">
+        <div
+          class="relative w-exd-400 h-exd-400 flex flex-col items-center justify-center"
+        >
           <img
-            :src="apiImageUrl"
+            :src="apiImageUrl || point"
             alt="10point"
-            class="absolute w-3/4 object-fill h-56 left-1/2 top-[40%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+            class="absolute top-10 z-10"
             preload
           />
           <img
             :src="hatchedEgg"
             alt="10point"
             preload
-            class="absolute -bottom-8 small:-bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[30%] object-scale-down"
+            class="absolute bottom-[40px]"
           />
         </div>
       </div>
@@ -58,11 +58,13 @@ import gacha2 from '~/assets/images/gacha2.png'
 import sparkling from '~/assets/images/sparkling.svg'
 import hatchedEgg from '~/assets/images/hatched-egg.svg'
 import arrow from '~/assets/images/arrow.svg'
+import point from '~/assets/images/10point.svg'
 
 const router = useRouter()
 const route = useRoute()
 
 const apiImageUrl = ref(null)
+const apiPoint = ref(null)
 
 const fetchImageFromApi = async () => {
   try {
@@ -100,21 +102,29 @@ const fetchImageFromApi = async () => {
     if (data.point.image) {
       const imageUrl = data.point.image
       apiImageUrl.value = imageUrl
-      localStorage.setItem('CACHED_IMAGE_POINT', imageUrl)
-    } else {
+      apiPoint.value = data.point.amount // Menyimpan jumlah poin yang diterima
+      localStorage.setItem('IMAGE_POINT', imageUrl)
+      localStorage.setItem('POINT', apiPoint.value) // Menyimpan poin di localStorage
+      console.log('Image URL:', imageUrl)
+    } else if (!data.point.image) {
       console.error('Unexpected API response structure:', data)
+      apiImageUrl.value = point
+      localStorage.setItem('IMAGE_POINT', imageUrl)
     }
   } catch (e) {
     console.error('Unexpected error:', e)
   }
 }
 
-const handleGoToCharacter = () =>
-  router.push(`/spin/character/${route.params.randomCode}`)
+const handleGoToCharacter = () => {
+  router.push(`/spin/character`)
+}
 
 onMounted(() => {
-  const cachedImageUrl = localStorage.getItem('CACHED_IMAGE_POINT')
-  if (cachedImageUrl) {
+  const cachedImageUrl = localStorage.getItem('IMAGE_POINT')
+  const cachedPoint = localStorage.getItem('POINT')
+  if (cachedImageUrl && cachedPoint) {
+    apiPoint.value = cachedPoint
     apiImageUrl.value = cachedImageUrl
   } else {
     fetchImageFromApi()
