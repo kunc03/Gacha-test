@@ -217,7 +217,7 @@ const nextAction = () => {
 const checkPoint = () => {
   try {
     const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN');
-    if (isAlreadySpin) {
+    if (isAlreadySpin == 'true') {
       errorMessages.value = "1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。"
       handleOpenDialog()
     } else {
