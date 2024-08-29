@@ -105,31 +105,31 @@ useHead({
     { name: 'og:type', content: 'Website' },
 
     // twitter
-    // { name: 'fb:app_id', content: 'YOUR_FACEBOOK_APP_ID' },
-    // { name: 'twitter:title', content: 'Gacharary' },
-    // {
-    //   name: 'twitter:description',
-    //   content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
-    // },
-    // {
-    //   name: 'twitter:image',
-    //   content:
-    //     'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
-    // },
-    // { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'fb:app_id', content: 'YOUR_FACEBOOK_APP_ID' },
+    { name: 'twitter:title', content: 'Gacharary' },
+    {
+      name: 'twitter:description',
+      content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
+    },
+    {
+      name: 'twitter:image',
+      content:
+        'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
+    },
+    { name: 'twitter:card', content: 'summary_large_image' },
 
     // // LINE
-    // { name: 'line:card', content: 'summary_large_image' },
-    // { name: 'line:title', content: 'Gacharary' },
-    // {
-    //   name: 'line:description',
-    //   content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
-    // },
-    // {
-    //   name: 'line:image',
-    //   content:
-    //     'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
-    // },
+    { name: 'line:card', content: 'summary_large_image' },
+    { name: 'line:title', content: 'Gacharary' },
+    {
+      name: 'line:description',
+      content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
+    },
+    {
+      name: 'line:image',
+      content:
+        'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
+    },
   ],
 })
 
