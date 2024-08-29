@@ -143,13 +143,21 @@
         class="absolute right-1 top-1 cursor-pointer z-50"
         @click="handleClose"
       />
-      <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
+      <div class="w-full flex flex-col justify-center items-center gap-4 py-6 px-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ errorMessages }}
           </p>
         </div>
+        <Button
+          class="!bg-exd-gold !py-4 w-full !max-w-exd-312 !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
+          raised
+          @click="goTo('/dashboard')"
+        >
+          <span class="grow text-center">ガチャTOP</span>
+          <img :src="arrow" alt="warning" width="10" height="10" preload />
+        </Button>
       </div>
     </template>
   </Dialog>
@@ -209,8 +217,8 @@ const nextAction = () => {
 const checkPoint = () => {
   try {
     const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN');
-    if (!isAlreadySpin) {
-      errorMessages.value = error._data.message
+    if (isAlreadySpin) {
+      errorMessages.value = "1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。"
       handleOpenDialog()
     } else {
       navigateTo('/dashboard')
@@ -288,6 +296,9 @@ const spinAfterLogin = async () => {
     }
     isLoading.value = false
   }
+}
+const goTo = (url) => {
+  navigateTo(url)
 }
 
 const spinBeforeLogin = async () => {
