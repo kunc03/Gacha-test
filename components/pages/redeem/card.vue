@@ -4,8 +4,8 @@
   >
     <div class="bg-exd-red-900 inline-flex justify-between w-full pt-2 px-4">
       <p class="text-white font-bold text-exd-1824.52">{{ keyBody }}pt</p>
-      <p class="text-exd-yellow-300 font-medium text-exd-1824.52">
-        <!-- 交換できます -->
+      <p class="text-exd-yellow-300 font-medium text-exd-1824.52" v-if="keyBody < currentPoint">
+        交換できます
       </p>
     </div>
     <div
@@ -56,6 +56,10 @@ const props = defineProps({
   },
   keyBody: {
     type: String
+  },
+  currentPoint: {
+    type: Number,
+    default: 0
   }
 })
 

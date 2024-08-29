@@ -21,12 +21,15 @@
         :key="key"
         :keyBody="key"
         :body="prize"
+        :currentPoint="store.point"
       />
     </div>
   </div>
 </template>
 
 <script setup>
+import { store } from '~/stores/dashboard.js'
+
 definePageMeta({
   middleware: 'auth',
   layout: 'with-bottom-bar',
@@ -61,6 +64,7 @@ const dataArrays = ((data) => {
 });
 
 onMounted(() => {
+  store.fetchingDashboardData()
   fetchingPrizesData();
 })
 
