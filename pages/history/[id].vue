@@ -32,7 +32,9 @@
             {{ historyDetailData.point_amount }}pt
           </p>
         </div>
-        <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap">
+        <p
+          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
+        >
           {{ historyDetailData.character_description }}
         </p>
         <!-- <div class="inline-flex gap-3 w-full justify-center">
@@ -62,7 +64,6 @@
 </template>
 
 <script setup>
-
 import duck from '~/assets/images/duck.svg'
 import download from '~/assets/images/download.svg'
 import facebook from '~/assets/images/facebook.svg'
@@ -75,33 +76,65 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
+const historyDetailData = ref({})
 const props = defineProps(['id'])
 
-const updateMeta = (title, description, image, url) => {
-  // useHead({
-  //   title: title || 'title',
-  //   meta: [
-  //     { property: 'og:type', content: 'website' },
-  //     { property: 'og:site_name', content: 'Gacha' },
-  //     { property: 'og:description', content: description || 'Description' },
-  //     { property: 'og:title', content: title || 'History' },
-  //     { property: 'og:image', content: image || 'Character image' },
-  //     { property: 'og:site', content: url }
-  //   ],
-  // })
-  useSeoMeta({
-    title: title || 'title',
-    ogTitle: title || 'title',
-    description: description || 'Description',
-    ogDescription: description || 'Description',
-    ogImage: image,
-    twitterCard: image,
-  })
-}
+const title = ' Gacharary'
+const description = 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！'
+const image =
+  'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png'
+const url = 'https://www.pixiv.net/artworks/121122327'
+
+useHead({
+  title: computed(() => historyDetailData.value.character_name),
+
+  meta: [
+    { name: 'description', content: 'description' },
+    // Facebook
+    { name: 'og:title', content: 'Gacharary' },
+    {
+      name: 'og:description',
+      content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
+    },
+    {
+      name: 'og:image',
+      content:
+        'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
+    },
+    { name: 'og:url', content: 'https://www.pixiv.net/artworks/121122327' },
+    { name: 'og:type', content: 'Website' },
+
+    // twitter
+    // { name: 'fb:app_id', content: 'YOUR_FACEBOOK_APP_ID' },
+    // { name: 'twitter:title', content: 'Gacharary' },
+    // {
+    //   name: 'twitter:description',
+    //   content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
+    // },
+    // {
+    //   name: 'twitter:image',
+    //   content:
+    //     'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
+    // },
+    // { name: 'twitter:card', content: 'summary_large_image' },
+
+    // // LINE
+    // { name: 'line:card', content: 'summary_large_image' },
+    // { name: 'line:title', content: 'Gacharary' },
+    // {
+    //   name: 'line:description',
+    //   content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
+    // },
+    // {
+    //   name: 'line:image',
+    //   content:
+    //     'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
+    // },
+  ],
+})
 
 const marker = ref(null)
 const mapContainer = ref(null)
-const historyDetailData = ref({})
 const map = ref(null)
 const route = useRoute()
 const id = route.params.id
@@ -128,16 +161,10 @@ const fetchingHistoryData = async () => {
     let lat = historyDetailData.value.lat
     let long = historyDetailData.value.long
 
+    console.log(historyDetailData.value)
     if (lat != undefined && long != undefined) {
-      initializeMap(lat, long)      
+      initializeMap(lat, long)
     }
-    let title = historyDetailData.value.character_name;
-    let description = historyDetailData.value.character_description;
-    let image = historyDetailData.value.character_image;
-    let website = window.location.href;
-
-    updateMeta(title, description, image, website)
-
   } catch (error) {
     console.log(error)
   }
@@ -168,5 +195,4 @@ onBeforeMount(async () => {
   await loadGoogleMaps()
   fetchingHistoryData()
 })
-
 </script>
