@@ -40,8 +40,7 @@
             <div class="w-full h-5 bg-exd-gray-44 pl-3">
               <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
             </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              {{ prizeDetailData.how_to_win }}
+            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.how_to_win">
             </p>
           </div>
         </div>
@@ -50,6 +49,7 @@
       <button
         class="cssbuttons-io-button mt-8 mb-8"
         :class="{ 'is-clicked': isClicked }"
+        :disabled="disableSwipe"
         @click="handleSwipe"
       >
         <div class="icon">
@@ -71,6 +71,71 @@
       </button>
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="isReedemDialogVisible"
+    modal
+    class="!bg-white !w-exd-300 h-exd-200 !max-w-sm border border-exd-gray-44 rounded-xl"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleClose"
+      />
+      <div
+        class="w-full h-full flex flex-col justify-end items-center gap-4 p-5"
+      >
+        <div class="w-full flex flex-col justify-center items-center gap-8">
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ redeemMessage }}
+          </p>
+
+          <Button
+            class="!bg-exd-gold !py-4 w-full !max-w-exd-312 !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
+            raised
+            :loading="isLoading"
+            @click="handleDialog"
+          >
+            <span class="grow text-center">GO!</span>
+            <img :src="arrow" alt="warning" width="10" height="10" preload />
+          </Button>
+        </div>
+      </div>
+    </template>
+  </Dialog>
+
+  <Dialog
+    v-model:visible="insufficientDialogVisible"
+    modal
+    class="!bg-white !w-exd-300 h-exd-200 !max-w-sm border border-exd-gray-44 rounded-xl"
+  >
+    <template #container>
+      <img
+        :src="close"
+        alt="close"
+        width="30"
+        height="30"
+        preload
+        class="absolute right-1 top-1 cursor-pointer z-50"
+        @click="handleClose"
+      />
+      <div
+        class="w-full h-full flex flex-col justify-center items-center gap-4 p-5"
+      >
+        <div class="w-full flex flex-col justify-center items-center gap-8">
+          <img :src="warning" alt="warning" width="40" height="40" preload />
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ errorMessage }}
+          </p>
+        </div>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup>
@@ -78,7 +143,9 @@ import swipeButton from 'vue3-swipe-button'
 import 'vue3-swipe-button/dist/swipeButton.css'
 import duck from '~/assets/images/duck.svg'
 import { useRouter } from 'vue-router'
-
+import warning from '~/assets/images/warning.svg'
+import close from '~/assets/images/close.svg'
+import arrow from '~/assets/images/arrow.svg'
 
 definePageMeta({
   middleware: 'auth',
@@ -93,7 +160,7 @@ const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        fetchingPrizeData();
+        fetchingPrizeData()
         // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
@@ -108,10 +175,61 @@ const getLocation = () => {
 const hasModal = ref(false)
 const route = useRoute()
 const router = useRouter()
+
 const isClicked = ref(false)
+const isReedemDialogVisible = ref(false)
+const insufficientDialogVisible = ref(false);
+const errorMessage = ref(null);
+const redeemDetailData = ref({})
+const redeemMessage = ref('')
+const isLoading = ref(false);
+const disableSwipe = ref(false);
+
+const fetchRedeem = async () => {
+  try {
+    errorMessage.value = null;
+    disableSwipe.value = true;
+    const { message, status } = await useFetchApi('POST', 'prizes/redeem', {
+      params: {
+        prize_id: id,
+      },
+    })
+
+    // Periksa apakah response memiliki properti _data
+    if (status) {
+      // Ekstrak pesan dari _data
+      redeemMessage.value = message
+      isReedemDialogVisible.value = true
+      setTimeout(() => {
+        router.push('/claim/success') // Redirect ke halaman yang diinginkan
+      }, 3000)
+    } else {
+      errorMessage.value = message;
+      insufficientDialogVisible.value = true;
+    }
+
+    // Tampilkan dialog dengan pesan
+    
+  } catch (error) {
+    console.error(error)
+    errorMessage.value = error._data.message;
+    insufficientDialogVisible.value = true;
+  }
+}
+
 const handleSwipe = () => {
   isClicked.value = true
+  if (isClicked.value) {
+    fetchRedeem()
+    
+  }
 }
+
+const handleClose = () => {
+  isReedemDialogVisible.value = false
+  insufficientDialogVisible.value = false
+}
+
 const prizeDetailData = ref({})
 const id = route.params.id
 
@@ -119,13 +237,15 @@ const fetchingPrizeData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
+
+    console.log('prize:', prizeDetailData.value)
   } catch (error) {
     console.log(error)
   }
 }
 
 onMounted(() => {
-  getLocation();
+  getLocation()
 })
 </script>
 

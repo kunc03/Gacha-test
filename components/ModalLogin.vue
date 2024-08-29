@@ -195,6 +195,7 @@ const saveSpin = async () => {
       body: {
         point_id: localStorage.getItem('POINT_ID'),
         location_id: localStorage.getItem('LOCATION_ID'),
+        character_id: localStorage.getItem('CHARACTER_ID')
       },
     })
 

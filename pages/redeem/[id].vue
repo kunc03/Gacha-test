@@ -35,17 +35,14 @@
             <div class="w-full h-5 bg-exd-gray-44 pl-3">
               <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
             </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              {{ prizeDetailData.how_to_win }}
-            </p>
+            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.how_to_win"></p>
           </div>
 
           <div class="flex flex-col gap-2 mb-2">
             <div class="w-full h-5 bg-exd-gray-44 pl-3">
               <p class="text-white text-exd-1220 font-bold">利用条件</p>
             </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218">
-              {{ prizeDetailData.terms_of_use }}
+            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.terms_of_use">
             </p>
           </div>
           <div class="w-full mb-5">
@@ -57,8 +54,9 @@
           class="!bg-exd-gold !py-4 !w-full !h-12 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
           raised
           @click="handleToggleModal"
+          :disabled="disableReedem"
         >
-          <span class="grow text-center">交換</span>
+          <span class="grow text-center" v-html="disableReedem ? '交換できません' : '交換'"></span>
           <img :src="arrow" alt="warning" width="10" height="10" preload />
           
         </Button>
@@ -110,6 +108,7 @@ import close from '~/assets/images/close.svg'
 import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
+import { store } from '~/stores/dashboard.js'
 
 definePageMeta({
   middleware: 'auth',
@@ -139,8 +138,6 @@ const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        loadGoogleMaps();
-        fetchingPrizeData();
         // initializeMap(position.coords.latitude, position.coords.longitude)
       },
       (error) => {
@@ -160,16 +157,30 @@ const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
 const prizeDetailData = ref({})
 const id = route.params.id
 const map = ref(null)
+const disableReedem = ref(false);
 
 const fetchingPrizeData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
-    if (data.lat != null && data.lng != null) {
-      initializeMap(data.lat, data.lng);
+    checkPoint(data.point);
+    if (data.lat != null && data.long != null) {
+      initializeMap(data.lat, data.long);
     }
   } catch (error) {
     console.log(error)
+  }
+}
+
+const checkPoint = (point) => {
+  try {
+    const currentPoint = store.point;
+    console.log(currentPoint)
+    if (currentPoint < point) {
+      disableReedem.value = true;
+    }
+  } catch (error) {
+    
   }
 }
 
@@ -194,7 +205,10 @@ const initializeMap = async (lat, long) => {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
   getLocation();
+  store.fetchingDashboardData()
+  await loadGoogleMaps();
+  fetchingPrizeData();
 })
 </script>

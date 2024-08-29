@@ -7,6 +7,7 @@
         v-if="showGif"
         :src="gifUrl"
         autoplay
+        preload="auto"
         class="absolute z-20 inset-0 w-full h-full object-cover"
         @ended="goToCharacter"
       />
