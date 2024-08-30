@@ -29,6 +29,7 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4"
         >
           <InputText
+            ref="surname"
             :model="form.surname"
             label="姓"
             required
@@ -37,6 +38,7 @@
             :validate-on-submit="validateOnSubmit"
           />
           <InputText
+            ref="givenName"
             :model="form.givenName"
             label="名"
             required
@@ -59,6 +61,7 @@
           >
           <div class="inline-flex gap-4">
             <Dropdown
+              ref="yearOfBirth"
               :model="form.yearOfBirth"
               @update:model="updateModel('yearOfBirth', $event)"
               @validate="validateInput('yearOfBirth', $event)"
@@ -67,6 +70,7 @@
               :validate-on-submit="validateOnSubmit"
             />
             <Dropdown
+              ref="monthOfBirth"
               :model="form.monthOfBirth"
               @update:model="updateModel('monthOfBirth', $event)"
               @validate="validateInput('monthOfBirth', $event)"
@@ -75,6 +79,7 @@
               :validate-on-submit="validateOnSubmit"
             />
             <Dropdown
+              ref="dateOfBirth"
               :model="form.dateOfBirth"
               @update:model="updateModel('dateOfBirth', $event)"
               @validate="validateInput('dateOfBirth', $event)"
@@ -164,6 +169,7 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4 flex-col"
         >
           <InputText
+            ref="postCode"
             :model="form.postCode"
             label="郵便番号（ハイフンなし)"
             required
@@ -204,6 +210,7 @@
           />
 
           <InputText
+            ref="address"
             :model="form.address"
             required
             v-model="inputValue"
@@ -222,6 +229,7 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
+            ref="phoneNumber"
             :model="form.phoneNumber"
             required
             :onlyNumeric="true"
@@ -235,6 +243,7 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
+            ref="email"
             type="email"
             :model="form.email"
             required
@@ -248,6 +257,7 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
+            ref="password"
             type="password"
             :model="form.password"
             required
@@ -257,6 +267,7 @@
             :validate-on-submit="validateOnSubmit"
           />
           <InputText
+            ref="confPassword"
             type="password"
             required
             :model="form.confPassword"
@@ -271,6 +282,7 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputTextArea
+            ref="questionnaire1"
             :model="form.questionnaire1"
             required
             label="アンケート"
@@ -279,6 +291,7 @@
             :validate-on-submit="validateOnSubmit"
           />
           <InputTextArea
+            ref="questionnaire2"
             :model="form.questionnaire2"
             required
             label="アンケート"
@@ -287,6 +300,7 @@
             :validate-on-submit="validateOnSubmit"
           />
           <InputTextArea
+            ref="questionnaire3"
             :model="form.questionnaire3"
             required
             label="アンケート"
@@ -474,11 +488,13 @@ const handleSubmit = async () => {
   } catch (error) {
     console.log(error)
     console.log("Error: Can't register")
-    const errors = error._data.errors
+    const errors = error._data.errors[0]
     if (errors) {
       const message = Object.keys(errors).map((item) => errors[item][0])
       errorMessages.value = message
-      isErrorMessage.value = true
+      // isErrorMessage.value = true
+      console.log(errors)
+      window.scrollTo({ top: errors, behavior: 'smooth' })
     }
   } finally {
     isLoading.value = false
