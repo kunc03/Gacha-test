@@ -105,6 +105,7 @@ const historyDetailData = ref({})
 const map = ref(null)
 const route = useRoute()
 const id = route.params.id
+const config = useRuntimeConfig()
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -113,7 +114,7 @@ const loadGoogleMaps = () => {
       return
     }
     const script = document.createElement('script')
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-_CN0BNZ53YPzV5TwP8KBpR1td2foCg&libraries=places&language=ja&region=ja`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.GOOGLE_API}&libraries=places&language=ja&region=ja`
     script.async = true
     script.onload = resolve
     script.onerror = reject
