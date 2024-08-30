@@ -12,6 +12,7 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap',
         },
+        { rel: 'icon', type: 'image/x-icon', href: '/logo-icon.ico' },
       ],
     },
   },
@@ -59,6 +60,11 @@ export default defineNuxtConfig({
       BASE_API: process.env.NUXT_BASE_API,
       API_URL: process.env.API_URL,
       GOOGLE_API: process.env.GOOGLE_API,
+      APP_NAME: process.env.APP_NAME,
+      META_TITLE: process.env.META_TITLE,
+      META_DESCRIPTION: process.env.META_DESCRIPTION,
+      META_IMAGE: process.env.META_IMAGE,
+      META_URL: process.env.META_URL
     },
   },
 
