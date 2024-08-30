@@ -15,21 +15,8 @@
           preload
         />
       </div>
-      <Button
-        class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-        raised
-        @click="goToSpinPoint"
-      >
-        <span class="grow text-center">ガチャを回す</span>
-        <img
-          :src="arrow"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
-      </Button>
+
+      <SolidButton label="ガチャを回す" :on-click="goToSpinPoint" has-bottom />
     </div>
   </div>
 
@@ -64,7 +51,6 @@
 const route = useRoute()
 const router = useRouter()
 import gacha2 from '~/assets/images/gacha2.png'
-import arrow from '~/assets/images/arrow.svg'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
 
@@ -146,4 +132,8 @@ const spinBeforeLogin = async () => {
     isLoading.value = false
   }
 }
+
+useHead({
+  title: 'Spin',
+})
 </script>

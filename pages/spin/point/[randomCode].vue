@@ -18,21 +18,9 @@
       <Circle10Point class="relative top-1/2 -translate-y-[50%]" />
     </div>
     <div class="absolute-10 top-1/2 translate-y-[80%]"></div>
-    <Button
-      class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-      raised
-      @click="handleGoToCharacter"
-    >
-      <span class="grow text-center">次へ</span>
-      <img
-        :src="arrow"
-        alt="arrow"
-        width="10"
-        height="10"
-        preload
-        class="shrink-0"
-      />
-    </Button>
+    <div class="w-full absolute bottom-0">
+      <SolidButton label="次へ" :on-click="handleGoToCharacter" has-bottom />
+    </div>
   </div>
 </template>
 
@@ -120,6 +108,10 @@ const handleGoToCharacter = () => {
 
 onMounted(() => {
   fetchImageFromApi()
+})
+
+useHead({
+  title: 'Spin Point',
 })
 </script>
 

@@ -22,33 +22,23 @@
         >
           パスワードは「名古屋観光デジタルマップ」　 で このスポットを探してGET!
         </div>
-        <div class="w-full grow bg-gray-100 p-5 relative flex flex-col">
-          <div class="overflow-y-auto grow max-h-[calc(100dvh-550px)]">
+        <div class="w-full grow bg-gray-100 relative flex flex-col">
+          <div class="grow p-5">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
               注意事項
             </p>
-            <p class="text-exd-1220 text-exd-gray-scorpion font-medium">
+            <p
+              class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)]"
+            >
               {{ description }}
             </p>
           </div>
-
-          <Button
-            class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-            raised
-            :loading="isLoading"
-            @click="goToScan"
-          >
-            <span class="grow text-center">GO!</span>
-            <LoadingIcon v-if="isLoading" />
-            <img
-              v-else
-              :src="arrow"
-              alt="warning"
-              width="10"
-              height="10"
-              preload
-            />
-          </Button>
+          <SolidButton
+            label="GO!"
+            :has-loading="false"
+            :on-click="goToScan"
+            :has-bottom="true"
+          />
         </div>
       </div>
     </div>
@@ -88,10 +78,9 @@
 <script setup>
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
 
 import InputOtp from 'primevue/inputotp'
-import Header from '~/components/header.vue'
+import Header from '~/components/Header.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
 
@@ -213,6 +202,10 @@ onMounted(async () => {
 
   const location = route.params.randomCode
   await getPassword(location)
+})
+
+useHead({
+  title: 'Scan',
 })
 </script>
 

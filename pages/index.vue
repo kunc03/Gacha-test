@@ -177,4 +177,8 @@ onMounted(() => {
     isComplete.value = true
   }
 })
+
+useHead({
+  title: 'Welcome',
+})
 </script>
