@@ -11,10 +11,16 @@
     <img
       :src="sparkling"
       alt="sparkling"
-      class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10"
+      class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10 animate-sparkling"
       preload
     />
-    <div
+    <div class="absolute inset-0 px-[1.5rem] flex justify-center z-20">
+      <CircleSpinCharacter
+        class="relative top-1/2 -translate-y-[50%]"
+        :imageSrc="characterImageUrl"
+      />
+    </div>
+    <!-- <div
       class="left-1/2 top-[30%] transform -translate-x-1/2 -translate-y-1/2 z-20 absolute bg-[url('assets/images/circle-white.svg')] bg-contain bg-center w-full h-full bg-no-repeat"
     >
       <div class="relative h-full w-full">
@@ -31,7 +37,7 @@
           class="absolute -bottom-10 md:-bottom-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-1/4 object-scale-down small:h-3/4"
         />
       </div>
-    </div>
+    </div> -->
 
     <Button
       class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
@@ -143,7 +149,9 @@
         class="absolute right-1 top-1 cursor-pointer z-50"
         @click="handleClose"
       />
-      <div class="w-full flex flex-col justify-center items-center gap-4 py-6 px-6">
+      <div
+        class="w-full flex flex-col justify-center items-center gap-4 py-6 px-6"
+      >
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
@@ -173,6 +181,7 @@ import close from '~/assets/images/close.svg'
 import exportImg from '~/assets/images/export.svg'
 import useRegister from '~/composables/useRegister'
 import warning from '~/assets/images/warning.svg'
+import SpinCharacter from '~/components/CircleSpinCharacter.vue'
 
 const { setSourceFrom } = useRegister()
 
@@ -216,14 +225,14 @@ const nextAction = () => {
 
 const checkPoint = () => {
   try {
-    const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN');
-    if (isAlreadySpin) {
-      errorMessages.value = "1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。"
+    const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN')
+    if (isAlreadySpin == 'true') {
+      errorMessages.value =
+        '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
       handleOpenDialog()
     } else {
       navigateTo('/dashboard')
     }
-    
   } catch (error) {
     console.log()
   }
@@ -258,7 +267,7 @@ const fetchImage = async () => {
     }
 
     const imageUrl = localStorage.getItem('CHARACTER_IMAGE')
-    characterImageUrl.value = imageUrl;
+    characterImageUrl.value = imageUrl
   } catch (e) {
     console.error('Unexpected error:', e)
   }
@@ -324,12 +333,29 @@ const spinBeforeLogin = async () => {
 }
 
 onMounted(() => {
-  fetchImage();
+  fetchImage()
 })
 </script>
 
 <style scoped>
 ::v-deep(.p-dialog-header) {
   display: none;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-sparkling {
+  opacity: 0.4;
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: sparkle 1s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

@@ -132,7 +132,7 @@ const checkPassword = async (params) => {
 }
 
 const goToScan = async () => {
-  const location = route.params.randomId
+  const location = route.params.randomCode
   const passwordValue = value.value
 
   const isTrue = await checkPassword({
@@ -222,7 +222,7 @@ onMounted(async () => {
     }
   }
 
-  const location = route.params.randomId
+  const location = route.params.randomCode
   await getPassword(location)
 })
 </script>
