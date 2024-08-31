@@ -48,7 +48,7 @@
       >{{ helperText }}</small
     >
     <small
-      v-if="error !== ''"
+      v-if="validateOnSubmit && !isLengthValid && !modelValue"
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
       >{{ error }}</small
@@ -106,6 +106,10 @@ const props = defineProps({
     default: false,
   },
   required: {
+    type: Boolean,
+    default: false,
+  },
+  minValue: {
     type: Boolean,
     default: false,
   },

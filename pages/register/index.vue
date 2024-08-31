@@ -257,7 +257,6 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
-            ref="password"
             type="password"
             :model="form.password"
             required
@@ -267,7 +266,6 @@
             :validate-on-submit="validateOnSubmit"
           />
           <InputText
-            ref="confPassword"
             type="password"
             required
             :model="form.confPassword"
