@@ -16,13 +16,26 @@
     </div>
 
     <div class="flex flex-col gap-8">
-      <PagesRedeemCard
-        v-for="(prize, key) in prizes"
-        :key="key"
-        :keyBody="key"
-        :body="prize"
-        :currentPoint="store.point"
-      />
+      <template v-if="isFetching">
+        <PagesRedeemCard
+          v-for="n in 1"
+          :key="n"
+          :keyBody="key"
+          :body="[]"
+          :currentPoint="0"
+          :is-fetching="true"
+        />
+      </template>
+      <template v-else>
+        <PagesRedeemCard
+          v-for="(prize, key) in prizes"
+          :key="key"
+          :keyBody="key"
+          :body="prize"
+          :currentPoint="store.point"
+          :is-fetching="false"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -40,32 +53,34 @@ useHead({
 })
 
 const prizes = ref([])
+const isFetching = ref(false)
 
 const fetchingPrizesData = async () => {
   try {
+    isFetching.value = true
     const { data } = await useFetchApi('GET', 'prizes')
 
-    prizes.value = dataArrays(data);
-    console.log(prizes.value);
+    prizes.value = dataArrays(data)
   } catch (error) {
     console.log(error)
+  } finally {
+    isFetching.value = false
   }
 }
 
-const dataArrays = ((data) => {
+const dataArrays = (data) => {
   return data.reduce((acc, obj) => {
-    const key = Object.keys(obj)[0];
+    const key = Object.keys(obj)[0]
     if (!acc[key]) {
-      acc[key] = [];
+      acc[key] = []
     }
-    acc[key] = acc[key].concat(obj[key]);
-    return acc;
-  }, {});
-});
+    acc[key] = acc[key].concat(obj[key])
+    return acc
+  }, {})
+}
 
 onMounted(() => {
   store.fetchingDashboardData()
-  fetchingPrizesData();
+  fetchingPrizesData()
 })
-
 </script>

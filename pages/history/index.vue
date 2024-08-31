@@ -11,7 +11,8 @@
     <div class="text-white w-full inline-flex justify-between">
       <p class="text-exd-2856">キャラクター図鑑</p>
       <p class="font-bold text-exd-1824.52 leading-tight">
-        <span class="text-exd-2856">{{ character_count }}</span>/{{ master_count }}
+        <span class="text-exd-2856">{{ character_count }}</span
+        >/{{ master_count }}
       </p>
     </div>
     <PagesHistoryCard
@@ -33,18 +34,16 @@ useHead({
 })
 
 const histories = ref([])
-const character_count = ref(0);
-const master_count = ref(0);
-
+const character_count = ref(0)
+const master_count = ref(0)
 
 const fetchingHistoryData = async () => {
   try {
     const data = await useFetchApi('GET', 'history')
-    
-    histories.value = data.data
-    character_count.value = data.character_count;
-    master_count.value = data.master_count;
 
+    histories.value = data.data
+    character_count.value = data.character_count
+    master_count.value = data.master_count
   } catch (error) {
     console.log(error)
   }
