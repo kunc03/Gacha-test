@@ -32,15 +32,17 @@
             {{ historyDetailData.point_amount }}pt
           </p>
         </div>
-        <p class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap">
+        <p
+          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
+        >
           {{ historyDetailData.character_description }}
         </p>
-        <!-- <div class="inline-flex gap-3 w-full justify-center">
-          <img :src="download" alt="download" class="size-8" preload />
-          <img :src="line" alt="line" class="size-8" preload />
-          <img :src="x" alt="x" class="size-8" preload />
-          <img :src="facebook" alt="facebook" class="size-8" preload />
-        </div> -->
+        <div class="inline-flex gap-3 w-full justify-center my-2">
+          <img :src="download" alt="download" class="size-8 cursor-pointer" @click="share('image')" preload />
+          <img :src="line" alt="line" class="size-8 cursor-pointer" @click="share('line')" preload />
+          <img :src="x" alt="x" class="size-8 cursor-pointer" @click="share('x')" preload />
+          <img :src="facebook" alt="facebook" class="size-8 cursor-pointer" @click="share('facebook')" preload />
+        </div>
         <div class="flex flex-col gap-2 mb-2">
           <div class="w-full h-5 bg-exd-gray-44 pl-3">
             <p class="text-white text-exd-1220 font-bold">
@@ -62,7 +64,6 @@
 </template>
 
 <script setup>
-
 import duck from '~/assets/images/duck.svg'
 import download from '~/assets/images/download.svg'
 import facebook from '~/assets/images/facebook.svg'
@@ -75,36 +76,19 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-const props = defineProps(['id'])
 
-const updateMeta = (title, description, image, url) => {
-  // useHead({
-  //   title: title || 'title',
-  //   meta: [
-  //     { property: 'og:type', content: 'website' },
-  //     { property: 'og:site_name', content: 'Gacha' },
-  //     { property: 'og:description', content: description || 'Description' },
-  //     { property: 'og:title', content: title || 'History' },
-  //     { property: 'og:image', content: image || 'Character image' },
-  //     { property: 'og:site', content: url }
-  //   ],
-  // })
-  useSeoMeta({
-    title: title || 'title',
-    ogTitle: title || 'title',
-    description: description || 'Description',
-    ogDescription: description || 'Description',
-    ogImage: image,
-    twitterCard: image,
-  })
-}
-
+const config = useRuntimeConfig();
 const marker = ref(null)
 const mapContainer = ref(null)
-const historyDetailData = ref({})
 const map = ref(null)
 const route = useRoute()
 const id = route.params.id
+const title = config.public.META_TITLE
+const description = config.public.META_DESCRIPTION
+const image = config.public.META_IMAGE
+const url = config.public.META_URL
+const historyDetailData = ref({})
+const props = defineProps(['id'])
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -113,7 +97,7 @@ const loadGoogleMaps = () => {
       return
     }
     const script = document.createElement('script')
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-_CN0BNZ53YPzV5TwP8KBpR1td2foCg&libraries=places&language=ja&region=ja`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.GOOGLE_API}&libraries=places&language=ja&region=ja`
     script.async = true
     script.onload = resolve
     script.onerror = reject
@@ -129,15 +113,8 @@ const fetchingHistoryData = async () => {
     let long = historyDetailData.value.long
 
     if (lat != undefined && long != undefined) {
-      initializeMap(lat, long)      
+      initializeMap(lat, long)
     }
-    let title = historyDetailData.value.character_name;
-    let description = historyDetailData.value.character_description;
-    let image = historyDetailData.value.character_image;
-    let website = window.location.href;
-
-    updateMeta(title, description, image, website)
-
   } catch (error) {
     console.log(error)
   }
@@ -164,9 +141,83 @@ const initializeMap = async (lat, long) => {
   })
 }
 
+const updateMetaHead = () => {
+  useHead({
+    title: computed(() => config.public.APP_NAME),
+
+    meta: [
+      { name: 'description', content: description },
+      // Facebook
+      { name: 'og:title', content: title },
+      { name: 'og:description', content: description},
+      { name: 'og:image', content: image},
+      { name: 'og:url', content: url},
+      { name: 'og:type', content: 'Website' },
+
+      // twitter
+      { name: 'twitter:title', content: title },
+      { name: 'twitter:description', content: description},
+      { name: 'twitter:image', content: image},
+      { name: 'twitter:card', content: 'summary_large_image' },
+
+      // // LINE
+      { name: 'line:title', content: title },
+      { name: 'line:description', content: description},
+      { name: 'line:image', content: image},
+      { name: 'line:card', content: 'summary_large_image' },
+    ],
+  });
+}
+
+const share = (type) => {
+  switch (type) {
+    case "image":
+      window.open(historyDetailData.value.character_image) 
+      break;
+    case "facebook":
+      shareToFacebook()
+      break;
+    case "x":
+      shareToX()
+      break;
+    case "line":
+      shareToLine();
+      break;
+  
+    default:
+      break;
+  }
+}
+
+const shareToFacebook = () => {
+  try {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(description)}`
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const shareToX = () => {
+  try {
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(url)}`);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const shareToLine = () => {
+  try {
+    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(url)}`);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 onBeforeMount(async () => {
   await loadGoogleMaps()
   fetchingHistoryData()
+  updateMetaHead();
 })
-
 </script>
