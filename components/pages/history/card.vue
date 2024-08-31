@@ -3,8 +3,9 @@
     :on-click="() => handleGoToDetailHistory()"
     :image-card="characterImage"
     :has-rounded="true"
+    :is-fetching="isFetching"
   >
-    <template v-slot:text>
+    <template v-slot:text v-if="!isFetching">
       <div>
         <p class="text-exd-gold text-exd-1724 font-bold">
           {{ data.amount }}<span>pt</span>
@@ -24,7 +25,21 @@
 import { useRouter } from 'vue-router'
 import noImage from '~/assets/images/no-image.svg'
 
-const props = defineProps(['data', 'id'])
+const props = defineProps({
+  isFetching: { type: Boolean, default: false },
+  data: {
+    type: Object,
+    default: () => {},
+  },
+  id: {
+    type: String,
+    default: '',
+  },
+  isFetching: {
+    type: Boolean,
+    default: true,
+  },
+})
 
 const characterImage = props.data.character?.image || noImage
 

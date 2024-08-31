@@ -3,7 +3,7 @@
     <div
       :class="[
         roundedClass,
-        'bg-white p-3 inline-flex gap-2 border-b border-b-exd-light-grey w-100 relative',
+        'bg-white p-3 inline-flex gap-2 border-b border-b-exd-light-grey w-100 relative cursor-pointer',
       ]"
       @click="handleClick"
     >

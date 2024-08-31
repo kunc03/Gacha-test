@@ -50,4 +50,8 @@ const menuItems = ref([
     onClick: () => router.push('/dashboard'),
   },
 ])
+
+onMounted(() => {
+  store.fetchingDashboardData()
+})
 </script>

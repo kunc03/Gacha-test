@@ -15,11 +15,17 @@
         >/{{ master_count }}
       </p>
     </div>
-    <PagesHistoryCard
-      v-for="(history, index) in histories"
-      :key="index"
-      :data="history"
-    />
+    <template v-if="isFetching">
+      <PagesHistoryCard v-for="n in 3" :key="n" :data="n" :is-fetching="true" />
+    </template>
+    <template v-else>
+      <PagesHistoryCard
+        v-for="(history, index) in histories"
+        :key="index"
+        :data="history"
+        :is-fetching="false"
+      />
+    </template>
   </div>
 </template>
 
@@ -36,9 +42,11 @@ useHead({
 const histories = ref([])
 const character_count = ref(0)
 const master_count = ref(0)
+const isFetching = ref(false)
 
 const fetchingHistoryData = async () => {
   try {
+    isFetching.value = true
     const data = await useFetchApi('GET', 'history')
 
     histories.value = data.data
@@ -46,6 +54,8 @@ const fetchingHistoryData = async () => {
     master_count.value = data.master_count
   } catch (error) {
     console.log(error)
+  } finally {
+    isFetching.value = false
   }
 }
 

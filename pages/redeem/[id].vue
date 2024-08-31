@@ -100,9 +100,7 @@
 </template>
 
 <script setup>
-import duck from '~/assets/images/duck.svg'
 import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 import { store } from '~/stores/dashboard.js'
@@ -206,7 +204,6 @@ const initializeMap = async (lat, long) => {
 
 onMounted(async () => {
   getLocation()
-  store.fetchingDashboardData()
   await loadGoogleMaps()
   fetchingPrizeData()
 })

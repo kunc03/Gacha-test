@@ -9,54 +9,90 @@
   </Header>
   <div class="flex flex-col bg-center text-black mt-[30%] px-8 gap-3">
     <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-      <div
-        class="w-full h-80 relative bg-[url('assets/images/bg-orange-image.png')] bg-cover bg-center"
-      >
-        <img
-          :src="
+      <div class="h-72 w-full overflow-hidden">
+        <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>
+        <CharacterCard
+          v-else
+          :image="
             historyDetailData.character_image != null
               ? historyDetailData.character_image
               : duck
           "
-          alt="duck"
-          class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
-          preload
         />
       </div>
       <div class="p-5 flex flex-col gap-2">
         <div class="inline-flex justify-between w-full">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+          <Skeleton
+            v-if="isFetching"
+            class="!h-3 !bg-exd-gray-scorpion"
+            width="15rem"
+          />
+          <p
+            v-else
+            class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+          >
             {{ historyDetailData.character_name }}
           </p>
-          <p class="font-bold text-exd-1824.52 text-exd-gold">
+          <Skeleton v-if="isFetching" class="!h-3 !bg-exd-gold" width="2rem " />
+          <p v-else class="font-bold text-exd-1824.52 text-exd-gold">
             {{ historyDetailData.point_amount }}pt
           </p>
         </div>
+        <Skeleton
+          v-if="isFetching"
+          class="!h-3 !bg-exd-gray-scorpion"
+          width="5rem"
+        />
         <p
+          v-else
           class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
         >
           {{ historyDetailData.character_description }}
         </p>
         <div class="inline-flex gap-3 w-full justify-center my-2">
-          <img :src="download" alt="download" class="size-8 cursor-pointer" @click="share('image')" preload />
-          <img :src="line" alt="line" class="size-8 cursor-pointer" @click="share('line')" preload />
-          <img :src="x" alt="x" class="size-8 cursor-pointer" @click="share('x')" preload />
-          <img :src="facebook" alt="facebook" class="size-8 cursor-pointer" @click="share('facebook')" preload />
+          <img
+            :src="download"
+            alt="download"
+            class="size-8 cursor-pointer"
+            @click="share('image')"
+            preload
+          />
+          <img
+            :src="line"
+            alt="line"
+            class="size-8 cursor-pointer"
+            @click="share('line')"
+            preload
+          />
+          <img
+            :src="x"
+            alt="x"
+            class="size-8 cursor-pointer"
+            @click="share('x')"
+            preload
+          />
+          <img
+            :src="facebook"
+            alt="facebook"
+            class="size-8 cursor-pointer"
+            @click="share('facebook')"
+            preload
+          />
         </div>
-        <div class="flex flex-col gap-2 mb-2">
-          <div class="w-full h-5 bg-exd-gray-44 pl-3">
-            <p class="text-white text-exd-1220 font-bold">
-              {{ historyDetailData.location_name }}
-            </p>
-          </div>
-          <p
-            class="text-exd-gray-scorpion font-medium text-exd-1218 text-word-wrap"
-          >
-            {{ historyDetailData.location_description }}
-          </p>
-        </div>
+
+        <HeadingSection
+          :is-fetching="isFetching"
+          :title="historyDetailData.location_name"
+          :body="historyDetailData.location_description"
+        />
+
         <div class="w-full">
-          <div ref="map" style="width: 100%; height: 300px"></div>
+          <Skeleton v-if="isFetching" class="!w-full !h-72" />
+          <div
+            v-show="!isFetching"
+            ref="map"
+            style="width: 100%; height: 300px"
+          />
         </div>
       </div>
     </div>
@@ -69,17 +105,18 @@ import download from '~/assets/images/download.svg'
 import facebook from '~/assets/images/facebook.svg'
 import line from '~/assets/images/line.svg'
 import x from '~/assets/images/x.svg'
-import maps from '~/assets/images/maps.svg'
 import { useRoute } from 'nuxt/app'
 
 definePageMeta({
   layout: 'with-bottom-bar',
+  middleware: 'auth',
 })
 
+useHead({
+  title: 'History Detail',
+})
 
-const config = useRuntimeConfig();
-const marker = ref(null)
-const mapContainer = ref(null)
+const config = useRuntimeConfig()
 const map = ref(null)
 const route = useRoute()
 const id = route.params.id
@@ -89,6 +126,7 @@ const image = config.public.META_IMAGE
 const url = config.public.META_URL
 const historyDetailData = ref({})
 const props = defineProps(['id'])
+const isFetching = ref(true)
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -107,6 +145,7 @@ const loadGoogleMaps = () => {
 
 const fetchingHistoryData = async () => {
   try {
+    isFetching.value = true
     const { data } = await useFetchApi('GET', 'history/' + id)
     historyDetailData.value = data
     let lat = historyDetailData.value.lat
@@ -117,6 +156,8 @@ const fetchingHistoryData = async () => {
     }
   } catch (error) {
     console.log(error)
+  } finally {
+    isFetching.value = false
   }
 }
 
@@ -149,75 +190,79 @@ const updateMetaHead = () => {
       { name: 'description', content: description },
       // Facebook
       { name: 'og:title', content: title },
-      { name: 'og:description', content: description},
-      { name: 'og:image', content: image},
-      { name: 'og:url', content: url},
+      { name: 'og:description', content: description },
+      { name: 'og:image', content: image },
+      { name: 'og:url', content: url },
       { name: 'og:type', content: 'Website' },
 
       // twitter
       { name: 'twitter:title', content: title },
-      { name: 'twitter:description', content: description},
-      { name: 'twitter:image', content: image},
+      { name: 'twitter:description', content: description },
+      { name: 'twitter:image', content: image },
       { name: 'twitter:card', content: 'summary_large_image' },
 
       // // LINE
       { name: 'line:title', content: title },
-      { name: 'line:description', content: description},
-      { name: 'line:image', content: image},
+      { name: 'line:description', content: description },
+      { name: 'line:image', content: image },
       { name: 'line:card', content: 'summary_large_image' },
     ],
-  });
+  })
 }
 
 const share = (type) => {
   switch (type) {
-    case "image":
-      window.open(historyDetailData.value.character_image) 
-      break;
-    case "facebook":
+    case 'image':
+      window.open(historyDetailData.value.character_image)
+      break
+    case 'facebook':
       shareToFacebook()
-      break;
-    case "x":
+      break
+    case 'x':
       shareToX()
-      break;
-    case "line":
-      shareToLine();
-      break;
-  
+      break
+    case 'line':
+      shareToLine()
+      break
+
     default:
-      break;
+      break
   }
 }
 
 const shareToFacebook = () => {
   try {
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(description)}`
-    );
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(
+        description
+      )}`
+    )
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
 const shareToX = () => {
   try {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(url)}`);
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(url)}`
+    )
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
 const shareToLine = () => {
   try {
-    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(url)}`);
+    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(url)}`)
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
 onBeforeMount(async () => {
   await loadGoogleMaps()
   fetchingHistoryData()
-  updateMetaHead();
+  updateMetaHead()
 })
 </script>

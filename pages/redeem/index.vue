@@ -80,7 +80,6 @@ const dataArrays = (data) => {
 }
 
 onMounted(() => {
-  store.fetchingDashboardData()
   fetchingPrizesData()
 })
 </script>
