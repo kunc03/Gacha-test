@@ -11,47 +11,53 @@
     <div
       class="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden"
     >
-      <div class="h-80 w-full overflow-hidden">
-        <CharacterCard :image="prizeDetailData.image" />
+      <div class="h-72 w-full overflow-hidden">
+        <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>
+        <CharacterCard v-else :image="prizeDetailData.image" />
       </div>
-      <div class="mt-5 p-5 flex flex-col justify-between w-full">
-        <div class="flex flex-col gap-2">
-          <div class="inline-flex justify-between w-full">
-            <p class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40">
+      <div class="p-5 flex flex-col justify-between w-full">
+        <div class="flex flex-col gap-4">
+          <div class="inline-flex justify-between w-full gap-3">
+            <Skeleton v-if="isFetching" class="!h-3" width="15rem"></Skeleton>
+            <p
+              v-else
+              class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+            >
               {{ prizeDetailData.name }}
             </p>
+            <Skeleton v-if="isFetching" class="!h-3" width="2rem"></Skeleton>
             <p
+              v-else
               class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
             >
               {{ prizeDetailData.point }}pt
             </p>
           </div>
-          <div class="flex flex-col gap-2 mb-2">
-            <div class="w-full h-5 bg-exd-gray-44 pl-3">
-              <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
-            </div>
-            <p
-              class="text-exd-gray-scorpion font-medium text-exd-1218"
-              v-html="prizeDetailData.how_to_win"
-            ></p>
-          </div>
 
-          <div class="flex flex-col gap-2 mb-2">
-            <div class="w-full h-5 bg-exd-gray-44 pl-3">
-              <p class="text-white text-exd-1220 font-bold">利用条件</p>
-            </div>
-            <p
-              class="text-exd-gray-scorpion font-medium text-exd-1218"
-              v-html="prizeDetailData.terms_of_use"
-            ></p>
-          </div>
+          <HeadingSection
+            :is-fetching="isFetching"
+            title="景品獲得方法"
+            :body="prizeDetailData.how_to_win"
+          />
+
+          <HeadingSection
+            :is-fetching="isFetching"
+            title="利用条件"
+            :body="prizeDetailData.terms_of_use"
+          />
+
           <div class="w-full mb-5">
-            <div ref="map" style="width: 100%; height: 300px"></div>
+            <Skeleton v-if="isFetching" class="!w-full !h-72" />
+            <div
+              v-show="!isFetching"
+              ref="map"
+              style="width: 100%; height: 300px"
+            />
           </div>
         </div>
       </div>
       <SolidButton
-        :disabled="disableRedeem"
+        :disabled="disableRedeem || isFetching"
         :label="disableRedeem ? '交換できません' : '交換'"
         :on-click="handleToggleModal"
         has-bottom
@@ -118,6 +124,7 @@ const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
 const prizeDetailData = ref({})
 const id = route.params.id
 const map = ref(null)
+const isFetching = ref(true)
 const disableRedeem = ref(false)
 const config = useRuntimeConfig()
 
@@ -153,6 +160,7 @@ const getLocation = () => {
 
 const fetchingPrizeData = async () => {
   try {
+    isFetching.value = true
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
     checkPoint(data.point)
@@ -161,6 +169,8 @@ const fetchingPrizeData = async () => {
     }
   } catch (error) {
     console.log(error)
+  } finally {
+    isFetching.value = false
   }
 }
 
