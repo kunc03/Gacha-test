@@ -2,9 +2,7 @@
   <div
     :class="[variantClass, 'h-full w-full flex justify-center items-center']"
   >
-    <Skeleton v-if="isLoading" class="!w-full !h-full" />
     <img
-      v-else
       :src="image"
       alt="character"
       class="relative object-scale-down w-full max-w-[200px]"

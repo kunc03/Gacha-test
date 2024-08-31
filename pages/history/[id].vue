@@ -21,10 +21,10 @@
         />
       </div>
       <div class="p-5 flex flex-col gap-2">
-        <div class="inline-flex justify-between w-full">
+        <div class="inline-flex justify-between w-full gap-2">
           <Skeleton
             v-if="isFetching"
-            class="!h-3 !bg-exd-gray-scorpion"
+            class="!h-3 !bg-exd-gray-scorpion !rounded-full"
             width="15rem"
           />
           <p
@@ -33,14 +33,18 @@
           >
             {{ historyDetailData.character_name }}
           </p>
-          <Skeleton v-if="isFetching" class="!h-3 !bg-exd-gold" width="2rem " />
+          <Skeleton
+            v-if="isFetching"
+            class="!h-3 !bg-exd-gold !rounded-full"
+            width="2rem "
+          />
           <p v-else class="font-bold text-exd-1824.52 text-exd-gold">
             {{ historyDetailData.point_amount }}pt
           </p>
         </div>
         <Skeleton
           v-if="isFetching"
-          class="!h-3 !bg-exd-gray-scorpion"
+          class="!h-3 !bg-exd-gray-scorpion !rounded-full"
           width="5rem"
         />
         <p

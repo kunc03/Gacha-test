@@ -25,7 +25,11 @@
             >
               {{ prizeDetailData.name }}
             </p>
-            <Skeleton v-if="isFetching" class="!h-3" width="2rem"></Skeleton>
+            <Skeleton
+              v-if="isFetching"
+              class="!h-3 !rounded-full !bg-exd-orange-700"
+              width="2rem"
+            ></Skeleton>
             <p
               v-else
               class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
