@@ -74,8 +74,6 @@ const bottomClass = computed(() => {
 })
 
 const handleClick = (event) => {
-  if (props.onClick) {
-    props.onClick(event)
-  }
+  props.onClick && props.onClick(event)
 }
 </script>

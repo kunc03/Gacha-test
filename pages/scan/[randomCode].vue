@@ -35,7 +35,7 @@
           </div>
           <SolidButton
             label="GO!"
-            :has-loading="false"
+            :has-loading="isLoading"
             :on-click="goToScan"
             :has-bottom="true"
           />
@@ -44,21 +44,8 @@
     </div>
   </div>
 
-  <Dialog
-    v-model:visible="isNotAllowed"
-    modal
-    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
-  >
-    <template #container>
-      <img
-        :src="close"
-        alt="close"
-        width="30"
-        height="30"
-        preload
-        class="absolute right-1 top-1 cursor-pointer z-50"
-        @click="handleCloseDialog"
-      />
+  <Modal :is-open="isNotAllowed" :on-close="() => handleCloseDialog()">
+    <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
@@ -71,7 +58,7 @@
         </div>
       </div>
     </template>
-  </Dialog>
+  </Modal>
   <div class="overlay" v-if="isRequestingLocation" />
 </template>
 

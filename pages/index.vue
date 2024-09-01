@@ -85,47 +85,17 @@
 
   <ModalLogin v-model="hasModal" />
 
-  <Dialog
-    v-model:visible="isComplete"
-    modal
-    class="!bg-white !w-exd-300 h-exd-200 !max-w-sm border border-exd-gray-44 rounded-xl"
-  >
-    <template #container>
-      <img
-        :src="close"
-        alt="close"
-        width="30"
-        height="30"
-        preload
-        class="absolute right-1 top-1 cursor-pointer z-50"
-        @click="handleClose"
-      />
-      <div
-        class="w-full h-full flex flex-col justify-end items-center gap-4 p-5"
-      >
-        <div class="w-full flex flex-col justify-between items-center gap-8">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            会員登録が完了しました。
-          </p>
-
-          <Button
-            class="!bg-exd-gold !py-4 w-full !max-w-exd-312 !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-            raised
-            :loading="isLoading"
-            @click="handleDialog"
-          >
-            <span class="grow text-center">GO!</span>
-            <!-- <LoadingIcon v-if="isLoading" /> -->
-            <img :src="arrow" alt="warning" width="10" height="10" preload />
-          </Button>
-        </div>
-      </div>
-    </template>
-  </Dialog>
+  <WarningPopUp
+    :is-open="isComplete"
+    :on-close="handleClose"
+    :has-button="true"
+    :on-click-button="handleDialog"
+    label-button="GO!"
+    modal-title=" 会員登録が完了しました。"
+  />
 </template>
 
 <script setup>
-import close from '~/assets/images/close.svg'
 import bgHeader from '~/assets/images/login-header.png'
 import intlRounded from '~/assets/images/intl-rounded.svg'
 import logoIcon from '~/assets/images/logo-icon.svg'
@@ -136,9 +106,8 @@ import digitalTourist from '~/assets/images/digital-tourist.png'
 import gachaEgg from '~/assets/images/gacha-egg.png'
 import gachaInfo from '~/assets/images/gacha-info.png'
 import gacha2 from '~/assets/images/gacha2.png'
-import arrow from '~/assets/images/arrow.svg'
-import InputText from '~/components/InputText.vue'
 import { nextTick } from 'vue'
+import WarningPopUp from '~/components/WarningPopUp.vue'
 
 const router = useRouter()
 const { setSourceFrom } = useRegister()
@@ -173,7 +142,6 @@ const validateInput = (field, value) => {
 
 onMounted(() => {
   if (window.location.hash === '#verification-completed') {
-    console.log('completed')
     isComplete.value = true
   }
 })
