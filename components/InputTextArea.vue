@@ -28,9 +28,12 @@
       ]"
     />
     <small v-if="hasHelper" :id="`${model}-help`">{{ helperText }}</small>
-    <small v-if="error !== ''" :id="`${model}-error`" :class="['p-error']">{{
-      error
-    }}</small>
+    <small
+      v-if="validateOnSubmit && !isLengthValid && !modelValue"
+      :id="`${model}-error`"
+      :class="['p-error']"
+      >{{ error }}</small
+    >
   </div>
 </template>
 

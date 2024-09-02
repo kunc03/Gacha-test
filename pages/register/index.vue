@@ -29,7 +29,6 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4"
         >
           <InputText
-            ref="surname"
             :model="form.surname"
             label="姓"
             required
@@ -38,7 +37,6 @@
             :validate-on-submit="validateOnSubmit"
           />
           <InputText
-            ref="givenName"
             :model="form.givenName"
             label="名"
             required
@@ -61,7 +59,6 @@
           >
           <div class="inline-flex gap-4">
             <Dropdown
-              ref="yearOfBirth"
               :model="form.yearOfBirth"
               @update:model="updateModel('yearOfBirth', $event)"
               @validate="validateInput('yearOfBirth', $event)"
@@ -70,7 +67,6 @@
               :validate-on-submit="validateOnSubmit"
             />
             <Dropdown
-              ref="monthOfBirth"
               :model="form.monthOfBirth"
               @update:model="updateModel('monthOfBirth', $event)"
               @validate="validateInput('monthOfBirth', $event)"
@@ -79,7 +75,6 @@
               :validate-on-submit="validateOnSubmit"
             />
             <Dropdown
-              ref="dateOfBirth"
               :model="form.dateOfBirth"
               @update:model="updateModel('dateOfBirth', $event)"
               @validate="validateInput('dateOfBirth', $event)"
@@ -169,7 +164,6 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4 flex-col"
         >
           <InputText
-            ref="postCode"
             :model="form.postCode"
             label="郵便番号（ハイフンなし)"
             required
@@ -210,7 +204,6 @@
           />
 
           <InputText
-            ref="address"
             :model="form.address"
             required
             v-model="inputValue"
@@ -229,7 +222,6 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
-            ref="phoneNumber"
             :model="form.phoneNumber"
             required
             :onlyNumeric="true"
@@ -243,7 +235,6 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
-            ref="email"
             type="email"
             :model="form.email"
             required
@@ -260,6 +251,9 @@
             type="password"
             :model="form.password"
             required
+            :isPassword="true"
+            :minLength="8"
+            error="パスワードを入力してください。"
             label="パスワード"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
@@ -269,6 +263,9 @@
             type="password"
             required
             :model="form.confPassword"
+            :isPassword="true"
+            :minLength="8"
+            error="パスワードを入力してください。"
             label="パスワード（再入力）"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
@@ -280,30 +277,30 @@
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputTextArea
-            ref="questionnaire1"
             :model="form.questionnaire1"
             required
             label="アンケート"
             @update:model="updateModel('questionnaire1', $event)"
             @validate="validateInput('questionnaire1', $event)"
+            error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
           />
           <InputTextArea
-            ref="questionnaire2"
             :model="form.questionnaire2"
             required
             label="アンケート"
             @update:model="updateModel('questionnaire2', $event)"
             @validate="validateInput('questionnaire2', $event)"
+            error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
           />
           <InputTextArea
-            ref="questionnaire3"
             :model="form.questionnaire3"
             required
             label="アンケート"
             @update:model="updateModel('questionnaire3', $event)"
             @validate="validateInput('questionnaire3', $event)"
+            error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
           />
         </div>

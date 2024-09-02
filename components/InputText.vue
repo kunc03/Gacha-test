@@ -14,7 +14,10 @@
     <div
       :class="[
         'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
-        validateOnSubmit && !isLengthValid && !modelValue
+        (validateOnSubmit && !isValid && !modelValue) ||
+        (isPassword &&
+          modelValue.length > 0 &&
+          (modelValue.length < minLength || !isAlphanumeric(modelValue)))
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -29,7 +32,7 @@
         v-only-numeric="onlyNumeric"
         @input="updateValue($event.target.value)"
         @blur="validate"
-        :invalid="error !== '' ? true : false || !isLengthValid"
+        :invalid="error !== '' ? true : false || !isValid"
         :aria-describedby="`${model}-${label}--${prefix}-${suffix}-help`"
         :placeholder="placeholder"
         :disabled="disabled"
@@ -48,11 +51,17 @@
       >{{ helperText }}</small
     >
     <small
-      v-if="validateOnSubmit && !isLengthValid && !modelValue"
+      v-if="
+        (validateOnSubmit && !isValid && !modelValue) ||
+        (isPassword &&
+          modelValue.length > 0 &&
+          (modelValue.length < minLength || !isAlphanumeric(modelValue)))
+      "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
-      >{{ error }}</small
     >
+      {{ errorMessage }}
+    </small>
   </div>
 </template>
 
@@ -109,16 +118,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  minValue: {
+  isPassword: {
     type: Boolean,
     default: false,
+  },
+  minLength: {
+    type: Number,
+    default: 0,
   },
   validateOnSubmit: Boolean,
 })
 
 const emit = defineEmits(['update:model', 'validate'])
 
-const isLengthValid = ref(true)
+const isValid = ref(true)
+const errorMessage = ref('')
 
 const modelValue = computed({
   get: () => props.model,
@@ -131,8 +145,27 @@ const updateValue = (value) => {
   emit('validate', value)
 }
 
+const isAlphanumeric = (str) => {
+  return /^[a-zA-Z0-9]+$/.test(str)
+}
+
 const validate = () => {
-  isLengthValid.value = modelValue.value.length > 0
+  if (props.isPassword) {
+    if (!isAlphanumeric(modelValue.value)) {
+      isValid.value = false
+      errorMessage.value = '半角英数字のみ使用できます。'
+    } else if (modelValue.value.length < props.minLength) {
+      isValid.value = false
+      errorMessage.value = `${props.minLength}文字以上で作成してください。`
+    } else {
+      isValid.value = true
+      errorMessage.value = ''
+    }
+  } else {
+    isValid.value = modelValue.value.length > 0
+    errorMessage.value = isValid.value ? '' : 'この項目は必須です。'
+  }
+
   emit('validate', modelValue.value)
 }
 
