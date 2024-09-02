@@ -22,7 +22,9 @@
           isEmailError &&
           validateOnSubmit &&
           !isValidEmail(modelValue)) ||
-        (type === 'email' && error === 'emailはすでに使用されています。')
+        (type === 'email' &&
+          !isValid &&
+          error === 'emailはすでに使用されています。')
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
