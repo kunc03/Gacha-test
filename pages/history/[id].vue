@@ -37,12 +37,12 @@
         >
           {{ historyDetailData.character_description }}
         </p>
-        <!-- <div class="inline-flex gap-3 w-full justify-center">
-          <img :src="download" alt="download" class="size-8" preload />
-          <img :src="line" alt="line" class="size-8" preload />
-          <img :src="x" alt="x" class="size-8" preload />
-          <img :src="facebook" alt="facebook" class="size-8" preload />
-        </div> -->
+        <div class="inline-flex gap-3 w-full justify-center my-2">
+          <img :src="download" alt="download" class="size-8 cursor-pointer" @click="share('image')" preload />
+          <img :src="line" alt="line" class="size-8 cursor-pointer" @click="share('line')" preload />
+          <img :src="x" alt="x" class="size-8 cursor-pointer" @click="share('x')" preload />
+          <img :src="facebook" alt="facebook" class="size-8 cursor-pointer" @click="share('facebook')" preload />
+        </div>
         <div class="flex flex-col gap-2 mb-2">
           <div class="w-full h-5 bg-exd-gray-44 pl-3">
             <p class="text-white text-exd-1220 font-bold">
@@ -76,69 +76,19 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-const historyDetailData = ref({})
-const props = defineProps(['id'])
 
-const title = ' Gacharary'
-const description = 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！'
-const image =
-  'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png'
-const url = 'https://www.pixiv.net/artworks/121122327'
-
-useHead({
-  title: computed(() => historyDetailData.value.character_name),
-
-  meta: [
-    { name: 'description', content: 'description' },
-    // Facebook
-    { name: 'og:title', content: 'Gacharary' },
-    {
-      name: 'og:description',
-      content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
-    },
-    {
-      name: 'og:image',
-      content:
-        'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
-    },
-    { name: 'og:url', content: 'https://www.pixiv.net/artworks/121122327' },
-    { name: 'og:type', content: 'Website' },
-
-    // twitter
-    { name: 'fb:app_id', content: 'YOUR_FACEBOOK_APP_ID' },
-    { name: 'twitter:title', content: 'Gacharary' },
-    {
-      name: 'twitter:description',
-      content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
-    },
-    {
-      name: 'twitter:image',
-      content:
-        'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
-    },
-    { name: 'twitter:card', content: 'summary_large_image' },
-
-    // // LINE
-    { name: 'line:card', content: 'summary_large_image' },
-    { name: 'line:title', content: 'Gacharary' },
-    {
-      name: 'line:description',
-      content: 'なごやぐるっとガチャラリー」でキャラクターをGETしたよ！',
-    },
-    {
-      name: 'line:image',
-      content:
-        'https://admin.per.talenavi.com/storage/01J6DX61TB29Z27K7ZXS0B9J7Y.png',
-    },
-  ],
-})
-
+const config = useRuntimeConfig();
 const marker = ref(null)
 const mapContainer = ref(null)
 const map = ref(null)
 const route = useRoute()
 const id = route.params.id
-const config = useRuntimeConfig()
+const title = config.public.META_TITLE
+const description = config.public.META_DESCRIPTION
+const image = config.public.META_IMAGE
+const url = config.public.META_URL
+const historyDetailData = ref({})
+const props = defineProps(['id'])
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -162,7 +112,6 @@ const fetchingHistoryData = async () => {
     let lat = historyDetailData.value.lat
     let long = historyDetailData.value.long
 
-    console.log(historyDetailData.value)
     if (lat != undefined && long != undefined) {
       initializeMap(lat, long)
     }
@@ -192,8 +141,83 @@ const initializeMap = async (lat, long) => {
   })
 }
 
+const updateMetaHead = () => {
+  useHead({
+    title: computed(() => config.public.APP_NAME),
+
+    meta: [
+      { name: 'description', content: description },
+      // Facebook
+      { name: 'og:title', content: title },
+      { name: 'og:description', content: description},
+      { name: 'og:image', content: image},
+      { name: 'og:url', content: url},
+      { name: 'og:type', content: 'Website' },
+
+      // twitter
+      { name: 'twitter:title', content: title },
+      { name: 'twitter:description', content: description},
+      { name: 'twitter:image', content: image},
+      { name: 'twitter:card', content: 'summary_large_image' },
+
+      // // LINE
+      { name: 'line:title', content: title },
+      { name: 'line:description', content: description},
+      { name: 'line:image', content: image},
+      { name: 'line:card', content: 'summary_large_image' },
+    ],
+  });
+}
+
+const share = (type) => {
+  switch (type) {
+    case "image":
+      window.open(historyDetailData.value.character_image) 
+      break;
+    case "facebook":
+      shareToFacebook()
+      break;
+    case "x":
+      shareToX()
+      break;
+    case "line":
+      shareToLine();
+      break;
+  
+    default:
+      break;
+  }
+}
+
+const shareToFacebook = () => {
+  try {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(description)}`
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const shareToX = () => {
+  try {
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(url)}`);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const shareToLine = () => {
+  try {
+    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(url)}`);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 onBeforeMount(async () => {
   await loadGoogleMaps()
   fetchingHistoryData()
+  updateMetaHead();
 })
 </script>
