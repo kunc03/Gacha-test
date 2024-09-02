@@ -485,7 +485,6 @@ const handleSubmit = async () => {
   validateOnSubmit.value = true
   errorMessages.value = []
 
-  console.log(errorMessages.value)
   // Validasi setiap field
   if (!form.value.surname) errorMessages.value.push('姓 は必須項目です。')
   if (!form.value.givenName) errorMessages.value.push('名 は必須項目です。')
