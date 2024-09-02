@@ -35,6 +35,7 @@
             @update:model="updateModel('surname', $event)"
             @validate="validateInput('surname', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
           <InputText
             :model="form.givenName"
@@ -43,6 +44,7 @@
             @update:model="updateModel('givenName', $event)"
             @validate="validateInput('givenName', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
         </div>
         <div
@@ -175,6 +177,7 @@
             "
             @validate="validateInput('postCode', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
             郵便番号を入力すると住所の一部が自動的に表示されます
@@ -191,6 +194,7 @@
             @update:model="updateModel('prefecture', $event)"
             @validate="validateInput('prefecture', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
 
           <InputText
@@ -201,6 +205,7 @@
             @update:model="updateModel('cityArea', $event)"
             @validate="validateInput('cityArea', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
 
           <InputText
@@ -212,6 +217,7 @@
             @update:model="updateModel('address', $event)"
             @validate="validateInput('address', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
 
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
@@ -229,6 +235,7 @@
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
         </div>
         <div
@@ -242,6 +249,7 @@
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
+            is-email-error="true"
           />
         </div>
         <div

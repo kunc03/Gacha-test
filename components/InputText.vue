@@ -17,7 +17,11 @@
         (validateOnSubmit && !isValid && !modelValue) ||
         (isPassword &&
           modelValue.length > 0 &&
-          (modelValue.length < minLength || !isAlphanumeric(modelValue)))
+          (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
+        (type === 'email' &&
+          isEmailError &&
+          validateOnSubmit &&
+          !isValidEmail(modelValue))
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -55,7 +59,8 @@
         (validateOnSubmit && !isValid && !modelValue) ||
         (isPassword &&
           modelValue.length > 0 &&
-          (modelValue.length < minLength || !isAlphanumeric(modelValue)))
+          (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
+        (type === 'email' && !isValidEmail(modelValue))
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
@@ -126,6 +131,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  isEmailError: {
+    type: Boolean,
+    default: false,
+  },
   validateOnSubmit: Boolean,
 })
 
@@ -149,6 +158,11 @@ const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
 }
 
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
 const validate = () => {
   if (props.isPassword) {
     if (!isAlphanumeric(modelValue.value)) {
@@ -161,9 +175,17 @@ const validate = () => {
       isValid.value = true
       errorMessage.value = ''
     }
-  } else {
+  } else if (props.type === 'email' && props.isEmailError) {
+    if (!isValidEmail(modelValue.value)) {
+      isValid.value = false
+      errorMessage.value = '正しい形式でメールアドレスを入力してください。'
+    } else {
+      isValid.value = true
+      errorMessage.value = ''
+    }
+  } else if (props.error !== '') {
     isValid.value = modelValue.value.length > 0
-    errorMessage.value = isValid.value ? '' : 'この項目は必須です。'
+    errorMessage.value = isValid.value ? '' : props.error
   }
 
   emit('validate', modelValue.value)
