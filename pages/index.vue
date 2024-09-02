@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center justify-between relative"
+    class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center justify-between relative cursor-pointer"
+    @click="handleShowModal"
   >
     <div class="relative grow">
       <img
@@ -49,13 +50,7 @@
     <div
       class="relative pb-7 gap-10 justify-center items-center w-full flex flex-col z-10"
     >
-      <img
-        :src="tapScreen"
-        alt="intl"
-        preload
-        class="cursor-pointer"
-        @click="handleShowModal"
-      />
+      <img :src="tapScreen" alt="intl" preload />
       <p class="text-white text-exd-1218 font-semibold">ホーム画面に追加</p>
     </div>
     <img

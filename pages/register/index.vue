@@ -274,6 +274,7 @@
             :validate-on-submit="validateOnSubmit"
             is-email-error="true"
             :class="{ 'input-error': !form.email && validateOnSubmit }"
+            error="emailはすでに使用されています。"
           />
         </div>
         <div
@@ -552,8 +553,8 @@ const handleSubmit = async () => {
     navigateTo('/register/complete')
   } catch (error) {
     const response = error._data.errors
-    console.log(response.password[response.password.length - 1])
-    errorMessages.value = response.password[response.password.length - 1]
+    console.log(response.email[0])
+    errorMessages.value = response.email[0]
     console.log("Error: Can't register")
     const errors = error._data.errors[0]
     if (errors) {

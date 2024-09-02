@@ -21,7 +21,8 @@
         (type === 'email' &&
           isEmailError &&
           validateOnSubmit &&
-          !isValidEmail(modelValue))
+          !isValidEmail(modelValue)) ||
+        (type === 'email' && error === 'emailはすでに使用されています。')
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -60,7 +61,8 @@
         (isPassword &&
           modelValue.length > 0 &&
           (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
-        (type === 'email' && !isValidEmail(modelValue))
+        (type === 'email' && !isValidEmail(modelValue)) ||
+        (type === 'email' && error === 'emailはすでに使用されています。')
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
@@ -179,6 +181,10 @@ const validate = () => {
     if (!isValidEmail(modelValue.value)) {
       isValid.value = false
       errorMessage.value = '正しい形式でメールアドレスを入力してください。'
+    } else if (props.error === 'emailはすでに使用されています。') {
+      isValid.value = false
+      errorMessage.value =
+        'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。'
     } else {
       isValid.value = true
       errorMessage.value = ''
