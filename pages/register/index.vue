@@ -273,8 +273,11 @@
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
             is-email-error="true"
-            :class="{ 'input-error': !form.email && validateOnSubmit }"
             error="emailはすでに使用されています。"
+            :class="{
+              'input-error': !form.email && validateOnSubmit,
+              'input-error': errorMessages.length > 0,
+            }"
           />
         </div>
         <div
@@ -515,7 +518,7 @@ const handleSubmit = async () => {
   if (errorMessages.value.length > 0) {
     await nextTick()
     const firstErrorElement = document.querySelector('.input-error')
-    if (firstErrorElement) {
+    if (firstErrorElement || errorMessages.value.length > 0) {
       firstErrorElement.scrollIntoView({ behavior: 'smooth' })
     }
   }
@@ -563,8 +566,6 @@ const handleSubmit = async () => {
     isLoading.value = false
   }
 }
-
-console.log(errorMessages.value)
 
 let postCodeBounds
 const checkPostalCode = async (code) => {
