@@ -1,13 +1,13 @@
 <template>
-  <Header hasBack>
+  <HeaderBar hasBack>
     <p
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
       コレクション
     </p>
-  </Header>
-  <div class="flex flex-col bg-center text-black mt-[30%] px-8 gap-3">
+  </HeaderBar>
+  <div class="flex flex-col bg-center text-black mt-20 px-8 gap-3">
     <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
       <div class="h-72 w-full overflow-hidden">
         <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>

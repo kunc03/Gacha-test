@@ -1,6 +1,6 @@
 <template>
-  <Header withLogo />
-  <div class="flex flex-col mt-[30%] grow justify-between px-8">
+  <HeaderBar withLogo />
+  <div class="flex flex-col mt-20 grow justify-between px-8">
     <p
       class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mx-auto"
     >

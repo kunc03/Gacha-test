@@ -1,13 +1,13 @@
 <template>
   <div class="grow flex flex-col">
-    <Header>
+    <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="absolute top-0 bottom-0 w-full flex items-end justify-center text-black font-bold text-exd-1824.52 pb-exd-22 pr-46 -z-10"
       >
         パスワード入力
       </p>
-    </Header>
+    </HeaderBar>
 
     <div class="flex flex-col grow items-center justify-center mt-20">
       <div
@@ -67,7 +67,7 @@ import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
 
 import InputOtp from 'primevue/inputotp'
-import Header from '~/components/Header.vue'
+import HeaderBar from '~/components/HeaderBar.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
 

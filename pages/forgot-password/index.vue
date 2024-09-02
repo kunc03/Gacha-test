@@ -1,13 +1,13 @@
 <template>
   <div class="grow flex flex-col">
-    <Header :hasBack="!isSuccessSendLinkResetPassword">
+    <HeaderBar :hasBack="!isSuccessSendLinkResetPassword">
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-exd-gray-scorpion font-bold text-exd-1824.52"
       >
         パスワード再設定
       </p>
-    </Header>
+    </HeaderBar>
 
     <div
       class="flex flex-col grow px-8 mt-32 pb-3 justify-between gap-6 w-full"

@@ -1,13 +1,13 @@
 <template>
   <div class="grow flex flex-col">
-    <Header>
+    <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-black font-bold text-exd-1824.52"
       >
         パスワード再設定
       </p>
-    </Header>
+    </HeaderBar>
 
     <div class="flex flex-col grow mt-11 justify-between px-8 pb-3">
       <template v-if="!isSuccessSendResetPassword">
@@ -87,7 +87,7 @@
 
 <script setup>
 import InputText from '~/components/InputText.vue'
-import Header from '~/components/Header.vue'
+import HeaderBar from '~/components/HeaderBar.vue'
 import { useRouter } from 'vue-router'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'

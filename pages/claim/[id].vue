@@ -1,13 +1,13 @@
 <template>
-  <Header hasBack>
+  <HeaderBar hasBack>
     <p
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
       景品一覧・交換
     </p>
-  </Header>
-  <div class="flex flex-col mt-[30%] grow">
+  </HeaderBar>
+  <div class="flex flex-col mt-20 grow">
     <p
       class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mx-auto"
     >
