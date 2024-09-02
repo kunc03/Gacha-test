@@ -6,9 +6,8 @@ export const store = reactive({
     try {
       const { data } = await useFetchApi('GET', 'dashboard')
       this.point = data.point
-      
     } catch (error) {
       console.log("Error: Can't save spin result")
     }
-  }
+  },
 })

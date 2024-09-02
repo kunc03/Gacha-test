@@ -60,11 +60,7 @@
         </div>
       </div>
     </div>
-    <Button
-      label="close"
-      class="!mb-4 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full"
-      raised
-    />
+    <SolidButton label="close" has-bottom :has-icon="false" />
   </div>
 </template>
 

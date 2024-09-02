@@ -1,12 +1,12 @@
 <template>
-  <Header hasBack>
+  <HeaderBar hasBack>
     <p
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
       マイページ
     </p>
-  </Header>
+  </HeaderBar>
   <div class="flex flex-col bg-center">
     <div class="flex flex-col mt-[40%] items-center">
       <p class="text-white text-exd-2856 font-bold">現在のポイント</p>
@@ -165,16 +165,11 @@ const logout = async () => {
     const { data, status } = await useFetchApi('POST', 'logout')
 
     localStorage.clear()
-    navigateTo('/');
-    
+    navigateTo('/')
   } catch (error) {
     localStorage.clear()
     navigateTo('/')
     console.log(error)
   }
 }
-
-onMounted(() => {
-  store.fetchingDashboardData()
-})
 </script>

@@ -46,40 +46,15 @@
         >
           パスワードを忘れた方
         </a>
-        <Button
-          class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
-          raised
-          @click="handleToRegister"
-        >
-          <span class="grow text-center">新規会員登録</span>
-          <img
-            :src="arrow"
-            alt="arrow"
-            width="10"
-            height="10"
-            preload
-            class="shrink-0"
-          />
-        </Button>
-        <Button
-          class="!bg-exd-red-vermilion !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
-          raised
+
+        <SolidButton label="新規会員登録" :onClick="handleToRegister" />
+        <SolidButton
+          label="ログイン"
+          :onClick="handleSubmit"
+          variant="red"
           :disabled="!isValidInput || isLoading"
-          :loading="isLoading"
-          @click="handleSubmit"
-        >
-          <span class="grow text-center">ログイン</span>
-          <LoadingIcon v-if="isLoading" />
-          <img
-            v-else
-            :src="arrow"
-            alt="arrow"
-            width="10"
-            height="10"
-            preload
-            class="shrink-0"
-          />
-        </Button>
+          :has-loading="isLoading"
+        />
       </div>
     </template>
   </Dialog>
@@ -195,7 +170,7 @@ const saveSpin = async () => {
       body: {
         point_id: localStorage.getItem('POINT_ID'),
         location_id: localStorage.getItem('LOCATION_ID'),
-        character_id: localStorage.getItem('CHARACTER_ID')
+        character_id: localStorage.getItem('CHARACTER_ID'),
       },
     })
 

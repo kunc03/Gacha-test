@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white bottom-0 left-0 right-0 absolute h-16 z-10">
+  <div class="bg-white bottom-0 left-0 right-0 absolute h-16 z-50">
     <div class="inline-flex gap-3 w-full pt-3">
       <div
         class="absolute -top-10 bg-[url('assets/images/point_navbar.svg')] bg-cover bg-center w-[104px] h-[104px] flex flex-col justify-center items-center"
@@ -13,44 +13,13 @@
       </div>
 
       <div class="inline-flex flex-row gap-7 ml-28 justify-evenly w-full">
-        <div class="flex flex-col items-center justify-center">
-          <img
-            :src="iconPin"
-            alt="icon-pin"
-            width="30"
-            height="30"
-            preload
-            class="text-center cursor-pointer"
-            @click="handleGoToMap"
-          />
-          <p class="text-exd-gray-scorpion text-exd-1020">デジタルマップ</p>
-        </div>
-        <div
-          class="flex flex-col items-center justify-center"
-          @click="handleGoToRedeem"
-        >
-          <img
-            :src="iconStar"
-            alt="icon-star"
-            width="30"
-            height="30"
-            preload
-            class="text-center cursor-pointer"
-          />
-          <p class="text-exd-gray-scorpion text-exd-1020">景品一覧・交換</p>
-        </div>
-        <div class="flex flex-col items-center justify-center">
-          <img
-            :src="iconPerson"
-            alt="icon-person"
-            width="30"
-            height="30"
-            preload
-            class="text-center cursor-pointer"
-            @click="handleGoToDashboard"
-          />
-          <p class="text-exd-gray-scorpion text-exd-1020">マイページ</p>
-        </div>
+        <BottomBarMenuIcon
+          v-for="(item, index) in menuItems"
+          :key="index"
+          :icon="item.icon"
+          :label="item.label"
+          :on-click="item.onClick"
+        />
       </div>
     </div>
   </div>
@@ -64,8 +33,25 @@ import { store } from '~/stores/dashboard.js'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-const handleGoToRedeem = () => router.push('/redeem')
-const handleGoToDashboard = () => router.push('/dashboard')
-const handleGoToMap = () =>
-  window.open('https://www.nagoya-info.jp/#dmap', '_blank')
+const menuItems = ref([
+  {
+    icon: iconPin,
+    label: 'デジタルマップ',
+    onClick: () => window.open('https://www.nagoya-info.jp/#dmap', '_blank'),
+  },
+  {
+    icon: iconStar,
+    label: '景品一覧・交換',
+    onClick: () => router.push('/redeem'),
+  },
+  {
+    icon: iconPerson,
+    label: 'マイページ',
+    onClick: () => router.push('/dashboard'),
+  },
+])
+
+onMounted(() => {
+  store.fetchingDashboardData()
+})
 </script>

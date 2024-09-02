@@ -1,13 +1,13 @@
 <template>
-  <Header hasBack>
+  <HeaderBar hasBack>
     <p
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
       景品一覧・交換
     </p>
-  </Header>
-  <div class="flex flex-col mt-[30%] grow">
+  </HeaderBar>
+  <div class="flex flex-col mt-20 grow">
     <p
       class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mx-auto"
     >
@@ -18,31 +18,42 @@
     >
       <div class="flex flex-col gap-5">
         <div class="h-64 bg-white w-80 rounded-lg relative mx-auto">
-          <img
-            :src="prizeDetailData.image"
-            :alt="prizeDetailData.name"
-            class="claim-img absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
-            preload
+          <Skeleton v-if="isFetching" class="!w-full !h-full" />
+
+          <CharacterCard
+            v-else
+            :image="prizeDetailData.image"
+            variant="without-background"
           />
         </div>
         <div class="flex flex-col gap-4">
           <div class="inline-flex justify-between w-full">
-            <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            <Skeleton v-if="isFetching" class="!h-3" width="15rem"></Skeleton>
+            <p
+              v-else
+              class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+            >
               {{ prizeDetailData.name }}
             </p>
+
+            <Skeleton
+              v-if="isFetching"
+              class="!h-3 !bg-exd-orange-700 !rounded-full"
+              width="2rem"
+            ></Skeleton>
             <p
+              v-else
               class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
             >
               {{ prizeDetailData.point }}pt
             </p>
           </div>
-          <div class="flex flex-col gap-2 mb-2">
-            <div class="w-full h-5 bg-exd-gray-44 pl-3">
-              <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
-            </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.how_to_win">
-            </p>
-          </div>
+
+          <HeadingSection
+            :is-fetching="isFetching"
+            title="景品獲得方法"
+            :body="prizeDetailData.how_to_win"
+          />
         </div>
       </div>
       <!-- <swipeButton text="スワイプ" @submit="handleSwipe" color="#d7a237" /> -->
@@ -73,7 +84,7 @@
   </div>
 
   <Dialog
-    v-model:visible="isReedemDialogVisible"
+    v-model:visible="isRedeemDialogVisible"
     modal
     class="!bg-white !w-exd-300 h-exd-200 !max-w-sm border border-exd-gray-44 rounded-xl"
   >
@@ -95,15 +106,11 @@
             {{ redeemMessage }}
           </p>
 
-          <Button
-            class="!bg-exd-gold !py-4 w-full !max-w-exd-312 !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-            raised
-            :loading="isLoading"
-            @click="handleDialog"
-          >
-            <span class="grow text-center">GO!</span>
-            <img :src="arrow" alt="warning" width="10" height="10" preload />
-          </Button>
+          <SolidButton
+            :on-click="() => handleDialog"
+            :has-loading="isLoading"
+            label="GO!"
+          />
         </div>
       </div>
     </template>
@@ -139,13 +146,10 @@
 </template>
 
 <script setup>
-import swipeButton from 'vue3-swipe-button'
 import 'vue3-swipe-button/dist/swipeButton.css'
-import duck from '~/assets/images/duck.svg'
 import { useRouter } from 'vue-router'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
 
 definePageMeta({
   middleware: 'auth',
@@ -172,23 +176,22 @@ const getLocation = () => {
   }
 }
 
-const hasModal = ref(false)
+const isFetching = ref(true)
 const route = useRoute()
 const router = useRouter()
 
 const isClicked = ref(false)
-const isReedemDialogVisible = ref(false)
-const insufficientDialogVisible = ref(false);
-const errorMessage = ref(null);
-const redeemDetailData = ref({})
+const isRedeemDialogVisible = ref(false)
+const insufficientDialogVisible = ref(false)
+const errorMessage = ref(null)
 const redeemMessage = ref('')
-const isLoading = ref(false);
-const disableSwipe = ref(false);
+const isLoading = ref(false)
+const disableSwipe = ref(false)
 
 const fetchRedeem = async () => {
   try {
-    errorMessage.value = null;
-    disableSwipe.value = true;
+    errorMessage.value = null
+    disableSwipe.value = true
     const { message, status } = await useFetchApi('POST', 'prizes/redeem', {
       params: {
         prize_id: id,
@@ -199,21 +202,20 @@ const fetchRedeem = async () => {
     if (status) {
       // Ekstrak pesan dari _data
       redeemMessage.value = message
-      isReedemDialogVisible.value = true
+      isRedeemDialogVisible.value = true
       setTimeout(() => {
         router.push('/claim/success') // Redirect ke halaman yang diinginkan
       }, 3000)
     } else {
-      errorMessage.value = message;
-      insufficientDialogVisible.value = true;
+      errorMessage.value = message
+      insufficientDialogVisible.value = true
     }
 
     // Tampilkan dialog dengan pesan
-    
   } catch (error) {
     console.error(error)
-    errorMessage.value = error._data.message;
-    insufficientDialogVisible.value = true;
+    errorMessage.value = error._data.message
+    insufficientDialogVisible.value = true
   }
 }
 
@@ -221,12 +223,11 @@ const handleSwipe = () => {
   isClicked.value = true
   if (isClicked.value) {
     fetchRedeem()
-    
   }
 }
 
 const handleClose = () => {
-  isReedemDialogVisible.value = false
+  isRedeemDialogVisible.value = false
   insufficientDialogVisible.value = false
 }
 
@@ -235,12 +236,15 @@ const id = route.params.id
 
 const fetchingPrizeData = async () => {
   try {
+    isFetching.value = true
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
 
     console.log('prize:', prizeDetailData.value)
   } catch (error) {
     console.log(error)
+  } finally {
+    isFetching.value = false
   }
 }
 

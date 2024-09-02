@@ -39,21 +39,9 @@
       </div>
     </div> -->
 
-    <Button
-      class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-      raised
-      @click="handleButton"
-    >
-      <span class="grow text-center">次へ</span>
-      <img
-        :src="arrow"
-        alt="arrow"
-        width="10"
-        height="10"
-        preload
-        class="shrink-0"
-      />
-    </Button>
+    <div class="absolute bottom-0 w-full">
+      <SolidButton label="次へ" :on-click="handleButton" has-bottom />
+    </div>
   </div>
 
   <Dialog
@@ -80,36 +68,13 @@
             会員登録が必要です
           </p>
         </div>
-        <Button
-          class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
-          raised
-          @click="handleToRegister"
-        >
-          <span class="grow text-center">新規会員登録</span>
-          <img
-            :src="arrow"
-            alt="arrow"
-            width="10"
-            height="10"
-            preload
-            class="shrink-0"
-          />
-        </Button>
-        <Button
-          class="!bg-exd-red-vermilion !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 h-exd-50"
-          raised
-          @click="handleToLogin"
-        >
-          <span class="grow text-center">マイページから引き換え</span>
-          <img
-            :src="arrow"
-            alt="arrow"
-            width="10"
-            height="10"
-            preload
-            class="shrink-0"
-          />
-        </Button>
+        <SolidButton label="新規会員登録" :on-click="handleToRegister" />
+        <SolidButton
+          label="マイページから引き換え"
+          :on-click="handleToLogin"
+          variant="red"
+        />
+
         <div
           class="font-medium text-exd-1218 text-center text-exd-gray-scorpion"
         >
@@ -158,14 +123,7 @@
             {{ errorMessages }}
           </p>
         </div>
-        <Button
-          class="!bg-exd-gold !py-4 w-full !max-w-exd-312 !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-          raised
-          @click="goTo('/dashboard')"
-        >
-          <span class="grow text-center">ガチャTOP</span>
-          <img :src="arrow" alt="warning" width="10" height="10" preload />
-        </Button>
+        <SolidButton label="ガチャTOP" :on-click="() => goTo('/dashboard')" />
       </div>
     </template>
   </Dialog>

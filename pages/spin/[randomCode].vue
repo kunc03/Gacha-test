@@ -15,39 +15,13 @@
           preload
         />
       </div>
-      <Button
-        class="!inset-x-1/2 !z-50 !mb-3 !-translate-x-1/2 !-translate-y-1/4 !absolute !bottom-1 !bg-exd-gold !py-4 !w-exd-312 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-        raised
-        @click="goToSpinPoint"
-      >
-        <span class="grow text-center">ガチャを回す</span>
-        <img
-          :src="arrow"
-          alt="arrow"
-          width="10"
-          height="10"
-          preload
-          class="shrink-0"
-        />
-      </Button>
+
+      <SolidButton label="ガチャを回す" :on-click="goToSpinPoint" has-bottom />
     </div>
   </div>
 
-  <Dialog
-    v-model:visible="isNotAllowed"
-    modal
-    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
-  >
-    <template #container>
-      <img
-        :src="close"
-        alt="close"
-        width="30"
-        height="30"
-        preload
-        class="absolute right-1 top-1 cursor-pointer z-50"
-        @click="handleCloseDialog"
-      />
+  <Modal :is-open="isNotAllowed" :on-close="() => handleCloseDialog()">
+    <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
@@ -57,16 +31,14 @@
         </div>
       </div>
     </template>
-  </Dialog>
+  </Modal>
 </template>
 
 <script setup>
 const route = useRoute()
 const router = useRouter()
 import gacha2 from '~/assets/images/gacha2.png'
-import arrow from '~/assets/images/arrow.svg'
 import warning from '~/assets/images/warning.svg'
-import close from '~/assets/images/close.svg'
 
 const isLoading = ref(false)
 const isNotAllowed = ref(false)
@@ -146,4 +118,8 @@ const spinBeforeLogin = async () => {
     isLoading.value = false
   }
 }
+
+useHead({
+  title: 'Spin',
+})
 </script>

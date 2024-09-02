@@ -1,66 +1,71 @@
 <template>
-  <Header hasBack>
+  <HeaderBar hasBack>
     <p
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
       景品一覧・交換
     </p>
-  </Header>
-  <div class="flex flex-col bg-center text-black mt-[30%] px-8">
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-      <div
-        class="w-full h-80 relative bg-[url('assets/images/bg-orange-image.png')] bg-cover bg-center"
-      >
-        <img
-          :src="prizeDetailData.image"
-          alt="duck"
-          class="absolute left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 object-scale-down"
-          preload
-        />
+  </HeaderBar>
+  <div class="flex flex-col bg-center text-black mt-20 px-8">
+    <div
+      class="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden"
+    >
+      <div class="h-72 w-full overflow-hidden">
+        <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>
+        <CharacterCard v-else :image="prizeDetailData.image" />
       </div>
-      <div class="mt-5 p-5 flex flex-col justify-between">
-        <div class="flex flex-col gap-2">
-          <div class="inline-flex justify-between w-full">
-            <p class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40">
+      <div class="p-5 flex flex-col justify-between w-full">
+        <div class="flex flex-col gap-4">
+          <div class="inline-flex justify-between w-full gap-3">
+            <Skeleton v-if="isFetching" class="!h-3" width="15rem"></Skeleton>
+            <p
+              v-else
+              class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+            >
               {{ prizeDetailData.name }}
             </p>
+            <Skeleton
+              v-if="isFetching"
+              class="!h-3 !rounded-full !bg-exd-orange-700"
+              width="2rem"
+            ></Skeleton>
             <p
+              v-else
               class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
             >
               {{ prizeDetailData.point }}pt
             </p>
           </div>
-          <div class="flex flex-col gap-2 mb-2">
-            <div class="w-full h-5 bg-exd-gray-44 pl-3">
-              <p class="text-white text-exd-1220 font-bold">景品獲得方法</p>
-            </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.how_to_win"></p>
-          </div>
 
-          <div class="flex flex-col gap-2 mb-2">
-            <div class="w-full h-5 bg-exd-gray-44 pl-3">
-              <p class="text-white text-exd-1220 font-bold">利用条件</p>
-            </div>
-            <p class="text-exd-gray-scorpion font-medium text-exd-1218" v-html="prizeDetailData.terms_of_use">
-            </p>
-          </div>
+          <HeadingSection
+            :is-fetching="isFetching"
+            title="景品獲得方法"
+            :body="prizeDetailData.how_to_win"
+          />
+
+          <HeadingSection
+            :is-fetching="isFetching"
+            title="利用条件"
+            :body="prizeDetailData.terms_of_use"
+          />
+
           <div class="w-full mb-5">
-            <div ref="map" style="width: 100%; height: 300px"></div>
+            <Skeleton v-if="isFetching" class="!w-full !h-72" />
+            <div
+              v-show="!isFetching"
+              ref="map"
+              style="width: 100%; height: 300px"
+            />
           </div>
         </div>
-
-        <Button
-          class="!bg-exd-gold !py-4 !w-full !h-12 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
-          raised
-          @click="handleToggleModal"
-          :disabled="disableReedem"
-        >
-          <span class="grow text-center" v-html="disableReedem ? '交換できません' : '交換'"></span>
-          <img :src="arrow" alt="warning" width="10" height="10" preload />
-          
-        </Button>
       </div>
+      <SolidButton
+        :disabled="disableRedeem || isFetching"
+        :label="disableRedeem ? '交換できません' : '交換'"
+        :on-click="handleToggleModal"
+        has-bottom
+      />
     </div>
   </div>
 
@@ -79,9 +84,8 @@
         class="absolute right-1 top-1 cursor-pointer z-50"
         @click="handleToggleModal"
       />
-
       <div
-        class="w-full flex flex-col justify-center items-center gap-4 p-6 mt-2"
+        class="w-full flex flex-col justify-center items-center gap-4 px-6 py-8 mt-2"
       >
         <p
           class="text-exd-gray-scorpion font-bold text-center text-exd-1424 max-w-36"
@@ -89,23 +93,18 @@
         >
           この景品は観光案内所で 交換となります
         </p>
-        <Button
-          class="!bg-exd-gold !py-4 !w-full !h-12 !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
-          raised
-          @click="handleGoToClaim"
-        >
-          <span class="grow text-center">到着しました</span>
-          <img :src="arrow" alt="warning" width="10" height="10" preload />
-        </Button>
       </div>
+      <SolidButton
+        label="到着しました"
+        :on-click="handleGoToClaim"
+        has-bottom
+      />
     </template>
   </Dialog>
 </template>
 
 <script setup>
-import duck from '~/assets/images/duck.svg'
 import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 import { store } from '~/stores/dashboard.js'
@@ -118,6 +117,18 @@ definePageMeta({
 useHead({
   title: 'Redeem',
 })
+
+const hasModal = ref(false)
+const route = useRoute()
+const router = useRouter()
+const handleToggleModal = () => (hasModal.value = !hasModal.value)
+const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
+const prizeDetailData = ref({})
+const id = route.params.id
+const map = ref(null)
+const isFetching = ref(true)
+const disableRedeem = ref(false)
+const config = useRuntimeConfig()
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -149,40 +160,29 @@ const getLocation = () => {
   }
 }
 
-const hasModal = ref(false)
-const route = useRoute()
-const router = useRouter()
-const handleToggleModal = () => (hasModal.value = !hasModal.value)
-const handleGoToClaim = () => router.push(`/claim/${route.params.id}`)
-const prizeDetailData = ref({})
-const id = route.params.id
-const map = ref(null)
-const disableReedem = ref(false);
-const config = useRuntimeConfig()
-
 const fetchingPrizeData = async () => {
   try {
+    isFetching.value = true
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
-    checkPoint(data.point);
-    if (data.lat != null && data.long != null) {
-      initializeMap(data.lat, data.long);
+    checkPoint(data.point)
+    if (data.lat !== null && data.long !== null) {
+      initializeMap(data.lat, data.long)
     }
   } catch (error) {
     console.log(error)
+  } finally {
+    isFetching.value = false
   }
 }
 
 const checkPoint = (point) => {
   try {
-    const currentPoint = store.point;
-    console.log(currentPoint)
+    const currentPoint = store.point
     if (currentPoint < point) {
-      disableReedem.value = true;
+      disableRedeem.value = true
     }
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 }
 
 const initializeMap = async (lat, long) => {
@@ -207,9 +207,8 @@ const initializeMap = async (lat, long) => {
 }
 
 onMounted(async () => {
-  getLocation();
-  store.fetchingDashboardData()
-  await loadGoogleMaps();
-  fetchingPrizeData();
+  getLocation()
+  await loadGoogleMaps()
+  fetchingPrizeData()
 })
 </script>

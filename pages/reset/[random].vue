@@ -1,13 +1,13 @@
 <template>
   <div class="grow flex flex-col">
-    <Header>
+    <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-black font-bold text-exd-1824.52"
       >
         パスワード再設定
       </p>
-    </Header>
+    </HeaderBar>
 
     <div class="flex flex-col grow mt-11 justify-between px-8 pb-3">
       <template v-if="!isSuccessSendResetPassword">
@@ -87,7 +87,7 @@
 
 <script setup>
 import InputText from '~/components/InputText.vue'
-import Header from '~/components/header.vue'
+import HeaderBar from '~/components/HeaderBar.vue'
 import { useRouter } from 'vue-router'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
@@ -96,10 +96,9 @@ import arrow from '~/assets/images/arrow.svg'
 const route = useRoute()
 const router = useRouter()
 const isLoading = ref(false)
-const token = route.params.random;
+const token = route.params.random
 const isErrorMessage = ref(false)
 const errorMessage = ref(null)
-
 
 const isSuccessSendResetPassword = ref(false)
 const handleCloseDialog = () => (isErrorMessage.value = false)
@@ -114,7 +113,6 @@ const updateModel = (field, value) => {
   form.value[field] = value
 }
 
-
 const handleSubmit = async () => {
   if (isSuccessSendResetPassword.value) {
     navigateTo('/')
@@ -123,11 +121,13 @@ const handleSubmit = async () => {
       token: token,
       email: form.value.email,
       password: form.value.password,
-      password_confirmation: form.value.confirmPassword
+      password_confirmation: form.value.confirmPassword,
     }
-    
+
     try {
-      const { status, message } = await useFetchApi('POST', 'email/reset', { body: payload });
+      const { status, message } = await useFetchApi('POST', 'email/reset', {
+        body: payload,
+      })
 
       if (status) {
         isSuccessSendResetPassword.value = true
@@ -136,8 +136,8 @@ const handleSubmit = async () => {
       // console.log(response)
     } catch (error) {
       const message = error._data.message
-      console.log(errorMessage.value);
-      
+      console.log(errorMessage.value)
+
       if (error) {
         errorMessage.value = message
         isErrorMessage.value = true
@@ -152,9 +152,8 @@ useHead({
 
 const fetchingEmailData = async () => {
   try {
-    const { data } = await useFetchApi('GET', 'email/decrypt?token='+token)
+    const { data } = await useFetchApi('GET', 'email/decrypt?token=' + token)
     form.value.email = data.email
-  
   } catch (error) {
     console.log("Error: Can't save spin result")
   }
@@ -165,6 +164,6 @@ const validateInput = (field, value) => {
 }
 
 onMounted(() => {
-  fetchingEmailData();
+  fetchingEmailData()
 })
 </script>

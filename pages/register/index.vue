@@ -1,13 +1,13 @@
 <template>
   <div class="grow flex flex-col">
-    <Header hasBack>
+    <HeaderBar hasBack>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-exd-gray-scorpion text-exd-1824.52"
       >
         会員情報
       </p>
-    </Header>
+    </HeaderBar>
 
     <div
       class="flex flex-col grow px-3 mt-32 pb-3 justify-between gap-6 w-full"
@@ -314,17 +314,14 @@
           </div>
         </div>
       </div>
-      <Button
-        class="!bg-exd-gold !py-4 !w-exd-312 !uppercase !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
-        raised
+      <div class="mt-1" />
+      <SolidButton
+        label="登録する"
+        :has-loading="isLoading"
         :disabled="!form.checked"
-        :loading="isLoading"
-        @click="handleSubmit"
-      >
-        <span class="grow text-center">登録する</span>
-        <LoadingIcon v-if="isLoading" />
-        <img v-else :src="arrow" alt="warning" width="10" height="10" preload />
-      </Button>
+        :on-click="handleSubmit"
+        has-bottom
+      />
     </div>
   </div>
 
@@ -362,7 +359,6 @@
 <script setup>
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
 
 import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
