@@ -15,7 +15,10 @@
       preload
     />
     <div class="absolute inset-0 px-[1.5rem] flex justify-center z-20">
-      <Circle10Point class="relative top-1/2 -translate-y-[50%]" />
+      <CircleSpinPoint
+        class="relative top-1/2 -translate-y-[50%]"
+        :imageSrc="pointImageUrl"
+      />
     </div>
     <div class="absolute-10 top-1/2 translate-y-[80%]"></div>
     <div class="w-full absolute bottom-0">
@@ -77,6 +80,8 @@ const fetchImageFromApi = async () => {
         data.userCollection.gacha_character.image
       )
       localStorage.setItem('POINT', data.userPoint.point.point.value)
+
+      pointImageUrl.value = data.userPoint.point.image
     } else {
       const { data, error } = await useFetchApi('GET', 'gacha/spin', {
         params: {
@@ -91,6 +96,8 @@ const fetchImageFromApi = async () => {
       localStorage.setItem('CHARACTER_ID', data.character.id)
       localStorage.setItem('CHARACTER_IMAGE', data.character.image)
       localStorage.setItem('POINT', apiPoint.value)
+
+      pointImageUrl.value = data.point.image
     }
 
     if (error) {
