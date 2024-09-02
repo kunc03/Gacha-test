@@ -285,7 +285,6 @@
             required
             :isPassword="true"
             :minLength="8"
-            error="パスワードを入力してください。"
             label="パスワード"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
@@ -298,7 +297,6 @@
             :model="form.confPassword"
             :isPassword="true"
             :minLength="8"
-            error="パスワードを入力してください。"
             label="パスワード（再入力）"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
@@ -548,10 +546,14 @@ const handleSubmit = async () => {
 
   try {
     const { data } = await useFetchApi('POST', 'register', { body: payload })
+
+    console.log(dataRegis)
     localStorage.setItem('USER_ID', data.user.id)
     navigateTo('/register/complete')
   } catch (error) {
-    console.log(error)
+    const response = error._data.errors
+    console.log(response.password[response.password.length - 1])
+    errorMessages.value = response.password[response.password.length - 1]
     console.log("Error: Can't register")
     const errors = error._data.errors[0]
     if (errors) {
@@ -562,6 +564,8 @@ const handleSubmit = async () => {
     isLoading.value = false
   }
 }
+
+console.log(errorMessages.value)
 
 let postCodeBounds
 const checkPostalCode = async (code) => {
