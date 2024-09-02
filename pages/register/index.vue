@@ -36,6 +36,7 @@
             @validate="validateInput('surname', $event)"
             :validate-on-submit="validateOnSubmit"
             error="この項目は必須です。"
+            :class="{ 'input-error': !form.surname && validateOnSubmit }"
           />
           <InputText
             :model="form.givenName"
@@ -45,6 +46,7 @@
             @validate="validateInput('givenName', $event)"
             :validate-on-submit="validateOnSubmit"
             error="この項目は必須です。"
+            :class="{ 'input-error': !form.givenName && validateOnSubmit }"
           />
         </div>
         <div
@@ -53,6 +55,12 @@
           <label
             for="生年月日"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
+            :class="{
+              'input-error':
+                (!form.yearOfBirth && validateOnSubmit) ||
+                (!form.monthOfBirth && validateOnSubmit) ||
+                (!form.dateOfBirth && validateOnSubmit),
+            }"
             >生年月日
             <span
               className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
@@ -67,6 +75,7 @@
               :options="yearOptions"
               suffix="年"
               :validate-on-submit="validateOnSubmit"
+              :class="{ 'input-error': !form.yearOfBirth && validateOnSubmit }"
             />
             <Dropdown
               :model="form.monthOfBirth"
@@ -75,6 +84,7 @@
               :options="monthOptions"
               suffix="月"
               :validate-on-submit="validateOnSubmit"
+              :class="{ 'input-error': !form.monthOfBirth && validateOnSubmit }"
             />
             <Dropdown
               :model="form.dateOfBirth"
@@ -83,8 +93,19 @@
               :options="dayOptions"
               suffix="日"
               :validate-on-submit="validateOnSubmit"
+              :class="{ 'input-error': !form.dateOfBirth && validateOnSubmit }"
             />
           </div>
+          <small
+            v-if="
+              (!form.yearOfBirth && validateOnSubmit) ||
+              (!form.monthOfBirth && validateOnSubmit) ||
+              (!form.dateOfBirth && validateOnSubmit)
+            "
+            :class="['p-error']"
+          >
+            この項目は必須です。
+          </small>
         </div>
         <div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
@@ -178,6 +199,7 @@
             @validate="validateInput('postCode', $event)"
             :validate-on-submit="validateOnSubmit"
             error="この項目は必須です。"
+            :class="{ 'input-error': !form.postCode && validateOnSubmit }"
           />
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
             郵便番号を入力すると住所の一部が自動的に表示されます
@@ -213,11 +235,11 @@
             required
             v-model="inputValue"
             label="番地・マンション名など"
-            @input="handleInputChange"
             @update:model="updateModel('address', $event)"
             @validate="validateInput('address', $event)"
             :validate-on-submit="validateOnSubmit"
             error="この項目は必須です。"
+            :class="{ 'input-error': !form.address && validateOnSubmit }"
           />
 
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
@@ -236,6 +258,7 @@
             @validate="validateInput('phoneNumber', $event)"
             :validate-on-submit="validateOnSubmit"
             error="この項目は必須です。"
+            :class="{ 'input-error': !form.phoneNumber && validateOnSubmit }"
           />
         </div>
         <div
@@ -250,6 +273,7 @@
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
             is-email-error="true"
+            :class="{ 'input-error': !form.email && validateOnSubmit }"
           />
         </div>
         <div
@@ -266,6 +290,7 @@
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.password && validateOnSubmit }"
           />
           <InputText
             type="password"
@@ -278,6 +303,7 @@
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.confPassword && validateOnSubmit }"
           />
         </div>
 
@@ -292,6 +318,7 @@
             @validate="validateInput('questionnaire1', $event)"
             error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.questionnaire1 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire2"
@@ -301,6 +328,7 @@
             @validate="validateInput('questionnaire2', $event)"
             error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.questionnaire2 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire3"
@@ -310,6 +338,7 @@
             @validate="validateInput('questionnaire3', $event)"
             error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.questionnaire3 && validateOnSubmit }"
           />
         </div>
 
@@ -394,10 +423,6 @@ const validateOnSubmit = ref(false)
 
 const inputValue = ref('')
 
-const handleInputChange = (event) => {
-  console.log('Input value changed to:', event.target.value)
-}
-
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
 const form = ref({
@@ -458,6 +483,44 @@ const dayOptions = computed(() => {
 
 const handleSubmit = async () => {
   validateOnSubmit.value = true
+  errorMessages.value = []
+
+  console.log(errorMessages.value)
+  // Validasi setiap field
+  if (!form.value.surname) errorMessages.value.push('姓 は必須項目です。')
+  if (!form.value.givenName) errorMessages.value.push('名 は必須項目です。')
+  if (
+    !form.value.yearOfBirth ||
+    !form.value.monthOfBirth ||
+    !form.value.dateOfBirth
+  ) {
+    errorMessages.value.push('生年月日 は必須項目です。')
+  }
+  if (!form.value.postCode)
+    errorMessages.value.push('郵便番号 は必須項目です。')
+  if (!form.value.phoneNumber)
+    errorMessages.value.push('電話番号 は必須項目です。')
+  if (!form.value.email)
+    errorMessages.value.push('メールアドレス は必須項目です。')
+  if (!form.value.password)
+    errorMessages.value.push('パスワード は必須項目です。')
+  if (form.value.password !== form.value.confPassword) {
+    errorMessages.value.push('パスワード が一致しません。')
+  }
+  if (!form.value.questionnaire1)
+    errorMessages.value.push('アンケート1 は必須項目です。')
+  if (!form.value.questionnaire2)
+    errorMessages.value.push('アンケート2 は必須項目です。')
+  if (!form.value.questionnaire3)
+    errorMessages.value.push('アンケート3 は必須項目です。')
+
+  if (errorMessages.value.length > 0) {
+    await nextTick()
+    const firstErrorElement = document.querySelector('.input-error')
+    if (firstErrorElement) {
+      firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   if (isLoading.value) return
   isLoading.value = true
@@ -495,9 +558,6 @@ const handleSubmit = async () => {
     if (errors) {
       const message = Object.keys(errors).map((item) => errors[item][0])
       errorMessages.value = message
-      // isErrorMessage.value = true
-      console.log(errors)
-      window.scrollTo({ top: errors, behavior: 'smooth' })
     }
   } finally {
     isLoading.value = false
@@ -522,15 +582,10 @@ const checkPostalCode = async (code) => {
     form.value.cityArea = [address.city, address.area].join(', ')
     form.value.city = address.city
     form.value.area = address.area
-    console.log(form.value.prefecture)
-    console.log(form.value.cityArea)
-    console.log(form.value.address)
   } catch (error) {
     console.log(error)
   }
 }
-
-console.log(form.value.password, form.value.confPassword)
 </script>
 
 <style scoped>
