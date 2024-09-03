@@ -83,7 +83,8 @@ export default defineNuxtConfig({
       META_TITLE: process.env.META_TITLE,
       META_DESCRIPTION: process.env.META_DESCRIPTION,
       META_IMAGE: process.env.META_IMAGE,
-      META_URL: process.env.META_URL
+      META_URL: process.env.META_URL,
+      META_QUOTE: process.env.META_QUOTE
     },
   },
 
