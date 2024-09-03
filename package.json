@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@j2only/slide-unlock": "^0.5.8",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/composition-api": "^0.34.0",
     "@nuxtjs/tailwindcss": "^6.12.1",

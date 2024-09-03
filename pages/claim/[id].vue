@@ -57,7 +57,7 @@
         </div>
       </div>
       <!-- <swipeButton text="スワイプ" @submit="handleSwipe" color="#d7a237" /> -->
-      <button
+      <!-- <button
         class="cssbuttons-io-button mt-8 mb-8"
         :class="{ 'is-clicked': isClicked }"
         :disabled="disableSwipe"
@@ -79,7 +79,18 @@
           </svg>
         </div>
         <p class="w-full">スワイプ</p>
-      </button>
+      </button> -->
+      <SlideUnlock
+          ref="vueslideunlock"
+          :auto-width="true"
+          :circle="true"
+          :width="400"
+          :height="60"
+          text="slide to unlock"
+          success-text="success"
+          name="slideunlock"
+          @completed="handleSwipe()"
+      />
     </div>
   </div>
 
@@ -150,6 +161,8 @@ import 'vue3-swipe-button/dist/swipeButton.css'
 import { useRouter } from 'vue-router'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
+import '@j2only/slide-unlock/dist/index.css';
+import SlideUnlock from "@j2only/slide-unlock"
 
 definePageMeta({
   middleware: 'auth',
