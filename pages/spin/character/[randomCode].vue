@@ -152,6 +152,8 @@ const isLoading = ref(false)
 const errorMessages = ref('')
 
 const characterImageUrl = ref(null)
+const TOKEN = useCookie('TOKEN')
+const USER = useCookie('USER')
 
 const handleCloseDialog = () => (hasModal.value = false)
 const handleShowDialog = () => (hasModal.value = true)
@@ -159,11 +161,9 @@ const handleClose = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 
 const handleButton = async () => {
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
   const point = localStorage.getItem('POINT_ID')
 
-  if (!token && !user) {
+  if (!TOKEN.value && !USER.value) {
     handleShowDialog()
   } else {
     checkPoint()
@@ -172,9 +172,7 @@ const handleButton = async () => {
 }
 
 const nextAction = () => {
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
-  if (token && user) {
+  if (TOKEN.value && USER.value) {
     navigateTo('/dashboard')
   } else {
     handleShowDialog()
@@ -197,10 +195,8 @@ const checkPoint = () => {
 }
 
 const goToSpinPoint = async () => {
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
   let isSuccess
-  if (token && user) {
+  if (TOKEN.value && USER.value) {
     isSuccess = await spinAfterLogin()
   } else {
     isSuccess = await spinBeforeLogin()

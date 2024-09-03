@@ -160,15 +160,22 @@ useHead({
 const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
 
+const TOKEN = useCookie('TOKEN')
+const USER = useCookie('USER')
+
 const logout = async () => {
   try {
     const { data, status } = await useFetchApi('POST', 'logout')
 
     localStorage.clear()
-    navigateTo('/')
+    TOKEN.value = null
+    USER.value = null
+    await navigateTo('/')
   } catch (error) {
     localStorage.clear()
-    navigateTo('/')
+    TOKEN.value = null
+    USER.value = null
+    await navigateTo('/')
     console.log(error)
   }
 }
