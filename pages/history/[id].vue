@@ -90,13 +90,14 @@
           :body="historyDetailData.location_description"
         />
 
-        <div class="w-full" @click="openGoogleMaps">
+        <div class="w-full">
           <Skeleton v-if="isFetching" class="!w-full !h-72" />
           <div
             class="cursor-pointer"
             v-show="!isFetching"
             ref="map"
             style="width: 100%; height: 300px"
+            @click="openGoogleMaps"
           />
         </div>
       </div>
@@ -270,7 +271,7 @@ const openGoogleMaps = () => {
   const lat = historyDetailData.value.lat
   const long = historyDetailData.value.long
   if (lat && long) {
-    const googleMapsUrl = `https://www.google.com/maps?q=${lat},${long}`
+    const googleMapsUrl = `https://www.google.jp/maps?q=${lat},${long}`
     window.open(googleMapsUrl, '_blank')
   }
 }

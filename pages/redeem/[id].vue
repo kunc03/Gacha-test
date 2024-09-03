@@ -62,6 +62,7 @@
               v-show="!isFetching"
               ref="map"
               style="width: 100%; height: 300px"
+              @click="openGoogleMaps"
             />
           </div>
         </div>
@@ -210,6 +211,15 @@ const initializeMap = async (lat, long) => {
     position: { lat: lat, lng: long },
     map: map.value,
   })
+}
+
+const openGoogleMaps = () => {
+  const lat = prizeDetailData.value.lat
+  const long = prizeDetailData.value.long
+  if (lat && long) {
+    const googleMapsUrl = `https://www.google.jp/maps?q=${lat},${long}`
+    window.open(googleMapsUrl, '_blank')
+  }
 }
 
 onMounted(async () => {
