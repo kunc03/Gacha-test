@@ -50,6 +50,12 @@
             :body="prizeDetailData.terms_of_use"
           />
 
+          <HeadingSection
+            :is-fetching="isFetching"
+            title="引き換え場所"
+            :body="prizeDetailData.location_description"
+          />
+
           <div class="w-full mb-5">
             <Skeleton v-if="isFetching" class="!w-full !h-72" />
             <div
