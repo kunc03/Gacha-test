@@ -19,12 +19,9 @@
           modelValue.length > 0 &&
           (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
         (type === 'email' &&
-          isEmailError &&
-          validateOnSubmit &&
-          !isValidEmail(modelValue)) ||
-        (type === 'email' &&
-          !isValid &&
-          error === 'emailはすでに使用されています。')
+          !isValidEmail(modelValue) &&
+          modelValue.length > 0) ||
+        (type === 'email' && error === 'emailはすでに使用されています。')
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -63,13 +60,20 @@
         (isPassword &&
           modelValue.length > 0 &&
           (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
-        (type === 'email' && !isValidEmail(modelValue)) ||
+        (type === 'email' &&
+          !isValidEmail(modelValue) &&
+          modelValue.length > 0) ||
         (type === 'email' && error === 'emailはすでに使用されています。')
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
     >
-      {{ errorMessage }}
+      {{
+        errorMessage ||
+        (type === 'email' &&
+          error === 'emailはすでに使用されています。' &&
+          'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。')
+      }}
     </small>
   </div>
 </template>

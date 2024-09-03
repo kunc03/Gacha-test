@@ -272,11 +272,11 @@
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
-            is-email-error="true"
-            error="emailはすでに使用されています。"
+            :is-email-error="true"
+            :error="errorEmailMessage"
             :class="{
               'input-error': !form.email && validateOnSubmit,
-              'input-error': errorMessages.length > 0,
+              'input-error': errorEmailMessage !== '' && validateOnSubmit,
             }"
           />
         </div>
@@ -293,7 +293,12 @@
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
-            :class="{ 'input-error': !form.password && validateOnSubmit }"
+            :class="{
+              'input-error':
+                (!form.password && validateOnSubmit) ||
+                (form.password.length < 8 && validateOnSubmit) ||
+                (!isAlphanumeric(form.password) && validateOnSubmit),
+            }"
           />
           <InputText
             type="password"
@@ -424,6 +429,7 @@ useHead({
 const validateOnSubmit = ref(false)
 
 const inputValue = ref('')
+const emailUpdated = ref(false)
 
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
@@ -452,15 +458,35 @@ const form = ref({
 })
 
 const errorMessages = ref([])
+const errorEmailMessage = ref('')
 
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const updateModel = (field, value) => {
   form.value[field] = value
+
+  if (field === 'email') {
+    emailValidate()
+  }
 }
 
 const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const emailValidate = () => {
+  const email = form.value.email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailRegex.test(email)) {
+    errorEmailMessage.value = 'Format email tidak valid.'
+  }
+}
+
+const isAlphanumeric = (str) => {
+  return /^[a-zA-Z0-9]+$/.test(str)
 }
 
 const yearOptions = computed(() => {
@@ -483,9 +509,47 @@ const dayOptions = computed(() => {
   )
 })
 
+const fetchRegister = async (payload) => {
+  try {
+    const { data } = await useFetchApi('POST', 'register', { body: payload })
+    localStorage.setItem('USER_ID', data.user.id)
+    navigateTo('/register/complete')
+  } catch (error) {
+    handleApiError(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const fetchEmailData = async () => {
+  const payload = { email: form.value.email }
+  try {
+    const { data } = await useFetchApi('POST', 'register', { body: payload })
+    return data
+  } catch (error) {
+    handleApiError(error)
+  }
+}
+
+const handleApiError = (error) => {
+  errorMessages.value = []
+
+  const response = error._data.errors
+
+  if (response.email) {
+    errorEmailMessage.value = response.email[0]
+    errorMessages.value.push(response.email[0])
+  } else {
+    errorEmailMessage.value = ''
+  }
+}
+
 const handleSubmit = async () => {
   validateOnSubmit.value = true
+
   errorMessages.value = []
+
+  emailValidate()
 
   // Validasi setiap field
   if (!form.value.surname) errorMessages.value.push('姓 は必須項目です。')
@@ -538,9 +602,9 @@ const handleSubmit = async () => {
     cityArea: [form.value.city, form.value.area].join(', '),
     city: form.value.city,
     area: form.value.area,
+    email: form.value.email,
     address: form.value.address,
     phone_number: form.value.phoneNumber,
-    email: form.value.email,
     password: form.value.password,
     password_confirmation: form.value.confPassword,
     questionnaire_1: form.value.questionnaire1,
@@ -548,24 +612,10 @@ const handleSubmit = async () => {
     questionnaire_3: form.value.questionnaire3,
   }
 
-  try {
-    const { data } = await useFetchApi('POST', 'register', { body: payload })
-    localStorage.setItem('USER_ID', data.user.id)
-    navigateTo('/register/complete')
-  } catch (error) {
-    const response = error._data.errors
-    console.log(response.email[0])
-    errorMessages.value = response.email[0]
-    console.log("Error: Can't register")
-    const errors = error._data.errors[0]
-    if (errors) {
-      const message = Object.keys(errors).map((item) => errors[item][0])
-      errorMessages.value = message
-    }
-  } finally {
-    isLoading.value = false
-  }
+  await fetchRegister(payload)
 }
+
+console.log(errorMessages.value, 'errorMessages')
 
 let postCodeBounds
 const checkPostalCode = async (code) => {
@@ -589,6 +639,15 @@ const checkPostalCode = async (code) => {
     console.log(error)
   }
 }
+
+watch(
+  () => form.value.email,
+  (newEmail) => {
+    if (emailRegex.test(newEmail)) {
+      fetchEmailData()
+    }
+  }
+)
 </script>
 
 <style scoped>
