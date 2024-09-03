@@ -129,6 +129,7 @@ const title = config.public.META_TITLE
 const description = config.public.META_DESCRIPTION
 const image = config.public.META_IMAGE
 const url = config.public.META_URL
+const quote = config.public.META_QUOTE
 const historyDetailData = ref({})
 const props = defineProps(['id'])
 const isFetching = ref(true)
@@ -250,7 +251,7 @@ const shareToFacebook = () => {
 const shareToX = () => {
   try {
     window.open(
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(url)}`
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(quote)}`
     )
   } catch (error) {
     console.log(error)
@@ -259,7 +260,7 @@ const shareToX = () => {
 
 const shareToLine = () => {
   try {
-    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(url)}`)
+    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(quote)}`)
   } catch (error) {
     console.log(error)
   }
