@@ -56,40 +56,17 @@
           />
         </div>
       </div>
-      <!-- <swipeButton text="スワイプ" @submit="handleSwipe" color="#d7a237" /> -->
-      <!-- <button
-        class="cssbuttons-io-button mt-8 mb-8"
-        :class="{ 'is-clicked': isClicked }"
-        :disabled="disableSwipe"
-        @click="handleSwipe"
-      >
-        <div class="icon">
-          <svg
-            width="13"
-            height="22"
-            viewBox="0 0 13 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.50049 2.00153L10.5 11.0005L1.50049 19.9996"
-              stroke="#D7A237"
-              stroke-width="3"
-            />
-          </svg>
-        </div>
-        <p class="w-full">スワイプ</p>
-      </button> -->
+
       <SlideUnlock
-          ref="vueslideunlock"
-          :auto-width="true"
-          :circle="true"
-          :width="400"
-          :height="60"
-          text="slide to unlock"
-          success-text="success"
-          name="slideunlock"
-          @completed="handleSwipe()"
+        ref="vueslideunlock"
+        :auto-width="true"
+        :circle="true"
+        :width="400"
+        :height="56"
+        text="スワイプ"
+        success-text="Claimed"
+        name="slideunlock"
+        @completed="handleSwipe()"
       />
     </div>
   </div>
@@ -157,12 +134,9 @@
 </template>
 
 <script setup>
-import 'vue3-swipe-button/dist/swipeButton.css'
 import { useRouter } from 'vue-router'
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
-import '@j2only/slide-unlock/dist/index.css';
-import SlideUnlock from "@j2only/slide-unlock"
 
 definePageMeta({
   middleware: 'auth',
@@ -200,6 +174,7 @@ const errorMessage = ref(null)
 const redeemMessage = ref('')
 const isLoading = ref(false)
 const disableSwipe = ref(false)
+const vueslideunlock = ref(null)
 
 const fetchRedeem = async () => {
   try {
@@ -218,10 +193,11 @@ const fetchRedeem = async () => {
       isRedeemDialogVisible.value = true
       setTimeout(() => {
         router.push('/claim/success') // Redirect ke halaman yang diinginkan
-      }, 3000)
+      }, 2000)
     } else {
       errorMessage.value = message
       insufficientDialogVisible.value = true
+      vueslideunlock.value.reset()
     }
 
     // Tampilkan dialog dengan pesan
@@ -229,6 +205,7 @@ const fetchRedeem = async () => {
     console.error(error)
     errorMessage.value = error._data.message
     insufficientDialogVisible.value = true
+    vueslideunlock.value.reset()
   }
 }
 
@@ -265,65 +242,3 @@ onMounted(() => {
   getLocation()
 })
 </script>
-
-<style scoped>
-.swipe-button {
-  border-radius: 33px;
-}
-/* From Uiverse.io by adamgiebl */
-.cssbuttons-io-button {
-  background: #d7a237;
-  color: white;
-  font-family: inherit;
-  padding: 0.35em;
-  padding-left: 1.2em;
-  font-size: 17px;
-  font-weight: 500;
-  border-radius: 9999999px;
-  border: none;
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  box-shadow: inset 0 0 1.6em -0.6em #d7a237;
-  overflow: hidden;
-  position: relative;
-  height: 3.4em;
-  padding-right: 3.3em;
-  cursor: pointer;
-}
-
-.cssbuttons-io-button .icon {
-  background: white;
-  margin-right: 1em;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.8em;
-  width: 2.8em;
-  border-radius: 9999999px;
-  box-shadow: 0.1em 0.1em 0.6em 0.2em #d7a237;
-  left: 0.3em;
-  transition: all 0.3s;
-}
-
-.cssbuttons-io-button.is-clicked .icon {
-  /* width: calc(100% - 0.6em); */
-  transform: translate(700%, 0);
-}
-
-.cssbuttons-io-button .icon svg {
-  width: 1.1em;
-  transition: transform 0.3s;
-  color: #d7a237;
-}
-
-.cssbuttons-io-button.is-clicked .icon svg {
-  transform: translateX(0.1em);
-}
-
-.cssbuttons-io-button:active .icon, /* Menyertakan :active untuk responsivitas tactile */
-.cssbuttons-io-button.is-clicked .icon {
-  /* transform: scale(0.95); */
-}
-</style>
