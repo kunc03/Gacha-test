@@ -3,7 +3,7 @@
     :visible="isOpen"
     modal
     class="!bg-white !w-exd-300 !max-w-sm border border-exd-gray-44 rounded-xl"
-    @update:visible="updateIsOpen"
+    @update:visible="$emit('isOpen', $event)"
   >
     <template #container>
       <img

@@ -39,11 +39,10 @@ const route = useRoute()
 
 const pointImageUrl = ref(null)
 const apiPoint = ref(null)
+const TOKEN = useCookie('TOKEN')
+const USER = useCookie('USER')
 
 const fetchImageFromApi = async () => {
-  const token = localStorage.getItem('TOKEN')
-  const user = localStorage.getItem('USER')
-
   try {
     const storedData = localStorage.getItem('VALID_PASSWORD')
 
@@ -60,7 +59,7 @@ const fetchImageFromApi = async () => {
       return
     }
 
-    if (token && user) {
+    if (TOKEN.value && USER.value) {
       const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
 
       const { data, status } = await useFetchApi('POST', 'gacha/spin', {

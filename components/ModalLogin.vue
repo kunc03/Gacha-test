@@ -138,8 +138,14 @@ const handleSubmit = async () => {
       body: { ...form.value },
     })
 
-    localStorage.setItem('TOKEN', response.data.token)
-    localStorage.setItem('USER', JSON.stringify(response.data.user))
+    const TOKEN = useCookie('TOKEN', {
+      maxAge: 60 * 60 * 24 * 7,
+    })
+    const USER = useCookie('USER', {
+      maxAge: 60 * 60 * 24 * 7,
+    })
+    TOKEN.value = response.data.token
+    USER.value = response.data.user
 
     await saveSpin()
     navigateTo('/dashboard')

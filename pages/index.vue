@@ -114,6 +114,16 @@ const { setSourceFrom } = useRegister()
 const hasModal = ref(false)
 const isComplete = ref(false)
 
+definePageMeta({
+  middleware: async (to, from) => {
+    const TOKEN = useCookie('TOKEN')
+
+    if (TOKEN.value) {
+      return await navigateTo('/dashboard')
+    }
+  },
+})
+
 const handleShowModal = () => {
   hasModal.value = true
   setSourceFrom('top')
