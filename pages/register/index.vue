@@ -442,7 +442,8 @@ const handleSubmit = async () => {
   isLoading.value = true
 
   let payload = {
-    name: form.value.surname + ' ' + form.value.givenName,
+    first_name: form.value.surname,
+    last_name: form.value.givenName,
     birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
