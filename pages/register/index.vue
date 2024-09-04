@@ -474,8 +474,6 @@ const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
 }
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
 const emailValidate = () => {
   const email = form.value.email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -510,6 +508,8 @@ const dayOptions = computed(() => {
 })
 
 const fetchRegister = async (payload) => {
+  errorMessages.value = []
+
   try {
     const { data } = await useFetchApi('POST', 'register', { body: payload })
     localStorage.setItem('USER_ID', data.user.id)
@@ -518,16 +518,6 @@ const fetchRegister = async (payload) => {
     handleApiError(error)
   } finally {
     isLoading.value = false
-  }
-}
-
-const fetchEmailData = async () => {
-  const payload = { email: form.value.email }
-  try {
-    const { data } = await useFetchApi('POST', 'register', { body: payload })
-    return data
-  } catch (error) {
-    handleApiError(error)
   }
 }
 
@@ -545,50 +535,13 @@ const handleApiError = (error) => {
 }
 
 const handleSubmit = async () => {
-  validateOnSubmit.value = true
+  emailValidate()
 
   errorMessages.value = []
 
-  emailValidate()
-
-  // Validasi setiap field
-  if (!form.value.surname) errorMessages.value.push('姓 は必須項目です。')
-  if (!form.value.givenName) errorMessages.value.push('名 は必須項目です。')
-  if (
-    !form.value.yearOfBirth ||
-    !form.value.monthOfBirth ||
-    !form.value.dateOfBirth
-  ) {
-    errorMessages.value.push('生年月日 は必須項目です。')
-  }
-  if (!form.value.postCode)
-    errorMessages.value.push('郵便番号 は必須項目です。')
-  if (!form.value.phoneNumber)
-    errorMessages.value.push('電話番号 は必須項目です。')
-  if (!form.value.email)
-    errorMessages.value.push('メールアドレス は必須項目です。')
-  if (!form.value.password)
-    errorMessages.value.push('パスワード は必須項目です。')
-  if (form.value.password !== form.value.confPassword) {
-    errorMessages.value.push('パスワード が一致しません。')
-  }
-  if (!form.value.questionnaire1)
-    errorMessages.value.push('アンケート1 は必須項目です。')
-  if (!form.value.questionnaire2)
-    errorMessages.value.push('アンケート2 は必須項目です。')
-  if (!form.value.questionnaire3)
-    errorMessages.value.push('アンケート3 は必須項目です。')
-
-  if (errorMessages.value.length > 0) {
-    await nextTick()
-    const firstErrorElement = document.querySelector('.input-error')
-    if (firstErrorElement || errorMessages.value.length > 0) {
-      firstErrorElement.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  if (isLoading.value) return
   isLoading.value = true
+
+  validateOnSubmit.value = true
 
   let payload = {
     name: form.value.surname + ' ' + form.value.givenName,
@@ -613,9 +566,30 @@ const handleSubmit = async () => {
   }
 
   await fetchRegister(payload)
-}
 
-console.log(errorMessages.value, 'errorMessages')
+  // Validasi setiap field
+  if (!form.value.email)
+    errorMessages.value.push('メールアドレス は必須項目です。')
+  if (!form.value.password)
+    errorMessages.value.push('パスワード は必須項目です。')
+  if (form.value.password !== form.value.confPassword) {
+    errorMessages.value.push('パスワード が一致しません。')
+  }
+  if (!form.value.questionnaire1)
+    errorMessages.value.push('アンケート1 は必須項目です。')
+  if (!form.value.questionnaire2)
+    errorMessages.value.push('アンケート2 は必須項目です。')
+  if (!form.value.questionnaire3)
+    errorMessages.value.push('アンケート3 は必須項目です。')
+
+  if (errorMessages.value.length > 0) {
+    await nextTick()
+    const firstErrorElement = document.querySelector('.input-error')
+    if (firstErrorElement || errorMessages.value.length > 0) {
+      firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+}
 
 let postCodeBounds
 const checkPostalCode = async (code) => {
@@ -639,15 +613,6 @@ const checkPostalCode = async (code) => {
     console.log(error)
   }
 }
-
-watch(
-  () => form.value.email,
-  (newEmail) => {
-    if (emailRegex.test(newEmail)) {
-      fetchEmailData()
-    }
-  }
-)
 </script>
 
 <style scoped>
