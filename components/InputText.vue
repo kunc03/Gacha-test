@@ -14,7 +14,14 @@
     <div
       :class="[
         'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
-        validateOnSubmit && !isLengthValid && !modelValue
+        (validateOnSubmit && !isValid && !modelValue) ||
+        (isPassword &&
+          modelValue.length > 0 &&
+          (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
+        (type === 'email' &&
+          !isValidEmail(modelValue) &&
+          modelValue.length > 0) ||
+        (type === 'email' && error === 'emailはすでに使用されています。')
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -29,7 +36,7 @@
         v-only-numeric="onlyNumeric"
         @input="updateValue($event.target.value)"
         @blur="validate"
-        :invalid="error !== '' ? true : false || !isLengthValid"
+        :invalid="error !== '' ? true : false || !isValid"
         :aria-describedby="`${model}-${label}--${prefix}-${suffix}-help`"
         :placeholder="placeholder"
         :disabled="disabled"
@@ -48,11 +55,26 @@
       >{{ helperText }}</small
     >
     <small
-      v-if="error !== ''"
+      v-if="
+        (validateOnSubmit && !isValid && !modelValue) ||
+        (isPassword &&
+          modelValue.length > 0 &&
+          (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
+        (type === 'email' &&
+          !isValidEmail(modelValue) &&
+          modelValue.length > 0) ||
+        (type === 'email' && error === 'emailはすでに使用されています。')
+      "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
-      >{{ error }}</small
     >
+      {{
+        errorMessage ||
+        (type === 'email' &&
+          error === 'emailはすでに使用されています。' &&
+          'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。')
+      }}
+    </small>
   </div>
 </template>
 
@@ -109,12 +131,25 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isPassword: {
+    type: Boolean,
+    default: false,
+  },
+  minLength: {
+    type: Number,
+    default: 0,
+  },
+  isEmailError: {
+    type: Boolean,
+    default: false,
+  },
   validateOnSubmit: Boolean,
 })
 
 const emit = defineEmits(['update:model', 'validate'])
 
-const isLengthValid = ref(true)
+const isValid = ref(true)
+const errorMessage = ref('')
 
 const modelValue = computed({
   get: () => props.model,
@@ -127,8 +162,47 @@ const updateValue = (value) => {
   emit('validate', value)
 }
 
+const isAlphanumeric = (str) => {
+  return /^[a-zA-Z0-9]+$/.test(str)
+}
+
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
 const validate = () => {
-  isLengthValid.value = modelValue.value.length > 0
+  if (props.isPassword) {
+    if (
+      modelValue.value.length > 0 &&
+      modelValue.value.length <= props.minLength
+    ) {
+      isValid.value = false
+      errorMessage.value = `${props.minLength}文字以上で作成してください。`
+    } else if (!isAlphanumeric(modelValue.value)) {
+      isValid.value = false
+      errorMessage.value = '半角英数字のみ使用できます。'
+    } else {
+      isValid.value = true
+      errorMessage.value = ''
+    }
+  } else if (props.type === 'email' && props.isEmailError) {
+    if (!isValidEmail(modelValue.value)) {
+      isValid.value = false
+      errorMessage.value = '正しい形式でメールアドレスを入力してください。'
+    } else if (props.error === 'emailはすでに使用されています。') {
+      isValid.value = false
+      errorMessage.value =
+        'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。'
+    } else {
+      isValid.value = true
+      errorMessage.value = ''
+    }
+  } else if (props.error !== '') {
+    isValid.value = modelValue.value.length > 0
+    errorMessage.value = isValid.value ? '' : props.error
+  }
+
   emit('validate', modelValue.value)
 }
 

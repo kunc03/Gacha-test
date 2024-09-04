@@ -48,7 +48,12 @@
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
-        <div class="text-center w-10/12">
+        <div v-if="errorLink" class="text-center w-10/12">
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ errorMessages }}
+          </p>
+        </div>
+        <div v-else class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             エラーが発生しました
           </p>
@@ -78,6 +83,8 @@ const isNotAllowed = ref(false)
 const isRequestingLocation = ref(false)
 const isLoading = ref(false)
 const description = ref(null)
+const errorLink = ref(false)
+const errorMessages = ref('')
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
 const checkPassword = async (params) => {
@@ -124,7 +131,10 @@ const getPassword = async (id) => {
 
     isLoading.value = false
   } catch (error) {
+    errorLink.value = true
     console.log("Error: Can't get password")
+    errorMessages.value = error._data.message
+    isNotAllowed.value = true
   }
 }
 

@@ -35,6 +35,8 @@
             @update:model="updateModel('surname', $event)"
             @validate="validateInput('surname', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
+            :class="{ 'input-error': !form.surname && validateOnSubmit }"
           />
           <InputText
             :model="form.givenName"
@@ -43,6 +45,8 @@
             @update:model="updateModel('givenName', $event)"
             @validate="validateInput('givenName', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
+            :class="{ 'input-error': !form.givenName && validateOnSubmit }"
           />
         </div>
         <div
@@ -51,6 +55,12 @@
           <label
             for="生年月日"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
+            :class="{
+              'input-error':
+                (!form.yearOfBirth && validateOnSubmit) ||
+                (!form.monthOfBirth && validateOnSubmit) ||
+                (!form.dateOfBirth && validateOnSubmit),
+            }"
             >生年月日
             <span
               className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
@@ -65,6 +75,7 @@
               :options="yearOptions"
               suffix="年"
               :validate-on-submit="validateOnSubmit"
+              :class="{ 'input-error': !form.yearOfBirth && validateOnSubmit }"
             />
             <Dropdown
               :model="form.monthOfBirth"
@@ -73,6 +84,7 @@
               :options="monthOptions"
               suffix="月"
               :validate-on-submit="validateOnSubmit"
+              :class="{ 'input-error': !form.monthOfBirth && validateOnSubmit }"
             />
             <Dropdown
               :model="form.dateOfBirth"
@@ -81,8 +93,19 @@
               :options="dayOptions"
               suffix="日"
               :validate-on-submit="validateOnSubmit"
+              :class="{ 'input-error': !form.dateOfBirth && validateOnSubmit }"
             />
           </div>
+          <small
+            v-if="
+              (!form.yearOfBirth && validateOnSubmit) ||
+              (!form.monthOfBirth && validateOnSubmit) ||
+              (!form.dateOfBirth && validateOnSubmit)
+            "
+            :class="['p-error']"
+          >
+            この項目は必須です。
+          </small>
         </div>
         <div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
@@ -175,6 +198,8 @@
             "
             @validate="validateInput('postCode', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
+            :class="{ 'input-error': !form.postCode && validateOnSubmit }"
           />
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
             郵便番号を入力すると住所の一部が自動的に表示されます
@@ -191,6 +216,7 @@
             @update:model="updateModel('prefecture', $event)"
             @validate="validateInput('prefecture', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
 
           <InputText
@@ -201,6 +227,7 @@
             @update:model="updateModel('cityArea', $event)"
             @validate="validateInput('cityArea', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
           />
 
           <InputText
@@ -208,10 +235,11 @@
             required
             v-model="inputValue"
             label="番地・マンション名など"
-            @input="handleInputChange"
             @update:model="updateModel('address', $event)"
             @validate="validateInput('address', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
+            :class="{ 'input-error': !form.address && validateOnSubmit }"
           />
 
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
@@ -229,6 +257,8 @@
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
             :validate-on-submit="validateOnSubmit"
+            error="この項目は必須です。"
+            :class="{ 'input-error': !form.phoneNumber && validateOnSubmit }"
           />
         </div>
         <div
@@ -242,6 +272,12 @@
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
+            :is-email-error="true"
+            :error="errorEmailMessage"
+            :class="{
+              'input-error': !form.email && validateOnSubmit,
+              'input-error': errorEmailMessage !== '' && validateOnSubmit,
+            }"
           />
         </div>
         <div
@@ -251,19 +287,35 @@
             type="password"
             :model="form.password"
             required
+            :isPassword="true"
+            :minLength="8"
             label="パスワード"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
+            :class="{
+              'input-error':
+                (!form.password && validateOnSubmit) ||
+                (form.password.length < 8 && validateOnSubmit) ||
+                (!isAlphanumeric(form.password) && validateOnSubmit),
+            }"
           />
           <InputText
             type="password"
             required
             :model="form.confPassword"
+            :isPassword="true"
+            :minLength="8"
             label="パスワード（再入力）"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
+            :class="{
+              'input-error':
+                (!form.confPassword && validateOnSubmit) ||
+                (form.confPassword.length < 8 && validateOnSubmit) ||
+                (!isAlphanumeric(form.confPassword) && validateOnSubmit),
+            }"
           />
         </div>
 
@@ -276,7 +328,9 @@
             label="アンケート"
             @update:model="updateModel('questionnaire1', $event)"
             @validate="validateInput('questionnaire1', $event)"
+            error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.questionnaire1 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire2"
@@ -284,7 +338,9 @@
             label="アンケート"
             @update:model="updateModel('questionnaire2', $event)"
             @validate="validateInput('questionnaire2', $event)"
+            error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.questionnaire2 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire3"
@@ -292,7 +348,9 @@
             label="アンケート"
             @update:model="updateModel('questionnaire3', $event)"
             @validate="validateInput('questionnaire3', $event)"
+            error="この項目は必須です。"
             :validate-on-submit="validateOnSubmit"
+            :class="{ 'input-error': !form.questionnaire3 && validateOnSubmit }"
           />
         </div>
 
@@ -372,10 +430,7 @@ useHead({
 const validateOnSubmit = ref(false)
 
 const inputValue = ref('')
-
-const handleInputChange = (event) => {
-  console.log('Input value changed to:', event.target.value)
-}
+const emailUpdated = ref(false)
 
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
@@ -404,15 +459,33 @@ const form = ref({
 })
 
 const errorMessages = ref([])
+const errorEmailMessage = ref('')
 
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const updateModel = (field, value) => {
   form.value[field] = value
+
+  if (field === 'email') {
+    emailValidate()
+  }
 }
 
 const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
+}
+
+const emailValidate = () => {
+  const email = form.value.email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailRegex.test(email)) {
+    errorEmailMessage.value = 'Format email tidak valid.'
+  }
+}
+
+const isAlphanumeric = (str) => {
+  return /^[a-zA-Z0-9]+$/.test(str)
 }
 
 const yearOptions = computed(() => {
@@ -435,11 +508,41 @@ const dayOptions = computed(() => {
   )
 })
 
-const handleSubmit = async () => {
-  validateOnSubmit.value = true
+const fetchRegister = async (payload) => {
+  errorMessages.value = []
 
-  if (isLoading.value) return
+  try {
+    const { data } = await useFetchApi('POST', 'register', { body: payload })
+    localStorage.setItem('USER_ID', data.user.id)
+    navigateTo('/register/complete')
+  } catch (error) {
+    handleApiError(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const handleApiError = (error) => {
+  errorMessages.value = []
+
+  const response = error._data.errors
+
+  if (response.email) {
+    errorEmailMessage.value = response.email[0]
+    errorMessages.value.push(response.email[0])
+  } else {
+    errorEmailMessage.value = ''
+  }
+}
+
+const handleSubmit = async () => {
+  emailValidate()
+
+  errorMessages.value = []
+
   isLoading.value = true
+
+  validateOnSubmit.value = true
 
   let payload = {
     first_name: form.value.surname,
@@ -454,9 +557,9 @@ const handleSubmit = async () => {
     cityArea: [form.value.city, form.value.area].join(', '),
     city: form.value.city,
     area: form.value.area,
+    email: form.value.email,
     address: form.value.address,
     phone_number: form.value.phoneNumber,
-    email: form.value.email,
     password: form.value.password,
     password_confirmation: form.value.confPassword,
     questionnaire_1: form.value.questionnaire1,
@@ -464,21 +567,29 @@ const handleSubmit = async () => {
     questionnaire_3: form.value.questionnaire3,
   }
 
-  try {
-    const { data } = await useFetchApi('POST', 'register', { body: payload })
-    localStorage.setItem('USER_ID', data.user.id)
-    navigateTo('/register/complete')
-  } catch (error) {
-    console.log(error)
-    console.log("Error: Can't register")
-    const errors = error._data.errors
-    if (errors) {
-      const message = Object.keys(errors).map((item) => errors[item][0])
-      errorMessages.value = message
-      isErrorMessage.value = true
+  await fetchRegister(payload)
+
+  // Validasi setiap field
+  if (!form.value.email)
+    errorMessages.value.push('メールアドレス は必須項目です。')
+  if (!form.value.password)
+    errorMessages.value.push('パスワード は必須項目です。')
+  if (form.value.password !== form.value.confPassword) {
+    errorMessages.value.push('パスワード が一致しません。')
+  }
+  if (!form.value.questionnaire1)
+    errorMessages.value.push('アンケート1 は必須項目です。')
+  if (!form.value.questionnaire2)
+    errorMessages.value.push('アンケート2 は必須項目です。')
+  if (!form.value.questionnaire3)
+    errorMessages.value.push('アンケート3 は必須項目です。')
+
+  if (errorMessages.value.length > 0) {
+    await nextTick()
+    const firstErrorElement = document.querySelector('.input-error')
+    if (firstErrorElement || errorMessages.value.length > 0) {
+      firstErrorElement.scrollIntoView({ behavior: 'smooth' })
     }
-  } finally {
-    isLoading.value = false
   }
 }
 
@@ -500,15 +611,10 @@ const checkPostalCode = async (code) => {
     form.value.cityArea = [address.city, address.area].join(', ')
     form.value.city = address.city
     form.value.area = address.area
-    console.log(form.value.prefecture)
-    console.log(form.value.cityArea)
-    console.log(form.value.address)
   } catch (error) {
     console.log(error)
   }
 }
-
-console.log(form.value.password, form.value.confPassword)
 </script>
 
 <style scoped>
