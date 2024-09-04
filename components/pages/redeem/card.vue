@@ -25,10 +25,10 @@
         <template v-slot:text>
           <div class="inline-flex justify-between w-100">
             <div class="flex flex-col justify-center gap-1">
-              <p class="text-exd-gray-scorpion font-semibold text-exd-1218">
+              <p class="text-exd-gray-scorpion font-semibold text-exd-1320">
                 {{ item.name }}
               </p>
-              <p class="text-exd-red-500 text-exd-1013.62">
+              <p class="text-exd-red-500 text-exd-12520">
                 利用可能期間：{{ item.started_at }}〜 {{ item.expired_at }}
               </p>
             </div>
