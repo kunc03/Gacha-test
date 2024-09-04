@@ -310,7 +310,12 @@
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
-            :class="{ 'input-error': !form.confPassword && validateOnSubmit }"
+            :class="{
+              'input-error':
+                (!form.confPassword && validateOnSubmit) ||
+                (form.confPassword.length < 8 && validateOnSubmit) ||
+                (!isAlphanumeric(form.confPassword) && validateOnSubmit),
+            }"
           />
         </div>
 
