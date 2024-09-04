@@ -9,7 +9,7 @@
       class="text-center cursor-pointer"
       @click="handleClick"
     />
-    <p class="text-exd-gray-scorpion text-exd-1020">{{ label }}</p>
+    <p class="text-exd-gray-scorpion text-exd-1020">{{ $t(label) }}</p>
   </div>
 </template>
 

@@ -24,14 +24,19 @@
       <img src="/images/logo.webp" alt="intl" width="130" height="48" preload />
     </div>
     <div class="pr-5 shrink-0">
-      <img
-        src="/images/intl-icon.svg"
-        alt="intl"
-        width="40"
-        height="40"
-        preload
-        class="cursor-pointer"
-      />
+      <div class="relative">
+        <button type="button" aria-haspopup="true" @click="langPanelToggle">
+          <img
+            src="/images/intl-icon.svg"
+            alt="intl"
+            width="40"
+            height="40"
+            preload
+            class="cursor-pointer"
+          />
+        </button>
+        <LanguangePanel v-model:visible="langPanel" />
+      </div>
     </div>
   </header>
 </template>
@@ -50,6 +55,12 @@ defineProps({
     default: false,
   },
 })
+
+const langPanel = ref(false)
+
+const langPanelToggle = (event) => {
+  langPanel.value = !langPanel.value
+}
 
 const handleGoBack = () => {
   if (window.history.length > 2) {

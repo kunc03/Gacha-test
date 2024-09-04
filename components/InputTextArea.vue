@@ -7,8 +7,8 @@
       >{{ label }}
       <span
         v-if="required"
-        className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
-        >必須</span
+        class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
+        >{{ $t('required') }}</span
       ></label
     >
     <Textarea

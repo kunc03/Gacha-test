@@ -77,8 +77,8 @@ const checkCaches = () => {
     <div
       class="h-full w-full flex flex-col justify-center items-center text-exd-red"
     >
-      <div class="text-xl font-semibold">Loading all assets</div>
-      <div class="text-lg">Please wait a moment...</div>
+      <div class="text-xl font-semibold">{{ $t('loadingAllAssets') }}</div>
+      <div class="text-lg">{{ $t('pleaseWaitMoment') }}</div>
       <div class="w-full px-12 mt-10">
         <ProgressBar
           :value="progress"

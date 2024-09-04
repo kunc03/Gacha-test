@@ -7,13 +7,13 @@
         variantClass,
         bottomClass,
         disabled ? '!cursor-not-allowed' : '!cursor-pointer',
-        '!py-4 !w-full !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !px-8 !relative',
+        '!py-4 !w-full !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !px-6 !relative',
       ]"
       raised
       @click="handleClick"
     >
       <span class="!text-center !w-full">{{ label }}</span>
-      <div class="!absolute !right-8 !top-1/2 !transform !-translate-y-1/2">
+      <div class="!absolute !right-6 !top-1/2 !transform !-translate-y-1/2">
         <LoadingIcon v-if="hasLoading" />
         <img
           v-if="hasIcon && !hasLoading"

@@ -20,21 +20,21 @@
       >
         <div class="font-bold text-exd-1424 text-center text-exd-gray-scorpion">
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            ログイン／新規会員登録
+            {{ $t('loginOrRegister') }}
           </p>
         </div>
 
         <InputText
           type="email"
           :model="form.email"
-          placeholder="ログインID（メールアドレス）"
+          :placeholder="$t('loginID')"
           @update:model="updateModel('email', $event)"
           @validate="validateInput('email', $event)"
         />
         <InputText
           type="password"
           :model="form.password"
-          placeholder="パスワード"
+          :placeholder="$t('password')"
           @update:model="updateModel('password', $event)"
           @validate="validateInput('password', $event)"
         />
@@ -44,16 +44,19 @@
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
           @click="navigateTo('/forgot-password')"
         >
-          パスワードを忘れた方
+          {{ $t('forgotYourPassword') }}
         </a>
 
-        <SolidButton label="新規会員登録" :onClick="handleToRegister" />
         <SolidButton
-          label="ログイン"
+          :label="$t('login')"
           :onClick="handleSubmit"
-          variant="red"
           :disabled="!isValidInput || isLoading"
           :has-loading="isLoading"
+        />
+        <SolidButton
+          :label="$t('newMemberRegistration')"
+          variant="red"
+          :onClick="handleToRegister"
         />
       </div>
     </template>
@@ -202,17 +205,16 @@ const handleSubmit = async () => {
 const saveSpin = async () => {
   if (!isSpin.value) return
   try {
-    const {data} = await useFetchApi('POST', 'gacha/save', {
+    const { data } = await useFetchApi('POST', 'gacha/save', {
       body: {
         point_id: localStorage.getItem('POINT_ID'),
         location_id: localStorage.getItem('LOCATION_ID'),
         character_id: localStorage.getItem('CHARACTER_ID'),
       },
     })
-    
+
     localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
     localStorage.setItem('login_after_spin', true)
-
   } catch (error) {
     console.log("Error: Can't save spin result")
 

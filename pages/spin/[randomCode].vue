@@ -18,7 +18,11 @@
         />
       </div>
 
-      <SolidButton label="ガチャを回す" :on-click="goToSpinPoint" has-bottom />
+      <SolidButton
+        :label="$t('spinTheGacha')"
+        :on-click="goToSpinPoint"
+        has-bottom
+      />
     </div>
   </div>
 

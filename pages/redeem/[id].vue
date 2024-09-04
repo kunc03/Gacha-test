@@ -4,7 +4,7 @@
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
-      景品一覧・交換
+      {{ $t('listOfPrizesAndExchanges') }}
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center text-black mt-20 px-8">
@@ -40,19 +40,19 @@
 
           <HeadingSection
             :is-fetching="isFetching"
-            title="景品獲得方法"
+            :title="$t('howToGetPrizes')"
             :body="prizeDetailData.how_to_win"
           />
 
           <HeadingSection
             :is-fetching="isFetching"
-            title="利用条件"
+            :title="$t('conditionsOfUse')"
             :body="prizeDetailData.terms_of_use"
           />
 
           <HeadingSection
             :is-fetching="isFetching"
-            title="引き換え場所"
+            :title="$t('redemptionLocation')"
             :body="prizeDetailData.location_description"
           />
 
@@ -60,16 +60,18 @@
             <Skeleton v-if="isFetching" class="!w-full !h-72" />
             <div
               v-show="!isFetching"
-              ref="map"
+              id="parentMap"
               style="width: 100%; height: 300px"
               @click="openGoogleMaps"
-            />
+            >
+              <div id="map" style="width: 100%; height: 100%" />
+            </div>
           </div>
         </div>
       </div>
       <SolidButton
         :disabled="disableRedeem || isFetching"
-        :label="disableRedeem ? '交換できません' : '交換'"
+        :label="disableRedeem ? $t('cannotBeExchanged') : $t('exchange')"
         :on-click="handleToggleModal"
         has-bottom
       />
@@ -98,11 +100,11 @@
           class="text-exd-gray-scorpion font-bold text-center text-exd-1424 max-w-36"
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         >
-          この景品は観光案内所で 交換となります
+          {{ $t('exchanged_message') }}
         </p>
       </div>
       <SolidButton
-        label="到着しました"
+        :label="$t('arrived')"
         :on-click="handleGoToClaim"
         has-bottom
       />
@@ -136,6 +138,7 @@ const map = ref(null)
 const isFetching = ref(true)
 const disableRedeem = ref(false)
 const config = useRuntimeConfig()
+const LOCALE = useCookie('LOCALE')
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -144,7 +147,7 @@ const loadGoogleMaps = () => {
       return
     }
     const script = document.createElement('script')
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.GOOGLE_API}&libraries=places&language=ja&region=ja`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.GOOGLE_API}&libraries=places&language=${LOCALE.value}&region=ja`
     script.async = true
     script.onload = resolve
     script.onerror = reject
@@ -205,11 +208,12 @@ const initializeMap = async (lat, long) => {
     streetViewControl: false, // Disables street view control
     fullscreenControl: false, // Disables fullscreen control
   }
-  map.value = new google.maps.Map(map.value, mapOptions)
+  const mapElement = document.getElementById('map')
+  const map = new google.maps.Map(mapElement, mapOptions)
 
   new google.maps.Marker({
     position: { lat: lat, lng: long },
-    map: map.value,
+    map: map,
   })
 }
 
@@ -226,5 +230,29 @@ onMounted(async () => {
   getLocation()
   await loadGoogleMaps()
   fetchingPrizeData()
+})
+
+watch(LOCALE, async (val) => {
+  const map = document.getElementById('map')
+
+  if (map.parentNode) {
+    map.parentNode.removeChild(map)
+    const div = document.createElement('div')
+    const parentMap = document.getElementById('parentMap')
+    div.id = 'map'
+    div.style = 'width: 100%; height: 100%'
+
+    parentMap.appendChild(div)
+  }
+
+  delete window.google
+
+  await loadGoogleMaps()
+  let lat = prizeDetailData.value.lat
+  let long = prizeDetailData.value.long
+
+  if (lat != undefined && long != undefined) {
+    initializeMap(lat, long)
+  }
 })
 </script>
