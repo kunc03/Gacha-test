@@ -173,12 +173,15 @@ const isValidEmail = (email) => {
 
 const validate = () => {
   if (props.isPassword) {
-    if (!isAlphanumeric(modelValue.value)) {
-      isValid.value = false
-      errorMessage.value = '半角英数字のみ使用できます。'
-    } else if (modelValue.value.length < props.minLength) {
+    if (
+      modelValue.value.length > 0 &&
+      modelValue.value.length <= props.minLength
+    ) {
       isValid.value = false
       errorMessage.value = `${props.minLength}文字以上で作成してください。`
+    } else if (!isAlphanumeric(modelValue.value)) {
+      isValid.value = false
+      errorMessage.value = '半角英数字のみ使用できます。'
     } else {
       isValid.value = true
       errorMessage.value = ''
