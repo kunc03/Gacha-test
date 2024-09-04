@@ -39,6 +39,8 @@ const fontSize = {
   'exd-1218': [pxToEm(12), { lineHeight: pxToEm(18) }],
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
   'exd-1220': [pxToEm(12), { lineHeight: pxToEm(20) }],
+  'exd-12520': [pxToEm(12.5), { lineHeight: pxToEm(20) }],
+  'exd-1320': [pxToEm(13.5), { lineHeight: pxToEm(20) }],
   'exd-1416': [pxToEm(14), { lineHeight: pxToEm(16) }],
   'exd-1424': [pxToEm(14), { lineHeight: pxToEm(24) }],
   'exd-1724': [pxToEm(17), { lineHeight: pxToEm(24) }],
