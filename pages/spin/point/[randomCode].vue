@@ -14,10 +14,12 @@
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10 animate-sparkling"
       preload
     />
-    <div class="absolute inset-0 px-[1.5rem] flex justify-center z-20">
+    <div class="absolute inset-0 flex justify-center z-20">
       <CircleSpinPoint
         class="relative top-1/2 -translate-y-[50%]"
         :imageSrc="pointImageUrl"
+        width="100%"
+        height="800"
       />
     </div>
     <div class="absolute-10 top-1/2 translate-y-[80%]"></div>

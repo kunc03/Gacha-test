@@ -18,7 +18,7 @@ onMounted(() => {
   <svg
     width="400"
     height="718"
-    viewBox="0 0 400 537"
+    viewBox="0 0 400 600"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -71,8 +71,15 @@ onMounted(() => {
       />
     </g>
 
+    <image
+      x="-105"
+      y="-95"
+      width="610"
+      height="590"
+      href="~/assets/images/circle-blur.png"
+    />
     <g filter="url(#filter0_b_19_69)" class="relative p-8">
-      <ellipse cx="200" cy="198" rx="200" ry="198" fill="white" />
+      <!-- <ellipse cx="200" cy="198" rx="200" ry="198" fill="white" /> -->
       <image height="220" width="220" :href="props.imageSrc" x="90" y="70" />
     </g>
     <rect x="44" y="300" width="311" height="237" fill="url(#pattern0_19_69)" />
