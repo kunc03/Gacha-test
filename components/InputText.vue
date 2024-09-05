@@ -14,14 +14,12 @@
     <div
       :class="[
         'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
-        (validateOnSubmit && !isValid && !modelValue) ||
-        (isPassword &&
+        (props.error !== '' && props.validateOnSubmit) ||
+        modelValue === 0 ||
+        (props.isPassword &&
           modelValue.length > 0 &&
-          (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
-        (type === 'email' &&
-          !isValidEmail(modelValue) &&
-          modelValue.length > 0) ||
-        (type === 'email' && error === 'emailはすでに使用されています。')
+          modelValue.length < props.minLength) ||
+        (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -56,23 +54,22 @@
     >
     <small
       v-if="
-        (validateOnSubmit && !isValid && !modelValue) ||
-        (isPassword &&
+        (props.error !== '' && props.validateOnSubmit) ||
+        modelValue === 0 ||
+        (props.isPassword &&
           modelValue.length > 0 &&
-          (modelValue.length < minLength || !isAlphanumeric(modelValue))) ||
-        (type === 'email' &&
-          !isValidEmail(modelValue) &&
-          modelValue.length > 0) ||
-        (type === 'email' && error === 'emailはすでに使用されています。')
+          modelValue.length < props.minLength) ||
+        (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
     >
       {{
-        errorMessage ||
-        (type === 'email' &&
-          error === 'emailはすでに使用されています。' &&
-          'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。')
+        error ||
+        (isPassword &&
+          modelValue.length > 0 &&
+          modelValue.length < minLength &&
+          '8文字以上で作成してください。')
       }}
     </small>
   </div>
@@ -135,6 +132,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isConfPassword: {
+    type: Boolean,
+    default: false,
+  },
   minLength: {
     type: Number,
     default: 0,
@@ -149,11 +150,35 @@ const props = defineProps({
 const emit = defineEmits(['update:model', 'validate'])
 
 const isValid = ref(true)
-const errorMessage = ref('')
 
 const modelValue = computed({
   get: () => props.model,
   set: (value) => emit('update:model', value),
+})
+
+const isAlphanumeric = (str) => {
+  return /^[a-zA-Z0-9]+$/.test(str)
+}
+
+const borderRed = computed(() => {
+  return (
+    (props.error !== '' && props.validateOnSubmit) ||
+    modelValue === 0 ||
+    (props.isPassword &&
+      modelValue.length > 0 &&
+      modelValue.length < props.minLength)
+  )
+})
+
+const errorMessage = computed(() => {
+  return (
+    (props.error !== '' && props.validateOnSubmit) ||
+    modelValue === 0 ||
+    (props.isPassword &&
+      modelValue.length > 0 &&
+      modelValue.length < props.minLength) ||
+    (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
+  )
 })
 
 const updateValue = (value) => {
@@ -162,47 +187,7 @@ const updateValue = (value) => {
   emit('validate', value)
 }
 
-const isAlphanumeric = (str) => {
-  return /^[a-zA-Z0-9]+$/.test(str)
-}
-
-const isValidEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
-}
-
 const validate = () => {
-  if (props.isPassword) {
-    if (
-      modelValue.value.length > 0 &&
-      modelValue.value.length <= props.minLength
-    ) {
-      isValid.value = false
-      errorMessage.value = `${props.minLength}文字以上で作成してください。`
-    } else if (!isAlphanumeric(modelValue.value)) {
-      isValid.value = false
-      errorMessage.value = '半角英数字のみ使用できます。'
-    } else {
-      isValid.value = true
-      errorMessage.value = ''
-    }
-  } else if (props.type === 'email' && props.isEmailError) {
-    if (!isValidEmail(modelValue.value)) {
-      isValid.value = false
-      errorMessage.value = '正しい形式でメールアドレスを入力してください。'
-    } else if (props.error === 'emailはすでに使用されています。') {
-      isValid.value = false
-      errorMessage.value =
-        'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。'
-    } else {
-      isValid.value = true
-      errorMessage.value = ''
-    }
-  } else if (props.error !== '') {
-    isValid.value = modelValue.value.length > 0
-    errorMessage.value = isValid.value ? '' : props.error
-  }
-
   emit('validate', modelValue.value)
 }
 
