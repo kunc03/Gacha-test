@@ -178,11 +178,11 @@
               ]"
             />
             <Button
-              @click="updateModel('residenceType', 'abroad')"
+              @click="updateModel('residenceType', 'non_domestic')"
               label="海外"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === 'abroad' && '!bg-exd-banana',
+                form.residenceType === 'non_domestic' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -484,7 +484,8 @@ const form = ref({
   monthOfBirth: '',
   dateOfBirth: '',
   gender: 'Non-Binary',
-  residenceType: '',
+  residenceType: 'domestic',
+  residence: '',
   postCode: '',
   prefecture: '',
   cityArea: '',
@@ -608,7 +609,10 @@ const handleSubmit = async () => {
     birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
-    residence: form.value.residenceType,
+    residence_type: form.value.residenceType,
+    residence: [form.value.prefecture, form.value.city, form.value.area].join(
+      ' '
+    ),
     prefecture: form.value.prefecture,
     cityArea: [form.value.city, form.value.area].join(', '),
     city: form.value.city,
