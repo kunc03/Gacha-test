@@ -18,7 +18,8 @@
         modelValue === 0 ||
         (props.isPassword &&
           modelValue.length > 0 &&
-          modelValue.length < props.minLength)
+          modelValue.length < props.minLength) ||
+        (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
