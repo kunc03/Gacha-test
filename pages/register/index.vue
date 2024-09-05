@@ -170,19 +170,19 @@
             style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
           >
             <Button
-              @click="updateModel('residenceType', '')"
+              @click="updateModel('residenceType', 'domestic')"
               label="国内"
               :class="[
                 'bg-white w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === '' && '!bg-exd-banana',
+                form.residenceType === 'domestic' && '!bg-exd-banana',
               ]"
             />
             <Button
-              @click="updateModel('residenceType', 'oversease')"
+              @click="updateModel('residenceType', 'abroad')"
               label="海外"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === 'oversease' && '!bg-exd-banana',
+                form.residenceType === 'abroad' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -474,7 +474,6 @@ useHead({
 const validateOnSubmit = ref(false)
 
 const inputValue = ref('')
-const emailUpdated = ref(false)
 
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
@@ -506,7 +505,6 @@ const errorMessages = ref([])
 const errorScroll = ref([])
 const errorEmailMessage = ref('')
 const errorPasswordMessage = ref('')
-const errorConfirmPasswordMessage = ref('')
 
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
@@ -610,9 +608,7 @@ const handleSubmit = async () => {
     birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
-    residence: [form.value.prefecture, form.value.city, form.value.area].join(
-      ' '
-    ),
+    residence: form.value.residenceType,
     prefecture: form.value.prefecture,
     cityArea: [form.value.city, form.value.area].join(', '),
     city: form.value.city,
