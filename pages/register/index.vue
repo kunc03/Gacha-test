@@ -316,6 +316,9 @@
             :validate-on-submit="validateOnSubmit"
             :error="
               (!form.password && validateOnSubmit && 'この項目は必須です。') ||
+              (!isAlphanumeric(form.password) &&
+                form.password.length > 0 &&
+                '半角英数字のみ使用できます。') ||
               errorPasswordMessage
             "
             :class="{
@@ -337,7 +340,7 @@
               (!form.confPassword &&
                 validateOnSubmit &&
                 'この項目は必須です。') ||
-              (form.confPassword !== form.password
+              (form.confPassword !== form.password && validateOnSubmit
                 ? 'パスワードが検証値と一致しません'
                 : '')
             "
@@ -567,9 +570,9 @@ const handleApiError = (error) => {
   }
   if (response.password) {
     if (form.value.password.length >= 8) {
-      if (!isAlphanumeric(form.value.password)) {
-        errorPasswordMessage.value = '半角英数字のみ使用できます。'
-      }
+      // if (!isAlphanumeric(form.value.password)) {
+      //   errorPasswordMessage.value = '半角英数字のみ使用できます。'
+      // }
     }
   } else {
     errorPasswordMessage.value = ''

@@ -14,9 +14,11 @@
     <div
       :class="[
         'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
-        (error !== '' && validateOnSubmit) ||
+        (props.error !== '' && props.validateOnSubmit) ||
         modelValue === 0 ||
-        (isPassword && modelValue.length > 0 && modelValue.length < minLength)
+        (props.isPassword &&
+          modelValue.length > 0 &&
+          modelValue.length < props.minLength)
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -51,9 +53,12 @@
     >
     <small
       v-if="
-        (error !== '' && validateOnSubmit) ||
+        (props.error !== '' && props.validateOnSubmit) ||
         modelValue === 0 ||
-        (isPassword && modelValue.length > 0 && modelValue.length < minLength)
+        (props.isPassword &&
+          modelValue.length > 0 &&
+          modelValue.length < props.minLength) ||
+        (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
@@ -144,13 +149,35 @@ const props = defineProps({
 const emit = defineEmits(['update:model', 'validate'])
 
 const isValid = ref(true)
-const errorMessage = props.error
-
-console.log(errorMessage)
 
 const modelValue = computed({
   get: () => props.model,
   set: (value) => emit('update:model', value),
+})
+
+const isAlphanumeric = (str) => {
+  return /^[a-zA-Z0-9]+$/.test(str)
+}
+
+const borderRed = computed(() => {
+  return (
+    (props.error !== '' && props.validateOnSubmit) ||
+    modelValue === 0 ||
+    (props.isPassword &&
+      modelValue.length > 0 &&
+      modelValue.length < props.minLength)
+  )
+})
+
+const errorMessage = computed(() => {
+  return (
+    (props.error !== '' && props.validateOnSubmit) ||
+    modelValue === 0 ||
+    (props.isPassword &&
+      modelValue.length > 0 &&
+      modelValue.length < props.minLength) ||
+    (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
+  )
 })
 
 const updateValue = (value) => {
