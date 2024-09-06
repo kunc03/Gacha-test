@@ -279,7 +279,7 @@ const openGoogleMaps = () => {
 const downloadImage = async () => {
   try {
     const fileName = historyDetailData.value.character_name+'.png';
-    const blob = await useFetchApi('GET', '/image/'+id)
+    const blob = await useFetchApi('GET', '/history/image/'+id)
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = fileName;
