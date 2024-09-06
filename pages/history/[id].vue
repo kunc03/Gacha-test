@@ -220,7 +220,7 @@ const updateMetaHead = () => {
 const share = (type) => {
   switch (type) {
     case 'image':
-      window.open(historyDetailData.value.character_image)
+      downloadImage()
       break
     case 'facebook':
       shareToFacebook()
@@ -273,6 +273,22 @@ const openGoogleMaps = () => {
   if (lat && long) {
     const googleMapsUrl = `https://www.google.jp/maps?q=${lat},${long}`
     window.open(googleMapsUrl, '_blank')
+  }
+}
+
+const downloadImage = async () => {
+  try {
+    const fileName = historyDetailData.value.character_name+'.png';
+    const blob = await useFetchApi('GET', '/history/image/'+id)
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  } catch (error) {
+    console.error('Error downloading the image:', error);
   }
 }
 
