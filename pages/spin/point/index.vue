@@ -5,7 +5,7 @@
     >
       <video
         v-if="showGif"
-        :src="gifUrl"
+        src="/video/spin-point.mp4"
         autoplay
         preload="auto"
         class="absolute z-20 inset-0 w-full h-full object-cover"
@@ -18,11 +18,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import spin from '~/assets/video/spin.mp4'
 
 const route = useRoute()
 
-const gifUrl = ref(spin)
 const showGif = ref(false)
 const router = useRouter()
 
