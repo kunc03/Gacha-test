@@ -112,6 +112,7 @@ const form = ref({
 
 const isErrorMessage = ref(false)
 const errorMessages = ref([])
+const route = useRoute()
 
 const isValidInput = computed(
   () => form.value.email !== '' && form.value.password !== ''
@@ -130,6 +131,7 @@ const handleToRegister = () => {
   navigateTo('/register')
 }
 const handleSubmit = async () => {
+  const location = route.params.randomCode
   if (isLoading.value) return
   isLoading.value = true
 
@@ -150,7 +152,12 @@ const handleSubmit = async () => {
     await nextTick()
 
     await saveSpin()
-    await navigateTo('/dashboard', { replace: true })
+
+    if (route.path === '/spin/character/' + location) {
+      emits('check-spin')
+    } else {
+      await navigateTo('/dashboard', { replace: true })
+    }
     isLoading.value = false
   } catch (error) {
     console.log("Error: Can't login", error)

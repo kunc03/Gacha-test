@@ -99,7 +99,7 @@
     </template>
   </Dialog>
 
-  <ModalLogin v-model="modalLogin" />
+  <ModalLogin v-model="modalLogin" @check-spin="checkPoint" />
 
   <Dialog
     v-model:visible="isNotAllowed"
@@ -163,8 +163,6 @@ const handleClose = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 
 const handleButton = async () => {
-  const point = localStorage.getItem('POINT_ID')
-
   if (!TOKEN.value && !USER.value) {
     handleShowDialog()
   } else {
@@ -181,27 +179,31 @@ const nextAction = () => {
   }
 }
 
-const checkPoint = () => {
+const checkPoint = async () => {
   try {
-    const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN')
-    if (isAlreadySpin == 'true') {
-      errorMessages.value =
-        '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
-      handleOpenDialog()
+    const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
+    const { data, status } = await useFetchApi('POST', 'gacha/spin', {
+      body: { ...payload },
+    })
+    const isAlreadySpin = data.is_already_spin
+    if (isAlreadySpin) {
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          modalLogin.value = false
+          resolve()
+        }, 500)
+      })
+
+      setTimeout(() => {
+        errorMessages.value =
+          '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
+        handleOpenDialog()
+      }, 500)
     } else {
       navigateTo('/dashboard')
     }
   } catch (error) {
-    console.log()
-  }
-}
-
-const goToSpinPoint = async () => {
-  let isSuccess
-  if (TOKEN.value && USER.value) {
-    isSuccess = await spinAfterLogin()
-  } else {
-    isSuccess = await spinBeforeLogin()
+    console.log('Error: Check point', error)
   }
 }
 
@@ -240,52 +242,8 @@ const handleToLogin = () => {
   modalLogin.value = true
 }
 
-const spinAfterLogin = async () => {
-  if (isLoading.value) return
-  isLoading.value = true
-  try {
-    const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
-    const { data, status } = await useFetchApi('POST', 'gacha/spin', {
-      body: { ...payload },
-    })
-    localStorage.setItem('POINT_ID', data.userPoint.prize_id)
-    localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
-    isLoading.value = false
-
-    return status
-  } catch (error) {
-    console.log("Error: Can't spin after login")
-    if (error?._data?.message) {
-      errorMessages.value = error._data.message
-      handleOpenDialog()
-    }
-    isLoading.value = false
-  }
-}
 const goTo = (url) => {
   navigateTo(url)
-}
-
-const spinBeforeLogin = async () => {
-  if (isLoading.value) return
-  isLoading.value = true
-  try {
-    const params = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
-    const { data, status } = await useFetchApi('GET', 'gacha/spin', {
-      params,
-    })
-    localStorage.setItem('POINT_ID', data.point.id)
-    localStorage.setItem('LOCATION_ID', data.location.id)
-    isLoading.value = false
-    return status
-  } catch (error) {
-    console.log("Error: Can't spin before login")
-    if (error?._data?.message) {
-      errorMessages.value = error._data.message
-      handleOpenDialog()
-    }
-    isLoading.value = false
-  }
 }
 
 onMounted(() => {

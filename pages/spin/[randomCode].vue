@@ -59,7 +59,7 @@ const goToSpinPoint = async () => {
   // }
 
   // if (isSuccess) {
-  router.push(`/spin/point/`)
+  router.push(`/spin/point`)
   // console.log('Success')
   // }
 }
