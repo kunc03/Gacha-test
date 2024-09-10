@@ -170,6 +170,8 @@ const radiusCheck = async () => {
     checkRadiusMessage.value = true
     isLoading.value = false
     isNotAllowed.value = true
+
+    document.body.style.pointerEvents = 'none'
   }
 }
 
@@ -240,6 +242,14 @@ onMounted(async () => {
   await getPassword(location)
 })
 
+watch(isNotAllowed, (newValue) => {
+  if (newValue) {
+    document.body.classList.add('modal-open')
+  } else {
+    document.body.classList.remove('modal-open')
+  }
+})
+
 useHead({
   title: 'Scan',
 })
@@ -265,5 +275,13 @@ useHead({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+:global(body.modal-open) {
+  pointer-events: none;
+}
+
+:global(body.modal-open .p-dialog) {
+  pointer-events: auto;
 }
 </style>
