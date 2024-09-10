@@ -147,24 +147,26 @@ const handleSubmit = async () => {
     TOKEN.value = response.data.token
     USER.value = response.data.user
 
+    await nextTick()
+
     await saveSpin()
-    navigateTo('/dashboard')
+    await navigateTo('/dashboard', { replace: true })
     isLoading.value = false
   } catch (error) {
     console.log("Error: Can't login", error)
 
-    const { errors, message } = error._data
+    const { errors, message } = error._data || {}
 
     if (errors) {
       const message = Object.keys(errors).map((item) => errors[item][0])
       errorMessages.value = message
       isErrorMessage.value = true
     }
-
     if (message && !errors) {
       errorMessages.value = [message]
       isErrorMessage.value = true
     }
+  } finally {
     isLoading.value = false
   }
 }
@@ -183,6 +185,8 @@ const saveSpin = async () => {
     console.log(response)
   } catch (error) {
     console.log("Error: Can't save spin result")
+
+    throw error
   }
 }
 </script>
