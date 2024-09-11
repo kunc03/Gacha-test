@@ -175,8 +175,6 @@ const handleSubmit = async () => {
     await saveSpin()
 
     if (route.path === '/spin/character/' + location) {
-      updateSpinStatus()
-
       await navigateTo('/dashboard', { replace: true })
     } else {
       await navigateTo('/dashboard', { replace: true })
@@ -204,15 +202,17 @@ const handleSubmit = async () => {
 const saveSpin = async () => {
   if (!isSpin.value) return
   try {
-    const response = await useFetchApi('POST', 'gacha/save', {
+    const {data} = await useFetchApi('POST', 'gacha/save', {
       body: {
         point_id: localStorage.getItem('POINT_ID'),
         location_id: localStorage.getItem('LOCATION_ID'),
         character_id: localStorage.getItem('CHARACTER_ID'),
       },
     })
+    
+    localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
+    localStorage.setItem('login_after_spin', true)
 
-    console.log(response)
   } catch (error) {
     console.log("Error: Can't save spin result")
 

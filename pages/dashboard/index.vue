@@ -236,10 +236,7 @@ const checkSpinEligibility = async () => {
   const message =
     '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
 
-  console.log('isAlreadySpin:', isAlreadySpin)
-  console.log('loginAfterSpin:', loginAfterSpin)
-
-  if (isAlreadySpin && loginAfterSpin) {
+  if ((isAlreadySpin == "true") && (loginAfterSpin == "true")) {
     errorMessages.value = message
     isNotAllowed.value = true
   }
