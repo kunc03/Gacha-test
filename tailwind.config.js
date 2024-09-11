@@ -66,7 +66,7 @@ module.exports = {
 
     extend: {
       screens: {
-        small: { min: '150px', max: '375px' },
+        small: { min: '150px', max: '380px' },
       },
       padding: { ...padding },
       colors: {

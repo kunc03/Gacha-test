@@ -16,7 +16,7 @@
         preload
         height="40"
         width="40"
-        class="absolute top-14 right-10"
+        class="absolute top-14 right-10 small:!h-8 small:!w-8 small:!top-10"
       />
       <img
         :src="logoIcon"
@@ -24,7 +24,7 @@
         preload
         height="129"
         width="226"
-        class="absolute md:top-20 top-16 left-0 z-20"
+        class="absolute md:top-20 top-16 left-0 z-20 small:!h-24 small:!w-28 small:!top-5"
       />
     </div>
     <img
@@ -32,20 +32,20 @@
       alt="gacha"
       preload
       width="300"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-32"
+      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-32 small:!top-5 small:!w-3/5"
     />
     <img
       :src="gachaEgg"
       alt="gacha-egg"
       preload
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 top-1/4 w-full"
+      class="absolute left-1/2 transform -translate-x-1/2 right-0 top-1/4 w-full small:!top-[10%]"
     />
     <img
       :src="gachaInfo"
       alt="gacha-info"
       preload
       width="380"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-40"
+      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-40 small:!top-[10%]"
     />
     <div
       class="relative pb-7 gap-10 justify-center items-center w-full flex flex-col z-10"
@@ -59,7 +59,7 @@
       preload
       height="135"
       width="363"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 bottom-1/4"
+      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 bottom-1/4 small:!h-24 small:!w-64"
     />
     <img
       :src="digitalTourist"
