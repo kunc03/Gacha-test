@@ -5,7 +5,7 @@
   >
     <div class="pl-5" v-if="hasBack">
       <img
-        :src="backButton"
+        src="/images/back-button.svg"
         alt="back"
         width="40"
         height="40"
@@ -21,11 +21,11 @@
       class="grow text-center w-full justify-center items-center flex"
       v-else
     >
-      <img :src="logo" alt="intl" width="130" height="48" preload />
+      <img src="/images/logo.webp" alt="intl" width="130" height="48" preload />
     </div>
     <div class="pr-5 shrink-0">
       <img
-        :src="intlIcon"
+        src="/images/intl-icon.svg"
         alt="intl"
         width="40"
         height="40"
@@ -38,9 +38,6 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
-import intlIcon from '~/assets/images/intl-icon.svg'
-import logo from '~/assets/images/logo.png'
-import backButton from '~/assets/images/back-button.svg'
 const router = useRouter()
 
 defineProps({

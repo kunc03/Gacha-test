@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full max-w-md mx-auto min-h-dvh max-h-full overflow-hidden bg-white flex flex-col relative bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center"
+    class="w-full max-w-md mx-auto min-h-dvh max-h-full overflow-hidden bg-white flex flex-col relative bg-[url('/images/bg-red2.webp')] bg-cover bg-center"
   >
     <HeaderBar :hasBack="hasBack">
       <p
