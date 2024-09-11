@@ -112,6 +112,7 @@ const form = ref({
 
 const isErrorMessage = ref(false)
 const errorMessages = ref([])
+const route = useRoute()
 
 const isValidInput = computed(
   () => form.value.email !== '' && form.value.password !== ''
@@ -129,7 +130,29 @@ const handleToRegister = () => {
   setSourceFrom('top')
   navigateTo('/register')
 }
+
+const updateSpinStatus = async () => {
+  const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD') || '{}')
+  const { data } = await useFetchApi('POST', 'gacha/spin', { body: payload })
+
+  const newStatus = data.is_already_spin
+
+  return new Promise((resolve) => {
+    const currentStatus = localStorage.getItem('IS_ALREADY_SPIN')
+    if (currentStatus !== newStatus.toString()) {
+      localStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
+      localStorage.setItem('login_after_spin', true)
+      isAlreadySpin.value = newStatus
+    }
+    setTimeout(() => {
+      resolve()
+    }, 0)
+  })
+}
+
 const handleSubmit = async () => {
+  const location = route.params.randomCode
+
   if (isLoading.value) return
   isLoading.value = true
 
@@ -147,24 +170,31 @@ const handleSubmit = async () => {
     TOKEN.value = response.data.token
     USER.value = response.data.user
 
+    await nextTick()
+
     await saveSpin()
-    navigateTo('/dashboard')
+
+    if (route.path === '/spin/character/' + location) {
+      await navigateTo('/dashboard', { replace: true })
+    } else {
+      await navigateTo('/dashboard', { replace: true })
+    }
     isLoading.value = false
   } catch (error) {
     console.log("Error: Can't login", error)
 
-    const { errors, message } = error._data
+    const { errors, message } = error._data || {}
 
     if (errors) {
       const message = Object.keys(errors).map((item) => errors[item][0])
       errorMessages.value = message
       isErrorMessage.value = true
     }
-
     if (message && !errors) {
       errorMessages.value = [message]
       isErrorMessage.value = true
     }
+  } finally {
     isLoading.value = false
   }
 }
@@ -172,17 +202,21 @@ const handleSubmit = async () => {
 const saveSpin = async () => {
   if (!isSpin.value) return
   try {
-    const response = await useFetchApi('POST', 'gacha/save', {
+    const {data} = await useFetchApi('POST', 'gacha/save', {
       body: {
         point_id: localStorage.getItem('POINT_ID'),
         location_id: localStorage.getItem('LOCATION_ID'),
         character_id: localStorage.getItem('CHARACTER_ID'),
       },
     })
+    
+    localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
+    localStorage.setItem('login_after_spin', true)
 
-    console.log(response)
   } catch (error) {
     console.log("Error: Can't save spin result")
+
+    throw error
   }
 }
 </script>
