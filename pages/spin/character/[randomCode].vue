@@ -1,15 +1,15 @@
 <template>
   <div
-    class="grow bg-[url('assets/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
+    class="grow bg-[url('/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
   >
     <img
-      :src="gacha2"
+      src="/images/gacha2.png"
       alt="gacha2"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"
       preload
     />
     <img
-      :src="sparkling"
+      src="/images/sparkling.svg"
       alt="sparkling"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10 animate-sparkling"
       preload
@@ -53,7 +53,7 @@
   >
     <template #container>
       <img
-        :src="close"
+        src="/images/close.svg"
         alt="close"
         width="30"
         height="30"
@@ -86,7 +86,7 @@
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             こちら
             <img
-              :src="exportImg"
+              src="/images/export.svg"
               alt="export"
               width="15"
               height="15"
@@ -108,7 +108,7 @@
   >
     <template #container>
       <img
-        :src="close"
+        src="/images/close.svg"
         alt="close"
         width="30"
         height="30"
@@ -119,7 +119,13 @@
       <div
         class="w-full flex flex-col justify-center items-center gap-4 py-6 px-6"
       >
-        <img :src="warning" alt="warning" width="40" height="40" preload />
+        <img
+          src="/images/warning.svg"
+          alt="warning"
+          width="40"
+          height="40"
+          preload
+        />
         <div class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ errorMessages }}
