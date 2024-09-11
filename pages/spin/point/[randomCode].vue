@@ -1,15 +1,15 @@
 <template>
   <div
-    class="grow bg-[url('assets/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
+    class="grow bg-[url('/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
   >
     <img
-      :src="gacha2"
+      src="/images/gacha2.png"
       alt="gacha2"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-0"
       preload
     />
     <img
-      :src="sparkling"
+      src="/images/sparkling.svg"
       alt="sparkling"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10 animate-sparkling"
       preload
@@ -30,12 +30,6 @@
 </template>
 
 <script setup>
-import gacha2 from '~/assets/images/gacha2.png'
-import sparkling from '~/assets/images/sparkling.svg'
-import hatchedEgg from '~/assets/images/hatched-egg.svg'
-import arrow from '~/assets/images/arrow.svg'
-import point from '~/assets/images/10point.svg'
-
 const router = useRouter()
 const route = useRoute()
 

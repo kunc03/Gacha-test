@@ -1,15 +1,17 @@
 <template>
+  <SplashScreen />
+
   <div class="grow flex flex-col">
     <Header withLogo />
 
     <div
-      class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center relative"
+      class="flex flex-col grow bg-[url('/images/bg-red2.svg')] bg-cover bg-center relative"
     >
       <div
         class="grow w-full flex flex-col items-center justify-center relative mb-4 mt-[15%]"
       >
         <img
-          :src="gacha2"
+          src="/images/gacha2.png"
           alt="gacha2"
           class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-full h-full object-scale-down small:h-3/4"
           preload
@@ -23,7 +25,13 @@
   <Modal :is-open="isNotAllowed" :on-close="() => handleCloseDialog()">
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
-        <img :src="warning" alt="warning" width="40" height="40" preload />
+        <img
+          src="/images/warning.svg"
+          alt="warning"
+          width="40"
+          height="40"
+          preload
+        />
         <div class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ errorMessages }}
