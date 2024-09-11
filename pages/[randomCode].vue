@@ -3,7 +3,7 @@
     class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col"
   >
     <div class="flex-1 items-center flex flex-col gap-11 mt-[15%] px-8">
-      <img src="/logo.webp" alt="logo" width="190" height="71" preload />
+      <img src="/images/logo.webp" alt="logo" width="190" height="71" preload />
       <div class="flex flex-col gap-8 mx-8 justify-start items-center w-full">
         <h1
           class="text-center font-bold text-exd-1824.52 text-white"
