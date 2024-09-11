@@ -130,8 +130,29 @@ const handleToRegister = () => {
   setSourceFrom('top')
   navigateTo('/register')
 }
+
+const updateSpinStatus = async () => {
+  const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD') || '{}')
+  const { data } = await useFetchApi('POST', 'gacha/spin', { body: payload })
+
+  const newStatus = data.is_already_spin
+
+  return new Promise((resolve) => {
+    const currentStatus = localStorage.getItem('IS_ALREADY_SPIN')
+    if (currentStatus !== newStatus.toString()) {
+      localStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
+      localStorage.setItem('login_after_spin', true)
+      isAlreadySpin.value = newStatus
+    }
+    setTimeout(() => {
+      resolve()
+    }, 0)
+  })
+}
+
 const handleSubmit = async () => {
   const location = route.params.randomCode
+
   if (isLoading.value) return
   isLoading.value = true
 
@@ -154,7 +175,9 @@ const handleSubmit = async () => {
     await saveSpin()
 
     if (route.path === '/spin/character/' + location) {
-      emits('check-spin')
+      updateSpinStatus()
+
+      await navigateTo('/dashboard', { replace: true })
     } else {
       await navigateTo('/dashboard', { replace: true })
     }

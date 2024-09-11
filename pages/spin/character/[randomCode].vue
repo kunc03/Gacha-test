@@ -161,6 +161,7 @@ const handleCloseDialog = () => (hasModal.value = false)
 const handleShowDialog = () => (hasModal.value = true)
 const handleClose = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
+const isAlreadySpin = ref(null)
 
 const handleButton = async () => {
   if (!TOKEN.value && !USER.value) {
@@ -171,39 +172,39 @@ const handleButton = async () => {
   }
 }
 
-const nextAction = () => {
-  if (TOKEN.value && USER.value) {
-    navigateTo('/dashboard')
-  } else {
-    handleShowDialog()
-  }
+const updateSpinStatus = (newStatus) => {
+  return new Promise((resolve) => {
+    const currentStatus = localStorage.getItem('IS_ALREADY_SPIN')
+    if (currentStatus !== newStatus.toString()) {
+      localStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
+      isAlreadySpin.value = newStatus
+    }
+    setTimeout(() => {
+      resolve()
+    }, 0)
+  })
+}
+
+const showErrorMessage = (
+  message = '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
+) => {
+  errorMessages.value = message
+  handleOpenDialog()
 }
 
 const checkPoint = async () => {
-  try {
-    const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
-    const { data, status } = await useFetchApi('POST', 'gacha/spin', {
-      body: { ...payload },
-    })
-    const isAlreadySpin = data.is_already_spin
-    if (isAlreadySpin) {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          modalLogin.value = false
-          resolve()
-        }, 500)
-      })
+  const router = useRouter()
 
-      setTimeout(() => {
-        errorMessages.value =
-          '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
-        handleOpenDialog()
-      }, 500)
+  try {
+    const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN')
+    if (isAlreadySpin) {
+      showErrorMessage()
     } else {
-      navigateTo('/dashboard')
+      router.push('/dashboard')
     }
   } catch (error) {
-    console.log('Error: Check point', error)
+    console.error('Error checking point:', error)
+    showErrorMessage('An unexpected error occurred. Please try again later.')
   }
 }
 
