@@ -2,18 +2,18 @@
   <SplashScreen />
 
   <div class="grow flex flex-col">
-    <Header withLogo />
+    <HeaderBar withLogo />
 
     <div
-      class="flex flex-col grow bg-[url('/images/bg-red2.svg')] bg-cover bg-center relative"
+      class="flex flex-col grow bg-[url('/images/bg-red2.webp')] bg-cover bg-center relative"
     >
       <div
         class="grow w-full flex flex-col items-center justify-center relative mb-4 mt-[15%]"
       >
         <img
-          src="/images/gacha2.png"
+          src="/images/gacha2.webp"
           alt="gacha2"
-          class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-full h-full object-scale-down small:h-3/4"
+          class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-100px)] h-full object-scale-down small:h-3/4"
           preload
         />
       </div>
@@ -45,8 +45,6 @@
 <script setup>
 const route = useRoute()
 const router = useRouter()
-import gacha2 from '~/assets/images/gacha2.png'
-import warning from '~/assets/images/warning.svg'
 
 const isLoading = ref(false)
 const isNotAllowed = ref(false)

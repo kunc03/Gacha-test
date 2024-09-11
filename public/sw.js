@@ -4,13 +4,16 @@ const urlsToCache = [
   '/logo-icon.ico',
   '/video/spin-point.mp4',
   '/video/spin-character.mp4',
-  '/images/gacha2.png',
-  '/images/bg-red2.svg',
-  '/images/warning.svg',
-  '/images/sparkling.svg',
+  '/images/gacha2.webp',
+  '/images/bg-red2.webp',
+  '/images/sparkling.webp',
   '/images/bg-green.webp',
+  '/images/logo.webp',
+  '/images/warning.svg',
   '/images/close.svg',
   '/images/export.svg',
+  '/images/intl-icon.svg',
+  '/images/back-button.svg',
 ]
 
 self.addEventListener('install', function (event) {

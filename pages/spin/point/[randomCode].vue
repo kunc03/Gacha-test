@@ -3,13 +3,13 @@
     class="grow bg-[url('/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
   >
     <img
-      src="/images/gacha2.png"
+      src="/images/gacha2.webp"
       alt="gacha2"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-0"
       preload
     />
     <img
-      src="/images/sparkling.svg"
+      src="/images/sparkling.webp"
       alt="sparkling"
       class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover z-10 animate-sparkling"
       preload

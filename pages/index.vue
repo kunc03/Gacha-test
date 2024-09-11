@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col grow bg-[url('assets/images/bg-red2.svg')] bg-cover bg-center justify-between relative cursor-pointer"
+    class="flex flex-col grow bg-[url('/images/bg-red2.webp')] bg-cover bg-center justify-between relative cursor-pointer"
     @click="handleShowModal"
   >
     <div class="relative grow">
@@ -28,7 +28,7 @@
       />
     </div>
     <img
-      :src="gacha2"
+      src="/images/gacha2.webp"
       alt="gacha"
       preload
       width="300"
@@ -100,7 +100,6 @@ import logo from '~/assets/images/logo.png'
 import digitalTourist from '~/assets/images/digital-tourist.png'
 import gachaEgg from '~/assets/images/gacha-egg.png'
 import gachaInfo from '~/assets/images/gacha-info.png'
-import gacha2 from '~/assets/images/gacha2.png'
 import { nextTick } from 'vue'
 import WarningPopUp from '~/components/WarningPopUp.vue'
 

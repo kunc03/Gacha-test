@@ -59,7 +59,7 @@ const checkCaches = () => {
       return cache.keys()
     })
     .then(function (keys) {
-      if (keys.length === 10) {
+      if (keys.length === 13) {
         clearInterval(checkCachesInterval)
         setTimeout(() => {
           completeLoading()
