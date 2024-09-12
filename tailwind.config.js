@@ -98,6 +98,9 @@ module.exports = {
         'exd-light-grey': {
           DEFAULT: 'hsla(var(--light-grey))', //#D0D0D0
         },
+        'exd-dark-grey': {
+          DEFAULT: 'hsla(var(--dark-grey))', //#3D3D3D
+        },
         'exd-neutral-400': {
           DEFAULT: 'hsla(var(--neutral-400))', //#8A9595
         },
@@ -112,6 +115,9 @@ module.exports = {
         },
         'exd-red-500': {
           DEFAULT: 'hsla(var(--red-500))', //#D84F45
+        },
+        'exd-green': {
+          DEFAULT: 'hsla(var(--green))', //#2E7D32
         },
       },
       height: {

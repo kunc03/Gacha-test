@@ -7,9 +7,9 @@
       コレクション
     </p>
   </HeaderBar>
-  <div class="flex flex-col bg-center text-black mt-20 px-8 gap-3">
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-      <div class="h-72 w-full overflow-hidden">
+  <div class="flex flex-col bg-center text-black mt-24 px-8 gap-3">
+    <div class="max-w-sm bg-white rounded-lg shadow">
+      <div class="h-72 w-full overflow-hidden rounded-t-lg">
         <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>
         <CharacterCard
           v-else
@@ -103,12 +103,27 @@
       </div>
     </div>
   </div>
+
+  <transition name="slide-right">
+    <div
+      v-if="showSuccessPopup"
+      class="popup-success bg-exd-dark-grey flex items-center gap-2"
+    >
+      <div
+        class="w-7 h-7 bg-exd-green rounded-full flex items-center justify-center text-exd-1320"
+      >
+        <img :src="check" alt="success" class="w-6 h-6" />
+      </div>
+      Success download image
+    </div>
+  </transition>
 </template>
 
 <script setup>
 import duck from '~/assets/images/duck.svg'
 import download from '~/assets/images/download.svg'
 import facebook from '~/assets/images/facebook.svg'
+import check from '~/assets/images/check.svg'
 import line from '~/assets/images/line.svg'
 import x from '~/assets/images/x.svg'
 import { useRoute } from 'nuxt/app'
@@ -134,6 +149,8 @@ const quote = config.public.META_QUOTE
 const historyDetailData = ref({})
 const props = defineProps(['id'])
 const isFetching = ref(true)
+
+const showSuccessPopup = ref(false)
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -221,6 +238,7 @@ const share = (type) => {
   switch (type) {
     case 'image':
       downloadImage()
+
       break
     case 'facebook':
       shareToFacebook()
@@ -278,17 +296,23 @@ const openGoogleMaps = () => {
 
 const downloadImage = async () => {
   try {
-    const fileName = historyDetailData.value.character_name+'.png';
-    const blob = await useFetchApi('GET', '/history/image/'+id)
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(link.href);
+    const fileName = historyDetailData.value.character_name + '.png'
+    const blob = await useFetchApi('GET', '/history/image/' + id)
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = fileName
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(link.href)
+
+    showSuccessPopup.value = true
+
+    setTimeout(() => {
+      showSuccessPopup.value = false
+    }, 10000)
   } catch (error) {
-    console.error('Error downloading the image:', error);
+    console.error('Error downloading the image:', error)
   }
 }
 
@@ -298,3 +322,38 @@ onBeforeMount(async () => {
   updateMetaHead()
 })
 </script>
+
+<style scoped>
+.popup-success {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  animation: slide-in 0.5s forwards, slide-out 0.5s 1.5s forwards;
+  z-index: 1000;
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+</style>
