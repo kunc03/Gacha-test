@@ -44,7 +44,11 @@
     </div>
   </div>
 
-  <Modal :is-open="isNotAllowed" :on-close="() => handleCloseDialog()">
+  <Modal
+    :is-open="isNotAllowed"
+    :on-close="() => handleCloseDialog()"
+    :is-hidden-close="checkRadiusMessage"
+  >
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
@@ -86,6 +90,11 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const handleCloseDialog = () => (isNotAllowed.value = false)
+
+const radiusCheckResult = ref(null)
+const checkRadiusMessage = ref(false)
+const longitude = ref('')
+const latitude = ref('')
 
 const checkPassword = async (params) => {
   isLoading.value = true
@@ -138,6 +147,34 @@ const getPassword = async (id) => {
   }
 }
 
+const radiusCheck = async () => {
+  const location = route.params.randomCode
+  isLoading.value = true
+  try {
+    const { data, status } = await useFetchApi('POST', 'radius-check', {
+      body: {
+        lat: latitude.value,
+        long: longitude.value,
+        slug: location,
+      },
+    })
+
+    radiusCheckResult.value = data
+    console.log('Radius check response:', data)
+    console.log('Radius check status:', status)
+    radiusCheckResult.value = data
+
+    isLoading.value = false
+  } catch (error) {
+    console.error("Error: Can't check radius", error)
+    checkRadiusMessage.value = true
+    isLoading.value = false
+    isNotAllowed.value = true
+
+    document.body.style.pointerEvents = 'none'
+  }
+}
+
 onMounted(async () => {
   if ('permissions' in navigator) {
     navigator.permissions
@@ -148,6 +185,10 @@ onMounted(async () => {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               console.log(position)
+              latitude.value = position.coords.latitude
+              longitude.value = position.coords.longitude
+              radiusCheck()
+
             },
             (error) => {
               console.error(error)
@@ -157,7 +198,11 @@ onMounted(async () => {
           if ('geolocation' in navigator) {
             isRequestingLocation.value = true
             navigator.geolocation.getCurrentPosition(
-              () => {
+              (position) => {
+                console.log(position)
+                latitude.value = position.coords.latitude
+                longitude.value = position.coords.longitude
+                radiusCheck();
                 isRequestingLocation.value = false
               },
               () => {
@@ -201,6 +246,14 @@ onMounted(async () => {
   await getPassword(location)
 })
 
+watch(isNotAllowed, (newValue) => {
+  if (newValue) {
+    document.body.classList.add('modal-open')
+  } else {
+    document.body.classList.remove('modal-open')
+  }
+})
+
 useHead({
   title: 'Scan',
 })
@@ -226,5 +279,13 @@ useHead({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+:global(body.modal-open) {
+  pointer-events: none;
+}
+
+:global(body.modal-open .p-dialog) {
+  pointer-events: auto;
 }
 </style>

@@ -8,6 +8,7 @@
     <template #container>
       <img
         :src="close"
+        :hidden="isHiddenClose"
         alt="close"
         width="30"
         height="30"
@@ -34,6 +35,10 @@ const props = defineProps({
   onClose: {
     type: Function,
     default: null,
+  },
+  isHiddenClose: {
+    type: Boolean,
+    default: false,
   },
 })
 
