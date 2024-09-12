@@ -187,8 +187,8 @@ onMounted(async () => {
               console.log(position)
               latitude.value = position.coords.latitude
               longitude.value = position.coords.longitude
-
               radiusCheck()
+
             },
             (error) => {
               console.error(error)
@@ -198,7 +198,11 @@ onMounted(async () => {
           if ('geolocation' in navigator) {
             isRequestingLocation.value = true
             navigator.geolocation.getCurrentPosition(
-              () => {
+              (position) => {
+                console.log(position)
+                latitude.value = position.coords.latitude
+                longitude.value = position.coords.longitude
+                radiusCheck();
                 isRequestingLocation.value = false
               },
               () => {
