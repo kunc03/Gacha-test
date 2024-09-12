@@ -3,12 +3,12 @@
     <div class="flex flex-col grow bg-white bg-cover bg-center">
       <video
         v-if="showGif"
-        src="/video/spin-point.mp4"
         autoplay
-        preload="auto"
         class="absolute z-20 inset-0 w-full h-full object-cover"
         @ended="goToCharacter"
-      />
+      >
+        <source src="/video/spin-point.mp4" type="video/mp4" />
+      </video>
     </div>
   </div>
 </template>
