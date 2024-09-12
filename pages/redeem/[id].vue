@@ -7,7 +7,7 @@
       景品一覧・交換
     </p>
   </HeaderBar>
-  <div class="flex flex-col bg-center text-black mt-20 px-8">
+  <div class="flex flex-col bg-center text-black mt-24 px-8">
     <div
       class="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden"
     >
