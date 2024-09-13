@@ -56,24 +56,63 @@ self.addEventListener('activate', function (event) {
 })
 
 self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    caches
-      .match(event.request)
-      .then(function (response) {
-        if (response) {
-          return response
-        }
+  if (
+    event.request.url.endsWith('.mp4') &&
+    event.request.headers.has('range')
+  ) {
+    event.respondWith(handleRangeRequest(event.request))
+  } else {
+    event.respondWith(
+      caches
+        .match(event.request)
+        .then(function (response) {
+          if (response) {
+            return response
+          }
 
-        return fetch(event.request)
-          .then(function (networkResponse) {
-            return networkResponse
-          })
-          .catch((error) => {
-            console.error('Fetch failed:', error)
-          })
-      })
-      .catch((error) => {
-        console.error('Cache match failed:', error)
-      })
-  )
+          return fetch(event.request)
+            .then(function (networkResponse) {
+              return networkResponse
+            })
+            .catch((error) => {
+              console.error('Fetch failed:', error)
+            })
+        })
+        .catch((error) => {
+          console.error('Cache match failed:', error)
+        })
+    )
+  }
 })
+
+async function handleRangeRequest(request) {
+  const cache = await caches.open(CACHE_NAME)
+  const response = await cache.match(request.url)
+
+  if (!response) {
+    return fetch(request)
+  }
+
+  const range = request.headers.get('range')
+  const bytes = /bytes\=(\d+)\-(\d+)?/.exec(range)
+  const start = Number(bytes[1])
+  const videoBlob = await response.blob()
+  const videoArrayBuffer = await videoBlob.arrayBuffer()
+  const videoSize = videoArrayBuffer.byteLength
+
+  // Jika tidak ada end byte, kirimkan dari start sampai akhir
+  const end = bytes[2] ? Number(bytes[2]) : videoSize - 1
+  const chunk = videoArrayBuffer.slice(start, end + 1)
+
+  // Header untuk range response
+  return new Response(chunk, {
+    status: 206,
+    statusText: 'Partial Content',
+    headers: [
+      ['Cache-Control', 'public, max-age=3600'],
+      ['Content-Range', `bytes ${start}-${end}/${videoSize}`],
+      ['Content-Length', chunk.byteLength],
+      ['Content-Type', 'video/mp4'],
+    ],
+  })
+}
