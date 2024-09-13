@@ -24,7 +24,11 @@
     </div>
     <div class="absolute-10 top-1/2 translate-y-[80%]"></div>
     <div class="w-full absolute bottom-0">
-      <SolidButton label="次へ" :on-click="handleGoToCharacter" has-bottom />
+      <SolidButton
+        :label="$t('toTheNext')"
+        :on-click="handleGoToCharacter"
+        has-bottom
+      />
     </div>
   </div>
 </template>

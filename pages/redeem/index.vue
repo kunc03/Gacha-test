@@ -4,12 +4,14 @@
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
-      景品一覧・交換
+      {{ $t('listOfPrizesAndExchanges') }}
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center w-full px-8">
     <div class="flex flex-col mt-[40%] items-center mb-4">
-      <p class="text-white text-exd-2856 font-bold">現在のポイント</p>
+      <p class="text-white text-exd-2856 font-bold">
+        {{ $t('currentPoints') }}
+      </p>
       <p class="text-white text-exd-56112 font-bold relative -top-7">
         {{ store.point }}<span class="text-exd-1020">pt</span>
       </p>

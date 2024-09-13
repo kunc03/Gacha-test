@@ -53,13 +53,34 @@ function completeLoading() {
 }
 
 const checkCaches = () => {
+  const urlsToCache = [
+    '/logo-icon.ico',
+    '/video/spin-point.mp4',
+    '/video/spin-character.mp4',
+    '/images/gacha2.webp',
+    '/images/bg-red2.webp',
+    '/images/sparkling.webp',
+    '/images/bg-green.webp',
+    '/images/logo.webp',
+    '/images/warning.svg',
+    '/images/close.svg',
+    '/images/export.svg',
+    '/images/intl-icon.svg',
+    '/images/back-button.svg',
+  ]
   caches
     .open('gacharary-v1')
     .then(function (cache) {
       return cache.keys()
     })
     .then(function (keys) {
-      if (keys.length === 13) {
+      console.log(keys)
+      const chachesUrl = keys.map((i) => i.url)
+      const isCacheAlready = urlsToCache.every((i) =>
+        chachesUrl.some((a) => a.includes(i))
+      )
+
+      if (isCacheAlready) {
         clearInterval(checkCachesInterval)
         setTimeout(() => {
           completeLoading()
@@ -77,8 +98,8 @@ const checkCaches = () => {
     <div
       class="h-full w-full flex flex-col justify-center items-center text-exd-red"
     >
-      <div class="text-xl font-semibold">Loading all assets</div>
-      <div class="text-lg">Please wait a moment...</div>
+      <div class="text-xl font-semibold">{{ $t('loadingAllAssets') }}</div>
+      <div class="text-lg">{{ $t('pleaseWaitMoment') }}</div>
       <div class="w-full px-12 mt-10">
         <ProgressBar
           :value="progress"

@@ -42,7 +42,11 @@
     </div> -->
 
     <div class="absolute bottom-0 w-full">
-      <SolidButton label="次へ" :on-click="handleButton" has-bottom />
+      <SolidButton
+        :label="$t('toTheNext')"
+        :on-click="handleButton"
+        has-bottom
+      />
     </div>
   </div>
 
@@ -65,14 +69,19 @@
         class="w-full flex flex-col justify-center items-center gap-4 py-6 relative"
       >
         <div class="font-bold text-exd-1424 text-center text-exd-gray-scorpion">
-          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">景品獲得には</p>
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            会員登録が必要です
+            {{ $t('toWinPrizes') }}
+          </p>
+          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
+            {{ $t('membershipRegistrationRequired') }}
           </p>
         </div>
-        <SolidButton label="新規会員登録" :on-click="handleToRegister" />
         <SolidButton
-          label="マイページから引き換え"
+          :label="$t('newMemberRegistration')"
+          :on-click="handleToRegister"
+        />
+        <SolidButton
+          :label="$t('redeemForMyPage')"
           :on-click="handleToLogin"
           variant="red"
         />
@@ -81,10 +90,10 @@
           class="font-medium text-exd-1218 text-center text-exd-gray-scorpion"
         >
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            ポイントと景品の交換方法は
+            {{ $t('howToExchangePoints') }}
           </p>
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            こちら
+            {{ $t('here') }}
             <img
               src="/images/export.svg"
               alt="export"
@@ -92,7 +101,8 @@
               height="15"
               class="inline"
               preload
-            />をご覧ください。
+            />
+            {{ $t('pleaseSee') }}
           </p>
         </div>
       </div>

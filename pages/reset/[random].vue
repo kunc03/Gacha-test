@@ -5,36 +5,36 @@
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-black font-bold text-exd-1824.52"
       >
-        パスワード再設定
+        {{ $t('resetPassword') }}
       </p>
     </HeaderBar>
 
-    <div class="flex flex-col grow mt-11 justify-between px-8 pb-3">
+    <div class="flex flex-col grow mt-32 justify-between px-8 pb-3">
       <template v-if="!isSuccessSendResetPassword">
         <div>
           <h1
             class="text-exd-gray-scorpion font-bold text-exd-1424 text-center"
           >
-            新しいパスワードを入力してください
+            {{ $t('enterYourNewPassword') }}
           </h1>
           <div class="flex flex-col gap-7 mt-14">
             <InputText
               :model="form.email"
-              label="ログインID（メールアドレス）"
+              :label="$t('loginID')"
               @validate="validateInput('email', $event)"
               disabled
             />
             <InputText
               type="password"
               :model="form.password"
-              label="パスワード"
+              :label="$t('password')"
               @validate="validateInput('password', $event)"
               @update:model="updateModel('password', $event)"
             />
             <InputText
               type="password"
               :model="form.confirmPassword"
-              label="パスワード（再入力"
+              :label="$t('reenterPassword')"
               @validate="validateInput('confPassword', $event)"
               @update:model="updateModel('confirmPassword', $event)"
             />
@@ -43,7 +43,7 @@
       </template>
       <template v-else>
         <h1 class="text-exd-gray-scorpion font-bold text-exd-1424 text-center">
-          パスワードの再設定が完了しました
+          {{ $t('passwordResetCompleted') }}
         </h1>
       </template>
       <Button
@@ -52,7 +52,7 @@
         @click="handleSubmit"
       >
         <span class="grow text-center">{{
-          !isSuccessSendResetPassword ? '送信' : 'マイページ'
+          !isSuccessSendResetPassword ? $t('send') : $t('myPage')
         }}</span>
         <img :src="arrow" alt="warning" width="10" height="10" preload />
       </Button>

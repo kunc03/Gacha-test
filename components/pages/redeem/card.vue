@@ -7,7 +7,7 @@
           class="text-exd-yellow-300 font-medium text-exd-1824.52"
           v-if="currentPoint >= keyBody"
         >
-          交換できます
+          {{ $t('canBeExchanged') }}
         </p>
       </template>
       <template v-else>
@@ -29,7 +29,8 @@
                 {{ item.name }}
               </p>
               <p class="text-exd-red-500 text-exd-12520">
-                利用可能期間：{{ item.started_at }}〜 {{ item.expired_at }}
+                {{ $t('availablePeriod') }}：{{ item.started_at }}〜
+                {{ item.expired_at }}
               </p>
             </div>
           </div>

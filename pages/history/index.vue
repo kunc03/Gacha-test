@@ -4,12 +4,12 @@
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
-      コレクション
+      {{ $t('collection') }}
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center text-black mt-20 px-8 gap-3">
     <div class="text-white w-full inline-flex justify-between">
-      <p class="text-exd-2856">キャラクター図鑑</p>
+      <p class="text-exd-2856">{{ $t('characterCatalog') }}</p>
       <p class="font-bold text-exd-1824.52 leading-tight">
         <span class="text-exd-2856">{{ character_count }}</span
         >/{{ master_count }}
