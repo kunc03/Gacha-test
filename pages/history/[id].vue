@@ -4,7 +4,7 @@
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
-      コレクション
+      {{ $t('collection') }}
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center text-black mt-20 px-8 gap-3">
@@ -95,10 +95,12 @@
           <div
             class="cursor-pointer"
             v-show="!isFetching"
-            ref="map"
+            id="parentMap"
             style="width: 100%; height: 300px"
             @click="openGoogleMaps"
-          />
+          >
+            <div id="map" style="width: 100%; height: 100%" />
+          </div>
         </div>
       </div>
     </div>
@@ -123,7 +125,6 @@ useHead({
 })
 
 const config = useRuntimeConfig()
-const map = ref(null)
 const route = useRoute()
 const id = route.params.id
 const title = config.public.META_TITLE
@@ -134,6 +135,7 @@ const quote = config.public.META_QUOTE
 const historyDetailData = ref({})
 const props = defineProps(['id'])
 const isFetching = ref(true)
+const LOCALE = useCookie('LOCALE')
 
 const loadGoogleMaps = () => {
   return new Promise((resolve, reject) => {
@@ -141,9 +143,16 @@ const loadGoogleMaps = () => {
       resolve()
       return
     }
+
+    const existingScript = document.getElementById('google-maps')
+    if (existingScript) {
+      existingScript.remove()
+    }
+
     const script = document.createElement('script')
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.GOOGLE_API}&libraries=places&language=ja&region=ja`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.GOOGLE_API}&libraries=places&language=${LOCALE.value}&region=ja`
     script.async = true
+    script.id = 'google-maps'
     script.onload = resolve
     script.onerror = reject
     document.head.appendChild(script)
@@ -181,11 +190,13 @@ const initializeMap = async (lat, long) => {
     streetViewControl: false, // Disables street view control
     fullscreenControl: false, // Disables fullscreen control
   }
-  map.value = new google.maps.Map(map.value, mapOptions)
+
+  const mapElement = document.getElementById('map')
+  const map = new google.maps.Map(mapElement, mapOptions)
 
   new google.maps.Marker({
     position: { lat: lat, lng: long },
-    map: map.value,
+    map: map,
   })
 }
 
@@ -296,5 +307,29 @@ onBeforeMount(async () => {
   await loadGoogleMaps()
   fetchingHistoryData()
   updateMetaHead()
+})
+
+watch(LOCALE, async (val) => {
+  const map = document.getElementById('map')
+
+  if (map.parentNode) {
+    map.parentNode.removeChild(map)
+    const div = document.createElement('div')
+    const parentMap = document.getElementById('parentMap')
+    div.id = 'map'
+    div.style = 'width: 100%; height: 100%'
+
+    parentMap.appendChild(div)
+  }
+
+  delete window.google
+
+  await loadGoogleMaps()
+  let lat = historyDetailData.value.lat
+  let long = historyDetailData.value.long
+
+  if (lat != undefined && long != undefined) {
+    initializeMap(lat, long)
+  }
 })
 </script>

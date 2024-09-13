@@ -5,7 +5,7 @@
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="absolute top-0 bottom-0 w-full flex items-end justify-center text-black font-bold text-exd-1824.52 pb-exd-22 pr-46 -z-10"
       >
-        パスワード入力
+        {{ $t('passwordInput') }}
       </p>
     </HeaderBar>
 
@@ -13,19 +13,19 @@
       <div
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
-        <p class="text-exd-gray-scorpion">パスワードを入力してください</p>
+        <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
         <InputOtp v-model="value" integerOnly class="!flex !flex-row !gap-3" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
           class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
-          パスワードは「名古屋観光デジタルマップ」　 で このスポットを探してGET!
+          {{ $t('passwordInputInformation') }}
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
-              注意事項
+              {{ $t('notes') }}
             </p>
             <p
               class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)]"
@@ -59,10 +59,10 @@
         </div>
         <div v-else class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            エラーが発生しました
+            {{ $t('errorHasOccurred') }}
           </p>
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            もう一度やりなおしてください
+            {{ $t('pleaseTryAgain') }}
           </p>
         </div>
       </div>

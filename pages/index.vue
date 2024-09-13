@@ -51,7 +51,9 @@
       class="relative pb-7 gap-10 justify-center items-center w-full flex flex-col z-10"
     >
       <img :src="tapScreen" alt="intl" preload />
-      <p class="text-white text-exd-1218 font-semibold">ホーム画面に追加</p>
+      <p class="text-white text-exd-1218 font-semibold">
+        {{ $t('addToHomeScreen') }}
+      </p>
     </div>
     <img
       :src="logo"

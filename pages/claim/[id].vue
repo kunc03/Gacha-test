@@ -4,14 +4,14 @@
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
-      景品一覧・交換
+      {{ $t('listOfPrizesAndExchanges') }}
     </p>
   </HeaderBar>
   <div class="flex flex-col mt-20 grow">
     <p
       class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mx-auto"
     >
-      スタッフにこの画面を見せて スワイプしてください
+      {{ $t('pleaseShowThisScreen') }}
     </p>
     <div
       class="bg-exd-banana grow mt-9 flex flex-col py-8 px-7 justify-between"
@@ -51,7 +51,7 @@
 
           <HeadingSection
             :is-fetching="isFetching"
-            title="景品獲得方法"
+            :title="$t('howToGetPrizes')"
             :body="prizeDetailData.how_to_win"
           />
         </div>
@@ -63,7 +63,7 @@
         :circle="true"
         :width="400"
         :height="56"
-        text="スワイプ"
+        :text="$t('swipe')"
         success-text="Claimed"
         name="slideunlock"
         @completed="handleSwipe()"

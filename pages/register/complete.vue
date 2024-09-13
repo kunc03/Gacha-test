@@ -5,7 +5,7 @@
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-exd-gray-scorpion font-bold text-exd-1824.52"
       >
-        新規会員登録
+        {{ $t('newMemberRegistration') }}
       </p>
     </HeaderBar>
 
@@ -16,14 +16,14 @@
         <p
           class="text-exd-gray-scorpion font-normal text-exd-1416 text-center mt-8"
         >
-          会員登録はまだ完了していません
+          {{ $t('registrationComplete') }}
         </p>
         <div
           class="text-exd-gray-scorpion font-normal text-exd-1416 text-start mt-8 max-w-xs mx-auto flex flex-col leading-loose"
         >
-          <p>ご入力のアドレスにメールを送信しました。</p>
+          <p>{{ $t('registrationCompleteInformation1') }}</p>
 
-          <p>メールに記載のリンクをクリックの上、登録を完了してください。</p>
+          <p>{{ $t('registrationCompleteInformation2') }}</p>
         </div>
       </div>
     </div>

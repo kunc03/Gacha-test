@@ -27,7 +27,7 @@
         </div>
         <div class="text-white font-bold text-xs text-start">
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            ※ガチャラリーのパスワードは本日限り有効です。
+            ※ {{ $t('passwordIsOnlyForToday') }}
           </p>
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             ※Gacharary password is valid only for today.

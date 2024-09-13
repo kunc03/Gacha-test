@@ -4,17 +4,20 @@
     <p
       class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mt-8 mx-auto"
     >
-      完了しました
+      {{ $t('done') }}
     </p>
   </div>
   <div class="flex flex-col w-full relative gap-1">
-    <SolidButton :on-click="() => goTo('external')" label="デジタルマップTOP" />
+    <SolidButton
+      :on-click="() => goTo('external')"
+      :label="$t('digitalMapTop')"
+    />
     <div class="h-5 w-full" />
     <SolidButton
       variant="red"
       :on-click="() => goTo('top')"
       :has-loading="isLoading"
-      label="ガチャTOP"
+      :label="$t('gachaTop')"
       has-bottom
     />
   </div>

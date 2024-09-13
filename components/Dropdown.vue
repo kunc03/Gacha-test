@@ -28,7 +28,10 @@
       inputClass="!text-exd-gray-scorpion"
       overlayClass="bg-white"
       :ptOptions="{ mergeSections: true, mergeProps: true }"
-      :pt="{ option: '!text-gray-500 hover:text-white' }"
+      :pt="{
+        option: '!text-gray-500 hover:text-white',
+        dropdown: { class: locale === 'en' && '!text-xs px-2 !w-auto' },
+      }"
     >
       <template v-if="suffix !== ''" #dropdownicon>
         {{ suffix }}
@@ -44,6 +47,9 @@
 <script setup>
 import { computed } from 'vue'
 import InputText from 'primevue/inputtext'
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
 
 const props = defineProps({
   prefix: {

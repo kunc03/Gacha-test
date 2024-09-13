@@ -5,7 +5,7 @@
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-exd-gray-scorpion text-exd-1824.52"
       >
-        会員情報
+        {{ $t('membershipInformation') }}
       </p>
     </HeaderBar>
 
@@ -13,15 +13,15 @@
       class="flex flex-col grow px-3 mt-32 pb-3 justify-between gap-6 w-full"
     >
       <h1
-        class="text-center flex flex-col text-1416 text-exd-gray-scorpion pt-6 pb-10"
+        class="text-center flex flex-col text-1416 text-exd-gray-scorpion pt-6 pb-10 w-full max-w-[360px] mx-auto"
       >
-        会員情報の変更は、内容を更新の上
-        <span>「変更する」ボタンをタップしてください</span>
+        {{ $t('memberInformation1') }}
+        <span> {{ $t('memberInformation2') }}</span>
       </h1>
       <div
         class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
       >
-        <h1>会員<span class="font-bold">ID</span></h1>
+        <h1>{{ $t('member') }} <span class="font-bold">ID</span></h1>
         <p class="font-bold">00000000000</p>
       </div>
       <div class="flex flex-col grow">
@@ -30,25 +30,25 @@
         >
           <InputText
             :model="form.surname"
-            label="姓"
+            :label="$t('surname')"
             required
             @update:model="updateModel('surname', $event)"
             @validate="validateInput('surname', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.surname && validateOnSubmit ? 'この項目は必須です。' : ''
+              !form.surname && validateOnSubmit ? $t('fieldRequired') : ''
             "
             :class="{ 'input-error': !form.surname && validateOnSubmit }"
           />
           <InputText
             :model="form.givenName"
-            label="名"
+            :label="$t('givenName')"
             required
             @update:model="updateModel('givenName', $event)"
             @validate="validateInput('givenName', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.givenName && validateOnSubmit ? 'この項目は必須です。' : ''
+              !form.givenName && validateOnSubmit ? $t('fieldRequired') : ''
             "
             :class="{ 'input-error': !form.givenName && validateOnSubmit }"
           />
@@ -57,7 +57,7 @@
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
         >
           <label
-            for="生年月日"
+            :for="$t('dateOfBirth')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             :class="{
               'input-error':
@@ -65,10 +65,11 @@
                 (!form.monthOfBirth && validateOnSubmit) ||
                 (!form.dateOfBirth && validateOnSubmit),
             }"
-            >生年月日
+          >
+            {{ $t('dateOfBirth') }}
             <span
-              className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
-              >必須</span
+              class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
+              >{{ $t('required') }}</span
             ></label
           >
           <div class="inline-flex gap-4">
@@ -77,7 +78,7 @@
               @update:model="updateModel('yearOfBirth', $event)"
               @validate="validateInput('yearOfBirth', $event)"
               :options="yearOptions"
-              suffix="年"
+              :suffix="$t('year')"
               :validate-on-submit="validateOnSubmit"
               :class="{ 'input-error': !form.yearOfBirth && validateOnSubmit }"
             />
@@ -86,7 +87,7 @@
               @update:model="updateModel('monthOfBirth', $event)"
               @validate="validateInput('monthOfBirth', $event)"
               :options="monthOptions"
-              suffix="月"
+              :suffix="$t('month')"
               :validate-on-submit="validateOnSubmit"
               :class="{ 'input-error': !form.monthOfBirth && validateOnSubmit }"
             />
@@ -95,7 +96,7 @@
               @update:model="updateModel('dateOfBirth', $event)"
               @validate="validateInput('dateOfBirth', $event)"
               :options="dayOptions"
-              suffix="日"
+              :suffix="$t('day')"
               :validate-on-submit="validateOnSubmit"
               :class="{ 'input-error': !form.dateOfBirth && validateOnSubmit }"
             />
@@ -108,19 +109,19 @@
             "
             :class="['p-error']"
           >
-            この項目は必須です。
+            {{ $t('fieldRequired') }}
           </small>
         </div>
         <div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
         >
           <label
-            for="性別"
+            :for="$t('sex')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
-            >性別
+            >{{ $t('sex') }}
             <span
-              className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
-              >必須</span
+              class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
+              >{{ $t('required') }}</span
             ></label
           >
           <ButtonGroup
@@ -129,7 +130,7 @@
           >
             <Button
               @click="updateModel('gender', 'Male')"
-              label="男性"
+              :label="$t('male')"
               :class="[
                 'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Male' && '!bg-exd-banana',
@@ -137,7 +138,7 @@
             />
             <Button
               @click="updateModel('gender', 'Female')"
-              label="女性"
+              :label="$t('female')"
               :class="[
                 'bg-white w-4/12 h-full border-t border-b border-t-exd-stone-300 border-b-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Female' && '!bg-exd-banana',
@@ -145,7 +146,7 @@
             />
             <Button
               @click="updateModel('gender', 'Non-Binary')"
-              label="無回答"
+              :label="$t('noAnswer')"
               :class="[
                 'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Non-Binary' && '!bg-exd-banana',
@@ -157,12 +158,12 @@
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
         >
           <label
-            for="性別"
+            :for="$t('residence')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
-            >居住地
+            >{{ $t('residence') }}
             <span
-              className="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
-              >必須</span
+              class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
+              >{{ $t('required') }}</span
             ></label
           >
           <ButtonGroup
@@ -171,7 +172,7 @@
           >
             <Button
               @click="updateModel('residenceType', 'domestic')"
-              label="国内"
+              :label="$t('domestic')"
               :class="[
                 'bg-white w-1/2 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.residenceType === 'domestic' && '!bg-exd-banana',
@@ -179,7 +180,7 @@
             />
             <Button
               @click="updateModel('residenceType', 'non_domestic')"
-              label="海外"
+              :label="$t('abroad')"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.residenceType === 'non_domestic' && '!bg-exd-banana',
@@ -192,7 +193,7 @@
         >
           <InputText
             :model="form.postCode"
-            label="郵便番号（ハイフンなし)"
+            :label="$t('postalCodeNoHyphens')"
             required
             @update:model="
               ($event) => {
@@ -203,12 +204,12 @@
             @validate="validateInput('postCode', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.postCode && validateOnSubmit ? 'この項目は必須です。' : ''
+              !form.postCode && validateOnSubmit ? $t('fieldRequired') : ''
             "
             :class="{ 'input-error': !form.postCode && validateOnSubmit }"
           />
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
-            郵便番号を入力すると住所の一部が自動的に表示されます
+            {{ $t('postalCodeInformation') }}
           </p>
         </div>
         <div
@@ -217,26 +218,26 @@
           <InputText
             :model="form.prefecture"
             required
-            label="都道府県"
+            :label="$t('prefectures')"
             disabled
             @update:model="updateModel('prefecture', $event)"
             @validate="validateInput('prefecture', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.prefecture && validateOnSubmit ? 'この項目は必須です。' : ''
+              !form.prefecture && validateOnSubmit ? $t('fieldRequired') : ''
             "
           />
 
           <InputText
             :model="form.cityArea"
             required
-            label="市区町村"
+            :label="$t('municipalities')"
             disabled
             @update:model="updateModel('cityArea', $event)"
             @validate="validateInput('cityArea', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.cityArea && validateOnSubmit ? 'この項目は必須です。' : ''
+              !form.cityArea && validateOnSubmit ? $t('fieldRequired') : ''
             "
           />
 
@@ -244,18 +245,18 @@
             :model="form.address"
             required
             v-model="inputValue"
-            label="番地・マンション名など"
+            :label="$t('streetAddressEtc')"
             @update:model="updateModel('address', $event)"
             @validate="validateInput('address', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.address && validateOnSubmit ? 'この項目は必須です。' : ''
+              !form.address && validateOnSubmit ? $t('fieldRequired') : ''
             "
             :class="{ 'input-error': !form.address && validateOnSubmit }"
           />
 
           <p class="text-exd-gray-scorpion font-medium text-exd-1220">
-            景品送付に使用する場合があるため正しく入力してください
+            {{ $t('streetAddressInformation') }}
           </p>
         </div>
         <div
@@ -265,14 +266,12 @@
             :model="form.phoneNumber"
             required
             :onlyNumeric="true"
-            label="電話番号（ハイフンなし）"
+            :label="$t('phoneNumberNoHyphens')"
             @update:model="updateModel('phoneNumber', $event)"
             @validate="validateInput('phoneNumber', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.phoneNumber && validateOnSubmit
-                ? 'この項目は必須です。'
-                : ''
+              !form.phoneNumber && validateOnSubmit ? $t('fieldRequired') : ''
             "
             :class="{ 'input-error': !form.phoneNumber && validateOnSubmit }"
           />
@@ -284,13 +283,13 @@
             type="email"
             :model="form.email"
             required
-            label="メールアドレス"
+            :label="$t('emailAddress')"
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
             :is-email-error="true"
             :error="
-              (!form.email && validateOnSubmit && 'この項目は必須です。') ||
+              (!form.email && validateOnSubmit && $t('fieldRequired')) ||
               errorEmailMessage
             "
             :class="{
@@ -310,15 +309,15 @@
             required
             :isPassword="true"
             :minLength="8"
-            label="パスワード"
+            :label="$t('password')"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.password && validateOnSubmit && 'この項目は必須です。') ||
+              (!form.password && validateOnSubmit && $t('fieldRequired')) ||
               (!isAlphanumeric(form.password) &&
                 form.password.length > 0 &&
-                '半角英数字のみ使用できます。') ||
+                $t('validPassword')) ||
               errorPasswordMessage
             "
             :class="{
@@ -335,13 +334,11 @@
             :isPassword="true"
             :isConfPassword="true"
             :minLength="8"
-            label="パスワード（再入力）"
+            :label="$t('reenterPassword')"
             :error="
-              (!form.confPassword &&
-                validateOnSubmit &&
-                'この項目は必須です。') ||
+              (!form.confPassword && validateOnSubmit && $t('fieldRequired')) ||
               (form.confPassword !== form.password && validateOnSubmit
-                ? 'パスワードが検証値と一致しません'
+                ? $t('passwordNotMatch')
                 : '')
             "
             @update:model="updateModel('confPassword', $event)"
@@ -365,30 +362,30 @@
           <InputTextArea
             :model="form.questionnaire1"
             required
-            label="アンケート"
+            :label="$t('questionnaire')"
             @update:model="updateModel('questionnaire1', $event)"
             @validate="validateInput('questionnaire1', $event)"
-            error="この項目は必須です。"
+            :error="$t('fieldRequired')"
             :validate-on-submit="validateOnSubmit"
             :class="{ 'input-error': !form.questionnaire1 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire2"
             required
-            label="アンケート"
+            :label="$t('questionnaire')"
             @update:model="updateModel('questionnaire2', $event)"
             @validate="validateInput('questionnaire2', $event)"
-            error="この項目は必須です。"
+            :error="$t('fieldRequired')"
             :validate-on-submit="validateOnSubmit"
             :class="{ 'input-error': !form.questionnaire2 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire3"
             required
-            label="アンケート"
+            :label="$t('questionnaire')"
             @update:model="updateModel('questionnaire3', $event)"
             @validate="validateInput('questionnaire3', $event)"
-            error="この項目は必須です。"
+            :error="$t('fieldRequired')"
             :validate-on-submit="validateOnSubmit"
             :class="{ 'input-error': !form.questionnaire3 && validateOnSubmit }"
           />
@@ -397,7 +394,7 @@
         <div class="w-full inline-flex gap-2 items-center justify-center mt-7">
           <Checkbox v-model="form.checked" :binary="true" />
           <p class="text-exd-gray-scorpion font-bold text-exd-1424">
-            利用規約に同意する
+            {{ $t('acceptTerm') }}
           </p>
         </div>
         <div
@@ -405,16 +402,18 @@
           style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         >
           <div class="max-h-28 scrollable-content overflow-y-auto px-4">
-            <p class="text-exd-1424 font-bold text-center pt-2">利用規約</p>
+            <p class="text-exd-1424 font-bold text-center pt-2">
+              {{ $t('termOfService') }}
+            </p>
             <p class="text-exd-1220 font-medium leading-relaxed h-[60px]">
-              ダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミーダミー
+              {{ $t('dummyDummy') }}
             </p>
           </div>
         </div>
       </div>
       <div class="mt-1" />
       <SolidButton
-        label="登録する"
+        :label="$t('register')"
         :has-loading="isLoading"
         :disabled="!form.checked"
         :on-click="handleSubmit"
@@ -462,10 +461,13 @@ import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
 import JapanPostalCode from 'japan-postal-code'
+import { useI18n } from 'vue-i18n'
 
 useHead({
   title: 'Register',
 })
+
+const { t } = useI18n()
 
 const validateOnSubmit = ref(false)
 
@@ -554,6 +556,8 @@ const fetchRegister = async (payload) => {
 const handleApiError = (error) => {
   errorScroll.value = []
 
+  console.log(t)
+
   const response = error._data.errors
 
   if (response) {
@@ -575,17 +579,16 @@ const handleApiError = (error) => {
 
   if (response.email) {
     if (response.email[0] === 'emailはすでに使用されています。') {
-      errorEmailMessage.value =
-        'このメールアドレスはすでに登録されていますが、まだ承認されていません。受信トレイをチェックしてください。'
+      errorEmailMessage.value = t('emailIsAlreadyRegistered')
     }
     if (
       response.email[0] === 'emailは有効なメールアドレスでなければなりません。'
     ) {
-      errorEmailMessage.value = '正しい形式でメールアドレスを入力してください。'
+      errorEmailMessage.value = t('validEmail')
     }
   } else {
     if (!form.value.email) {
-      errorEmailMessage.value = 'この項目は必須です。'
+      errorEmailMessage.value = t('fieldRequired')
     } else {
       errorEmailMessage.value = ''
     }

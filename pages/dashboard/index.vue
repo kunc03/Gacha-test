@@ -4,12 +4,14 @@
       style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
       class="text-exd-gray-scorpion font-bold text-exd-1824.52"
     >
-      マイページ
+      {{ $t('myPage') }}
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center">
     <div class="flex flex-col mt-[40%] items-center">
-      <p class="text-white text-exd-2856 font-bold">現在のポイント</p>
+      <p class="text-white text-exd-2856 font-bold">
+        {{ $t('currentPoints') }}
+      </p>
       <p class="text-white text-exd-56112 font-bold relative -top-7">
         {{ store.point }}<span class="text-exd-1020">pt</span>
       </p>
@@ -29,8 +31,8 @@
           preload
           class="text-center cursor-pointer"
         />
-        <p class="text-exd-gray-scorpion text-exd-1424 font-bold">
-          景品一覧・交換
+        <p class="text-exd-gray-scorpion text-exd-1424 font-bold text-center">
+          {{ $t('listOfPrizesAndExchanges') }}
         </p>
       </div>
       <div
@@ -46,8 +48,8 @@
           preload
           class="text-center cursor-pointer"
         />
-        <p class="text-exd-gray-scorpion text-exd-1424 font-bold">
-          コレクション
+        <p class="text-exd-gray-scorpion text-exd-1424 font-bold text-center">
+          {{ $t('collection') }}
         </p>
       </div>
     </div>
@@ -55,7 +57,9 @@
       class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center"
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
     >
-      <p class="text-exd-gray-scorpion grow">会員情報</p>
+      <p class="text-exd-gray-scorpion grow">
+        {{ $t('membershipInformation') }}
+      </p>
       <img
         :src="arrow"
         alt="arrow"
@@ -70,7 +74,7 @@
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
     >
       <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
-        ヘルプ・お問い合わせ
+        {{ $t('helpAndInquiries') }}
         <span>
           <img :src="exportIcon" alt="export" width="20" height="20" preload
         /></span>
@@ -89,7 +93,7 @@
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
     >
       <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
-        デジタルマップへ
+        {{ $t('toTheDigitalMap') }}
         <span>
           <img :src="exportIcon" alt="export" width="20" height="20" preload
         /></span>
@@ -109,7 +113,7 @@
       @click="logout"
     >
       <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
-        ログアウト
+        {{ $t('logout') }}
       </p>
       <img
         :src="arrow"
@@ -123,7 +127,7 @@
     <p
       class="underline text-white text-exd-1218 font-semibold text-center mt-5"
     >
-      ホーム画面に追加
+      {{ $t('addToHomeScreen') }}
     </p>
     <div
       class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7"
@@ -132,7 +136,7 @@
         class="text-white grow inline-flex items-center justify-center font-bold text-exd-1424"
       >
         <!-- バナーリンク -->
-        バナーリンク
+        {{ $t('bannerLink') }}
       </p>
     </div>
   </div>
