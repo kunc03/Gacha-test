@@ -18,19 +18,19 @@ export default defineNuxtConfig({
         { name: 'description', content: process.env.META_TITLE },
         // Facebook
         { name: 'og:title', content: process.env.META_TITLE },
-        { name: 'og:description', content: process.env.META_DESCRIPTION},
-        { name: 'og:image', content: process.env.META_IMAGE},
-        { name: 'og:url', content: process.env.META_URL},
+        { name: 'og:description', content: process.env.META_DESCRIPTION },
+        { name: 'og:image', content: process.env.META_IMAGE },
+        { name: 'og:url', content: process.env.META_URL },
         { name: 'og:type', content: 'Website' },
         // twitter
         { name: 'twitter:title', content: process.env.META_TITLE },
-        { name: 'twitter:description', content: process.env.META_DESCRIPTION},
-        { name: 'twitter:image', content: process.env.META_IMAGE},
+        { name: 'twitter:description', content: process.env.META_DESCRIPTION },
+        { name: 'twitter:image', content: process.env.META_IMAGE },
         { name: 'twitter:card', content: 'summary_large_image' },
         // // LINE
         { name: 'line:title', content: process.env.META_TITLE },
-        { name: 'line:description', content: process.env.META_DESCRIPTION},
-        { name: 'line:image', content: process.env.META_IMAGE},
+        { name: 'line:description', content: process.env.META_DESCRIPTION },
+        { name: 'line:image', content: process.env.META_IMAGE },
         { name: 'line:card', content: 'summary_large_image' },
       ],
     },
@@ -84,7 +84,8 @@ export default defineNuxtConfig({
       META_DESCRIPTION: process.env.META_DESCRIPTION,
       META_IMAGE: process.env.META_IMAGE,
       META_URL: process.env.META_URL,
-      META_QUOTE: process.env.META_QUOTE
+      META_QUOTE: process.env.META_QUOTE,
+      SECRET_KEY: process.env.SECRET_KEY,
     },
   },
 
