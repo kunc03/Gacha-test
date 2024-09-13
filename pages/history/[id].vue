@@ -310,7 +310,7 @@ const downloadImage = async () => {
 
     setTimeout(() => {
       showSuccessPopup.value = false
-    }, 10000)
+    }, 2000)
   } catch (error) {
     console.error('Error downloading the image:', error)
   }
