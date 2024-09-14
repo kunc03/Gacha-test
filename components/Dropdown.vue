@@ -20,8 +20,8 @@
       :placeholder="placeholder"
       :editable="editable"
       :class="[
-        'grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300',
-        validateOnSubmit && !isLengthValid && !modelValue
+        'grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-xl selection:!bg-gray-300',
+        (validateOnSubmit && !isLengthValid && !modelValue) || error !== ''
           ? '!border-2 border-exd-red-vermilion'
           : '!border-none',
       ]"
