@@ -3,13 +3,26 @@
     class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col"
   >
     <div class="flex-1 items-center flex flex-col gap-11 mt-[15%] px-8">
+      <div class="relative w-full text-right">
+        <button type="button" aria-haspopup="true" @click="langPanelToggle">
+          <img
+            src="/images/intl-icon.svg"
+            alt="intl"
+            width="40"
+            height="40"
+            preload
+            class="cursor-pointer bg-white rounded-full"
+          />
+        </button>
+        <LanguangePanel v-model:visible="langPanel" />
+      </div>
       <img src="/images/logo.webp" alt="logo" width="190" height="71" preload />
       <div class="flex flex-col gap-8 mx-8 justify-start items-center w-full">
         <h1
           class="text-center font-bold text-exd-1824.52 text-white"
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         >
-          Password
+          {{ $t('password') }}
         </h1>
         <div
           class="bg-white h-exd-150 rounded-xl text-center grid place-items-center text-exd-6081.72 text-exd-red w-full font-bold"
@@ -29,16 +42,13 @@
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             ※ {{ $t('passwordIsOnlyForToday') }}
           </p>
-          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            ※Gacharary password is valid only for today.
-          </p>
         </div>
       </div>
       <div
         class="bg-white text-center py-2 px-4 w-full text-exd-red font-bold"
         v-if="responseData.description && responseData.image"
       >
-        QR Code Spot
+        {{ $t('qrCodeSpot') }}
       </div>
       <div
         class="inline-flex justify-between bg w-full gap-3"
@@ -65,10 +75,12 @@
 </template>
 
 <script setup>
-import Button from 'primevue/button'
-import logo from '~/assets/images/logo.png'
 import emptyImage from '~/assets/images/no-image.svg'
 
+const langPanel = ref(false)
+const langPanelToggle = (event) => {
+  langPanel.value = !langPanel.value
+}
 const route = useRoute()
 const responseData = ref({
   password: '',
