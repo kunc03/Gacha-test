@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-
+  <!-- 
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
@@ -68,7 +68,7 @@
       </div>
     </template>
   </Modal>
-  <div class="overlay" v-if="isRequestingLocation" />
+  <div class="overlay" v-if="isRequestingLocation" /> -->
 </template>
 
 <script setup>
@@ -188,7 +188,6 @@ onMounted(async () => {
               latitude.value = position.coords.latitude
               longitude.value = position.coords.longitude
               radiusCheck()
-
             },
             (error) => {
               console.error(error)
@@ -202,7 +201,7 @@ onMounted(async () => {
                 console.log(position)
                 latitude.value = position.coords.latitude
                 longitude.value = position.coords.longitude
-                radiusCheck();
+                radiusCheck()
                 isRequestingLocation.value = false
               },
               () => {

@@ -97,7 +97,7 @@
         class="w-full flex flex-col justify-center items-center gap-4 px-6 py-8 mt-2"
       >
         <p
-          class="text-exd-gray-scorpion font-bold text-center text-exd-1424 max-w-36"
+          class="text-exd-gray-scorpion font-bold text-center text-exd-1424"
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         >
           {{ $t('exchanged_message') }}

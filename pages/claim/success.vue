@@ -6,6 +6,13 @@
     >
       {{ $t('done') }}
     </p>
+    <div class="flex-1 mt-11 w-full relative">
+      <div
+        class="border-2 border-exd-red-vermilion flex-1 w-3/6 text-center absolute top-10 left-1/2 transform -translate-x-1/2 px-6 py-3 text-exd-red-vermilion font-extrabold rounded-lg text-exd-1724"
+      >
+        交換済
+      </div>
+    </div>
   </div>
   <div class="flex flex-col w-full relative gap-1">
     <SolidButton
