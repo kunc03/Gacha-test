@@ -9,7 +9,7 @@
 
     <Select
       :inputId="`id-${model}`"
-      :modelValue="modelValue"
+      :modelValue="displayValue"
       @update:modelValue="($value) => updateValue($value)"
       @blur="validate"
       :options="options"
@@ -107,6 +107,8 @@ const props = defineProps({
   validateOnSubmit: Boolean,
 })
 
+const { t } = useI18n()
+
 const emit = defineEmits(['update:model', 'validate'])
 
 const isLengthValid = ref(true)
@@ -116,14 +118,47 @@ const modelValue = computed({
   set: (value) => emit('update:model', value),
 })
 
+const ageMap = {
+  '10代以下': 10,
+  'below 10s': 10,
+  '20代': 20,
+  '20s': 20,
+  '30代': 30,
+  '30s': 30,
+  '40代': 40,
+  '40s': 40,
+  '50代': 50,
+  '50s': 50,
+  '60代': 60,
+  '60s': 60,
+  '70代以上': 70,
+  '70s and above': 70,
+}
+
+// Inverse of ageMap to handle displaying the string in the UI
+const reverseAgeMap = {
+  10: t('10'),
+  20: t('20'),
+  30: t('30'),
+  40: t('40'),
+  50: t('50'),
+  60: t('60'),
+  70: t('70'),
+}
+
+const displayValue = computed(() => {
+  return reverseAgeMap[props.model] || props.model
+})
+
 const updateValue = (value) => {
-  modelValue.value = value
+  const intValue = ageMap[value] !== undefined ? ageMap[value] : value
+  emit('update:model', intValue)
   validate()
-  emit('validate', value)
+  emit('validate', intValue)
 }
 
 const validate = () => {
-  isLengthValid.value = modelValue.value.length > 0
+  isLengthValid.value = modelValue.value && modelValue.value.length > 0
   emit('validate', modelValue.value)
 }
 

@@ -65,7 +65,7 @@ div
               :model="form.age"
               @update:model="updateModel('age', $event)"
               @validate="validateInput('age', $event)"
-              :options="getAgeOptions.map((item) => item.value)"
+              :options="getAgeOptions.map((item) => item.label)"
               :placeholder="t('choice')"
               :hasHelper="arrow"
               :validate-on-submit="validateOnSubmit"
