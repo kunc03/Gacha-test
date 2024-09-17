@@ -1,22 +1,16 @@
 <template>
   <div
-    class="flex flex-col grow bg-[url('/images/bg-red2.webp')] bg-cover bg-center justify-between relative cursor-pointer"
+    class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer"
     @click="handleShowModal"
   >
     <div class="relative grow">
       <img
-        :src="bgHeader"
-        alt="bg-header"
-        preload
-        class="absolute top-0 left-0 right-0 w-full"
-      />
-      <img
         :src="intlRounded"
         alt="intl"
         preload
-        height="40"
-        width="40"
-        class="absolute top-14 right-10 small:!h-8 small:!w-8 small:!top-10"
+        height="48"
+        width="48"
+        class="absolute top-14 right-10 small:right-6 small:!h-10 small:!w-10 small:!top-8"
       />
       <img
         :src="logoIcon"
@@ -24,44 +18,54 @@
         preload
         height="129"
         width="226"
-        class="absolute md:top-20 top-16 left-0 z-20 small:!h-24 small:!w-28 small:!top-5"
+        class="absolute top-8 small:top-4 h-[129px] small:h-20 w-[226px] small:w-auto left-0 z-20"
       />
     </div>
-    <img
-      src="/images/gacha2.webp"
-      alt="gacha"
-      preload
-      width="300"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-32 small:!top-5 small:!w-3/5"
-    />
-    <img
-      :src="gachaEgg"
-      alt="gacha-egg"
-      preload
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 top-1/4 w-full small:!top-[10%]"
-    />
-    <img
-      :src="gachaInfo"
-      alt="gacha-info"
-      preload
-      width="380"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-40 small:!top-[10%]"
-    />
+    <div class="absolute inset-x-0 top-[96px] small:top-10">
+      <img
+        :src="picture1"
+        alt="picture1"
+        class="absolute -left-2 w-auto small:w-auto"
+      />
+      <img
+        :src="picture2"
+        alt="picture2"
+        class="absolute -right-[4.5rem] top-8 w-auto small:w-auto"
+      />
+      <img :src="get" alt="get" class="absolute right-4 top-4" />
+
+      <img
+        :src="gacha"
+        alt="gacha"
+        preload
+        class="absolute left-5 top-40 w-[172px] small:w-[150px]"
+      />
+    </div>
     <div
-      class="relative pb-7 gap-10 justify-center items-center w-full flex flex-col z-10"
+      class="relative pb-7 small:pb-4 gap-10 small:gap-5 justify-center items-center w-full flex flex-col z-10"
     >
-      <img :src="tapScreen" alt="intl" preload />
+      <img :src="tapScreen" alt="intl" class="h-auto small:w-40" preload />
       <p class="text-white text-exd-1218 font-semibold">
         {{ $t('addToHomeScreen') }}
       </p>
     </div>
+    <img
+      :src="character"
+      alt="character"
+      class="absolute right-28 small:right-24 top-[calc(50%-3rem)] small:top-[calc(52%-3.5rem)]"
+    />
+    <img
+      :src="intl"
+      alt="intl"
+      class="absolute right-6 small:right-4 top-[calc(50%-1.2rem)] small:top-[calc(52%-1.7rem)]"
+    />
     <img
       :src="logo"
       alt="logo"
       preload
       height="135"
       width="363"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 bottom-1/4 small:!h-24 small:!w-64"
+      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(57%)] small:!h-auto small:!w-[20rem]"
     />
     <img
       :src="digitalTourist"
@@ -69,14 +73,7 @@
       preload
       height="135"
       width="363"
-      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 bottom-[22%]"
-    />
-    <img
-      :src="bgLoginBottom"
-      alt="bg-bottom"
-      preload
-      width="450"
-      class="absolute bottom-0 left-0 right-0"
+      class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[calc(55%+140px)] small:top-[calc(57%+120px)] w-[363px] small:w-[19rem]"
     />
   </div>
 
@@ -100,10 +97,14 @@ import tapScreen from '~/assets/images/tap-screen.svg'
 import bgLoginBottom from '~/assets/images/bg-login-bottom.png'
 import logo from '~/assets/images/logo.png'
 import digitalTourist from '~/assets/images/digital-tourist.png'
-import gachaEgg from '~/assets/images/gacha-egg.png'
-import gachaInfo from '~/assets/images/gacha-info.png'
 import { nextTick } from 'vue'
 import WarningPopUp from '~/components/WarningPopUp.vue'
+import gacha from '~/assets/images/gacha.png'
+import picture1 from '~/assets/images/picture1.png'
+import picture2 from '~/assets/images/picture2.png'
+import get from '~/assets/images/get.png'
+import intl from '~/assets/images/intl.png'
+import character from '~/assets/images/character.png'
 
 const router = useRouter()
 const { setSourceFrom } = useRegister()
