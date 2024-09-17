@@ -178,6 +178,7 @@ const handleShowDialog = () => (hasModal.value = true)
 const handleClose = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 const isAlreadySpin = ref(null)
+const { decryptData } = useEncryption()
 
 const handleButton = async () => {
   if (!TOKEN.value && !USER.value) {
@@ -199,6 +200,28 @@ const updateSpinStatus = (newStatus) => {
       resolve()
     }, 0)
   })
+}
+
+const checkSpinBeforeLogin = () => {
+  const router = useRouter()
+
+  try {
+    const parseData = decryptData(localStorage.getItem('VALID_PASSWORD')) || {}
+    const slug = parseData?.slug?.toUpperCase()
+    const slugStorageName = `${slug}_GACHA`
+    const slugStorage = decryptData(localStorage.getItem(slugStorageName))
+
+    const isAlreadySpin =
+      Object.keys(parseData).length > 0 && slugStorage?.is_already_spin
+    if (isAlreadySpin) {
+      showErrorMessage()
+    } else {
+      handleShowDialog()
+    }
+  } catch (error) {
+    console.error('Error checking point:', error)
+    showErrorMessage('An unexpected error occurred. Please try again later.')
+  }
 }
 
 const showErrorMessage = (
@@ -235,14 +258,16 @@ const fetchImage = async () => {
 
     let parsedData
     try {
-      parsedData = JSON.parse(storedData)
+      parsedData = decryptData(storedData)
     } catch (e) {
       console.error('Error parsing stored data:', e)
       return
     }
 
-    const imageUrl = localStorage.getItem('CHARACTER_IMAGE')
-    characterImageUrl.value = imageUrl
+    const slug = parsedData.slug.toUpperCase()
+
+    const slugData = decryptData(localStorage.getItem(`${slug}_GACHA`))
+    characterImageUrl.value = slugData?.character_image
   } catch (e) {
     console.error('Unexpected error:', e)
   }

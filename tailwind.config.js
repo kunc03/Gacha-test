@@ -27,6 +27,7 @@ const width = {
   'exd-148': pxToEm(148),
   'exd-190': pxToEm(190),
   'exd-300': pxToEm(300),
+  'exd-310': pxToEm(310),
   'exd-312': pxToEm(312),
   'exd-394': pxToEm(394),
   'exd-400': pxToEm(400),
@@ -126,6 +127,7 @@ module.exports = {
       width: {
         ...width,
       },
+      maxWidth: { ...width },
       fontSize: { ...fontSize },
     },
   },

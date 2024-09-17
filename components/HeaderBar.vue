@@ -14,11 +14,17 @@
         @click="handleGoBack"
       />
     </div>
-    <div class="grow text-center" v-if="!withLogo">
+    <div
+      :class="['grow text-center', !hasBack ? 'pl-[60px]' : '']"
+      v-if="!withLogo"
+    >
       <slot />
     </div>
     <div
-      class="grow text-center w-full justify-center items-center flex"
+      :class="[
+        'grow text-center w-full justify-center items-center flex',
+        !hasBack ? 'pl-[60px]' : '',
+      ]"
       v-else
     >
       <img src="/images/logo.webp" alt="intl" width="130" height="48" preload />

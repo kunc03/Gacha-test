@@ -116,6 +116,7 @@ const form = ref({
 const isErrorMessage = ref(false)
 const errorMessages = ref([])
 const route = useRoute()
+const { decryptData } = useEncryption()
 
 const isValidInput = computed(
   () => form.value.email !== '' && form.value.password !== ''
@@ -135,7 +136,7 @@ const handleToRegister = () => {
 }
 
 const updateSpinStatus = async () => {
-  const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD') || '{}')
+  const payload = decryptData(localStorage.getItem('VALID_PASSWORD') || '{}')
   const { data } = await useFetchApi('POST', 'gacha/spin', { body: payload })
 
   const newStatus = data.is_already_spin
@@ -204,14 +205,22 @@ const handleSubmit = async () => {
 
 const saveSpin = async () => {
   if (!isSpin.value) return
+  const parseData = decryptData(localStorage.getItem('VALID_PASSWORD'))
+  const slug = parseData?.slug?.toUpperCase()
+  const slugStorageName = `${slug}_GACHA`
+  const slugStorage = decryptData(localStorage.getItem(slugStorageName))
   try {
     const { data } = await useFetchApi('POST', 'gacha/save', {
       body: {
-        point_id: localStorage.getItem('POINT_ID'),
-        location_id: localStorage.getItem('LOCATION_ID'),
-        character_id: localStorage.getItem('CHARACTER_ID'),
+        point_id: slugStorage?.point_id,
+        location_id: slugStorage?.location_id,
+        character_id: slugStorage?.character_id,
+        log_id: slugStorage?.log_id,
       },
     })
+
+    localStorage.removeItem('VALID_PASSWORD')
+    localStorage.removeItem(slugStorageName)
 
     localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
     localStorage.setItem('login_after_spin', true)
