@@ -57,76 +57,7 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 
 const goToSpinPoint = async () => {
-  // const token = localStorage.getItem('TOKEN')
-  // const user = localStorage.getItem('USER')
-
-  // let isSuccess
-
-  // if (token && user) {
-  //   isSuccess = await spinAfterLogin()
-  // } else {
-  //   isSuccess = await spinBeforeLogin()
-  // }
-
-  // if (isSuccess) {
   router.push(`/spin/point`)
-  // console.log('Success')
-  // }
-}
-
-const spinAfterLogin = async () => {
-  if (isLoading.value) return
-  isLoading.value = true
-  try {
-    const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
-
-    const { data, status } = await useFetchApi('POST', 'gacha/spin', {
-      body: { ...payload },
-    })
-
-    localStorage.setItem('POINT_ID', data.userPoint.prize_id)
-    localStorage.setItem('LOCATION_ID', data.userPoint.location_id)
-
-    isLoading.value = false
-    return status
-  } catch (error) {
-    console.log("Error: Can't spin after login")
-
-    if (error?._data?.message) {
-      errorMessages.value = error._data.message
-      handleOpenDialog()
-    }
-
-    isLoading.value = false
-  }
-}
-
-const spinBeforeLogin = async () => {
-  if (isLoading.value) return
-  isLoading.value = true
-
-  try {
-    const params = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
-
-    const { data, status } = await useFetchApi('GET', 'gacha/spin', {
-      params,
-    })
-
-    localStorage.setItem('POINT_ID', data.point.id)
-    localStorage.setItem('LOCATION_ID', data.location.id)
-
-    isLoading.value = false
-    return status
-  } catch (error) {
-    console.log("Error: Can't spin before login")
-
-    if (error?._data?.message) {
-      errorMessages.value = error._data.message
-      handleOpenDialog()
-    }
-
-    isLoading.value = false
-  }
 }
 
 useHead({

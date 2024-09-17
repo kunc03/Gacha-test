@@ -41,6 +41,7 @@ const pointImageUrl = ref(null)
 const apiPoint = ref(null)
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
+const { encryptData, decryptData } = useEncryption()
 
 const fetchImageFromApi = async () => {
   try {
@@ -53,35 +54,47 @@ const fetchImageFromApi = async () => {
 
     let parsedData
     try {
-      parsedData = JSON.parse(storedData)
+      parsedData = decryptData(storedData)
     } catch (e) {
       console.error('Error parsing stored data:', e)
       return
     }
 
+    const slug = parsedData?.slug?.toUpperCase()
+    const slugStorageName = `${slug}_GACHA`
     if (TOKEN.value && USER.value) {
-      const payload = JSON.parse(localStorage.getItem('VALID_PASSWORD')) || {}
+      const payload = decryptData(localStorage.getItem('VALID_PASSWORD')) || {}
 
       const { data, status } = await useFetchApi('POST', 'gacha/spin', {
         body: { ...payload },
       })
 
       localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
-      localStorage.setItem('LOCATION_ID', data.userPoint.location.id)
-      localStorage.setItem('POINT_ID', data.userPoint.point.id)
-      localStorage.setItem('POINT_IMAGE', data.userPoint.point.image)
-      localStorage.setItem(
-        'CHARACTER_ID',
-        data.userCollection.gacha_character.id
-      )
-      localStorage.setItem(
-        'CHARACTER_IMAGE',
-        data.userCollection.gacha_character.image
-      )
-      localStorage.setItem('POINT', data.userPoint.point.point.value)
 
+      const storage = {
+        location_id: data.userPoint.location.id,
+        point_id: data.userPoint.point.id,
+        point_image: data.userPoint.point.image,
+        character_id: data.userCollection.gacha_character.id,
+        character_image: data.userCollection.gacha_character.image,
+        point: data.userPoint.point.point.value,
+      }
+
+      localStorage.setItem(slugStorageName, encryptData(storage))
       pointImageUrl.value = data.userPoint.point.image
     } else {
+      const slugData = localStorage.getItem(slugStorageName)
+
+      if (slugData) {
+        const parse = decryptData(slugData)
+        pointImageUrl.value = parse.point_image
+        localStorage.setItem(
+          slugStorageName,
+          encryptData({ ...parse, is_already_spin: true })
+        )
+        return
+      }
+
       const { data, error } = await useFetchApi('GET', 'gacha/spin', {
         params: {
           slug: parsedData.slug,
@@ -89,13 +102,17 @@ const fetchImageFromApi = async () => {
         },
       })
 
-      localStorage.setItem('LOCATION_ID', data.location.id)
-      localStorage.setItem('POINT_ID', data.point.id)
-      localStorage.setItem('POINT_IMAGE', data.point.image)
-      localStorage.setItem('CHARACTER_ID', data.character.id)
-      localStorage.setItem('CHARACTER_IMAGE', data.character.image)
-      localStorage.setItem('POINT', apiPoint.value)
+      const storage = {
+        location_id: data.location.id,
+        point_id: data.point.id,
+        point_image: data.point.image,
+        character_id: data.character.id,
+        character_image: data.character.image,
+        point: apiPoint.value,
+        log_id: data.log_id,
+      }
 
+      localStorage.setItem(slugStorageName, encryptData(storage))
       pointImageUrl.value = data.point.image
     }
 

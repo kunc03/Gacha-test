@@ -21,10 +21,11 @@ const route = useRoute()
 
 const showGif = ref(false)
 const router = useRouter()
+const { decryptData } = useEncryption()
 
 const goToCharacter = async () => {
   const data = localStorage.getItem('VALID_PASSWORD')
-  const value = JSON.parse(data)
+  const value = decryptData(data)
   const slug = value?.slug
   router.push(`/spin/point/${slug}`)
 }
