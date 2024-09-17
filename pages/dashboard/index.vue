@@ -54,8 +54,9 @@
       </div>
     </div>
     <div
-      class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center"
+      class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center cursor-pointer"
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+      @click="profile"
     >
       <p class="text-exd-gray-scorpion grow">
         {{ $t('membershipInformation') }}
@@ -194,6 +195,7 @@ useHead({
 
 const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
+const profile = () => router.push('/profile')
 
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
@@ -240,7 +242,7 @@ const checkSpinEligibility = async () => {
   const message =
     '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
 
-  if ((isAlreadySpin == "true") && (loginAfterSpin == "true")) {
+  if (isAlreadySpin == 'true' && loginAfterSpin == 'true') {
     errorMessages.value = message
     isNotAllowed.value = true
   }

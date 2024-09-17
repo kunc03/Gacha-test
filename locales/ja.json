@@ -59,7 +59,7 @@
   "surname": "姓",
   "givenName": "名",
   "nickName": "ニックネーム",
-  "era": "年代",
+  "age": "年代",
   "country": " 国を選択",
   "dateOfBirth": "生年月日",
   "year": "年",
@@ -115,5 +115,7 @@
   "redeemForMyPage": "マイページから引き換え",
   "passwordResetCompleted": "パスワードの再設定が完了しました",
   "passwordMin": "半角英数8文字以",
-  "invalidNickname": "ニックネームは英数字でスペースを入れないでください"
+  "invalidNickname": "ニックネームは英数字でスペースを入れないでください",
+  "change": "変更する",
+  "completed": "完了しました"
 }

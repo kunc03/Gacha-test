@@ -12,9 +12,11 @@
           >{{ $t('required') }}</span
         >
       </label>
-      <span class="truncate max-w-56 text-exd-1220 text-exd-gray-scorpion">{{
-        $t(inform)
-      }}</span>
+      <span
+        v-if="inform !== ''"
+        class="truncate max-w-56 text-exd-1220 text-exd-gray-scorpion"
+        >{{ $t(inform) }}</span
+      >
     </div>
     <div
       :class="[
@@ -184,7 +186,9 @@ const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
 }
 
-const isNicknameValid = (str) => /^[a-z0-9]+$/.test(str) && !/\s/.test(str)
+const isNicknameValid = (str) => {
+  return /^[a-zA-Z0-9\u3040-\u30FF\u4E00-\u9FFF]+$/.test(str)
+}
 
 const updateValue = (value) => {
   modelValue.value = value

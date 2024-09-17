@@ -33,7 +33,7 @@ div
             :model="form.nickName"
             :label="$t('nickName')"
             required
-            is-nick-name="true"
+            :isNickName="true"
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
@@ -47,13 +47,13 @@ div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
         >
           <label
-            :for="$t('era')"
+            :for="$t('age')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             :class="{
-              'input-error': !form.era && validateOnSubmit,
+              'input-error': !form.age && validateOnSubmit,
             }"
           >
-            {{ $t('era') }}
+            {{ $t('age') }}
             <span
               class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >{{ $t('required') }}</span
@@ -65,9 +65,9 @@ div
               :model="form.age"
               @update:model="updateModel('age', $event)"
               @validate="validateInput('age', $event)"
-              :options="getAgeOptions.map((item) => item.value)"
+              :options="getAgeOptions.map((item) => item.label)"
               :placeholder="t('choice')"
-              :hasHelper="arrow"
+              :hasHelper="true"
               :validate-on-submit="validateOnSubmit"
               :error="!form.age && validateOnSubmit ? $t('fieldRequired') : ''"
               :class="{ 'input-error': !form.age && validateOnSubmit }"
@@ -185,15 +185,17 @@ div
                 >
               </label>
               <Dropdown
-                :model="form.country"
-                @update:model="updateModel('country', $event)"
-                @validate="validateInput('country', $event)"
+                :model="form.country_type"
+                @update:model="updateModel('country_type', $event)"
+                @validate="validateInput('country_type', $event)"
                 :options="countries.map((item) => item.name)"
                 :placeholder="t('choice')"
+                :hasHelper="true"
                 :error="
-                  !form.country && validateOnSubmit ? $t('fieldRequired') : ''
+                  !form.country_type && validateOnSubmit
+                    ? $t('fieldRequired')
+                    : ''
                 "
-                :hasHelper="arrow"
                 :validate-on-submit="validateOnSubmit"
               />
             </div>
@@ -219,7 +221,7 @@ div
             :class="{
               'input-error': form.email !== '' && validateOnSubmit,
               'input-error':
-                (errorEmailMessage && validateOnSubmit) ||
+                errorEmailMessage ||
                 (form.email.length < 3 && validateOnSubmit),
             }"
           />
@@ -233,24 +235,13 @@ div
             :model="form.password"
             :isPassword="true"
             required
-            :minLength="8"
             :label="$t('password')"
             inform="passwordMin"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="
-              (!form.password && validateOnSubmit && $t('fieldRequired')) ||
-              (!isAlphanumeric(form.password) &&
-                form.password.length > 0 &&
-                $t('validPassword')) ||
-              errorPasswordMessage
-            "
             :class="{
-              'input-error':
-                (!form.password && validateOnSubmit) ||
-                (form.password.length < 8 && validateOnSubmit) ||
-                (!isAlphanumeric(form.password) && validateOnSubmit),
+              'input-error': !isAlphanumeric(form.password),
             }"
           />
           <InputText
@@ -259,121 +250,39 @@ div
             :isPassword="true"
             required
             :isConfPassword="true"
-            :minLength="8"
             :label="$t('reenterPassword')"
-            :error="
-              (!form.confPassword && validateOnSubmit && $t('fieldRequired')) ||
-              (form.confPassword !== form.password && validateOnSubmit
-                ? $t('passwordNotMatch')
-                : '')
-            "
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
             :class="{
               'input-error':
-                (!form.confPassword && validateOnSubmit) ||
-                (form.password !== form.confPassword &&
-                  form.confPassword >= 8 &&
-                  validateOnSubmit) ||
-                (!isAlphanumeric(form.confPassword) && validateOnSubmit) ||
-                (form.confPassword.length < 8 && validateOnSubmit),
+                !isAlphanumeric(form.confPassword) ||
+                form.confPassword.length < 8,
             }"
           />
-        </div>
-
-        <div
-          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputTextArea
-            :model="form.questionnaire1"
-            :label="$t('questionnaire1')"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-          />
-          <InputTextArea
-            :model="form.questionnaire2"
-            :label="$t('questionnaire2')"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
-          />
-        </div>
-
-        <div class="w-full inline-flex gap-2 items-center justify-center mt-7">
-          <Checkbox v-model="form.checked" :binary="true" />
-          <p class="text-exd-gray-scorpion font-bold text-exd-1424">
-            {{ $t('acceptTerm') }}
-          </p>
-        </div>
-        <div
-          class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-28 max-w-xs mx-auto text-exd-gray-scorpion pr-2"
-          style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
-        >
-          <div class="max-h-28 scrollable-content overflow-y-auto px-4">
-            <p class="text-exd-1424 font-bold text-center pt-2">
-              {{ $t('termOfService') }}
-            </p>
-            <p class="text-exd-1220 font-medium leading-relaxed h-[60px]">
-              {{ $t('dummyDummy') }}
-            </p>
-          </div>
         </div>
       </div>
       <div class="mt-1" />
       <SolidButton
-        :label="$t('register')"
+        :label="$t('change')"
         :has-loading="isLoading"
-        :disabled="!form.checked"
+        :disabled="!isButtonEnabled"
         :on-click="handleSubmit"
         has-bottom
       />
     </div>
   </div>
-
-  <Dialog
-    v-model:visible="isErrorMessage"
-    modal
-    class="!bg-white !w-11/12 !max-w-sm border border-exd-gray-44"
-  >
-    <template #container>
-      <img
-        :src="close"
-        alt="close"
-        width="30"
-        height="30"
-        preload
-        class="absolute right-1 top-1 cursor-pointer z-50"
-        @click="handleCloseDialog"
-      />
-      <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
-        <img :src="warning" alt="warning" width="40" height="40" preload />
-        <div class="text-center w-10/12">
-          <p
-            v-for="(item, index) in errorScroll"
-            :key="index"
-            class="font-bold text-exd-1424 text-exd-gray-scorpion"
-          >
-            {{ item }}
-          </p>
-        </div>
-      </div>
-    </template>
-  </Dialog>
 </template>
 
 <script setup>
-import warning from '~/assets/images/warning.svg'
-import close from '~/assets/images/close.svg'
 import arrow from '~/assets/images/arrow.svg'
-import logo from '~/assets/images/logo.png'
 import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
-import InputTextArea from '~/components/InputTextArea.vue'
 import JapanPostalCode from 'japan-postal-code'
 import { useI18n } from 'vue-i18n'
 
 useHead({
-  title: 'Register',
+  title: 'Profile',
 })
 
 const { t } = useI18n()
@@ -382,24 +291,23 @@ const validateOnSubmit = ref(false)
 
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
+const isButtonEnabled = ref(false)
+
 const form = ref({
-  nickName: '',
-  age: '',
-  country_type: '',
+  nickName: '山田太郎',
+  age: 10,
+  country_type: 'Japan',
   gender: 'Non-Binary',
-  postCode: '',
+  postCode: '0000000',
   prefecture: '',
   address: '',
   city: '',
   area: '',
-  email: '',
+  email: 'xxxxxxxxxx@gmail.com',
   residenceType: 'domestic',
-  // residence: '',
   password: '',
   confPassword: '',
-  questionnaire1: '',
-  questionnaire2: '',
-  checked: false,
+  //   checked: false,
 })
 
 const countries = [
@@ -657,8 +565,6 @@ const errorScroll = ref([])
 const errorEmailMessage = ref('')
 const errorPasswordMessage = ref('')
 
-const handleCloseDialog = () => (isErrorMessage.value = false)
-
 const updateModel = (field, value) => {
   form.value[field] = value
 }
@@ -681,13 +587,33 @@ const getAgeOptions = [
   { value: 70, label: t('70') },
 ]
 
+const initialForm = JSON.parse(JSON.stringify(form.value))
+
+const isFormChanged = () => {
+  return JSON.stringify(form.value) !== JSON.stringify(initialForm)
+}
+
+watch(
+  () => form.value,
+  (newValue, oldValue) => {
+    if (isFormChanged()) {
+      isButtonEnabled.value = true
+    } else {
+      isButtonEnabled.value = false
+    }
+  },
+  { deep: true }
+)
+
 const fetchRegister = async (payload) => {
   errorMessages.value = []
 
   try {
-    const { data } = await useFetchApi('POST', 'register', { body: payload })
-    localStorage.setItem('USER_ID', data.user.id)
-    navigateTo('/register/complete')
+    if (errorPasswordMessage.value === '') {
+      navigateTo('/profile/complete')
+    } else {
+      console.log('error')
+    }
   } catch (error) {
     handleApiError(error)
   } finally {
@@ -704,8 +630,6 @@ const handleApiError = (error) => {
     const message = Object.keys(response).map((item) => response[item][0])
     errorScroll.value = message
     errorMessages.value.push(response)
-    console.log('errorMessages', errorMessages.value)
-    isErrorMessage.value = true
   }
 
   if (response.email) {
@@ -750,8 +674,6 @@ const handleSubmit = async () => {
     address: [form.value.city, form.value.area].join(' '),
     password: form.value.password,
     password_confirmation: form.value.confPassword,
-    questionnaire_1: form.value.questionnaire1,
-    questionnaire_2: form.value.questionnaire2,
   }
 
   await fetchRegister(payload)
