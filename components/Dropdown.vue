@@ -119,23 +119,15 @@ const modelValue = computed({
 })
 
 const ageMap = {
-  '10代以下': 10,
-  'below 10s': 10,
-  '20代': 20,
-  '20s': 20,
-  '30代': 30,
-  '30s': 30,
-  '40代': 40,
-  '40s': 40,
-  '50代': 50,
-  '50s': 50,
-  '60代': 60,
-  '60s': 60,
-  '70代以上': 70,
-  '70s and above': 70,
+  [t('10')]: 10,
+  [t('20')]: 20,
+  [t('30')]: 30,
+  [t('40')]: 40,
+  [t('50')]: 50,
+  [t('60')]: 60,
+  [t('70')]: 70,
 }
 
-// Inverse of ageMap to handle displaying the string in the UI
 const reverseAgeMap = {
   10: t('10'),
   20: t('20'),
