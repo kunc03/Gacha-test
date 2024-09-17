@@ -58,7 +58,7 @@
   "surname": "Surname",
   "givenName": "Given Name",
   "nickName": "Nick Name",
-  "age": "Select Era",
+  "age": "Era",
   "country": "Select Country",
   "dateOfBirth": "Date of Birth",
   "year": "Year",

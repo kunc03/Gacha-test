@@ -36,21 +36,23 @@
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error=" !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''"
-            :class="{'input-error': !form.nickName && validateOnSubmit}"
+            :error="
+              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
+            "
+            :class="{ 'input-error': !form.nickName && validateOnSubmit }"
           />
         </div>
         <div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
         >
           <label
-            :for="$t('era')"
+            :for="$t('age')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             :class="{
               'input-error': !form.era && validateOnSubmit,
             }"
           >
-            {{ $t('era') }}
+            {{ $t('age') }}
             <span
               class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >{{ $t('required') }}</span
@@ -173,7 +175,9 @@
               <label
                 :for="$t('country')"
                 class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
-                :class="{ 'input-error': !form.country_code && validateOnSubmit }"
+                :class="{
+                  'input-error': !form.country_code && validateOnSubmit,
+                }"
               >
                 {{ $t('country') }}
                 <span
@@ -190,7 +194,9 @@
                 optionLabel="name"
                 :placeholder="t('choice')"
                 :error="
-                  !form.country_code && validateOnSubmit ? $t('fieldRequired') : ''
+                  !form.country_code && validateOnSubmit
+                    ? $t('fieldRequired')
+                    : ''
                 "
                 :hasHelper="arrow"
                 :validate-on-submit="validateOnSubmit"
@@ -753,10 +759,10 @@ const handleSubmit = async () => {
   }
 
   if (form.value.residenceType == 'overseas') {
-    delete payload.prefecture;
-    delete payload.city;
-    delete payload.area;
-    delete payload.address;
+    delete payload.prefecture
+    delete payload.city
+    delete payload.area
+    delete payload.address
   }
 
   await fetchRegister(payload)
