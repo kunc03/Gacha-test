@@ -1,4 +1,3 @@
-div
 <template>
   <div class="grow flex flex-col">
     <HeaderBar hasBack>
@@ -37,10 +36,8 @@ div
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.nickName && validateOnSubmit }"
+            :error=" !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''"
+            :class="{'input-error': !form.nickName && validateOnSubmit}"
           />
         </div>
         <div
@@ -141,11 +138,11 @@ div
               ]"
             />
             <Button
-              @click="updateModel('residenceType', 'abroad')"
+              @click="updateModel('residenceType', 'overseas')"
               :label="$t('abroad')"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === 'abroad' && '!bg-exd-banana',
+                form.residenceType === 'overseas' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -176,7 +173,7 @@ div
               <label
                 :for="$t('country')"
                 class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
-                :class="{ 'input-error': !form.country && validateOnSubmit }"
+                :class="{ 'input-error': !form.country_code && validateOnSubmit }"
               >
                 {{ $t('country') }}
                 <span
@@ -185,13 +182,15 @@ div
                 >
               </label>
               <Dropdown
-                :model="form.country"
-                @update:model="updateModel('country', $event)"
-                @validate="validateInput('country', $event)"
-                :options="countries.map((item) => item.name)"
+                :model="form.country_code"
+                @update:model="updateModel('country_code', $event)"
+                @validate="validateInput('country_code', $event)"
+                :options="countries"
+                optionValue="code"
+                optionLabel="name"
                 :placeholder="t('choice')"
                 :error="
-                  !form.country && validateOnSubmit ? $t('fieldRequired') : ''
+                  !form.country_code && validateOnSubmit ? $t('fieldRequired') : ''
                 "
                 :hasHelper="arrow"
                 :validate-on-submit="validateOnSubmit"
@@ -735,14 +734,13 @@ const handleSubmit = async () => {
 
   let payload = {
     nickname: form.value.nickName,
-    // first_name: form.value.nickName, //firstname
+    first_name: form.value.nickName, //firstname
     age: form.value.age,
-    country_type: form.value.country,
+    country_code: form.value.country_code,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
     residence: form.value.residenceType,
     residence_type: form.value.residenceType,
-    phone_number: form.value.postCode,
     prefecture: form.value.prefecture,
     city: form.value.city,
     area: form.value.area,
@@ -752,6 +750,13 @@ const handleSubmit = async () => {
     password_confirmation: form.value.confPassword,
     questionnaire_1: form.value.questionnaire1,
     questionnaire_2: form.value.questionnaire2,
+  }
+
+  if (form.value.residenceType == 'overseas') {
+    delete payload.prefecture;
+    delete payload.city;
+    delete payload.area;
+    delete payload.address;
   }
 
   await fetchRegister(payload)

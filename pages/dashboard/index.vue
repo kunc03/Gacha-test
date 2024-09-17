@@ -131,14 +131,34 @@
       {{ $t('addToHomeScreen') }}
     </p>
     <div
-      class="bg-exd-neutral-400 w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center mt-7"
+      class="w-exd-312 h-exd-50 mx-auto inline-flex justify-between items-center mt-7"
     >
-      <p
+      <!-- <p
         class="text-white grow inline-flex items-center justify-center font-bold text-exd-1424"
       >
-        <!-- バナーリンク -->
         {{ $t('bannerLink') }}
-      </p>
+      </p> -->
+
+      <Swiper
+        :spaceBetween="30"
+        :centeredSlides="true"
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: false,
+        }"
+        :pagination="{
+          clickable: true,
+        }"
+        :navigation="false"
+        :modules="[Autoplay, Pagination, Navigation]"
+        class="mySwiper"
+      >
+        <SwiperSlide v-for="item in bannerList">
+          <a :href="item.link" target="_blank">
+            <img :src="item.image" />
+          </a>
+        </SwiperSlide>
+      </Swiper>
     </div>
   </div>
 
@@ -181,6 +201,12 @@ import { useRouter } from 'vue-router'
 import { store } from '~/stores/dashboard.js'
 import close from '~/assets/images/close.svg'
 import warning from '~/assets/images/warning.svg'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
 const router = useRouter()
 
@@ -202,6 +228,25 @@ const USER = useCookie('USER')
 
 const isNotAllowed = ref(false)
 const errorMessages = ref('')
+const bannerList = ref([
+  { image: '/images/banner_01.jpg', link: 'https://www.yabaton.com/' },
+  { image: '/images/banner_02.jpg', link: 'https://www.koushoji.or.jp/' },
+  { image: '/images/banner_03.jpg', link: 'https://www.maruya-honten.com/' },
+  {
+    image: '/images/banner_04.jpg',
+    link: 'https://www.nagoya-tv-tower.co.jp/',
+  },
+  {
+    image: '/images/banner_05.jpg',
+    link: 'https://www.tokyuhotels.co.jp/nagoya-h/index.html',
+  },
+  { image: '/images/banner_06.jpg', link: 'https://www.kani-honke.co.jp/' },
+  { image: '/images/banner_07.jpg', link: 'https://nagoya.nikkostyle.jp/' },
+  {
+    image: '/images/banner_08.jpg',
+    link: 'https://www.nagoya-info.jp/accommodation/detail/115/',
+  },
+])
 
 const handleClose = () => {
   isNotAllowed.value = false
@@ -252,3 +297,33 @@ onMounted(() => {
   checkSpinEligibility()
 })
 </script>
+
+<style>
+.swiper {
+  width: 100%;
+  height: 100px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 50px;
+  object-fit: cover;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: white;
+}
+
+.swiper-pagination {
+  top: 78px !important;
+}
+</style>
