@@ -9,7 +9,7 @@
 
     <Select
       :inputId="`id-${model}`"
-      :modelValue="modelValue"
+      :modelValue="displayValue"
       @update:modelValue="($value) => updateValue($value)"
       @blur="validate"
       :options="options"
@@ -20,8 +20,8 @@
       :placeholder="placeholder"
       :editable="editable"
       :class="[
-        'grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-none selection:!bg-gray-300',
-        validateOnSubmit && !isLengthValid && !modelValue
+        'grow w-full bg-gray-100 !text-exd-gray-scorpion focus:!border-none focus:!outline-none selection:!rounded-none rounded-xl selection:!bg-gray-300',
+        (validateOnSubmit && !isLengthValid && !modelValue) || error !== ''
           ? '!border-2 border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -107,6 +107,8 @@ const props = defineProps({
   validateOnSubmit: Boolean,
 })
 
+const { t } = useI18n()
+
 const emit = defineEmits(['update:model', 'validate'])
 
 const isLengthValid = ref(true)
@@ -116,14 +118,39 @@ const modelValue = computed({
   set: (value) => emit('update:model', value),
 })
 
+const ageMap = {
+  [t('10')]: 10,
+  [t('20')]: 20,
+  [t('30')]: 30,
+  [t('40')]: 40,
+  [t('50')]: 50,
+  [t('60')]: 60,
+  [t('70')]: 70,
+}
+
+const reverseAgeMap = {
+  10: t('10'),
+  20: t('20'),
+  30: t('30'),
+  40: t('40'),
+  50: t('50'),
+  60: t('60'),
+  70: t('70'),
+}
+
+const displayValue = computed(() => {
+  return reverseAgeMap[props.model] || props.model
+})
+
 const updateValue = (value) => {
-  modelValue.value = value
+  const intValue = ageMap[value] !== undefined ? ageMap[value] : value
+  emit('update:model', intValue)
   validate()
-  emit('validate', value)
+  emit('validate', intValue)
 }
 
 const validate = () => {
-  isLengthValid.value = modelValue.value.length > 0
+  isLengthValid.value = modelValue.value && modelValue.value.length > 0
   emit('validate', modelValue.value)
 }
 

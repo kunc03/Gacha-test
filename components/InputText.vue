@@ -1,25 +1,33 @@
 <template>
   <div class="flex flex-col w-full">
-    <label
-      :for="`label-${label}`"
-      class="text-exd-gray-scorpion text-exd-1424 flex gap-2 items-center py-0"
-      v-if="label !== ''"
-      >{{ label }}
-      <span
-        v-if="required"
-        class="!bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
-        >{{ $t('required') }}</span
-      ></label
-    >
+    <div class="flex items-center justify-between">
+      <label
+        :for="`label-${label}`"
+        class="text-exd-gray-scorpion text-exd-1424 flex gap-2 items-center py-0"
+        v-if="label !== ''"
+        >{{ label }}
+        <span
+          v-if="required"
+          class="!bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
+          >{{ $t('required') }}</span
+        >
+      </label>
+      <span class="truncate max-w-56 text-exd-1220 text-exd-gray-scorpion">{{
+        $t(inform)
+      }}</span>
+    </div>
     <div
       :class="[
-        'inline-flex rounded-lg bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
+        'inline-flex rounded-xl bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
         (props.error !== '' && props.validateOnSubmit) ||
         modelValue === 0 ||
         (props.isPassword &&
           modelValue.length > 0 &&
           modelValue.length < props.minLength) ||
-        (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
+        (props.isPassword &&
+          !isAlphanumeric(modelValue) &&
+          props.error !== '') ||
+        (modelValue.length > 0 && isNickName && !isNicknameValid(modelValue))
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -54,12 +62,13 @@
     >
     <small
       v-if="
-        (props.error !== '' && props.validateOnSubmit) ||
+        (error !== '' && validateOnSubmit) ||
         modelValue === 0 ||
-        (props.isPassword &&
+        (isPassword &&
           modelValue.length > 0 &&
-          modelValue.length < props.minLength) ||
-        (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
+          modelValue.length < minLength) ||
+        (isPassword && !isAlphanumeric(modelValue) && error !== '') ||
+        (modelValue.length > 0 && isNickName && !isNicknameValid(modelValue))
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
@@ -69,7 +78,11 @@
         (isPassword &&
           modelValue.length > 0 &&
           modelValue.length < minLength &&
-          $t('minLength', { number: minLength }))
+          $t('minLength', { number: minLength })) ||
+        (modelValue.length > 0 &&
+          isNickName &&
+          !isNicknameValid(modelValue) &&
+          t('invalidNickname'))
       }}
     </small>
   </div>
@@ -78,6 +91,7 @@
 <script setup>
 import { computed } from 'vue'
 import InputText from 'primevue/inputtext'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   prefix: {
@@ -144,8 +158,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isNickName: {
+    type: Boolean,
+    default: false,
+  },
+  inform: {
+    type: String,
+    default: '',
+  },
   validateOnSubmit: Boolean,
 })
+
+const { t } = useI18n()
 
 const emit = defineEmits(['update:model', 'validate'])
 
@@ -160,26 +184,7 @@ const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
 }
 
-const borderRed = computed(() => {
-  return (
-    (props.error !== '' && props.validateOnSubmit) ||
-    modelValue === 0 ||
-    (props.isPassword &&
-      modelValue.length > 0 &&
-      modelValue.length < props.minLength)
-  )
-})
-
-const errorMessage = computed(() => {
-  return (
-    (props.error !== '' && props.validateOnSubmit) ||
-    modelValue === 0 ||
-    (props.isPassword &&
-      modelValue.length > 0 &&
-      modelValue.length < props.minLength) ||
-    (props.isPassword && !isAlphanumeric(modelValue) && props.error !== '')
-  )
-})
+const isNicknameValid = (str) => /^[a-z0-9]+$/.test(str) && !/\s/.test(str)
 
 const updateValue = (value) => {
   modelValue.value = value

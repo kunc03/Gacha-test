@@ -29,88 +29,47 @@
           class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4"
         >
           <InputText
-            :model="form.surname"
-            :label="$t('surname')"
+            :model="form.nickName"
+            :label="$t('nickName')"
             required
-            @update:model="updateModel('surname', $event)"
-            @validate="validateInput('surname', $event)"
+            is-nick-name="true"
+            @update:model="updateModel('nickName', $event)"
+            @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.surname && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.surname && validateOnSubmit }"
-          />
-          <InputText
-            :model="form.givenName"
-            :label="$t('givenName')"
-            required
-            @update:model="updateModel('givenName', $event)"
-            @validate="validateInput('givenName', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.givenName && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.givenName && validateOnSubmit }"
+            :error=" !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''"
+            :class="{'input-error': !form.nickName && validateOnSubmit}"
           />
         </div>
         <div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
         >
           <label
-            :for="$t('dateOfBirth')"
+            :for="$t('era')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             :class="{
-              'input-error':
-                (!form.yearOfBirth && validateOnSubmit) ||
-                (!form.monthOfBirth && validateOnSubmit) ||
-                (!form.dateOfBirth && validateOnSubmit),
+              'input-error': !form.era && validateOnSubmit,
             }"
           >
-            {{ $t('dateOfBirth') }}
+            {{ $t('era') }}
             <span
               class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >{{ $t('required') }}</span
-            ></label
-          >
-          <div class="inline-flex gap-4">
+            >
+          </label>
+
+          <div class="inline-flex gap-4 w-7/12">
             <Dropdown
-              :model="form.yearOfBirth"
-              @update:model="updateModel('yearOfBirth', $event)"
-              @validate="validateInput('yearOfBirth', $event)"
-              :options="yearOptions"
-              :suffix="$t('year')"
+              :model="form.age"
+              @update:model="updateModel('age', $event)"
+              @validate="validateInput('age', $event)"
+              :options="getAgeOptions.map((item) => item.label)"
+              :placeholder="t('choice')"
+              :hasHelper="arrow"
               :validate-on-submit="validateOnSubmit"
-              :class="{ 'input-error': !form.yearOfBirth && validateOnSubmit }"
-            />
-            <Dropdown
-              :model="form.monthOfBirth"
-              @update:model="updateModel('monthOfBirth', $event)"
-              @validate="validateInput('monthOfBirth', $event)"
-              :options="monthOptions"
-              :suffix="$t('month')"
-              :validate-on-submit="validateOnSubmit"
-              :class="{ 'input-error': !form.monthOfBirth && validateOnSubmit }"
-            />
-            <Dropdown
-              :model="form.dateOfBirth"
-              @update:model="updateModel('dateOfBirth', $event)"
-              @validate="validateInput('dateOfBirth', $event)"
-              :options="dayOptions"
-              :suffix="$t('day')"
-              :validate-on-submit="validateOnSubmit"
-              :class="{ 'input-error': !form.dateOfBirth && validateOnSubmit }"
+              :error="!form.age && validateOnSubmit ? $t('fieldRequired') : ''"
+              :class="{ 'input-error': !form.age && validateOnSubmit }"
             />
           </div>
-          <small
-            v-if="
-              (!form.yearOfBirth && validateOnSubmit) ||
-              (!form.monthOfBirth && validateOnSubmit) ||
-              (!form.dateOfBirth && validateOnSubmit)
-            "
-            :class="['p-error']"
-          >
-            {{ $t('fieldRequired') }}
-          </small>
         </div>
         <div
           class="inline-flex flex-col border-b border-b-exd-light-grey py-5 px-4"
@@ -122,8 +81,8 @@
             <span
               class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >{{ $t('required') }}</span
-            ></label
-          >
+            >
+          </label>
           <ButtonGroup
             class="text-exd-gray-scorpion w-full h-10 rounded-none"
             style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
@@ -164,8 +123,8 @@
             <span
               class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
               >{{ $t('required') }}</span
-            ></label
-          >
+            >
+          </label>
           <ButtonGroup
             class="w-full h-10 rounded-none"
             style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
@@ -179,11 +138,11 @@
               ]"
             />
             <Button
-              @click="updateModel('residenceType', 'non_domestic')"
+              @click="updateModel('residenceType', 'overseas')"
               :label="$t('abroad')"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
-                form.residenceType === 'non_domestic' && '!bg-exd-banana',
+                form.residenceType === 'overseas' && '!bg-exd-banana',
               ]"
             />
           </ButtonGroup>
@@ -191,91 +150,55 @@
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4 flex-col"
         >
-          <InputText
-            :model="form.postCode"
-            :label="$t('postalCodeNoHyphens')"
-            required
-            @update:model="
-              ($event) => {
-                updateModel('postCode', $event)
-                checkPostalCode($event)
-              }
-            "
-            @validate="validateInput('postCode', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.postCode && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.postCode && validateOnSubmit }"
-          />
-          <p class="text-exd-gray-scorpion font-medium text-exd-1220">
-            {{ $t('postalCodeInformation') }}
-          </p>
+          <div class="w-7/12">
+            <InputText
+              v-if="form.residenceType === 'domestic'"
+              :model="form.postCode"
+              required
+              :label="$t('postalCodeNoHyphens')"
+              @update:model="
+                ($event) => {
+                  updateModel('postCode', $event)
+                  checkPostalCode($event)
+                }
+              "
+              @validate="validateInput('postCode', $event)"
+              :validate-on-submit="validateOnSubmit"
+              :error="
+                !form.postCode && validateOnSubmit ? $t('fieldRequired') : ''
+              "
+              :class="{ 'input-error': !form.postCode && validateOnSubmit }"
+            />
+            <div v-else>
+              <label
+                :for="$t('country')"
+                class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
+                :class="{ 'input-error': !form.country_code && validateOnSubmit }"
+              >
+                {{ $t('country') }}
+                <span
+                  class="bg-exd-red-vermilion text-white text-exd-0910 px-1 py-[2px] rounded-sm"
+                  >{{ $t('required') }}</span
+                >
+              </label>
+              <Dropdown
+                :model="form.country_code"
+                @update:model="updateModel('country_code', $event)"
+                @validate="validateInput('country_code', $event)"
+                :options="countries"
+                optionValue="code"
+                optionLabel="name"
+                :placeholder="t('choice')"
+                :error="
+                  !form.country_code && validateOnSubmit ? $t('fieldRequired') : ''
+                "
+                :hasHelper="arrow"
+                :validate-on-submit="validateOnSubmit"
+              />
+            </div>
+          </div>
         </div>
-        <div
-          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputText
-            :model="form.prefecture"
-            required
-            :label="$t('prefectures')"
-            disabled
-            @update:model="updateModel('prefecture', $event)"
-            @validate="validateInput('prefecture', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.prefecture && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-          />
 
-          <InputText
-            :model="form.cityArea"
-            required
-            :label="$t('municipalities')"
-            disabled
-            @update:model="updateModel('cityArea', $event)"
-            @validate="validateInput('cityArea', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.cityArea && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-          />
-
-          <InputText
-            :model="form.address"
-            required
-            v-model="inputValue"
-            :label="$t('streetAddressEtc')"
-            @update:model="updateModel('address', $event)"
-            @validate="validateInput('address', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.address && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.address && validateOnSubmit }"
-          />
-
-          <p class="text-exd-gray-scorpion font-medium text-exd-1220">
-            {{ $t('streetAddressInformation') }}
-          </p>
-        </div>
-        <div
-          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputText
-            :model="form.phoneNumber"
-            required
-            :onlyNumeric="true"
-            :label="$t('phoneNumberNoHyphens')"
-            @update:model="updateModel('phoneNumber', $event)"
-            @validate="validateInput('phoneNumber', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.phoneNumber && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.phoneNumber && validateOnSubmit }"
-          />
-        </div>
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
@@ -300,16 +223,18 @@
             }"
           />
         </div>
+
         <div
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
             type="password"
             :model="form.password"
-            required
             :isPassword="true"
+            required
             :minLength="8"
             :label="$t('password')"
+            inform="passwordMin"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
@@ -329,9 +254,9 @@
           />
           <InputText
             type="password"
-            required
             :model="form.confPassword"
             :isPassword="true"
+            required
             :isConfPassword="true"
             :minLength="8"
             :label="$t('reenterPassword')"
@@ -361,33 +286,15 @@
         >
           <InputTextArea
             :model="form.questionnaire1"
-            required
-            :label="$t('questionnaire')"
+            :label="$t('questionnaire1')"
             @update:model="updateModel('questionnaire1', $event)"
             @validate="validateInput('questionnaire1', $event)"
-            :error="$t('fieldRequired')"
-            :validate-on-submit="validateOnSubmit"
-            :class="{ 'input-error': !form.questionnaire1 && validateOnSubmit }"
           />
           <InputTextArea
             :model="form.questionnaire2"
-            required
-            :label="$t('questionnaire')"
+            :label="$t('questionnaire2')"
             @update:model="updateModel('questionnaire2', $event)"
             @validate="validateInput('questionnaire2', $event)"
-            :error="$t('fieldRequired')"
-            :validate-on-submit="validateOnSubmit"
-            :class="{ 'input-error': !form.questionnaire2 && validateOnSubmit }"
-          />
-          <InputTextArea
-            :model="form.questionnaire3"
-            required
-            :label="$t('questionnaire')"
-            @update:model="updateModel('questionnaire3', $event)"
-            @validate="validateInput('questionnaire3', $event)"
-            :error="$t('fieldRequired')"
-            :validate-on-submit="validateOnSubmit"
-            :class="{ 'input-error': !form.questionnaire3 && validateOnSubmit }"
           />
         </div>
 
@@ -456,7 +363,8 @@
 <script setup>
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
-
+import arrow from '~/assets/images/arrow.svg'
+import logo from '~/assets/images/logo.png'
 import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
@@ -471,34 +379,277 @@ const { t } = useI18n()
 
 const validateOnSubmit = ref(false)
 
-const inputValue = ref('')
-
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
 const form = ref({
-  surname: '',
-  givenName: '',
-  yearOfBirth: '',
-  monthOfBirth: '',
-  dateOfBirth: '',
+  nickName: '',
+  age: '',
+  country_type: '',
   gender: 'Non-Binary',
-  residenceType: 'domestic',
-  residence: '',
   postCode: '',
   prefecture: '',
-  cityArea: '',
   address: '',
   city: '',
   area: '',
-  phoneNumber: '',
   email: '',
+  residenceType: 'domestic',
+  // residence: '',
   password: '',
   confPassword: '',
   questionnaire1: '',
   questionnaire2: '',
-  questionnaire3: '',
   checked: false,
 })
+
+const countries = [
+  { code: 'AF', name: 'Afghanistan' },
+  { code: 'AL', name: 'Albania' },
+  { code: 'DZ', name: 'Algeria' },
+  { code: 'AS', name: 'American Samoa' },
+  { code: 'AD', name: 'Andorra' },
+  { code: 'AG', name: 'Angola' },
+  { code: 'AI', name: 'Anguilla' },
+  { code: 'AG', name: 'Antigua & Barbuda' },
+  { code: 'AR', name: 'Argentina' },
+  { code: 'AA', name: 'Armenia' },
+  { code: 'AW', name: 'Aruba' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'AT', name: 'Austria' },
+  { code: 'AZ', name: 'Azerbaijan' },
+  { code: 'BS', name: 'Bahamas' },
+  { code: 'BH', name: 'Bahrain' },
+  { code: 'BD', name: 'Bangladesh' },
+  { code: 'BB', name: 'Barbados' },
+  { code: 'BY', name: 'Belarus' },
+  { code: 'BE', name: 'Belgium' },
+  { code: 'BZ', name: 'Belize' },
+  { code: 'BJ', name: 'Benin' },
+  { code: 'BM', name: 'Bermuda' },
+  { code: 'BT', name: 'Bhutan' },
+  { code: 'BO', name: 'Bolivia' },
+  { code: 'BL', name: 'Bonaire' },
+  { code: 'BA', name: 'Bosnia & Herzegovina' },
+  { code: 'BW', name: 'Botswana' },
+  { code: 'BR', name: 'Brazil' },
+  { code: 'BC', name: 'British Indian Ocean Ter' },
+  { code: 'BN', name: 'Brunei' },
+  { code: 'BG', name: 'Bulgaria' },
+  { code: 'BF', name: 'Burkina Faso' },
+  { code: 'BI', name: 'Burundi' },
+  { code: 'KH', name: 'Cambodia' },
+  { code: 'CM', name: 'Cameroon' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'IC', name: 'Canary Islands' },
+  { code: 'CV', name: 'Cape Verde' },
+  { code: 'KY', name: 'Cayman Islands' },
+  { code: 'CF', name: 'Central African Republic' },
+  { code: 'TD', name: 'Chad' },
+  { code: 'CD', name: 'Channel Islands' },
+  { code: 'CL', name: 'Chile' },
+  { code: 'CN', name: 'China' },
+  { code: 'CI', name: 'Christmas Island' },
+  { code: 'CS', name: 'Cocos Island' },
+  { code: 'CO', name: 'Colombia' },
+  { code: 'CC', name: 'Comoros' },
+  { code: 'CG', name: 'Congo' },
+  { code: 'CK', name: 'Cook Islands' },
+  { code: 'CR', name: 'Costa Rica' },
+  { code: 'CT', name: "Cote D'Ivoire" },
+  { code: 'HR', name: 'Croatia' },
+  { code: 'CU', name: 'Cuba' },
+  { code: 'CB', name: 'Curacao' },
+  { code: 'CY', name: 'Cyprus' },
+  { code: 'CZ', name: 'Czech Republic' },
+  { code: 'DK', name: 'Denmark' },
+  { code: 'DJ', name: 'Djibouti' },
+  { code: 'DM', name: 'Dominica' },
+  { code: 'DO', name: 'Dominican Republic' },
+  { code: 'TM', name: 'East Timor' },
+  { code: 'EC', name: 'Ecuador' },
+  { code: 'EG', name: 'Egypt' },
+  { code: 'SV', name: 'El Salvador' },
+  { code: 'GQ', name: 'Equatorial Guinea' },
+  { code: 'ER', name: 'Eritrea' },
+  { code: 'EE', name: 'Estonia' },
+  { code: 'ET', name: 'Ethiopia' },
+  { code: 'FA', name: 'Falkland Islands' },
+  { code: 'FO', name: 'Faroe Islands' },
+  { code: 'FJ', name: 'Fiji' },
+  { code: 'FI', name: 'Finland' },
+  { code: 'FR', name: 'France' },
+  { code: 'GF', name: 'French Guiana' },
+  { code: 'PF', name: 'French Polynesia' },
+  { code: 'FS', name: 'French Southern Ter' },
+  { code: 'GA', name: 'Gabon' },
+  { code: 'GM', name: 'Gambia' },
+  { code: 'GE', name: 'Georgia' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'GH', name: 'Ghana' },
+  { code: 'GI', name: 'Gibraltar' },
+  { code: 'GB', name: 'Great Britain' },
+  { code: 'GR', name: 'Greece' },
+  { code: 'GL', name: 'Greenland' },
+  { code: 'GD', name: 'Grenada' },
+  { code: 'GP', name: 'Guadeloupe' },
+  { code: 'GU', name: 'Guam' },
+  { code: 'GT', name: 'Guatemala' },
+  { code: 'GN', name: 'Guinea' },
+  { code: 'GY', name: 'Guyana' },
+  { code: 'HT', name: 'Haiti' },
+  { code: 'HW', name: 'Hawaii' },
+  { code: 'HN', name: 'Honduras' },
+  { code: 'HK', name: 'Hong Kong' },
+  { code: 'HU', name: 'Hungary' },
+  { code: 'IS', name: 'Iceland' },
+  { code: 'IN', name: 'India' },
+  { code: 'ID', name: 'Indonesia' },
+  { code: 'IA', name: 'Iran' },
+  { code: 'IQ', name: 'Iraq' },
+  { code: 'IR', name: 'Ireland' },
+  { code: 'IM', name: 'Isle of Man' },
+  { code: 'IL', name: 'Israel' },
+  { code: 'IT', name: 'Italy' },
+  { code: 'JM', name: 'Jamaica' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'JO', name: 'Jordan' },
+  { code: 'KZ', name: 'Kazakhstan' },
+  { code: 'KE', name: 'Kenya' },
+  { code: 'KI', name: 'Kiribati' },
+  { code: 'NK', name: 'Korea North' },
+  { code: 'KS', name: 'Korea South' },
+  { code: 'KW', name: 'Kuwait' },
+  { code: 'KG', name: 'Kyrgyzstan' },
+  { code: 'LA', name: 'Laos' },
+  { code: 'LV', name: 'Latvia' },
+  { code: 'LB', name: 'Lebanon' },
+  { code: 'LS', name: 'Lesotho' },
+  { code: 'LR', name: 'Liberia' },
+  { code: 'LY', name: 'Libya' },
+  { code: 'LI', name: 'Liechtenstein' },
+  { code: 'LT', name: 'Lithuania' },
+  { code: 'LU', name: 'Luxembourg' },
+  { code: 'MO', name: 'Macau' },
+  { code: 'MK', name: 'Macedonia' },
+  { code: 'MG', name: 'Madagascar' },
+  { code: 'MY', name: 'Malaysia' },
+  { code: 'MW', name: 'Malawi' },
+  { code: 'MV', name: 'Maldives' },
+  { code: 'ML', name: 'Mali' },
+  { code: 'MT', name: 'Malta' },
+  { code: 'MH', name: 'Marshall Islands' },
+  { code: 'MQ', name: 'Martinique' },
+  { code: 'MR', name: 'Mauritania' },
+  { code: 'MU', name: 'Mauritius' },
+  { code: 'ME', name: 'Mayotte' },
+  { code: 'MX', name: 'Mexico' },
+  { code: 'MI', name: 'Midway Islands' },
+  { code: 'MD', name: 'Moldova' },
+  { code: 'MC', name: 'Monaco' },
+  { code: 'MN', name: 'Mongolia' },
+  { code: 'MS', name: 'Montserrat' },
+  { code: 'MA', name: 'Morocco' },
+  { code: 'MZ', name: 'Mozambique' },
+  { code: 'MM', name: 'Myanmar' },
+  { code: 'NA', name: 'Nambia' },
+  { code: 'NU', name: 'Nauru' },
+  { code: 'NP', name: 'Nepal' },
+  { code: 'AN', name: 'Netherland Antilles' },
+  { code: 'NL', name: 'Netherlands (Holland, Europe)' },
+  { code: 'NV', name: 'Nevis' },
+  { code: 'NC', name: 'New Caledonia' },
+  { code: 'NZ', name: 'New Zealand' },
+  { code: 'NI', name: 'Nicaragua' },
+  { code: 'NE', name: 'Niger' },
+  { code: 'NG', name: 'Nigeria' },
+  { code: 'NW', name: 'Niue' },
+  { code: 'NF', name: 'Norfolk Island' },
+  { code: 'NO', name: 'Norway' },
+  { code: 'OM', name: 'Oman' },
+  { code: 'PK', name: 'Pakistan' },
+  { code: 'PW', name: 'Palau Island' },
+  { code: 'PS', name: 'Palestine' },
+  { code: 'PA', name: 'Panama' },
+  { code: 'PG', name: 'Papua New Guinea' },
+  { code: 'PY', name: 'Paraguay' },
+  { code: 'PE', name: 'Peru' },
+  { code: 'PH', name: 'Philippines' },
+  { code: 'PO', name: 'Pitcairn Island' },
+  { code: 'PL', name: 'Poland' },
+  { code: 'PT', name: 'Portugal' },
+  { code: 'PR', name: 'Puerto Rico' },
+  { code: 'QA', name: 'Qatar' },
+  { code: 'ME', name: 'Republic of Montenegro' },
+  { code: 'RS', name: 'Republic of Serbia' },
+  { code: 'RE', name: 'Reunion' },
+  { code: 'RO', name: 'Romania' },
+  { code: 'RU', name: 'Russia' },
+  { code: 'RW', name: 'Rwanda' },
+  { code: 'NT', name: 'St Barthelemy' },
+  { code: 'EU', name: 'St Eustatius' },
+  { code: 'HE', name: 'St Helena' },
+  { code: 'KN', name: 'St Kitts-Nevis' },
+  { code: 'LC', name: 'St Lucia' },
+  { code: 'MB', name: 'St Maarten' },
+  { code: 'PM', name: 'St Pierre & Miquelon' },
+  { code: 'VC', name: 'St Vincent & Grenadines' },
+  { code: 'SP', name: 'Saipan' },
+  { code: 'SO', name: 'Samoa' },
+  { code: 'AS', name: 'Samoa American' },
+  { code: 'SM', name: 'San Marino' },
+  { code: 'ST', name: 'Sao Tome & Principe' },
+  { code: 'SA', name: 'Saudi Arabia' },
+  { code: 'SN', name: 'Senegal' },
+  { code: 'RS', name: 'Serbia' },
+  { code: 'SC', name: 'Seychelles' },
+  { code: 'SL', name: 'Sierra Leone' },
+  { code: 'SG', name: 'Singapore' },
+  { code: 'SK', name: 'Slovakia' },
+  { code: 'SI', name: 'Slovenia' },
+  { code: 'SB', name: 'Solomon Islands' },
+  { code: 'OI', name: 'Somalia' },
+  { code: 'ZA', name: 'South Africa' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'LK', name: 'Sri Lanka' },
+  { code: 'SD', name: 'Sudan' },
+  { code: 'SR', name: 'Suriname' },
+  { code: 'SZ', name: 'Swaziland' },
+  { code: 'SE', name: 'Sweden' },
+  { code: 'CH', name: 'Switzerland' },
+  { code: 'SY', name: 'Syria' },
+  { code: 'TA', name: 'Tahiti' },
+  { code: 'TW', name: 'Taiwan' },
+  { code: 'TJ', name: 'Tajikistan' },
+  { code: 'TZ', name: 'Tanzania' },
+  { code: 'TH', name: 'Thailand' },
+  { code: 'TG', name: 'Togo' },
+  { code: 'TK', name: 'Tokelau' },
+  { code: 'TO', name: 'Tonga' },
+  { code: 'TT', name: 'Trinidad & Tobago' },
+  { code: 'TN', name: 'Tunisia' },
+  { code: 'TR', name: 'Turkey' },
+  { code: 'TU', name: 'Turkmenistan' },
+  { code: 'TC', name: 'Turks & Caicos Is' },
+  { code: 'TV', name: 'Tuvalu' },
+  { code: 'UG', name: 'Uganda' },
+  { code: 'UA', name: 'Ukraine' },
+  { code: 'AE', name: 'United Arab Emirates' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'US', name: 'United States of America' },
+  { code: 'UY', name: 'Uruguay' },
+  { code: 'UZ', name: 'Uzbekistan' },
+  { code: 'VU', name: 'Vanuatu' },
+  { code: 'VS', name: 'Vatican City State' },
+  { code: 'VE', name: 'Venezuela' },
+  { code: 'VN', name: 'Vietnam' },
+  { code: 'VB', name: 'Virgin Islands (Brit)' },
+  { code: 'VA', name: 'Virgin Islands (USA)' },
+  { code: 'WK', name: 'Wake Island' },
+  { code: 'WF', name: 'Wallis & Futana Is' },
+  { code: 'YE', name: 'Yemen' },
+  { code: 'ZR', name: 'Zaire' },
+  { code: 'ZM', name: 'Zambia' },
+  { code: 'ZW', name: 'Zimbabwe' },
+]
 
 const errorMessages = ref([])
 const errorScroll = ref([])
@@ -519,25 +670,15 @@ const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
 }
 
-const yearOptions = computed(() => {
-  const currentYear = new Date().getFullYear()
-  return [...new Array(100)].map((item, index) =>
-    // currentYear - index
-    String(currentYear - index).padStart(4, '0')
-  )
-})
-
-const monthOptions = computed(() => {
-  return [...new Array(12)].map((item, index) =>
-    String(index + 1).padStart(2, '0')
-  )
-})
-
-const dayOptions = computed(() => {
-  return [...new Array(31)].map((item, index) =>
-    String(index + 1).padStart(2, '0')
-  )
-})
+const getAgeOptions = [
+  { value: 10, label: t('10') },
+  { value: 20, label: t('20') },
+  { value: 30, label: t('30') },
+  { value: 40, label: t('40') },
+  { value: 50, label: t('50') },
+  { value: 60, label: t('60') },
+  { value: 70, label: t('70') },
+]
 
 const fetchRegister = async (payload) => {
   errorMessages.value = []
@@ -556,8 +697,6 @@ const fetchRegister = async (payload) => {
 const handleApiError = (error) => {
   errorScroll.value = []
 
-  console.log(t)
-
   const response = error._data.errors
 
   if (response) {
@@ -565,16 +704,7 @@ const handleApiError = (error) => {
     errorScroll.value = message
     errorMessages.value.push(response)
     console.log('errorMessages', errorMessages.value)
-    // isErrorMessage.value = true
-  }
-  if (response.password) {
-    if (form.value.password.length >= 8) {
-      // if (!isAlphanumeric(form.value.password)) {
-      //   errorPasswordMessage.value = '半角英数字のみ使用できます。'
-      // }
-    }
-  } else {
-    errorPasswordMessage.value = ''
+    isErrorMessage.value = true
   }
 
   if (response.email) {
@@ -603,27 +733,30 @@ const handleSubmit = async () => {
   validateOnSubmit.value = true
 
   let payload = {
-    first_name: form.value.surname,
-    last_name: form.value.givenName,
-    birthdate: `${form.value.yearOfBirth}-${form.value.monthOfBirth}-${form.value.dateOfBirth}`,
+    nickname: form.value.nickName,
+    first_name: form.value.nickName, //firstname
+    age: form.value.age,
+    country_code: form.value.country_code,
     gender: form.value.gender,
     postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
+    residence: form.value.residenceType,
     residence_type: form.value.residenceType,
-    residence: [form.value.prefecture, form.value.city, form.value.area].join(
-      ' '
-    ),
     prefecture: form.value.prefecture,
-    cityArea: [form.value.city, form.value.area].join(', '),
     city: form.value.city,
     area: form.value.area,
     email: form.value.email,
-    address: form.value.address,
-    phone_number: form.value.phoneNumber,
+    address: [form.value.city, form.value.area].join(' '),
     password: form.value.password,
     password_confirmation: form.value.confPassword,
     questionnaire_1: form.value.questionnaire1,
     questionnaire_2: form.value.questionnaire2,
-    questionnaire_3: form.value.questionnaire3,
+  }
+
+  if (form.value.residenceType == 'overseas') {
+    delete payload.prefecture;
+    delete payload.city;
+    delete payload.area;
+    delete payload.address;
   }
 
   await fetchRegister(payload)
@@ -651,7 +784,6 @@ const checkPostalCode = async (code) => {
     })
 
     form.value.prefecture = address.prefecture
-    form.value.cityArea = [address.city, address.area].join(', ')
     form.value.city = address.city
     form.value.area = address.area
   } catch (error) {
