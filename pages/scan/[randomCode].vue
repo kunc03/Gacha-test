@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-
+  <!-- 
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
@@ -68,7 +68,7 @@
       </div>
     </template>
   </Modal>
-  <div class="overlay" v-if="isRequestingLocation" />
+  <div class="overlay" v-if="isRequestingLocation" /> -->
 </template>
 
 <script setup>

@@ -1,15 +1,8 @@
 <template>
-  <HeaderBar hasBack>
-    <p
-      style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
-      class="text-exd-gray-scorpion font-bold text-exd-1824.52"
-    >
-      {{ $t('listOfPrizesAndExchanges') }}
-    </p>
-  </HeaderBar>
+  <HeaderBar hasBack withLogo />
   <div class="flex flex-col mt-20 grow">
     <p
-      class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mx-auto"
+      class="text-exd-red-vermilion text-exd-1724 text-center font-extrabold max-w-[356px] mx-auto p-4"
     >
       {{ $t('pleaseShowThisScreen') }}
     </p>
