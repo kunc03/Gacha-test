@@ -113,9 +113,9 @@
   "pleaseWaitMoment": "しばらくお待ちください。。。",
   "spinTheGacha": "ガチャを回す",
   "toTheNext": "次へ",
-  "toWinPrizes": "景品獲得には",
+  "toWinPrizes": "景品獲得・応募には",
   "membershipRegistrationRequired": "会員登録が必要です",
-  "howToExchangePoints": " ポイントと景品の交換方法は",
+  "howToExchangePoints": " ポイントと景品の交換・応募方法は",
   "pleaseSee": "をご覧ください。",
   "here": " こちら",
   "redeemForMyPage": "マイページから引き換え",
@@ -124,5 +124,7 @@
   "invalidNickname": "ニックネームは英数字でスペースを入れないでください",
   "change": "変更する",
   "completed": "完了しました",
-  "minPhoneNumber": "電話番号は11文字以上でなければなりません"
+  "minPhoneNumber": "電話番号は11文字以上でなければなりません",
+  "replaced": "交換済",
+  "openGoogleMaps": "Googleマップを開く"
 }

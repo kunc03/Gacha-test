@@ -2,15 +2,15 @@
   <HeaderBar withLogo />
   <div class="flex flex-col mt-20 grow justify-between px-8">
     <p
-      class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 mt-8 mx-auto"
+      class="text-exd-gray-scorpion text-exd-1424 text-center font-bold max-w-44 my-8 mx-auto"
     >
       {{ $t('done') }}
     </p>
-    <div class="flex-1 mt-11 w-full relative">
+    <div class="flex-1 w-full relative">
       <div
-        class="border-2 border-exd-red-vermilion flex-1 w-3/6 text-center absolute top-10 left-1/2 transform -translate-x-1/2 px-6 py-3 text-exd-red-vermilion font-extrabold rounded-lg text-exd-1724"
+        class="border-4 border-exd-red-vermilion flex-1 w-5/6 text-center absolute top-8 left-1/2 transform -translate-x-1/2 px-6 py-2 text-exd-red-vermilion !font-extrabold rounded-lg text-[38px]"
       >
-        交換済
+        {{ $t('replaced') }}
       </div>
     </div>
   </div>

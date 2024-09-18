@@ -62,7 +62,7 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      primary: ['Noto Sans'],
+      sans: ['"Noto Sans JP"', 'sans-serif'],
     },
 
     extend: {

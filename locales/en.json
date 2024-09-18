@@ -123,5 +123,7 @@
   "invalidNickname": "Nicknames must be alphanumeric characters with no spaces",
   "change": "Change",
   "completed": "Completed",
-  "minPhoneNumber": "Phone number must be at least 11 characters"
+  "minPhoneNumber": "Phone number must be at least 11 characters",
+  "replaced": "Replaced",
+  "openGoogleMaps": "Open Google Maps"
 }
