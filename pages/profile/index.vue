@@ -32,14 +32,9 @@
             :model="form.nickName"
             :label="$t('nickName')"
             required
-            is-nick-name="true"
+            :is-nick-name="true"
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
-            "
-            :class="{ 'input-error': !form.nickName && validateOnSubmit }"
           />
         </div>
         <div
@@ -48,9 +43,6 @@
           <label
             :for="$t('age')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
-            :class="{
-              'input-error': !form.age && validateOnSubmit,
-            }"
           >
             {{ $t('age') }}
             <span
@@ -67,9 +59,6 @@
               :options="getAgeOptions.map((item) => item.label)"
               :placeholder="t('choice')"
               :hasHelper="true"
-              :validate-on-submit="validateOnSubmit"
-              :error="!form.age && validateOnSubmit ? $t('fieldRequired') : ''"
-              :class="{ 'input-error': !form.age && validateOnSubmit }"
             />
           </div>
         </div>
@@ -152,31 +141,70 @@
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4 flex-col"
         >
-          <div class="w-7/12">
-            <InputText
+          <div class="flex flex-col gap-4">
+            <div
+              class="flex flex-col gap-4"
               v-if="form.residenceType === 'domestic'"
-              :model="form.postCode"
-              required
-              :label="$t('postalCodeNoHyphens')"
-              @update:model="
-                ($event) => {
-                  updateModel('postCode', $event)
-                  checkPostalCode($event)
-                }
-              "
-              @validate="validateInput('postCode', $event)"
-              :validate-on-submit="validateOnSubmit"
-              :error="
-                !form.postCode && validateOnSubmit ? $t('fieldRequired') : ''
-              "
-              :class="{ 'input-error': !form.postCode && validateOnSubmit }"
-            />
-            <div v-else>
+            >
+              <InputText
+                :model="form.postCode"
+                required
+                :label="$t('postalCodeNoHyphens')"
+                @update:model="
+                  ($event) => {
+                    updateModel('postCode', $event)
+                    checkPostalCode($event)
+                  }
+                "
+                @validate="validateInput('postCode', $event)"
+              />
+              <InputText
+                :model="form.prefecture"
+                required
+                disabled
+                :label="$t('prefecture')"
+                @update:model="
+                  ($event) => {
+                    updateModel('prefecture', $event)
+                    checkPostalCode($event)
+                  }
+                "
+                @validate="validateInput('prefecture', $event)"
+              />
+              <InputText
+                :model="form.city"
+                disabled
+                required
+                :label="$t('city')"
+                @update:model="
+                  ($event) => {
+                    updateModel('city', $event)
+                    checkPostalCode($event)
+                  }
+                "
+                @validate="validateInput('city', $event)"
+              />
+              <InputText
+                :model="form.area"
+                disabled
+                required
+                :label="$t('area')"
+                @update:model="
+                  ($event) => {
+                    updateModel('area', $event)
+                    checkPostalCode($event)
+                  }
+                "
+                @validate="validateInput('area', $event)"
+              />
+            </div>
+
+            <div v-if="form.residenceType === 'overseas'">
               <label
                 :for="$t('country')"
                 class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
                 :class="{
-                  'input-error': !form.country_code && validateOnSubmit,
+                  'input-error': !form.countryCode && validateOnSubmit,
                 }"
               >
                 {{ $t('country') }}
@@ -186,23 +214,50 @@
                 >
               </label>
               <Dropdown
-                :model="form.country_code"
-                @update:model="updateModel('country_code', $event)"
-                @validate="validateInput('country_code', $event)"
+                :model="form.countryCode"
+                @update:model="updateModel('countryCode', $event)"
+                @validate="validateInput('countryCode', $event)"
                 :options="countries"
                 optionValue="code"
                 optionLabel="name"
                 :placeholder="t('choice')"
-                :error="
-                  !form.country_code && validateOnSubmit
-                    ? $t('fieldRequired')
-                    : ''
-                "
                 :hasHelper="true"
-                :validate-on-submit="validateOnSubmit"
               />
             </div>
           </div>
+        </div>
+
+        <div
+          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <InputText
+            :model="form.address"
+            required
+            :label="$t('address')"
+            @update:model="updateModel('address', $event)"
+            @validate="validateInput('address', $event)"
+            :validate-on-submit="validateOnSubmit"
+          />
+        </div>
+
+        <div
+          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <InputText
+            type="number"
+            :model="form.phoneNumber"
+            required
+            :label="$t('phoneNumber')"
+            @update:model="updateModel('phoneNumber', $event)"
+            @validate="validateInput('phoneNumber', $event)"
+            :minLength="11"
+            :validate-on-submit="validateOnSubmit"
+            :error="form.phoneNumber.length === 0 ? t('fieldRequired') : ''"
+            :class="{
+              'input-error':
+                form.phoneNumber.length > 0 && form.phoneNumber.length < 10,
+            }"
+          />
         </div>
 
         <div
@@ -245,7 +300,6 @@
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.password && validateOnSubmit && $t('fieldRequired')) ||
               (!isAlphanumeric(form.password) &&
                 form.password.length > 0 &&
                 $t('validPassword')) ||
@@ -253,7 +307,6 @@
             "
             :class="{
               'input-error':
-                (!form.password && validateOnSubmit) ||
                 (form.password.length < 8 && validateOnSubmit) ||
                 (!isAlphanumeric(form.password) && validateOnSubmit),
             }"
@@ -267,10 +320,9 @@
             :minLength="8"
             :label="$t('reenterPassword')"
             :error="
-              (!form.confPassword && validateOnSubmit && $t('fieldRequired')) ||
-              (form.confPassword !== form.password && validateOnSubmit
+              form.confPassword !== form.password && validateOnSubmit
                 ? $t('passwordNotMatch')
-                : '')
+                : ''
             "
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
@@ -303,32 +355,12 @@
             @validate="validateInput('questionnaire2', $event)"
           />
         </div>
-
-        <div class="w-full inline-flex gap-2 items-center justify-center mt-7">
-          <Checkbox v-model="form.checked" :binary="true" />
-          <p class="text-exd-gray-scorpion font-bold text-exd-1424">
-            {{ $t('acceptTerm') }}
-          </p>
-        </div>
-        <div
-          class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-28 max-w-xs mx-auto text-exd-gray-scorpion pr-2"
-          style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
-        >
-          <div class="max-h-28 scrollable-content overflow-y-auto px-4">
-            <p class="text-exd-1424 font-bold text-center pt-2">
-              {{ $t('termOfService') }}
-            </p>
-            <p class="text-exd-1220 font-medium leading-relaxed h-[60px]">
-              {{ $t('dummyDummy') }}
-            </p>
-          </div>
-        </div>
       </div>
       <div class="mt-1" />
       <SolidButton
         :label="$t('register')"
         :has-loading="isLoading"
-        :disabled="!form.checked"
+        :disabled="!isButtonEnabled"
         :on-click="handleSubmit"
         has-bottom
       />
@@ -378,7 +410,7 @@ import JapanPostalCode from 'japan-postal-code'
 import { useI18n } from 'vue-i18n'
 
 useHead({
-  title: 'Register',
+  title: 'Profile',
 })
 
 const { t } = useI18n()
@@ -387,24 +419,25 @@ const validateOnSubmit = ref(false)
 
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
-const form = ref({
+const isButtonEnabled = ref(false)
+
+const form = reactive({
   nickName: '',
-  age: '',
-  country_type: '',
-  gender: 'Non-Binary',
+  age: null,
+  gender: '',
+  phoneNumber: '',
+  address: '',
+  email: '',
   postCode: '',
   prefecture: '',
-  address: '',
   city: '',
   area: '',
-  email: '',
-  residenceType: 'domestic',
-  // residence: '',
+  residenceType: '',
+  countryCode: '',
   password: '',
   confPassword: '',
   questionnaire1: '',
   questionnaire2: '',
-  checked: false,
 })
 
 const countries = [
@@ -665,7 +698,11 @@ const errorPasswordMessage = ref('')
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const updateModel = (field, value) => {
-  form.value[field] = value
+  if (field in form) {
+    form[field] = value
+  } else {
+    console.error(`Field ${field} tidak ditemukan dalam form`)
+  }
 }
 
 const validateInput = (field, value) => {
@@ -677,22 +714,67 @@ const isAlphanumeric = (str) => {
 }
 
 const getAgeOptions = [
-  { value: 10, label: t('10') },
-  { value: 20, label: t('20') },
-  { value: 30, label: t('30') },
-  { value: 40, label: t('40') },
-  { value: 50, label: t('50') },
-  { value: 60, label: t('60') },
-  { value: 70, label: t('70') },
+  { value: 1, label: t('10') },
+  { value: 2, label: t('20') },
+  { value: 3, label: t('30') },
+  { value: 4, label: t('40') },
+  { value: 5, label: t('50') },
+  { value: 6, label: t('60') },
+  { value: 7, label: t('70') },
 ]
 
-const fetchRegister = async (payload) => {
+let initialForm = {}
+
+const isFormChanged = () => {
+  return JSON.stringify(form) !== JSON.stringify(initialForm)
+}
+
+const populateForm = (data) => {
+  form.nickName = data.nickname || data.first_name || ''
+  form.age = data.age || null
+  form.gender = data.gender || ''
+  form.phoneNumber = data.phone_number || ''
+  form.address = data.address || ''
+  form.email = data.email || ''
+  form.residenceType = data.residence_type || 'overseas'
+  form.password = ''
+  form.confPassword = ''
+  form.questionnaire1 = data.questionnaire_1 || ''
+  form.questionnaire2 = data.questionnaire_2 || ''
+
+  if (data.residence_type === 'domestic') {
+    form.postCode = data.postal_code.name || ''
+    form.prefecture = data.prefecture.name || ''
+    form.city = data.city.name || ''
+    form.area = data.area.name || ''
+  } else {
+    form.countryCode = data.country_code || ''
+  }
+}
+
+const fetchGetUserData = async () => {
   errorMessages.value = []
+  isLoading.value = true
 
   try {
-    const { data } = await useFetchApi('POST', 'register', { body: payload })
-    localStorage.setItem('USER_ID', data.user.id)
-    navigateTo('/register/complete')
+    const { data } = await useFetchApi('GET', 'user')
+    populateForm(data)
+
+    initialForm = JSON.parse(JSON.stringify(form))
+  } catch (error) {
+    console.log(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const fetchPostUserData = async (payload) => {
+  errorMessages.value = []
+  isLoading.value = true
+
+  try {
+    const { data } = await useFetchApi('POST', 'user', { body: payload })
+    navigateTo('/profile/complete')
   } catch (error) {
     handleApiError(error)
   } finally {
@@ -703,7 +785,7 @@ const fetchRegister = async (payload) => {
 const handleApiError = (error) => {
   errorScroll.value = []
 
-  const response = error._data.errors
+  const response = error._data?.errors
 
   if (response) {
     const message = Object.keys(response).map((item) => response[item][0])
@@ -714,9 +796,6 @@ const handleApiError = (error) => {
   }
 
   if (response.email) {
-    if (response.email[0] === 'emailはすでに使用されています。') {
-      errorEmailMessage.value = t('emailIsAlreadyRegistered')
-    }
     if (
       response.email[0] === 'emailは有効なメールアドレスでなければなりません。'
     ) {
@@ -731,6 +810,35 @@ const handleApiError = (error) => {
   }
 }
 
+const buildPayload = () => {
+  const payload = {
+    nickname: form.nickName,
+    first_name: form.nickName,
+    age: form.age,
+    gender: form.gender,
+    email: form.email,
+    address: form.address,
+    phone_number: form.phoneNumber,
+    password: form.password,
+    password_confirmation: form.confPassword,
+    residence: form.residenceType,
+    residence_type: form.residenceType,
+    questionnaire_1: form.questionnaire1,
+    questionnaire_2: form.questionnaire2,
+  }
+
+  if (form.residenceType === 'overseas') {
+    payload.country_code = form.countryCode
+  } else {
+    payload.postal_code = parseInt(form.postCode)
+    payload.prefecture = form.prefecture
+    payload.city = form.city
+    payload.area = form.area
+  }
+
+  return payload
+}
+
 const handleSubmit = async () => {
   errorScroll.value = []
 
@@ -738,34 +846,10 @@ const handleSubmit = async () => {
 
   validateOnSubmit.value = true
 
-  let payload = {
-    nickname: form.value.nickName,
-    first_name: form.value.nickName, //firstname
-    age: form.value.age,
-    country_code: form.value.country_code,
-    gender: form.value.gender,
-    postal_code: parseInt(form.value.postCode.replaceAll('-', '')),
-    residence: form.value.residenceType,
-    residence_type: form.value.residenceType,
-    prefecture: form.value.prefecture,
-    city: form.value.city,
-    area: form.value.area,
-    email: form.value.email,
-    address: [form.value.city, form.value.area].join(' '),
-    password: form.value.password,
-    password_confirmation: form.value.confPassword,
-    questionnaire_1: form.value.questionnaire1,
-    questionnaire_2: form.value.questionnaire2,
-  }
+  const payload = buildPayload()
 
-  if (form.value.residenceType == 'overseas') {
-    delete payload.prefecture
-    delete payload.city
-    delete payload.area
-    delete payload.address
-  }
+  await fetchPostUserData(payload)
 
-  await fetchRegister(payload)
   if (errorScroll.value.length > 0) {
     await nextTick()
     const firstErrorElement = document.querySelector('.input-error')
@@ -773,9 +857,11 @@ const handleSubmit = async () => {
       firstErrorElement.scrollIntoView({ behavior: 'smooth' })
     }
   }
+  isLoading.value = false
 }
 
 let postCodeBounds
+
 const checkPostalCode = async (code) => {
   clearTimeout(postCodeBounds)
   try {
@@ -789,13 +875,25 @@ const checkPostalCode = async (code) => {
       }, 800)
     })
 
-    form.value.prefecture = address.prefecture
-    form.value.city = address.city
-    form.value.area = address.area
+    form.prefecture = address.prefecture
+    form.city = address.city
+    form.area = address.area
   } catch (error) {
     console.log(error)
   }
 }
+
+watch(
+  () => form,
+  (newValue, oldValue) => {
+    isButtonEnabled.value = isFormChanged()
+  },
+  { deep: true }
+)
+
+onMounted(async () => {
+  await fetchGetUserData()
+})
 </script>
 
 <style scoped>

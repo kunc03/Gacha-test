@@ -12,9 +12,11 @@
           >{{ $t('required') }}</span
         >
       </label>
-      <span class="truncate max-w-56 text-exd-1220 text-exd-gray-scorpion">{{
-        $t(inform)
-      }}</span>
+      <span
+        v-if="inform !== ''"
+        class="truncate max-w-56 text-exd-1220 text-exd-gray-scorpion"
+        >{{ $t(inform) }}</span
+      >
     </div>
     <div
       :class="[
@@ -22,12 +24,12 @@
         (props.error !== '' && props.validateOnSubmit) ||
         modelValue === 0 ||
         (props.isPassword &&
-          modelValue.length > 0 &&
-          modelValue.length < props.minLength) ||
+          modelValue?.length > 0 &&
+          modelValue?.length < props.minLength) ||
         (props.isPassword &&
           !isAlphanumeric(modelValue) &&
           props.error !== '') ||
-        (modelValue.length > 0 && isNickName && !isNicknameValid(modelValue))
+        (modelValue?.length > 0 && isNickName && !isNicknameValid(modelValue))
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -65,10 +67,10 @@
         (error !== '' && validateOnSubmit) ||
         modelValue === 0 ||
         (isPassword &&
-          modelValue.length > 0 &&
-          modelValue.length < minLength) ||
+          modelValue?.length > 0 &&
+          modelValue?.length < minLength) ||
         (isPassword && !isAlphanumeric(modelValue) && error !== '') ||
-        (modelValue.length > 0 && isNickName && !isNicknameValid(modelValue))
+        (modelValue?.length > 0 && isNickName && !isNicknameValid(modelValue))
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
@@ -76,10 +78,10 @@
       {{
         error ||
         (isPassword &&
-          modelValue.length > 0 &&
-          modelValue.length < minLength &&
+          modelValue?.length > 0 &&
+          modelValue?.length < minLength &&
           $t('minLength', { number: minLength })) ||
-        (modelValue.length > 0 &&
+        (modelValue?.length > 0 &&
           isNickName &&
           !isNicknameValid(modelValue) &&
           t('invalidNickname'))
@@ -184,7 +186,9 @@ const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
 }
 
-const isNicknameValid = (str) => /^[a-z0-9]+$/.test(str) && !/\s/.test(str)
+const isNicknameValid = (str) => {
+  return /^[a-zA-Z0-9\u3040-\u30FF\u4E00-\u9FFF]+$/.test(str)
+}
 
 const updateValue = (value) => {
   modelValue.value = value
