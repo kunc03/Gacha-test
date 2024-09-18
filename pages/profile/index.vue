@@ -758,8 +758,6 @@ const fetchGetUserData = async () => {
 
   try {
     const { data } = await useFetchApi('GET', 'user')
-    console.log(data)
-
     populateForm(data)
 
     initialForm = JSON.parse(JSON.stringify(form))
@@ -877,9 +875,9 @@ const checkPostalCode = async (code) => {
       }, 800)
     })
 
-    form.value.prefecture = address.prefecture
-    form.value.city = address.city
-    form.value.area = address.area
+    form.prefecture = address.prefecture
+    form.city = address.city
+    form.area = address.area
   } catch (error) {
     console.log(error)
   }
