@@ -695,13 +695,13 @@ const isAlphanumeric = (str) => {
 }
 
 const getAgeOptions = [
-  { value: 10, label: t('10') },
-  { value: 20, label: t('20') },
-  { value: 30, label: t('30') },
-  { value: 40, label: t('40') },
-  { value: 50, label: t('50') },
-  { value: 60, label: t('60') },
-  { value: 70, label: t('70') },
+  { value: 1, label: t('10') },
+  { value: 2, label: t('20') },
+  { value: 3, label: t('30') },
+  { value: 4, label: t('40') },
+  { value: 5, label: t('50') },
+  { value: 6, label: t('60') },
+  { value: 7, label: t('70') },
 ]
 
 let initialForm = {}
