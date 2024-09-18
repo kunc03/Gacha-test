@@ -107,13 +107,14 @@
   "pleaseWaitMoment": "しばらくお待ちください。。。",
   "spinTheGacha": "ガチャを回す",
   "toTheNext": "次へ",
-  "toWinPrizes": "景品獲得には",
+  "toWinPrizes": "景品獲得・応募には",
   "membershipRegistrationRequired": "会員登録が必要です",
-  "howToExchangePoints": " ポイントと景品の交換方法は",
+  "howToExchangePoints": " ポイントと景品の交換・応募方法は",
   "pleaseSee": "をご覧ください。",
   "here": " こちら",
   "redeemForMyPage": "マイページから引き換え",
   "passwordResetCompleted": "パスワードの再設定が完了しました",
   "passwordMin": "半角英数8文字以",
-  "invalidNickname": "ニックネームは英数字でスペースを入れないでください"
+  "invalidNickname": "ニックネームは英数字でスペースを入れないでください",
+  "replaced": "交換済"
 }

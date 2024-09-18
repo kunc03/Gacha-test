@@ -2,13 +2,11 @@
   <HeaderBar hasBack withLogo />
   <div class="flex flex-col mt-20 grow">
     <p
-      class="text-exd-red-vermilion text-exd-1724 text-center font-extrabold max-w-[356px] mx-auto p-4"
+      class="text-exd-red-vermilion text-exd-1724 text-center font-extrabold max-w-[356px] mx-auto p-4 my-4"
     >
       {{ $t('pleaseShowThisScreen') }}
     </p>
-    <div
-      class="bg-exd-banana grow mt-9 flex flex-col py-8 px-7 justify-between"
-    >
+    <div class="bg-exd-banana grow flex flex-col py-8 px-7 justify-between">
       <div class="flex flex-col gap-5">
         <div class="h-64 bg-white w-80 rounded-lg relative mx-auto">
           <Skeleton v-if="isFetching" class="!w-full !h-full" />
