@@ -115,5 +115,6 @@
   "redeemForMyPage": "マイページから引き換え",
   "passwordResetCompleted": "パスワードの再設定が完了しました",
   "passwordMin": "半角英数8文字以",
-  "invalidNickname": "ニックネームは英数字でスペースを入れないでください"
+  "invalidNickname": "ニックネームは英数字でスペースを入れないでください",
+  "replaced": "交換済"
 }

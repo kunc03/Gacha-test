@@ -313,7 +313,6 @@ onMounted(() => {
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: 50px;
   object-fit: cover;
 }
 
