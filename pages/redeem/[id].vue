@@ -61,10 +61,27 @@
             <div
               v-show="!isFetching"
               id="parentMap"
+              class="relative"
               style="width: 100%; height: 300px"
-              @click="openGoogleMaps"
             >
               <div id="map" style="width: 100%; height: 100%" />
+              <div class="absolute inset-0 z-10"></div>
+              <div
+                class="absolute bg-white inset-x-0 bottom-0 h-8 flex items-center z-20"
+              >
+                <span
+                  class="text-exd-red-vermilion text-sm flex items-center cursor-pointer"
+                  @click="openGoogleMaps"
+                  >{{ $t('openGoogleMaps') }}
+                  <img
+                    src="~/assets/images/export-red.svg"
+                    alt="export"
+                    width="15"
+                    height="15"
+                    class="inline ml-1"
+                  />
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -198,7 +215,7 @@ const checkPoint = (point) => {
 const initializeMap = async (lat, long) => {
   const mapOptions = {
     center: { lat: lat, lng: long },
-    zoom: 15,
+    zoom: 17,
     disableDefaultUI: true, // Disables all default controls like zoom and map type
     draggable: false, // Disables dragging of the map
     scrollwheel: false, // Disables zooming with the mouse scroll

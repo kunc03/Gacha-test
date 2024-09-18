@@ -116,5 +116,6 @@
   "passwordResetCompleted": "パスワードの再設定が完了しました",
   "passwordMin": "半角英数8文字以",
   "invalidNickname": "ニックネームは英数字でスペースを入れないでください",
-  "replaced": "交換済"
+  "replaced": "交換済",
+  "openGoogleMaps": "Googleマップを開く"
 }
