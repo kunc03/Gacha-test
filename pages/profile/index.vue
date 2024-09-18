@@ -338,6 +338,23 @@
             }"
           />
         </div>
+
+        <div
+          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <InputTextArea
+            :model="form.questionnaire1"
+            :label="$t('questionnaire1')"
+            @update:model="updateModel('questionnaire1', $event)"
+            @validate="validateInput('questionnaire1', $event)"
+          />
+          <InputTextArea
+            :model="form.questionnaire2"
+            :label="$t('questionnaire2')"
+            @update:model="updateModel('questionnaire2', $event)"
+            @validate="validateInput('questionnaire2', $event)"
+          />
+        </div>
       </div>
       <div class="mt-1" />
       <SolidButton
@@ -419,6 +436,8 @@ const form = reactive({
   countryCode: '',
   password: '',
   confPassword: '',
+  questionnaire1: '',
+  questionnaire2: '',
 })
 
 const countries = [
@@ -720,6 +739,8 @@ const populateForm = (data) => {
   form.residenceType = data.residence_type || 'overseas'
   form.password = ''
   form.confPassword = ''
+  form.questionnaire1 = data.questionnaire_1 || ''
+  form.questionnaire2 = data.questionnaire_2 || ''
 
   if (data.residence_type === 'domestic') {
     form.postCode = data.postal_code.name || ''
@@ -804,6 +825,8 @@ const buildPayload = () => {
     password_confirmation: form.confPassword,
     residence: form.residenceType,
     residence_type: form.residenceType,
+    questionnaire_1: form.questionnaire1,
+    questionnaire_2: form.questionnaire2,
   }
 
   if (form.residenceType === 'overseas') {
