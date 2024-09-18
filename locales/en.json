@@ -115,5 +115,6 @@
   "passwordResetCompleted": "Password reset completed",
   "passwordMin": "8 or more half-width alphanumeric characters",
   "invalidNickname": "Nicknames must be alphanumeric characters with no spaces",
-  "replaced": "Replaced"
+  "replaced": "Replaced",
+  "openGoogleMaps": "Open Google Maps"
 }
