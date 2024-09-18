@@ -49,7 +49,7 @@
             :for="$t('age')"
             class="text-exd-gray-scorpion text-exd-1424 flex items-center gap-2"
             :class="{
-              'input-error': !form.era && validateOnSubmit,
+              'input-error': !form.age && validateOnSubmit,
             }"
           >
             {{ $t('age') }}
@@ -64,9 +64,9 @@
               :model="form.age"
               @update:model="updateModel('age', $event)"
               @validate="validateInput('age', $event)"
-              :options="getAgeOptions.map((item) => item.value)"
+              :options="getAgeOptions.map((item) => item.label)"
               :placeholder="t('choice')"
-              :hasHelper="arrow"
+              :hasHelper="true"
               :validate-on-submit="validateOnSubmit"
               :error="!form.age && validateOnSubmit ? $t('fieldRequired') : ''"
               :class="{ 'input-error': !form.age && validateOnSubmit }"
@@ -141,7 +141,7 @@
             />
             <Button
               @click="updateModel('residenceType', 'overseas')"
-              :label="$t('abroad')"
+              :label="$t('overseas')"
               :class="[
                 'bg-white w-1/2 h-full border-t border-b border-r border-t-exd-stone-300 border-b-exd-stone-300 border-r-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.residenceType === 'overseas' && '!bg-exd-banana',
@@ -198,7 +198,7 @@
                     ? $t('fieldRequired')
                     : ''
                 "
-                :hasHelper="arrow"
+                :hasHelper="true"
                 :validate-on-submit="validateOnSubmit"
               />
             </div>

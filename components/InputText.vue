@@ -24,12 +24,12 @@
         (props.error !== '' && props.validateOnSubmit) ||
         modelValue === 0 ||
         (props.isPassword &&
-          modelValue.length > 0 &&
-          modelValue.length < props.minLength) ||
+          modelValue?.length > 0 &&
+          modelValue?.length < props.minLength) ||
         (props.isPassword &&
           !isAlphanumeric(modelValue) &&
           props.error !== '') ||
-        (modelValue.length > 0 && isNickName && !isNicknameValid(modelValue))
+        (modelValue?.length > 0 && isNickName && !isNicknameValid(modelValue))
           ? '!border-2 !border-exd-red-vermilion'
           : '!border-none',
       ]"
@@ -67,10 +67,10 @@
         (error !== '' && validateOnSubmit) ||
         modelValue === 0 ||
         (isPassword &&
-          modelValue.length > 0 &&
-          modelValue.length < minLength) ||
+          modelValue?.length > 0 &&
+          modelValue?.length < minLength) ||
         (isPassword && !isAlphanumeric(modelValue) && error !== '') ||
-        (modelValue.length > 0 && isNickName && !isNicknameValid(modelValue))
+        (modelValue?.length > 0 && isNickName && !isNicknameValid(modelValue))
       "
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
@@ -78,10 +78,10 @@
       {{
         error ||
         (isPassword &&
-          modelValue.length > 0 &&
-          modelValue.length < minLength &&
+          modelValue?.length > 0 &&
+          modelValue?.length < minLength &&
           $t('minLength', { number: minLength })) ||
-        (modelValue.length > 0 &&
+        (modelValue?.length > 0 &&
           isNickName &&
           !isNicknameValid(modelValue) &&
           t('invalidNickname'))

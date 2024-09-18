@@ -57,7 +57,7 @@
   "validPassword": "Only half-width alphanumeric characters can be used.",
   "surname": "Surname",
   "givenName": "Given Name",
-  "nickName": "Nick Name",
+  "nickName": "Nickname",
   "age": "Era",
   "country": "Select Country",
   "dateOfBirth": "Date of Birth",
@@ -70,7 +70,13 @@
   "noAnswer": "No Answer",
   "residence": "Residence",
   "domestic": "Domestic",
+  "phoneNumber": "Phone Number",
+  "address": "Address",
   "abroad": "Abroad",
+  "overseas": "Overseas",
+  "prefecture": "Prefecture",
+  "city": "City",
+  "area": "Area",
   "10": "below 10s",
   "20": "20s",
   "30": "30s",
@@ -116,5 +122,6 @@
   "passwordMin": "8 or more half-width alphanumeric characters",
   "invalidNickname": "Nicknames must be alphanumeric characters with no spaces",
   "change": "Change",
-  "completed": "Completed"
+  "completed": "Completed",
+  "minPhoneNumber": "Phone number must be at least 11 characters"
 }

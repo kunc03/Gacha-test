@@ -70,8 +70,14 @@
   "female": "女性",
   "noAnswer": "無回答",
   "residence": "居住地",
+  "phoneNumber": "電話番号",
+  "address": "住所",
   "domestic": "国内",
   "abroad": "海外",
+  "overseas": "海外",
+  "prefecture": "県",
+  "city": "市",
+  "area": "地域",
   "10": "10代以下",
   "20": "20代",
   "30": "30代",
@@ -117,5 +123,6 @@
   "passwordMin": "半角英数8文字以",
   "invalidNickname": "ニックネームは英数字でスペースを入れないでください",
   "change": "変更する",
-  "completed": "完了しました"
+  "completed": "完了しました",
+  "minPhoneNumber": "電話番号は11文字以上でなければなりません"
 }
