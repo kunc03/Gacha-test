@@ -294,7 +294,6 @@
             :validate-on-submit="validateOnSubmit"
             :class="{
               'input-error':
-                (!form.confPassword && validateOnSubmit) ||
                 (form.password !== form.confPassword &&
                   form.confPassword >= 8 &&
                   validateOnSubmit) ||

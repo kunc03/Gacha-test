@@ -470,7 +470,6 @@ const handleApiError = (error) => {
     console.log('errorMessages', errorMessages.value)
     // isErrorMessage.value = true
   }
-  console.log(response.nickname[0])
 
   if (response.email) {
     if (response.email[0] === 'emailはすでに使用されています。') {
@@ -577,19 +576,19 @@ const checkPostalCode = async (code) => {
 .scrollable-content::-webkit-scrollbar-track {
   display: block !important;
   margin-block: 10px;
-  background: #f1f1f1 !important; /* Warna background track */
-  border-radius: 10px !important; /* Membuat track lebih membulat */
+  background: #f1f1f1 !important;
+  border-radius: 10px !important;
 }
 
 .scrollable-content::-webkit-scrollbar-thumb {
   display: block !important;
   height: 30px !important;
-  background: #d7a237 !important; /* Warna scrollbar */
-  border-radius: 10px !important; /* Membuat scrollbar lebih membulat */
+  background: #d7a237 !important;
+  border-radius: 10px !important;
 }
 
 .scrollable-content::-webkit-scrollbar-thumb:hover {
   display: block !important;
-  background: #555 !important; /* Warna scrollbar saat hover */
+  background: #555 !important;
 }
 </style>
