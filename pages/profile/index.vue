@@ -455,7 +455,6 @@ const fetchGetUserData = async () => {
 
   try {
     const { data } = await useFetchApi('GET', 'user')
-    console.log(data)
 
     userId.value = data.id
 
