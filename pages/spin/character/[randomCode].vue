@@ -184,16 +184,16 @@ const handleButton = async () => {
   if (!TOKEN.value && !USER.value) {
     handleShowDialog()
   } else {
-    checkPoint()
+    router.push('/dashboard')
     // goToSpinPoint()
   }
 }
 
 const updateSpinStatus = (newStatus) => {
   return new Promise((resolve) => {
-    const currentStatus = localStorage.getItem('IS_ALREADY_SPIN')
+    const currentStatus = sessionStorage.getItem('IS_ALREADY_SPIN')
     if (currentStatus !== newStatus.toString()) {
-      localStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
+      sessionStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
       isAlreadySpin.value = newStatus
     }
     setTimeout(() => {
@@ -235,7 +235,7 @@ const checkPoint = async () => {
   const router = useRouter()
 
   try {
-    const isAlreadySpin = localStorage.getItem('IS_ALREADY_SPIN')
+    const isAlreadySpin = sessionStorage.getItem('IS_ALREADY_SPIN')
     if (isAlreadySpin) {
       showErrorMessage()
     } else {

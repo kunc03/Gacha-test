@@ -142,10 +142,9 @@ const updateSpinStatus = async () => {
   const newStatus = data.is_already_spin
 
   return new Promise((resolve) => {
-    const currentStatus = localStorage.getItem('IS_ALREADY_SPIN')
+    const currentStatus = sessionStorage.getItem('IS_ALREADY_SPIN')
     if (currentStatus !== newStatus.toString()) {
-      localStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
-      localStorage.setItem('login_after_spin', true)
+      sessionStorage.setItem('IS_ALREADY_SPIN', newStatus.toString())
       isAlreadySpin.value = newStatus
     }
     setTimeout(() => {
@@ -222,8 +221,7 @@ const saveSpin = async () => {
     localStorage.removeItem('VALID_PASSWORD')
     localStorage.removeItem(slugStorageName)
 
-    localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
-    localStorage.setItem('login_after_spin', true)
+    sessionStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
   } catch (error) {
     console.log("Error: Can't save spin result")
 
