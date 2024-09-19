@@ -3,6 +3,7 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
 
   const TOKEN = useCookie('TOKEN')
   const USER = useCookie('USER')
+  const LOCALE = useCookie('LOCALE')
   return $fetch(url, {
     ...opts,
     method,
@@ -11,6 +12,8 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
       if (TOKEN.value && USER.value) {
         options.headers = { Authorization: `Bearer ${TOKEN.value}` }
       }
+
+      options.params = { ...options?.params, lang: LOCALE.value }
     },
     onRequestError({ request, options, error }) {
       return Promise.reject(error)
