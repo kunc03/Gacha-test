@@ -9,7 +9,7 @@
 
     <Select
       :inputId="`id-${model}`"
-      :modelValue="displayValue"
+      :modelValue="modelValue"
       @update:modelValue="($value) => updateValue($value)"
       @blur="validate"
       :options="options"
@@ -110,50 +110,21 @@ const props = defineProps({
 const { t } = useI18n()
 
 const emit = defineEmits(['update:model', 'validate'])
-
 const isLengthValid = ref(true)
-
 const modelValue = computed({
   get: () => props.model,
   set: (value) => emit('update:model', value),
 })
 
-const ageMap = {
-  [t('10')]: 1,
-  [t('20')]: 2,
-  [t('30')]: 3,
-  [t('40')]: 4,
-  [t('50')]: 5,
-  [t('60')]: 6,
-  [t('70')]: 7,
-}
-
-const reverseAgeMap = {
-  1: t('10'),
-  2: t('20'),
-  3: t('30'),
-  4: t('40'),
-  5: t('50'),
-  6: t('60'),
-  7: t('70'),
-}
-
-const displayValue = computed(() => {
-  return reverseAgeMap[props.model] || props.model
-})
-
 const updateValue = (value) => {
-  const intValue = ageMap[value] !== undefined ? ageMap[value] : value
-  emit('update:model', intValue)
+  modelValue.value = value
   validate()
-  emit('validate', intValue)
+  emit('validate', value)
 }
-
 const validate = () => {
-  isLengthValid.value = modelValue.value && modelValue.value.length > 0
+  isLengthValid.value = modelValue.value.length > 0
   emit('validate', modelValue.value)
 }
-
 watch(
   () => props.validateOnSubmit,
   (newValue) => {

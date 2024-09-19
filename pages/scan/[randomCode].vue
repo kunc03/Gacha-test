@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  
+
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
@@ -79,6 +79,7 @@ import InputOtp from 'primevue/inputotp'
 import HeaderBar from '~/components/HeaderBar.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const value = ref('')
 const route = useRoute()
@@ -90,6 +91,7 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const handleCloseDialog = () => (isNotAllowed.value = false)
+const { t } = useI18n()
 
 const radiusCheckResult = ref(null)
 const checkRadiusMessage = ref(false)
@@ -153,7 +155,7 @@ const radiusCheck = async () => {
   const location = route.params.randomCode
   isLoading.value = true
   try {
-    const { data, status } = await useFetchApi('POST', 'radius-check', {
+    const { data } = await useFetchApi('POST', 'radius-check', {
       body: {
         lat: latitude.value,
         long: longitude.value,
@@ -162,15 +164,15 @@ const radiusCheck = async () => {
     })
 
     radiusCheckResult.value = data
-    console.log('Radius check response:', data)
-    console.log('Radius check status:', status)
+    // console.log('Radius check response:', data)
     radiusCheckResult.value = data
 
     isLoading.value = false
   } catch (error) {
-    console.error("Error: Can't check radius", error)
+    // console.error("Error: Can't check radius", error)
     checkRadiusMessage.value = true
     isLoading.value = false
+    errorMessages.value = t('locationValidate')
     isNotAllowed.value = true
 
     document.body.style.pointerEvents = 'none'

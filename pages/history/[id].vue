@@ -132,7 +132,7 @@
       >
         <img :src="check" alt="success" class="w-6 h-6" />
       </div>
-      Success download image
+      {{ $t('downloadImage') }}
     </div>
   </transition>
 </template>
