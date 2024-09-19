@@ -318,9 +318,7 @@
           class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-28 max-w-xs mx-auto text-exd-gray-scorpion pr-2"
           style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         >
-          <div
-            class="max-h-28 mt-3 scrollable-content overflow-y-auto pl-6 pr-4"
-          >
+          <div class="max-h-2 scrollable-content overflow-y-auto pl-6 pr-4">
             <p class="text-exd-1424 font-bold text-center">
               {{ $t('termOfService') }}
             </p>
@@ -472,15 +470,9 @@ const handleApiError = (error) => {
   }
 
   if (response.email) {
-    if (response.email[0] === 'emailはすでに使用されています。') {
-      errorEmailMessage.value = t('emailIsAlreadyRegistered')
+    if (response.email[0]) {
+      errorEmailMessage.value = response.email[0]
     }
-    if (
-      response.email[0] === 'emailは有効なメールアドレスでなければなりません。'
-    ) {
-      errorEmailMessage.value = t('validEmail')
-    }
-  } else {
     if (!form.value.email) {
       errorEmailMessage.value = t('fieldRequired')
     } else {
