@@ -3,7 +3,7 @@
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
-        class="absolute top-0 bottom-0 w-full flex items-end justify-center text-black font-bold text-exd-1824.52 pb-exd-22 pr-46 -z-10"
+        class="text-black font-bold text-exd-1824.52"
       >
         {{ $t('passwordInput') }}
       </p>
@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  
+
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
