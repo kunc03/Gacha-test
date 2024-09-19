@@ -22,7 +22,9 @@
         class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
       >
         <h1>{{ $t('member') }} <span class="font-bold">ID</span></h1>
-        <p class="font-bold">00000000000</p>
+        <p class="font-bold w-48 text-center overflow-hidden whitespace-nowrap">
+          {{ userId }}
+        </p>
       </div>
       <div class="flex flex-col grow">
         <div
@@ -365,6 +367,7 @@ const validateOnSubmit = ref(false)
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
 const isButtonEnabled = ref(false)
+const userId = ref(null)
 
 const form = reactive({
   nickName: '',
@@ -454,6 +457,8 @@ const fetchGetUserData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'user')
     console.log(data)
+
+    userId.value = data.id
 
     populateForm(data)
 
