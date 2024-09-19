@@ -221,10 +221,7 @@
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
             :is-email-error="true"
-            :error="
-              (!form.email && validateOnSubmit && $t('fieldRequired')) ||
-              errorEmailMessage
-            "
+            :error="errorEmailMessage"
             :class="{
               'input-error': form.email !== '' && validateOnSubmit,
               'input-error':
@@ -315,14 +312,16 @@
           </p>
         </div>
         <div
-          class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-28 max-w-xs mx-auto text-exd-gray-scorpion pr-2"
+          class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-[90px] max-w-xs mx-auto text-exd-gray-scorpion pr-2"
           style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         >
-          <div class="max-h-2 scrollable-content overflow-y-auto pl-6 pr-4">
+          <div
+            class="max-h-[88px] scrollable-content overflow-y-auto pl-6 pr-4"
+          >
             <p class="text-exd-1424 font-bold text-center">
               {{ $t('termOfService') }}
             </p>
-            <p class="text-exd-1220 font-medium leading-relaxed h-[60px]">
+            <p class="text-exd-1220 font-medium leading-relaxed h-[84px]">
               {{ $t('dummyDummy') }}
             </p>
           </div>
@@ -472,11 +471,6 @@ const handleApiError = (error) => {
   if (response.email) {
     if (response.email[0]) {
       errorEmailMessage.value = response.email[0]
-    }
-    if (!form.value.email) {
-      errorEmailMessage.value = t('fieldRequired')
-    } else {
-      errorEmailMessage.value = ''
     }
   }
 }

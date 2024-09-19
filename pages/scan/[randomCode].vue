@@ -147,6 +147,8 @@ const getPassword = async (id) => {
     errorLink.value = true
     console.log("Error: Can't get password")
     errorMessages.value = error._data.message
+    errorMessages.value = t('locationValidate')
+
     isNotAllowed.value = true
   }
 }
@@ -172,7 +174,6 @@ const radiusCheck = async () => {
     // console.error("Error: Can't check radius", error)
     checkRadiusMessage.value = true
     isLoading.value = false
-    errorMessages.value = t('locationValidate')
     isNotAllowed.value = true
 
     document.body.style.pointerEvents = 'none'
