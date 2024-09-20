@@ -22,7 +22,7 @@
         class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
       >
         <h1>{{ $t('member') }} <span class="font-bold">ID</span></h1>
-        <p class="font-bold w-48 text-center overflow-hidden whitespace-nowrap">
+        <p class="font-bold w-48 text-right overflow-hidden whitespace-nowrap">
           {{ userId }}
         </p>
       </div>
