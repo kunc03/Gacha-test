@@ -111,15 +111,20 @@ const { setSourceFrom } = useRegister()
 const hasModal = ref(false)
 const isComplete = ref(false)
 
-definePageMeta({
-  middleware: async (to, from) => {
-    const TOKEN = useCookie('TOKEN')
+const TOKEN = useCookie('TOKEN')
+const USER = useCookie('USER')
 
-    if (TOKEN.value) {
-      return await navigateTo('/dashboard')
-    }
-  },
-})
+// definePageMeta({
+//   middleware: async (to, from) => {
+//     const TOKEN = useCookie('TOKEN')
+//     const USER = useCookie('USER')
+
+//     if (TOKEN.value) {
+//       // Jika token ada, redirect ke dashboard
+//       return navigateTo('/dashboard')
+//     }
+//   },
+// })
 
 const handleShowModal = () => {
   hasModal.value = true
@@ -132,7 +137,9 @@ const handleDialog = async () => {
   handleShowModal()
 }
 
-const handleClose = () => (isComplete.value = false)
+const handleClose = () => {
+  isComplete.value = false
+}
 
 const form = ref({
   emailAddress: '',
@@ -147,9 +154,18 @@ const validateInput = (field, value) => {
   console.log(`Validated ${field}:`, value)
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (window.location.hash === '#verification-completed') {
     isComplete.value = true
+    // Clear localStorage, sessionStorage, and cookies
+    localStorage.clear()
+    sessionStorage.clear()
+    TOKEN.value = null
+    USER.value = null
+  } else {
+    if (TOKEN.value) {
+      return await navigateTo('/dashboard')
+    }
   }
 })
 
