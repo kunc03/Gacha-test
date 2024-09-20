@@ -128,5 +128,6 @@
   "openGoogleMaps": "Open Google Maps",
   "validNickname": "The nickname must contain only lowercase letters and digits without spaces.",
   "locationValidate": "You are too far from this spot location , please get closer",
-  "downloadImage": "Downloading Character Image"
+  "downloadImage": "Downloading Character Image",
+  "shareCharacter": "Share Character"
 }

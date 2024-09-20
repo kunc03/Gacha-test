@@ -294,6 +294,8 @@ const shareToFacebook = () => {
   }
 }
 
+console.log(encodeURIComponent(description))
+
 const shareToX = () => {
   try {
     window.open(
