@@ -21,17 +21,7 @@
     <div
       :class="[
         'inline-flex rounded-xl bg-gray-100 text-exd-gray-scorpion px-4 h-10 items-center w-full',
-        (props.error !== '' && props.validateOnSubmit) ||
-        modelValue === 0 ||
-        (props.isPassword &&
-          modelValue?.length > 0 &&
-          modelValue?.length < props.minLength) ||
-        (props.isPassword &&
-          !isAlphanumeric(modelValue) &&
-          props.error !== '') ||
-        (modelValue?.length > 0 && isNickName && !isNicknameValid(modelValue))
-          ? '!border-2 !border-exd-red-vermilion'
-          : '!border-none',
+        error !== '' ? '!border-2 !border-exd-red-vermilion' : '!border-none',
       ]"
     >
       <span v-if="prefix !== ''" class="mr-2 text-exd-1424 font-bold">{{
@@ -63,29 +53,11 @@
       >{{ helperText }}</small
     >
     <small
-      v-if="
-        (error !== '' && validateOnSubmit) ||
-        modelValue === 0 ||
-        (isPassword &&
-          modelValue?.length > 0 &&
-          modelValue?.length < minLength) ||
-        (isPassword && !isAlphanumeric(modelValue) && error !== '') ||
-        (modelValue?.length > 0 && isNickName && !isNicknameValid(modelValue))
-      "
+      v-if="error !== ''"
       :id="`${model}-${label}--${prefix}-${suffix}-error`"
       :class="['p-error']"
     >
-      {{
-        error ||
-        (isPassword &&
-          modelValue?.length > 0 &&
-          modelValue?.length < minLength &&
-          $t('minLength', { number: minLength })) ||
-        (modelValue?.length > 0 &&
-          isNickName &&
-          !isNicknameValid(modelValue) &&
-          t('invalidNickname'))
-      }}
+      {{ error }}
     </small>
   </div>
 </template>
@@ -181,14 +153,6 @@ const modelValue = computed({
   get: () => props.model,
   set: (value) => emit('update:model', value),
 })
-
-const isAlphanumeric = (str) => {
-  return /^[a-zA-Z0-9]+$/.test(str)
-}
-
-const isNicknameValid = (str) => {
-  return /^[a-zA-Z0-9\u3040-\u30FF\u4E00-\u9FFF]+$/.test(str)
-}
 
 const updateValue = (value) => {
   modelValue.value = value

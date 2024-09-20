@@ -22,7 +22,9 @@
         class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
       >
         <h1>{{ $t('member') }} <span class="font-bold">ID</span></h1>
-        <p class="font-bold">00000000000</p>
+        <p class="font-bold w-48 text-center overflow-hidden whitespace-nowrap">
+          {{ userId }}
+        </p>
       </div>
       <div class="flex flex-col grow">
         <div
@@ -56,7 +58,9 @@
               :model="form.age"
               @update:model="updateModel('age', $event)"
               @validate="validateInput('age', $event)"
-              :options="getAgeOptions.map((item) => item.label)"
+              :options="getAgeOptions()"
+              optionValue="value"
+              optionLabel="label"
               :placeholder="t('choice')"
               :hasHelper="true"
             />
@@ -158,45 +162,6 @@
                 "
                 @validate="validateInput('postCode', $event)"
               />
-              <InputText
-                :model="form.prefecture"
-                required
-                disabled
-                :label="$t('prefecture')"
-                @update:model="
-                  ($event) => {
-                    updateModel('prefecture', $event)
-                    checkPostalCode($event)
-                  }
-                "
-                @validate="validateInput('prefecture', $event)"
-              />
-              <InputText
-                :model="form.city"
-                disabled
-                required
-                :label="$t('city')"
-                @update:model="
-                  ($event) => {
-                    updateModel('city', $event)
-                    checkPostalCode($event)
-                  }
-                "
-                @validate="validateInput('city', $event)"
-              />
-              <InputText
-                :model="form.area"
-                disabled
-                required
-                :label="$t('area')"
-                @update:model="
-                  ($event) => {
-                    updateModel('area', $event)
-                    checkPostalCode($event)
-                  }
-                "
-                @validate="validateInput('area', $event)"
-              />
             </div>
 
             <div v-if="form.residenceType === 'overseas'">
@@ -227,7 +192,7 @@
           </div>
         </div>
 
-        <div
+        <!-- <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
           <InputText
@@ -258,7 +223,7 @@
                 form.phoneNumber.length > 0 && form.phoneNumber.length < 10,
             }"
           />
-        </div>
+        </div> -->
 
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
@@ -329,30 +294,12 @@
             :validate-on-submit="validateOnSubmit"
             :class="{
               'input-error':
-                (!form.confPassword && validateOnSubmit) ||
                 (form.password !== form.confPassword &&
                   form.confPassword >= 8 &&
                   validateOnSubmit) ||
                 (!isAlphanumeric(form.confPassword) && validateOnSubmit) ||
                 (form.confPassword.length < 8 && validateOnSubmit),
             }"
-          />
-        </div>
-
-        <div
-          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputTextArea
-            :model="form.questionnaire1"
-            :label="$t('questionnaire1')"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-          />
-          <InputTextArea
-            :model="form.questionnaire2"
-            :label="$t('questionnaire2')"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
           />
         </div>
       </div>
@@ -401,13 +348,12 @@
 <script setup>
 import warning from '~/assets/images/warning.svg'
 import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
-import logo from '~/assets/images/logo.png'
 import Dropdown from '~/components/Dropdown.vue'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
 import JapanPostalCode from 'japan-postal-code'
 import { useI18n } from 'vue-i18n'
+import { countries } from '~/data/countries'
 
 useHead({
   title: 'Profile',
@@ -420,6 +366,7 @@ const validateOnSubmit = ref(false)
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
 const isButtonEnabled = ref(false)
+const userId = ref(null)
 
 const form = reactive({
   nickName: '',
@@ -440,262 +387,23 @@ const form = reactive({
   questionnaire2: '',
 })
 
-const countries = [
-  { code: 'AF', name: 'Afghanistan' },
-  { code: 'AL', name: 'Albania' },
-  { code: 'DZ', name: 'Algeria' },
-  { code: 'AS', name: 'American Samoa' },
-  { code: 'AD', name: 'Andorra' },
-  { code: 'AG', name: 'Angola' },
-  { code: 'AI', name: 'Anguilla' },
-  { code: 'AG', name: 'Antigua & Barbuda' },
-  { code: 'AR', name: 'Argentina' },
-  { code: 'AA', name: 'Armenia' },
-  { code: 'AW', name: 'Aruba' },
-  { code: 'AU', name: 'Australia' },
-  { code: 'AT', name: 'Austria' },
-  { code: 'AZ', name: 'Azerbaijan' },
-  { code: 'BS', name: 'Bahamas' },
-  { code: 'BH', name: 'Bahrain' },
-  { code: 'BD', name: 'Bangladesh' },
-  { code: 'BB', name: 'Barbados' },
-  { code: 'BY', name: 'Belarus' },
-  { code: 'BE', name: 'Belgium' },
-  { code: 'BZ', name: 'Belize' },
-  { code: 'BJ', name: 'Benin' },
-  { code: 'BM', name: 'Bermuda' },
-  { code: 'BT', name: 'Bhutan' },
-  { code: 'BO', name: 'Bolivia' },
-  { code: 'BL', name: 'Bonaire' },
-  { code: 'BA', name: 'Bosnia & Herzegovina' },
-  { code: 'BW', name: 'Botswana' },
-  { code: 'BR', name: 'Brazil' },
-  { code: 'BC', name: 'British Indian Ocean Ter' },
-  { code: 'BN', name: 'Brunei' },
-  { code: 'BG', name: 'Bulgaria' },
-  { code: 'BF', name: 'Burkina Faso' },
-  { code: 'BI', name: 'Burundi' },
-  { code: 'KH', name: 'Cambodia' },
-  { code: 'CM', name: 'Cameroon' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'IC', name: 'Canary Islands' },
-  { code: 'CV', name: 'Cape Verde' },
-  { code: 'KY', name: 'Cayman Islands' },
-  { code: 'CF', name: 'Central African Republic' },
-  { code: 'TD', name: 'Chad' },
-  { code: 'CD', name: 'Channel Islands' },
-  { code: 'CL', name: 'Chile' },
-  { code: 'CN', name: 'China' },
-  { code: 'CI', name: 'Christmas Island' },
-  { code: 'CS', name: 'Cocos Island' },
-  { code: 'CO', name: 'Colombia' },
-  { code: 'CC', name: 'Comoros' },
-  { code: 'CG', name: 'Congo' },
-  { code: 'CK', name: 'Cook Islands' },
-  { code: 'CR', name: 'Costa Rica' },
-  { code: 'CT', name: "Cote D'Ivoire" },
-  { code: 'HR', name: 'Croatia' },
-  { code: 'CU', name: 'Cuba' },
-  { code: 'CB', name: 'Curacao' },
-  { code: 'CY', name: 'Cyprus' },
-  { code: 'CZ', name: 'Czech Republic' },
-  { code: 'DK', name: 'Denmark' },
-  { code: 'DJ', name: 'Djibouti' },
-  { code: 'DM', name: 'Dominica' },
-  { code: 'DO', name: 'Dominican Republic' },
-  { code: 'TM', name: 'East Timor' },
-  { code: 'EC', name: 'Ecuador' },
-  { code: 'EG', name: 'Egypt' },
-  { code: 'SV', name: 'El Salvador' },
-  { code: 'GQ', name: 'Equatorial Guinea' },
-  { code: 'ER', name: 'Eritrea' },
-  { code: 'EE', name: 'Estonia' },
-  { code: 'ET', name: 'Ethiopia' },
-  { code: 'FA', name: 'Falkland Islands' },
-  { code: 'FO', name: 'Faroe Islands' },
-  { code: 'FJ', name: 'Fiji' },
-  { code: 'FI', name: 'Finland' },
-  { code: 'FR', name: 'France' },
-  { code: 'GF', name: 'French Guiana' },
-  { code: 'PF', name: 'French Polynesia' },
-  { code: 'FS', name: 'French Southern Ter' },
-  { code: 'GA', name: 'Gabon' },
-  { code: 'GM', name: 'Gambia' },
-  { code: 'GE', name: 'Georgia' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'GH', name: 'Ghana' },
-  { code: 'GI', name: 'Gibraltar' },
-  { code: 'GB', name: 'Great Britain' },
-  { code: 'GR', name: 'Greece' },
-  { code: 'GL', name: 'Greenland' },
-  { code: 'GD', name: 'Grenada' },
-  { code: 'GP', name: 'Guadeloupe' },
-  { code: 'GU', name: 'Guam' },
-  { code: 'GT', name: 'Guatemala' },
-  { code: 'GN', name: 'Guinea' },
-  { code: 'GY', name: 'Guyana' },
-  { code: 'HT', name: 'Haiti' },
-  { code: 'HW', name: 'Hawaii' },
-  { code: 'HN', name: 'Honduras' },
-  { code: 'HK', name: 'Hong Kong' },
-  { code: 'HU', name: 'Hungary' },
-  { code: 'IS', name: 'Iceland' },
-  { code: 'IN', name: 'India' },
-  { code: 'ID', name: 'Indonesia' },
-  { code: 'IA', name: 'Iran' },
-  { code: 'IQ', name: 'Iraq' },
-  { code: 'IR', name: 'Ireland' },
-  { code: 'IM', name: 'Isle of Man' },
-  { code: 'IL', name: 'Israel' },
-  { code: 'IT', name: 'Italy' },
-  { code: 'JM', name: 'Jamaica' },
-  { code: 'JP', name: 'Japan' },
-  { code: 'JO', name: 'Jordan' },
-  { code: 'KZ', name: 'Kazakhstan' },
-  { code: 'KE', name: 'Kenya' },
-  { code: 'KI', name: 'Kiribati' },
-  { code: 'NK', name: 'Korea North' },
-  { code: 'KS', name: 'Korea South' },
-  { code: 'KW', name: 'Kuwait' },
-  { code: 'KG', name: 'Kyrgyzstan' },
-  { code: 'LA', name: 'Laos' },
-  { code: 'LV', name: 'Latvia' },
-  { code: 'LB', name: 'Lebanon' },
-  { code: 'LS', name: 'Lesotho' },
-  { code: 'LR', name: 'Liberia' },
-  { code: 'LY', name: 'Libya' },
-  { code: 'LI', name: 'Liechtenstein' },
-  { code: 'LT', name: 'Lithuania' },
-  { code: 'LU', name: 'Luxembourg' },
-  { code: 'MO', name: 'Macau' },
-  { code: 'MK', name: 'Macedonia' },
-  { code: 'MG', name: 'Madagascar' },
-  { code: 'MY', name: 'Malaysia' },
-  { code: 'MW', name: 'Malawi' },
-  { code: 'MV', name: 'Maldives' },
-  { code: 'ML', name: 'Mali' },
-  { code: 'MT', name: 'Malta' },
-  { code: 'MH', name: 'Marshall Islands' },
-  { code: 'MQ', name: 'Martinique' },
-  { code: 'MR', name: 'Mauritania' },
-  { code: 'MU', name: 'Mauritius' },
-  { code: 'ME', name: 'Mayotte' },
-  { code: 'MX', name: 'Mexico' },
-  { code: 'MI', name: 'Midway Islands' },
-  { code: 'MD', name: 'Moldova' },
-  { code: 'MC', name: 'Monaco' },
-  { code: 'MN', name: 'Mongolia' },
-  { code: 'MS', name: 'Montserrat' },
-  { code: 'MA', name: 'Morocco' },
-  { code: 'MZ', name: 'Mozambique' },
-  { code: 'MM', name: 'Myanmar' },
-  { code: 'NA', name: 'Nambia' },
-  { code: 'NU', name: 'Nauru' },
-  { code: 'NP', name: 'Nepal' },
-  { code: 'AN', name: 'Netherland Antilles' },
-  { code: 'NL', name: 'Netherlands (Holland, Europe)' },
-  { code: 'NV', name: 'Nevis' },
-  { code: 'NC', name: 'New Caledonia' },
-  { code: 'NZ', name: 'New Zealand' },
-  { code: 'NI', name: 'Nicaragua' },
-  { code: 'NE', name: 'Niger' },
-  { code: 'NG', name: 'Nigeria' },
-  { code: 'NW', name: 'Niue' },
-  { code: 'NF', name: 'Norfolk Island' },
-  { code: 'NO', name: 'Norway' },
-  { code: 'OM', name: 'Oman' },
-  { code: 'PK', name: 'Pakistan' },
-  { code: 'PW', name: 'Palau Island' },
-  { code: 'PS', name: 'Palestine' },
-  { code: 'PA', name: 'Panama' },
-  { code: 'PG', name: 'Papua New Guinea' },
-  { code: 'PY', name: 'Paraguay' },
-  { code: 'PE', name: 'Peru' },
-  { code: 'PH', name: 'Philippines' },
-  { code: 'PO', name: 'Pitcairn Island' },
-  { code: 'PL', name: 'Poland' },
-  { code: 'PT', name: 'Portugal' },
-  { code: 'PR', name: 'Puerto Rico' },
-  { code: 'QA', name: 'Qatar' },
-  { code: 'ME', name: 'Republic of Montenegro' },
-  { code: 'RS', name: 'Republic of Serbia' },
-  { code: 'RE', name: 'Reunion' },
-  { code: 'RO', name: 'Romania' },
-  { code: 'RU', name: 'Russia' },
-  { code: 'RW', name: 'Rwanda' },
-  { code: 'NT', name: 'St Barthelemy' },
-  { code: 'EU', name: 'St Eustatius' },
-  { code: 'HE', name: 'St Helena' },
-  { code: 'KN', name: 'St Kitts-Nevis' },
-  { code: 'LC', name: 'St Lucia' },
-  { code: 'MB', name: 'St Maarten' },
-  { code: 'PM', name: 'St Pierre & Miquelon' },
-  { code: 'VC', name: 'St Vincent & Grenadines' },
-  { code: 'SP', name: 'Saipan' },
-  { code: 'SO', name: 'Samoa' },
-  { code: 'AS', name: 'Samoa American' },
-  { code: 'SM', name: 'San Marino' },
-  { code: 'ST', name: 'Sao Tome & Principe' },
-  { code: 'SA', name: 'Saudi Arabia' },
-  { code: 'SN', name: 'Senegal' },
-  { code: 'RS', name: 'Serbia' },
-  { code: 'SC', name: 'Seychelles' },
-  { code: 'SL', name: 'Sierra Leone' },
-  { code: 'SG', name: 'Singapore' },
-  { code: 'SK', name: 'Slovakia' },
-  { code: 'SI', name: 'Slovenia' },
-  { code: 'SB', name: 'Solomon Islands' },
-  { code: 'OI', name: 'Somalia' },
-  { code: 'ZA', name: 'South Africa' },
-  { code: 'ES', name: 'Spain' },
-  { code: 'LK', name: 'Sri Lanka' },
-  { code: 'SD', name: 'Sudan' },
-  { code: 'SR', name: 'Suriname' },
-  { code: 'SZ', name: 'Swaziland' },
-  { code: 'SE', name: 'Sweden' },
-  { code: 'CH', name: 'Switzerland' },
-  { code: 'SY', name: 'Syria' },
-  { code: 'TA', name: 'Tahiti' },
-  { code: 'TW', name: 'Taiwan' },
-  { code: 'TJ', name: 'Tajikistan' },
-  { code: 'TZ', name: 'Tanzania' },
-  { code: 'TH', name: 'Thailand' },
-  { code: 'TG', name: 'Togo' },
-  { code: 'TK', name: 'Tokelau' },
-  { code: 'TO', name: 'Tonga' },
-  { code: 'TT', name: 'Trinidad & Tobago' },
-  { code: 'TN', name: 'Tunisia' },
-  { code: 'TR', name: 'Turkey' },
-  { code: 'TU', name: 'Turkmenistan' },
-  { code: 'TC', name: 'Turks & Caicos Is' },
-  { code: 'TV', name: 'Tuvalu' },
-  { code: 'UG', name: 'Uganda' },
-  { code: 'UA', name: 'Ukraine' },
-  { code: 'AE', name: 'United Arab Emirates' },
-  { code: 'GB', name: 'United Kingdom' },
-  { code: 'US', name: 'United States of America' },
-  { code: 'UY', name: 'Uruguay' },
-  { code: 'UZ', name: 'Uzbekistan' },
-  { code: 'VU', name: 'Vanuatu' },
-  { code: 'VS', name: 'Vatican City State' },
-  { code: 'VE', name: 'Venezuela' },
-  { code: 'VN', name: 'Vietnam' },
-  { code: 'VB', name: 'Virgin Islands (Brit)' },
-  { code: 'VA', name: 'Virgin Islands (USA)' },
-  { code: 'WK', name: 'Wake Island' },
-  { code: 'WF', name: 'Wallis & Futana Is' },
-  { code: 'YE', name: 'Yemen' },
-  { code: 'ZR', name: 'Zaire' },
-  { code: 'ZM', name: 'Zambia' },
-  { code: 'ZW', name: 'Zimbabwe' },
-]
-
 const errorMessages = ref([])
 const errorScroll = ref([])
 const errorEmailMessage = ref('')
+const errorNicknameMessage = ref('')
 const errorPasswordMessage = ref('')
 
 const handleCloseDialog = () => (isErrorMessage.value = false)
+
+const getAgeOptions = () => [
+  { value: 1, label: t('10') },
+  { value: 2, label: t('20') },
+  { value: 3, label: t('30') },
+  { value: 4, label: t('40') },
+  { value: 5, label: t('50') },
+  { value: 6, label: t('60') },
+  { value: 7, label: t('70') },
+]
 
 const updateModel = (field, value) => {
   if (field in form) {
@@ -713,16 +421,6 @@ const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
 }
 
-const getAgeOptions = [
-  { value: 1, label: t('10') },
-  { value: 2, label: t('20') },
-  { value: 3, label: t('30') },
-  { value: 4, label: t('40') },
-  { value: 5, label: t('50') },
-  { value: 6, label: t('60') },
-  { value: 7, label: t('70') },
-]
-
 let initialForm = {}
 
 const isFormChanged = () => {
@@ -733,8 +431,6 @@ const populateForm = (data) => {
   form.nickName = data.nickname || data.first_name || ''
   form.age = data.age || null
   form.gender = data.gender || ''
-  form.phoneNumber = data.phone_number || ''
-  form.address = data.address || ''
   form.email = data.email || ''
   form.residenceType = data.residence_type || 'overseas'
   form.password = ''
@@ -747,6 +443,7 @@ const populateForm = (data) => {
     form.prefecture = data.prefecture.name || ''
     form.city = data.city.name || ''
     form.area = data.area.name || ''
+    form.address = data.area.name || ''
   } else {
     form.countryCode = data.country_code || ''
   }
@@ -758,6 +455,9 @@ const fetchGetUserData = async () => {
 
   try {
     const { data } = await useFetchApi('GET', 'user')
+
+    userId.value = data.id
+
     populateForm(data)
 
     initialForm = JSON.parse(JSON.stringify(form))
@@ -792,7 +492,7 @@ const handleApiError = (error) => {
     errorScroll.value = message
     errorMessages.value.push(response)
     console.log('errorMessages', errorMessages.value)
-    isErrorMessage.value = true
+    // isErrorMessage.value = true
   }
 
   if (response.email) {
@@ -802,7 +502,7 @@ const handleApiError = (error) => {
       errorEmailMessage.value = t('validEmail')
     }
   } else {
-    if (!form.value.email) {
+    if (!form.email) {
       errorEmailMessage.value = t('fieldRequired')
     } else {
       errorEmailMessage.value = ''
@@ -817,8 +517,6 @@ const buildPayload = () => {
     age: form.age,
     gender: form.gender,
     email: form.email,
-    address: form.address,
-    phone_number: form.phoneNumber,
     password: form.password,
     password_confirmation: form.confPassword,
     residence: form.residenceType,
@@ -834,6 +532,7 @@ const buildPayload = () => {
     payload.prefecture = form.prefecture
     payload.city = form.city
     payload.area = form.area
+    payload.address = form.address
   }
 
   return payload
