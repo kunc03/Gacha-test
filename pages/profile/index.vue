@@ -456,7 +456,7 @@ const fetchGetUserData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'user')
 
-    userId.value = data.id
+    userId.value = data.user_id
 
     populateForm(data)
 
