@@ -40,7 +40,7 @@
   "enterYourNewPassword": "新しいパスワードを入力してください",
   "resetPasswordDescription": "パスワードの再設定手続きを行います。登録されたログインID（メールアドレス）をご入力の上「送信」ボタンをタップしてください。",
   "resetPasswordRequirement1": "※ご登録メールアドレスにパスワード再設定受付メールを送信しますので、ご確認ください。",
-  "resetPasswordRequirement2": "※迷惑メール防止設定をされている場合は「00000000@000.com」または、ドメイン「@000.com」からの受信を許可してください。",
+  "resetPasswordRequirement2": "※迷惑メール防止設定をされている場合は「{'00000000@000.com'}」または、ドメイン「{'@000.com'}」からの受信を許可してください。",
   "resetPasswordRequirement3": "※お使いのメール及びメールソフトにより、自動的に迷惑メールフォルダに振り分けられる場合があります。",
   "send": "送信",
   "emailSentCompleted": "メール送信完了",
