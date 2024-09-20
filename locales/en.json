@@ -39,7 +39,7 @@
   "enterYourNewPassword": "Enter your new password",
   "resetPasswordDescription": "We will carry out the procedure to reset your password. Please enter your registered login ID (email address) and tap the \"Send\" button.",
   "resetPasswordRequirement1": "*A password reset confirmation email will be sent to your registered email address, so please check it.",
-  "resetPasswordRequirement2": "*If you have spam filters set up, please allow emails from \"00000000@000.com\" or the domain \"@000.com\".",
+  "resetPasswordRequirement2": "*If you have spam filters set up, please allow emails from \"{'00000000@000.com'}\" or the domain \"{'@000.com'}\".",
   "resetPasswordRequirement3": "*Depending on your email and email software, the email may be automatically sorted into your spam folder.",
   "send": "Send",
   "emailSentCompleted": "Email sent completed",
