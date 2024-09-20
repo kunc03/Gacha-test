@@ -69,7 +69,7 @@ const fetchImageFromApi = async () => {
         body: { ...payload },
       })
 
-      localStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
+      sessionStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)
 
       const storage = {
         location_id: data.userPoint.location.id,

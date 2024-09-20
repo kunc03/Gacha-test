@@ -250,7 +250,7 @@ const bannerList = ref([
 
 const handleClose = () => {
   isNotAllowed.value = false
-  localStorage.removeItem('login_after_spin')
+  sessionStorage.removeItem('IS_ALREADY_SPIN')
 }
 
 const logout = async () => {
@@ -258,11 +258,13 @@ const logout = async () => {
     const { data, status } = await useFetchApi('POST', 'logout')
 
     localStorage.clear()
+    sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
     await navigateTo('/')
   } catch (error) {
     localStorage.clear()
+    sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
     await navigateTo('/')
@@ -282,12 +284,11 @@ const getLocalStorageItem = (key) => {
 const checkSpinEligibility = async () => {
   await new Promise((resolve) => setTimeout(resolve, 0))
 
-  const isAlreadySpin = getLocalStorageItem('IS_ALREADY_SPIN')
-  const loginAfterSpin = getLocalStorageItem('login_after_spin')
+  const isAlreadySpin = sessionStorage.getItem('IS_ALREADY_SPIN')
   const message =
     '1日に2回以上ガチャがプレイされました。同じスポットでは1日に1回しかポイントが貯まりません。'
 
-  if (isAlreadySpin == 'true' && loginAfterSpin == 'true') {
+  if (isAlreadySpin == 'true') {
     errorMessages.value = message
     isNotAllowed.value = true
   }
