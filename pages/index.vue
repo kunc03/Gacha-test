@@ -154,18 +154,15 @@ const validateInput = (field, value) => {
   console.log(`Validated ${field}:`, value)
 }
 
-onMounted(async () => {
+onMounted(() => {
   if (window.location.hash === '#verification-completed') {
     isComplete.value = true
-    // Clear localStorage, sessionStorage, and cookies
     localStorage.clear()
     sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
-  } else {
-    if (TOKEN.value) {
-      return await navigateTo('/dashboard')
-    }
+  } else if (TOKEN.value) {
+    navigateTo('/dashboard')
   }
 })
 
