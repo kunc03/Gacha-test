@@ -1,9 +1,6 @@
 <script setup>
 const loading = ref(true)
-const progress = ref(0)
-let loadingInterval
 let checkCachesInterval
-const config = useRuntimeConfig()
 
 // Init service worker
 if (process.client && 'serviceWorker' in navigator) {
@@ -21,35 +18,13 @@ if (process.client && 'serviceWorker' in navigator) {
 }
 
 onMounted(() => {
-  let loadingProgress = 0
-  loadingInterval = setInterval(() => {
-    loadingProgress += 2
-    updateProgress(loadingProgress)
-
-    if (loadingProgress >= 90) {
-      clearInterval(loadingInterval)
-    }
-  }, 500)
-
   checkCachesInterval = setInterval(() => {
     checkCaches()
-  }, 1000)
+  }, 500)
 })
 
-function updateProgress(value) {
-  progress.value = value
-  if (value >= 100) {
-    completeLoading()
-  }
-}
-
 function completeLoading() {
-  clearInterval(loadingInterval)
-  progress.value = 100
-  setTimeout(() => {
-    loading.value = false
-    progress.value = 0
-  }, 1000)
+  loading.value = false
 }
 
 const checkCaches = () => {
@@ -74,7 +49,6 @@ const checkCaches = () => {
       return cache.keys()
     })
     .then(function (keys) {
-      console.log(keys)
       const chachesUrl = keys.map((i) => i.url)
       const isCacheAlready = urlsToCache.every((i) =>
         chachesUrl.some((a) => a.includes(i))
@@ -82,9 +56,7 @@ const checkCaches = () => {
 
       if (isCacheAlready) {
         clearInterval(checkCachesInterval)
-        setTimeout(() => {
-          completeLoading()
-        }, 1000)
+        completeLoading()
       }
     })
 }
@@ -93,26 +65,19 @@ const checkCaches = () => {
 <template>
   <div
     v-if="loading"
-    class="w-full max-w-md mx-auto h-screen overflow-hidden bg-white flex flex-col fixed z-[1000]"
+    class="w-full max-w-md mx-auto h-screen overflow-hidden bg-[url('~/assets/images/bg-loading.webp')] bg-cover bg-center flex flex-col fixed z-[1000]"
   >
     <div
       class="h-full w-full flex flex-col justify-center items-center text-exd-red"
     >
-      <div class="text-xl font-semibold">{{ $t('loadingAllAssets') }}</div>
-      <div class="text-lg">{{ $t('pleaseWaitMoment') }}</div>
-      <div class="w-full px-12 mt-10">
-        <ProgressBar
-          :value="progress"
-          :showValue="false"
-          :pt-options="{ mergeProps: true }"
-          :pt="{
-            root: { class: '!bg-exd-light-grey' },
-            value: {
-              class: '!bg-gradient-to-r from-exd-gold to-exd-red-vermilion',
-            },
-          }"
-        ></ProgressBar>
-      </div>
+      <img
+        src="~/assets/images/gacha-loading.gif"
+        class="w-[100px] h-[100px]"
+      />
+      <img
+        src="~/assets/images/loading.png"
+        class="mt-6 ml-5 w-[126px] h-[24px]"
+      />
     </div>
   </div>
 </template>
