@@ -47,7 +47,7 @@
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
-    :is-hidden-close="checkRadiusMessage"
+    :is-hidden-close="checkRadiusFailed"
   >
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
@@ -59,10 +59,7 @@
         </div>
         <div v-else class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ $t('errorHasOccurred') }}
-          </p>
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ $t('pleaseTryAgain') }}
+            {{ checkRadiusMessage }}
           </p>
         </div>
       </div>
@@ -94,7 +91,8 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 const { t } = useI18n()
 
 const radiusCheckResult = ref(null)
-const checkRadiusMessage = ref(false)
+const checkRadiusFailed = ref(false)
+const checkRadiusMessage = ref(null)
 const longitude = ref('')
 const latitude = ref('')
 
@@ -140,14 +138,13 @@ const getPassword = async (id) => {
 
     if (data) {
       description.value = data.description
+      await checkingLocation();
     }
 
     isLoading.value = false
   } catch (error) {
     errorLink.value = true
-    console.log("Error: Can't get password")
     errorMessages.value = error._data.message
-    errorMessages.value = t('locationValidate')
 
     isNotAllowed.value = true
   }
@@ -166,13 +163,12 @@ const radiusCheck = async () => {
     })
 
     radiusCheckResult.value = data
-    // console.log('Radius check response:', data)
     radiusCheckResult.value = data
 
     isLoading.value = false
   } catch (error) {
-    // console.error("Error: Can't check radius", error)
-    checkRadiusMessage.value = true
+    checkRadiusFailed.value = true
+    checkRadiusMessage.value = error._data.message;
     isLoading.value = false
     isNotAllowed.value = true
 
@@ -180,7 +176,7 @@ const radiusCheck = async () => {
   }
 }
 
-onMounted(async () => {
+const checkingLocation = async () => {
   if ('permissions' in navigator) {
     navigator.permissions
       .query({ name: 'geolocation' })
@@ -189,7 +185,6 @@ onMounted(async () => {
           isRequestingLocation.value = false
           navigator.geolocation.getCurrentPosition(
             (position) => {
-              console.log(position)
               latitude.value = position.coords.latitude
               longitude.value = position.coords.longitude
               radiusCheck()
@@ -203,7 +198,6 @@ onMounted(async () => {
             isRequestingLocation.value = true
             navigator.geolocation.getCurrentPosition(
               (position) => {
-                console.log(position)
                 latitude.value = position.coords.latitude
                 longitude.value = position.coords.longitude
                 radiusCheck()
@@ -245,9 +239,12 @@ onMounted(async () => {
       isNotAllowed.value = true
     }
   }
+}
 
+onMounted(async () => {
   const location = route.params.randomCode
   await getPassword(location)
+  
 })
 
 watch(isNotAllowed, (newValue) => {
