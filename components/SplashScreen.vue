@@ -20,7 +20,7 @@ if (process.client && 'serviceWorker' in navigator) {
 onMounted(() => {
   checkCachesInterval = setInterval(() => {
     checkCaches()
-  }, 500)
+  }, 1500)
 })
 
 function completeLoading() {
