@@ -180,6 +180,10 @@ const handleOpenDialog = () => (isNotAllowed.value = true)
 const isAlreadySpin = ref(null)
 const { decryptData } = useEncryption()
 
+definePageMeta({
+  middleware: 'valid-password',
+})
+
 const handleButton = async () => {
   if (!TOKEN.value && !USER.value) {
     handleShowDialog()
@@ -206,7 +210,8 @@ const checkSpinBeforeLogin = () => {
   const router = useRouter()
 
   try {
-    const parseData = decryptData(localStorage.getItem('VALID_PASSWORD')) || {}
+    const storedData = useCookie('VALID_PASSWORD')
+    const parseData = decryptData(storedData.value) || {}
     const slug = parseData?.slug?.toUpperCase()
     const slugStorageName = `${slug}_GACHA`
     const slugStorage = decryptData(localStorage.getItem(slugStorageName))
@@ -249,16 +254,16 @@ const checkPoint = async () => {
 
 const fetchImage = async () => {
   try {
-    const storedData = localStorage.getItem('VALID_PASSWORD')
+    const storedData = useCookie('VALID_PASSWORD')
 
-    if (!storedData) {
+    if (!storedData.value) {
       console.error('No verified data found in localStorage')
       return
     }
 
     let parsedData
     try {
-      parsedData = decryptData(storedData)
+      parsedData = decryptData(storedData.value)
     } catch (e) {
       console.error('Error parsing stored data:', e)
       return

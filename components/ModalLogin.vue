@@ -136,7 +136,8 @@ const handleToRegister = () => {
 }
 
 const updateSpinStatus = async () => {
-  const payload = decryptData(localStorage.getItem('VALID_PASSWORD') || '{}')
+  const storedData = useCookie('VALID_PASSWORD')
+  const payload = decryptData(storedData.value || '{}')
   const { data } = await useFetchApi('POST', 'gacha/spin', { body: payload })
 
   const newStatus = data.is_already_spin
@@ -204,7 +205,8 @@ const handleSubmit = async () => {
 
 const saveSpin = async () => {
   if (!isSpin.value) return
-  const parseData = decryptData(localStorage.getItem('VALID_PASSWORD'))
+  const storedData = useCookie('VALID_PASSWORD')
+  const parseData = decryptData(storedData.value)
   const slug = parseData?.slug?.toUpperCase()
   const slugStorageName = `${slug}_GACHA`
   const slugStorage = decryptData(localStorage.getItem(slugStorageName))
@@ -218,7 +220,7 @@ const saveSpin = async () => {
       },
     })
 
-    localStorage.removeItem('VALID_PASSWORD')
+    storedData.value = null
     localStorage.removeItem(slugStorageName)
 
     sessionStorage.setItem('IS_ALREADY_SPIN', data.is_already_spin)

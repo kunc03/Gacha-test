@@ -3,6 +3,7 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
 
   const TOKEN = useCookie('TOKEN')
   const USER = useCookie('USER')
+  const VALID_PASSWORD = useCookie('VALID_PASSWORD')
   const LOCALE = useCookie('LOCALE')
   return $fetch(url, {
     ...opts,
@@ -24,8 +25,10 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
     async onResponseError({ request, response, options }) {
       if (response?.status === 401) {
         localStorage.clear()
+        sessionStorage.clear()
         TOKEN.value = null
         USER.value = null
+        VALID_PASSWORD.value = null
         await navigateTo('/')
       }
       return Promise.reject(response)

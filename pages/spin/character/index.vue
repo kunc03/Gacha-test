@@ -23,8 +23,8 @@ const router = useRouter()
 const { decryptData } = useEncryption()
 
 const goToCharacter = async () => {
-  const data = localStorage.getItem('VALID_PASSWORD')
-  const value = decryptData(data)
+  const data = useCookie('VALID_PASSWORD')
+  const value = decryptData(data.value)
   const slug = value?.slug
   router.push(`/spin/character/${slug}`)
 }

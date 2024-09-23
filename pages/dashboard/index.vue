@@ -225,6 +225,7 @@ const profile = () => router.push('/profile')
 
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
+const VALID_PASSWORD = useCookie('VALID_PASSWORD')
 
 const isNotAllowed = ref(false)
 const errorMessages = ref('')
@@ -261,12 +262,14 @@ const logout = async () => {
     sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
+    VALID_PASSWORD.value = null
     await navigateTo('/')
   } catch (error) {
     localStorage.clear()
     sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
+    VALID_PASSWORD.value = null
     await navigateTo('/')
     console.log(error)
   }

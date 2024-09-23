@@ -56,6 +56,10 @@ const errorMessages = ref('')
 const handleCloseDialog = () => (isNotAllowed.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 
+definePageMeta({
+  middleware: 'valid-password',
+})
+
 const goToSpinPoint = async () => {
   router.push(`/spin/point`)
 }

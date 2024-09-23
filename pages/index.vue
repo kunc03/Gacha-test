@@ -113,6 +113,7 @@ const isComplete = ref(false)
 
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
+const VALID_PASSWORD = useCookie('VALID_PASSWORD')
 
 // definePageMeta({
 //   middleware: async (to, from) => {
@@ -161,6 +162,7 @@ onMounted(() => {
     sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
+    VALID_PASSWORD.value = null
   } else if (TOKEN.value) {
     navigateTo('/dashboard')
   }

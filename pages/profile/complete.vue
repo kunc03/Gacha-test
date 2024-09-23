@@ -53,8 +53,8 @@ useHead({
 
 const saveSpin = async () => {
   if (!isSpin) return
-
-  const parseData = decryptData(localStorage.getItem('VALID_PASSWORD'))
+  const storedData = useCookie('VALID_PASSWORD')
+  const parseData = decryptData(storedData.value)
   const slug = parseData?.slug?.toUpperCase()
   const slugStorageName = `${slug}_GACHA`
   const slugStorage = decryptData(localStorage.getItem(slugStorageName))
