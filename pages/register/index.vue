@@ -478,7 +478,6 @@ const handleApiError = (error) => {
 const buildPayload = () => {
   const payload = {
     nickname: form.value.nickName,
-    first_name: form.value.nickName,
     age: form.value.age,
     gender: form.value.gender,
     email: form.value.email,
