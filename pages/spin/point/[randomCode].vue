@@ -43,18 +43,22 @@ const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
 const { encryptData, decryptData } = useEncryption()
 
+definePageMeta({
+  middleware: 'valid-password',
+})
+
 const fetchImageFromApi = async () => {
   try {
-    const storedData = localStorage.getItem('VALID_PASSWORD')
+    const storedData = useCookie('VALID_PASSWORD')
 
-    if (!storedData) {
+    if (!storedData.value) {
       console.error('No verified data found in localStorage')
       return
     }
 
     let parsedData
     try {
-      parsedData = decryptData(storedData)
+      parsedData = decryptData(storedData.value)
     } catch (e) {
       console.error('Error parsing stored data:', e)
       return
@@ -63,7 +67,7 @@ const fetchImageFromApi = async () => {
     const slug = parsedData?.slug?.toUpperCase()
     const slugStorageName = `${slug}_GACHA`
     if (TOKEN.value && USER.value) {
-      const payload = decryptData(localStorage.getItem('VALID_PASSWORD')) || {}
+      const payload = decryptData(storedData.value) || {}
 
       const { data, status } = await useFetchApi('POST', 'gacha/spin', {
         body: { ...payload },
@@ -92,6 +96,7 @@ const fetchImageFromApi = async () => {
           slugStorageName,
           encryptData({ ...parse, is_already_spin: true })
         )
+        reportMultipleSpin({ ...parse })
         return
       }
 
@@ -122,6 +127,17 @@ const fetchImageFromApi = async () => {
     }
   } catch (e) {
     console.error('Unexpected error:', e)
+  }
+}
+const reportMultipleSpin = async ({ point_id, character_id, location_id }) => {
+  try {
+    const response = await useFetchApi('POST', 'gacha/report', {
+      body: { point_id, character_id, location_id },
+    })
+
+    console.log(response)
+  } catch (error) {
+    console.log('Error report multiple spin', error)
   }
 }
 

@@ -8,7 +8,6 @@
         {{ $t('passwordInput') }}
       </p>
     </HeaderBar>
-
     <div class="flex flex-col grow items-center justify-center mt-20">
       <div
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
@@ -106,7 +105,8 @@ const checkPassword = async (params) => {
       params,
     })
 
-    localStorage.setItem('VALID_PASSWORD', encryptData(params))
+    const validPassword = useCookie('VALID_PASSWORD')
+    validPassword.value = encryptData(params)
 
     isLoading.value = false
     return status
@@ -138,7 +138,7 @@ const getPassword = async (id) => {
 
     if (data) {
       description.value = data.description
-      await checkingLocation();
+      await checkingLocation()
     }
 
     isLoading.value = false
@@ -168,7 +168,7 @@ const radiusCheck = async () => {
     isLoading.value = false
   } catch (error) {
     checkRadiusFailed.value = true
-    checkRadiusMessage.value = error._data.message;
+    checkRadiusMessage.value = error._data.message
     isLoading.value = false
     isNotAllowed.value = true
 
@@ -244,7 +244,6 @@ const checkingLocation = async () => {
 onMounted(async () => {
   const location = route.params.randomCode
   await getPassword(location)
-  
 })
 
 watch(isNotAllowed, (newValue) => {
