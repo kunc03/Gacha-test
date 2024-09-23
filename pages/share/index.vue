@@ -188,9 +188,6 @@ const initializeMap = async (lat, long) => {
     await nextTick()
 
     const mapElement = document.getElementById('map')
-
-    // console.log('mapElement', mapElement)
-
     const map = new google.maps.Map(mapElement, mapOptions)
 
     new google.maps.Marker({

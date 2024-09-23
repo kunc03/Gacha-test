@@ -130,5 +130,7 @@
   "validNickname": "半角英数字、小文字、スペース不要",
   "locationValidate": "スポットエリア外です。エリア内に戻ってから再度お試しください。",
   "downloadImage": "キャラの画像をダウンロードしています。",
-  "shareCharacter": "キャラクターを共有する"
+  "shareCharacter": "キャラクターを共有する",
+  "no_available_data": "No Availabe Data",
+  "back_to_top": "Back to Top"
 }

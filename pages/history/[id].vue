@@ -282,33 +282,46 @@ const share = (type) => {
   }
 }
 
-const shareToFacebook = () => {
+const generateUrlToShare = () => {
+  let objectToShare = {
+    url: url,
+    quote: quote
+  }
+
   try {
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(
-        description
-      )}`
-    )
+    objectToShare.url = url+"/share?char="+historyDetailData.value.character_id+"&spot="+historyDetailData.value.location_id;
+    objectToShare.quote = quote+"/share?char="+historyDetailData.value.character_id+"&spot="+historyDetailData.value.location_id;
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  return objectToShare;
+}
+
+const shareToFacebook = () => {
+  let objectToShare = generateUrlToShare();
+  try {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(objectToShare.url)}`)
   } catch (error) {
     console.log(error)
   }
 }
 
-console.log(encodeURIComponent(description))
-
 const shareToX = () => {
+  let objectToShare = generateUrlToShare();
+
   try {
-    window.open(
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(quote)}`
-    )
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(objectToShare.quote)}`)
   } catch (error) {
     console.log(error)
   }
 }
 
 const shareToLine = () => {
+  let objectToShare = generateUrlToShare();
   try {
-    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(quote)}`)
+    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(objectToShare.quote)}`)
   } catch (error) {
     console.log(error)
   }
