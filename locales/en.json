@@ -129,5 +129,7 @@
   "validNickname": "The nickname must contain only lowercase letters and digits without spaces.",
   "locationValidate": "You are too far from this spot location , please get closer",
   "downloadImage": "Downloading Character Image",
-  "shareCharacter": "Share Character"
+  "shareCharacter": "Share Character",
+  "no_available_data": "No Availabe Data",
+  "back_to_top": "Back to Top"
 }
