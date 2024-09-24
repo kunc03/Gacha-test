@@ -143,10 +143,6 @@ const isValidPath = computed(() => {
 })
 
 const showSuccessPopup = ref(false)
-onBeforeMount(async () => {
-  await loadGoogleMaps()
-  await fetchingShareData()
-})
 
 const fetchingShareData = async () => {
   try {
@@ -155,21 +151,31 @@ const fetchingShareData = async () => {
       character_id: route.query.char,
       location_id: route.query.spot,
     }
-    const { data } = await useFetchApi('POST', 'share', { body: payload })
-    shareDetailData.value = data
 
-    useServerSeoMeta({
-      title: () => `${shareDetailData.value.character_name}`,
-      ogTitle: () => `${shareDetailData.value.character_name}`,
-      ogImage: () => `${shareDetailData.value.character_image}`,
-      ogDescription: () => `${shareDetailData.value.character_name}`,
-    });
-    
-    let lat = shareDetailData.value.lat
-    let long = shareDetailData.value.long
+    const { data, error } = await useAsyncData(() =>
+      useFetchApi('POST', 'share', { body: payload })
+    )
 
-    if (lat != undefined && long != undefined) {
-      initializeMap(lat, long)
+    if (data.value) {
+      shareDetailData.value = data.value.data
+
+      useServerSeoMeta({
+        title: () => `${shareDetailData.value.character_name}`,
+        ogTitle: () => `${shareDetailData.value.character_name}`,
+        ogImage: () => `${shareDetailData.value.character_image}`,
+        ogDescription: () => `${shareDetailData.value.character_description}`,
+        twitterTitle: () => `${shareDetailData.value.character_name}`,
+        twitterImage: () => `${shareDetailData.value.character_image}`,
+        twitterDescription: () =>
+          `${shareDetailData.value.character_description}`,
+        lineTitle: () => `${shareDetailData.value.character_name}`,
+        lineImage: () => `${shareDetailData.value.character_image}`,
+        lineDescription: () => `${shareDetailData.value.character_description}`,
+      })
+    }
+
+    if (error.value) {
+      console.log(error.value)
     }
   } catch (error) {
     console.log(error)
@@ -177,6 +183,18 @@ const fetchingShareData = async () => {
     isFetching.value = false
   }
 }
+
+fetchingShareData()
+
+onBeforeMount(async () => {
+  await loadGoogleMaps()
+  let lat = shareDetailData.value?.lat
+  let long = shareDetailData.value?.long
+
+  if (lat != undefined && long != undefined) {
+    initializeMap(lat, long)
+  }
+})
 
 const initializeMap = async (lat, long) => {
   try {
