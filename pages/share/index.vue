@@ -157,6 +157,14 @@ const fetchingShareData = async () => {
     }
     const { data } = await useFetchApi('POST', 'share', { body: payload })
     shareDetailData.value = data
+
+    useServerSeoMeta({
+      title: () => `${shareDetailData.value.character_name}`,
+      ogTitle: () => `${shareDetailData.value.character_name}`,
+      ogImage: () => `${shareDetailData.value.character_image}`,
+      ogDescription: () => `${shareDetailData.value.character_name}`,
+    });
+    
     let lat = shareDetailData.value.lat
     let long = shareDetailData.value.long
 
