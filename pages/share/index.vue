@@ -158,19 +158,37 @@ const fetchingShareData = async () => {
 
     if (data.value) {
       shareDetailData.value = data.value.data
-
+      const url = window.location.href
       useServerSeoMeta({
         title: () => `${shareDetailData.value.character_name}`,
         ogTitle: () => `${shareDetailData.value.character_name}`,
         ogImage: () => `${shareDetailData.value.character_image}`,
+        ogImageHeight: 600,
+        ogImageWidth: 600,
         ogDescription: () => `${shareDetailData.value.character_description}`,
+        ogUrl: () => url,
+        twitterCard: 'summary',
         twitterTitle: () => `${shareDetailData.value.character_name}`,
         twitterImage: () => `${shareDetailData.value.character_image}`,
         twitterDescription: () =>
           `${shareDetailData.value.character_description}`,
-        lineTitle: () => `${shareDetailData.value.character_name}`,
-        lineImage: () => `${shareDetailData.value.character_image}`,
-        lineDescription: () => `${shareDetailData.value.character_description}`,
+        twitterUrl: () => url,
+      })
+
+      useSeoMeta({
+        title: () => `${shareDetailData.value.character_name}`,
+        ogTitle: () => `${shareDetailData.value.character_name}`,
+        ogImage: () => `${shareDetailData.value.character_image}`,
+        ogImageHeight: 600,
+        ogImageWidth: 600,
+        ogDescription: () => `${shareDetailData.value.character_description}`,
+        ogUrl: () => url,
+        twitterCard: 'summary',
+        twitterTitle: () => `${shareDetailData.value.character_name}`,
+        twitterImage: () => `${shareDetailData.value.character_image}`,
+        twitterDescription: () =>
+          `${shareDetailData.value.character_description}`,
+        twitterUrl: () => url,
       })
     }
 
