@@ -36,7 +36,9 @@
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="errorNicknameMessage"
+            :error="
+              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
+            "
             :class="{
               'input-error': errorNicknameMessage,
             }"
@@ -70,7 +72,7 @@
               :placeholder="t('choice')"
               :hasHelper="true"
               :validate-on-submit="validateOnSubmit"
-              :error="errorAgeMessage"
+              :error="!form.age && validateOnSubmit ? t('fieldRequired') : ''"
               :class="{ 'input-error': errorAgeMessage }"
             />
           </div>
@@ -170,7 +172,7 @@
               :validate-on-submit="validateOnSubmit"
               :error="
                 !form.postCode && validateOnSubmit
-                  ? $t('fieldRequired')
+                  ? $t('postCodeRequired')
                   : '' || (form.postCode.length > 0 && form.postCode.length < 7)
                   ? $t('minLengthPostalCode')
                   : '' || errorPostCodeMessage
@@ -252,7 +254,10 @@
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="errorPasswordMessage"
+            :error="
+              (!form.password && validateOnSubmit && t('passwordRequired')) ||
+              errorPasswordMessage
+            "
             :class="{
               'input-error': errorPasswordMessage,
             }"
@@ -265,10 +270,15 @@
             :isConfPassword="true"
             :minLength="8"
             :label="$t('reenterPassword')"
-            :error="errorPasswordMessage"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
+            :error="
+              (!form.confPassword &&
+                validateOnSubmit &&
+                t('passwordRequired')) ||
+              errorConfPasswordMessage
+            "
             :class="{
               'input-error': errorPasswordMessage,
             }"
@@ -399,23 +409,58 @@ const isErrorMessage = ref(false)
 const validateOnSubmit = ref(false)
 const errorNicknameMessage = ref('')
 const errorPasswordMessage = ref('')
+const errorConfPasswordMessage = ref('')
 const errorPostCodeMessage = ref('')
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const updateModel = (field, value) => {
   form.value[field] = value
+
+  const password = form.value.password
+  const confPassword = form.value.confPassword
+
+  if (field === 'email') {
+    emailValidate()
+  }
+
+  if (field === 'password') {
+    passwordValidate()
+  }
+
+  if (password === confPassword) {
+    errorConfPasswordMessage.value = ''
+  } else {
+    errorConfPasswordMessage.value = t('passwordNotMatch')
+  }
 }
 
 const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
 }
 
-const isAlphanumeric = (str) => {
-  return /^[a-zA-Z0-9]+$/.test(str)
-}
-
 const emailRegex = (email) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+const emailValidate = () => {
+  const email = form.value.email
+  if (!emailRegex(email)) {
+    errorEmailMessage.value = t('emailFormat')
+  } else if (email.length === 0) {
+    errorEmailMessage.value = t('fieldRequired')
+  } else {
+    errorEmailMessage.value = ''
+  }
+}
+
+const passwordValidate = () => {
+  const password = form.value.password
+
+  if (password.length > 0 && password.length < 8) {
+    errorPasswordMessage.value = t('minLengthPassword')
+  } else {
+    errorPasswordMessage.value = ''
+  }
 }
 
 const getAgeOptions = [
@@ -455,13 +500,23 @@ const handleApiError = (error) => {
     // isErrorMessage.value = true
   }
 
+  const jaPassNotMatch = 'passwordが確認用の値と一致しません。'
+  const enPassNotMatch = 'The password field confirmation does not match.'
+
   errorNicknameMessage.value = response.nickname ? response.nickname[0] : ''
 
   errorAgeMessage.value = response.age ? response.age[0] : ''
 
+  errorEmailMessage.value = response.email ? response.email[0] : ''
+
   errorPasswordMessage.value = response.password ? response.password[0] : ''
 
-  errorEmailMessage.value = response.email ? response.email[0] : ''
+  if (
+    response.password[0] === jaPassNotMatch ||
+    response.password[0] === enPassNotMatch
+  ) {
+    errorPasswordMessage.value = ''
+  }
 }
 
 const buildPayload = () => {

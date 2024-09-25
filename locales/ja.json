@@ -54,7 +54,6 @@
   "fieldRequired": "この項目は必須です。",
   "validEmail": "正しい形式でメールアドレスを入力してください。",
   "emailIsAlreadyRegistered": "このメールアドレスはすでに使用されています。",
-  "passwordNotMatch": "パスワードが検証値と一致しません",
   "validPassword": "半角英数字のみ使用できます。",
   "surname": "姓",
   "givenName": "名",
@@ -135,7 +134,11 @@
   "back_to_top": "Back to Top",
   "minLengthPostalCode": "郵便番号は7桁でなければなりません。",
   "postalCodeNotFound": "郵便番号が見つかりません",
-  "postalCodeRequired": "郵便番号フィールドは必須です",
-  "countryRequired": "国フィールドは必須です",
-  "emailFormat": "電子メール フィールドには有効な電子メール アドレスを入力する必要があります。"
+  "countryRequired": "Countryは必須です。",
+  "postCodeRequired": "Postcodeは必須です。",
+  "emailRequired": "Emailは必須です。",
+  "emailFormat": "emailは有効なメールアドレスでなければなりません。",
+  "passwordRequired": "Passwordは必須です。",
+  "passwordNotMatch": "パスワードフィールドの確認が一致しません。",
+  "minLengthPassword": "半角英数8文字以上"
 }

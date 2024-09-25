@@ -51,9 +51,6 @@
   "required": "Required",
   "minLength": "Please use at least {number} characters",
   "fieldRequired": "This field is required.",
-  "validEmail": "Please enter your email address in the correct format.",
-  "emailIsAlreadyRegistered": "This email address is already in use.",
-  "passwordNotMatch": "Password does not match verification value",
   "validPassword": "Only half-width alphanumeric characters can be used.",
   "surname": "Surname",
   "givenName": "Given Name",
@@ -64,7 +61,7 @@
   "year": "Year",
   "month": "Month",
   "day": "Day",
-  "sex": "Sex",
+  "sex": "Gender",
   "male": "Male",
   "female": "Female",
   "noAnswer": "No Answer",
@@ -134,7 +131,11 @@
   "back_to_top": "Back to Top",
   "minLengthPostalCode": "The postcode must be 7 digits.",
   "postalCodeNotFound": "Postal code not found",
-  "postalCodeRequired": "The postcode field is required",
+  "postCodeRequired": "The postcode field is required",
   "countryRequired": "The country field is required",
-  "emailFormat": "The email field must be a valid email address."
+  "emailRequired": "The email field is required.",
+  "emailFormat": "The email field must be a valid email address.",
+  "passwordRequired": "The password field is required",
+  "passwordNotMatch": "The password field confirmation does not match.",
+  "minLengthPassword": "At least 8 alphanumeric characters"
 }
