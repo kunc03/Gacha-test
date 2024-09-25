@@ -36,11 +36,9 @@
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
-            "
+            :error="errorNicknameMessage"
             :class="{
-              'input-error': !form.nickName,
+              'input-error': errorNicknameMessage,
             }"
           />
         </div>
@@ -72,8 +70,8 @@
               :placeholder="t('choice')"
               :hasHelper="true"
               :validate-on-submit="validateOnSubmit"
-              :error="!form.age && validateOnSubmit ? $t('fieldRequired') : ''"
-              :class="{ 'input-error': !form.age && validateOnSubmit }"
+              :error="errorAgeMessage"
+              :class="{ 'input-error': errorAgeMessage }"
             />
           </div>
         </div>
@@ -156,7 +154,7 @@
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4 flex-col"
         >
-          <div class="w-7/12">
+          <div class="w-8/12">
             <InputText
               v-if="form.residenceType === 'domestic'"
               :model="form.postCode"
@@ -171,9 +169,18 @@
               @validate="validateInput('postCode', $event)"
               :validate-on-submit="validateOnSubmit"
               :error="
-                !form.postCode && validateOnSubmit ? $t('fieldRequired') : ''
+                !form.postCode && validateOnSubmit
+                  ? $t('fieldRequired')
+                  : '' || (form.postCode.length > 0 && form.postCode.length < 7)
+                  ? $t('minLengthPostalCode')
+                  : '' || errorPostCodeMessage
               "
-              :class="{ 'input-error': !form.postCode && validateOnSubmit }"
+              :class="{
+                'input-error':
+                  (!form.postCode && validateOnSubmit) ||
+                  (form.postCode.length > 0 && form.postCode.length < 7) ||
+                  errorPostCodeMessage,
+              }"
             />
             <div v-else>
               <label
@@ -199,7 +206,7 @@
                 :placeholder="t('choice')"
                 :error="
                   !form.countryCode && validateOnSubmit
-                    ? $t('fieldRequired')
+                    ? $t('countryRequired')
                     : ''
                 "
                 :hasHelper="true"
@@ -221,12 +228,12 @@
             @validate="validateInput('email', $event)"
             :validate-on-submit="validateOnSubmit"
             :is-email-error="true"
-            :error="errorEmailMessage"
+            :error="
+              errorEmailMessage ||
+              (form.email && !emailRegex(form.email) ? t('emailFormat') : '')
+            "
             :class="{
-              'input-error': form.email !== '' && validateOnSubmit,
-              'input-error':
-                (errorEmailMessage && validateOnSubmit) ||
-                (form.email.length < 3 && validateOnSubmit),
+              'input-error': errorEmailMessage || !emailRegex(form.email),
             }"
           />
         </div>
@@ -245,18 +252,9 @@
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
-            :error="
-              (!form.password && validateOnSubmit && $t('fieldRequired')) ||
-              (!isAlphanumeric(form.password) &&
-                form.password.length > 0 &&
-                $t('validPassword')) ||
-              errorPasswordMessage
-            "
+            :error="errorPasswordMessage"
             :class="{
-              'input-error':
-                (!form.password && validateOnSubmit) ||
-                (form.password.length < 8 && validateOnSubmit) ||
-                (!isAlphanumeric(form.password) && validateOnSubmit),
+              'input-error': errorPasswordMessage,
             }"
           />
           <InputText
@@ -267,23 +265,12 @@
             :isConfPassword="true"
             :minLength="8"
             :label="$t('reenterPassword')"
-            :error="
-              (!form.confPassword && validateOnSubmit && $t('fieldRequired')) ||
-              (form.confPassword !== form.password && validateOnSubmit
-                ? $t('passwordNotMatch')
-                : '')
-            "
+            :error="errorPasswordMessage"
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
             :class="{
-              'input-error':
-                (!form.confPassword && validateOnSubmit) ||
-                (form.password !== form.confPassword &&
-                  form.confPassword >= 8 &&
-                  validateOnSubmit) ||
-                (!isAlphanumeric(form.confPassword) && validateOnSubmit) ||
-                (form.confPassword.length < 8 && validateOnSubmit),
+              'input-error': errorPasswordMessage,
             }"
           />
         </div>
@@ -312,11 +299,11 @@
           </p>
         </div>
         <div
-          class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-[90px] max-w-xs mx-auto text-exd-gray-scorpion pr-2"
+          class="w-full mt-5 border border-exd-gray-44 rounded-xl bg-white h-[98px] max-w-xs mx-auto text-exd-gray-scorpion pr-2"
           style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         >
           <div
-            class="max-h-[88px] scrollable-content overflow-y-auto pl-6 pr-4"
+            class="max-h-[85px] mt-[5.5px] scrollable-content overflow-y-auto pl-6 pr-4"
           >
             <p class="text-exd-1424 font-bold text-center">
               {{ $t('termOfService') }}
@@ -370,32 +357,24 @@
 </template>
 
 <script setup>
-import warning from '~/assets/images/warning.svg'
-import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
-import logo from '~/assets/images/logo.png'
-import Dropdown from '~/components/Dropdown.vue'
-import InputText from '~/components/InputText.vue'
-import InputTextArea from '~/components/InputTextArea.vue'
-import JapanPostalCode from 'japan-postal-code'
 import { useI18n } from 'vue-i18n'
 import { countries } from '~/data/countries'
+import close from '~/assets/images/close.svg'
+import JapanPostalCode from 'japan-postal-code'
+import Dropdown from '~/components/Dropdown.vue'
+import warning from '~/assets/images/warning.svg'
+import InputText from '~/components/InputText.vue'
+import InputTextArea from '~/components/InputTextArea.vue'
 
 useHead({
   title: 'Register',
 })
 
-const { t } = useI18n()
-
-const validateOnSubmit = ref(false)
-
-const isLoading = ref(false)
-const isErrorMessage = ref(false)
 const form = ref({
   nickName: '',
   age: '',
   countryCode: '',
-  gender: 'Non-Binary',
+  gender: 'Male',
   postCode: '',
   prefecture: '',
   address: '',
@@ -410,13 +389,17 @@ const form = ref({
   questionnaire2: '',
   checked: false,
 })
-
-const errorMessages = ref([])
+const { t } = useI18n()
 const errorScroll = ref([])
+const isLoading = ref(false)
+const errorMessages = ref([])
+const errorAgeMessage = ref('')
 const errorEmailMessage = ref('')
-const errorPasswordMessage = ref('')
+const isErrorMessage = ref(false)
+const validateOnSubmit = ref(false)
 const errorNicknameMessage = ref('')
-
+const errorPasswordMessage = ref('')
+const errorPostCodeMessage = ref('')
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const updateModel = (field, value) => {
@@ -429,6 +412,10 @@ const validateInput = (field, value) => {
 
 const isAlphanumeric = (str) => {
   return /^[a-zA-Z0-9]+$/.test(str)
+}
+
+const emailRegex = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 const getAgeOptions = [
@@ -468,11 +455,13 @@ const handleApiError = (error) => {
     // isErrorMessage.value = true
   }
 
-  if (response.email) {
-    if (response.email[0]) {
-      errorEmailMessage.value = response.email[0]
-    }
-  }
+  errorNicknameMessage.value = response.nickname ? response.nickname[0] : ''
+
+  errorAgeMessage.value = response.age ? response.age[0] : ''
+
+  errorPasswordMessage.value = response.password ? response.password[0] : ''
+
+  errorEmailMessage.value = response.email ? response.email[0] : ''
 }
 
 const buildPayload = () => {
@@ -538,8 +527,11 @@ const checkPostalCode = async (code) => {
     form.value.prefecture = address.prefecture
     form.value.city = address.city
     form.value.area = address.area
+
+    errorPostCodeMessage.value = ''
   } catch (error) {
-    console.log(error)
+    console.log('ada error', error)
+    errorPostCodeMessage.value = t('postalCodeNotFound')
   }
 }
 </script>

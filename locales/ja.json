@@ -132,5 +132,10 @@
   "downloadImage": "キャラの画像をダウンロードしています。",
   "shareCharacter": "キャラクターを共有する",
   "no_available_data": "No Availabe Data",
-  "back_to_top": "Back to Top"
+  "back_to_top": "Back to Top",
+  "minLengthPostalCode": "郵便番号は7桁でなければなりません。",
+  "postalCodeNotFound": "郵便番号が見つかりません",
+  "postalCodeRequired": "郵便番号フィールドは必須です",
+  "countryRequired": "国フィールドは必須です",
+  "emailFormat": "電子メール フィールドには有効な電子メール アドレスを入力する必要があります。"
 }

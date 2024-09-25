@@ -131,5 +131,10 @@
   "downloadImage": "Downloading Character Image",
   "shareCharacter": "Share Character",
   "no_available_data": "No Availabe Data",
-  "back_to_top": "Back to Top"
+  "back_to_top": "Back to Top",
+  "minLengthPostalCode": "The postcode must be 7 digits.",
+  "postalCodeNotFound": "Postal code not found",
+  "postalCodeRequired": "The postcode field is required",
+  "countryRequired": "The country field is required",
+  "emailFormat": "The email field must be a valid email address."
 }
