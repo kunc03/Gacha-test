@@ -135,6 +135,8 @@
   "countryRequired": "The country field is required",
   "emailRequired": "The email field is required.",
   "emailFormat": "The email field must be a valid email address.",
+  "nicknameRequired": "The Nickname field is required",
+  "ageRequired": "The Age field is required",
   "passwordRequired": "The password field is required",
   "passwordNotMatch": "The password field confirmation does not match.",
   "minLengthPassword": "At least 8 alphanumeric characters"

@@ -134,6 +134,8 @@
   "back_to_top": "Back to Top",
   "minLengthPostalCode": "郵便番号は7桁でなければなりません。",
   "postalCodeNotFound": "郵便番号が見つかりません",
+  "nicknameRequired": "Nicknameは必須です。",
+  "ageRequired": "Ageは必須です。",
   "countryRequired": "Countryは必須です。",
   "postCodeRequired": "Postcodeは必須です。",
   "emailRequired": "Emailは必須です。",

@@ -37,10 +37,10 @@
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
+              !form.nickName && validateOnSubmit ? $t('nicknameRequired') : ''
             "
             :class="{
-              'input-error': errorNicknameMessage,
+              'input-error': !form.nickName && validateOnSubmit,
             }"
           />
         </div>
@@ -72,8 +72,8 @@
               :placeholder="t('choice')"
               :hasHelper="true"
               :validate-on-submit="validateOnSubmit"
-              :error="!form.age && validateOnSubmit ? t('fieldRequired') : ''"
-              :class="{ 'input-error': errorAgeMessage }"
+              :error="!form.age && validateOnSubmit ? t('ageRequired') : ''"
+              :class="{ 'input-error': !form.age && validateOnSubmit }"
             />
           </div>
         </div>
