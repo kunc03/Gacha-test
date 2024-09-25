@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer"
+    @touchmove="(e) => e.preventDefault()"
+    class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer overflow-hidden"
     @click="handleShowModal"
   >
     <div class="relative grow">

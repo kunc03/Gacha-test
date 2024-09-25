@@ -4,6 +4,8 @@
       <video
         v-if="showGif"
         autoplay
+        muted
+        playsinline
         class="absolute z-20 inset-0 w-full h-full object-cover"
         @ended="goToCharacter"
       >

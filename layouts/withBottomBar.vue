@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full max-w-md mx-auto min-h-dvh max-h-full overflow-hidden bg-white flex flex-col relative bg-[url('/images/bg-red2.webp')] bg-cover bg-center"
+    class="w-full max-w-md mx-auto h-full overflow-hidden bg-white flex flex-col relative bg-[url('/images/bg-red2.webp')] bg-cover bg-center"
   >
     <HeaderBar :hasBack="hasBack">
       <p
@@ -10,6 +10,8 @@
         {{ title }}
       </p>
     </HeaderBar>
+
+    <slot name="header"></slot>
 
     <section class="min-h-dvh max-h-[calc(100dvh-30px)] overflow-y-auto pb-32">
       <slot />
