@@ -142,5 +142,6 @@
   "passwordRequired": "The password field is required",
   "passwordNotMatch": "The password field confirmation does not match.",
   "minLengthPassword": "At least 8 alphanumeric characters",
-  "loginOrRegisterTop":"Log in or register as a new member to play the gacha"
+  "questionRequired": "The questionnaire field is required",
+  "loginOrRegisterTop": "Log in or register as a new member to play the gacha"
 }

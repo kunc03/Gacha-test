@@ -145,5 +145,6 @@
   "passwordRequired": "Passwordは必須です。",
   "passwordNotMatch": "パスワードフィールドの確認が一致しません。",
   "minLengthPassword": "半角英数8文字以上",
-  "loginOrRegisterTop":"ログイン・新規会員登録でガチャを回す"
+  "questionRequired": "Questionnaireは必須です。",
+  "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す"
 }
