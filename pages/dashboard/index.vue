@@ -73,8 +73,9 @@
     <div
       class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+      @click="handleGoToHelp()"
     >
-      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
+      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-underline cursor-pointer">
         {{ $t('helpAndInquiries') }}
         <span>
           <img :src="exportIcon" alt="export" width="20" height="20" preload
@@ -92,8 +93,9 @@
     <div
       class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+      @click="handleGoToDigitalMap()"
     >
-      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
+      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-underline cursor-pointer">
         {{ $t('toTheDigitalMap') }}
         <span>
           <img :src="exportIcon" alt="export" width="20" height="20" preload
@@ -126,9 +128,11 @@
       />
     </div>
     <p
-      class="underline text-white text-exd-1218 font-semibold text-center mt-5"
+      class="underline text-white text-exd-1218 font-semibold text-center mt-5 text-underline cursor-pointer"
     >
-      {{ $t('addToHomeScreen') }}
+      <a href="https://www.google.com" target="_blank">
+        {{ $t('addToHomeScreen') }}
+      </a>
     </p>
     <div
       class="w-exd-312 h-exd-50 mx-auto inline-flex justify-between items-center mt-7"
@@ -222,6 +226,12 @@ useHead({
 const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
 const profile = () => router.push('/profile')
+const handleGoToHelp = () => {
+  window.open("https://www.google.com", '_blank')
+}
+const handleGoToDigitalMap = () => {
+  window.open("https://nospot.new-ordinary.co.jp/maps/nagoya", '_blank');
+}
 
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
