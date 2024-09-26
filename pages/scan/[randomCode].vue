@@ -22,14 +22,26 @@
         <div
           class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
-        <span>{{ $t('passwordInputInformationIntro') }}</span>
-        <span>
-          <a href="https://nospot.new-ordinary.co.jp/maps/nagoya" target="_blank" class="cursor-pointer text-underline items-center" style="display:inline-flex">
-            <span>{{ $t('passwordInputInformation') }}</span>
-            <span><img :src="exportIcon" alt="export" width="20" height="20" preload/></span>
-          </a>
-        </span>
-        <span>{{ $t('passwordInputInformationOutro') }}</span>
+          <span>{{ $t('passwordInputInformationIntro') }}</span>
+          <span>
+            <a
+              href="https://nospot.new-ordinary.co.jp/maps/nagoya"
+              target="_blank"
+              class="cursor-pointer text-underline items-center"
+              style="display: inline-flex"
+            >
+              <span>{{ $t('passwordInputInformation') }}</span>
+              <span
+                ><img
+                  :src="exportIcon"
+                  alt="export"
+                  width="20"
+                  height="20"
+                  preload
+              /></span>
+            </a>
+          </span>
+          <span>{{ $t('passwordInputInformationOutro') }}</span>
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5">
@@ -163,28 +175,6 @@ const getPassword = async (id) => {
 
 const radiusCheck = async () => {
   const location = route.params.randomCode
-  isLoading.value = true
-  try {
-    const { data } = await useFetchApi('POST', 'radius-check', {
-      body: {
-        lat: latitude.value,
-        long: longitude.value,
-        slug: location,
-      },
-    })
-
-    radiusCheckResult.value = data
-    radiusCheckResult.value = data
-
-    isLoading.value = false
-  } catch (error) {
-    checkRadiusFailed.value = true
-    checkRadiusMessage.value = error._data.message
-    isLoading.value = false
-    isNotAllowed.value = true
-
-    document.body.style.pointerEvents = 'none'
-  }
 }
 
 const checkingLocation = async () => {
