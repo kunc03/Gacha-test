@@ -113,11 +113,9 @@
 </template>
 
 <script setup>
-import bgHeader from '~/assets/images/login-header.png'
 import intlRounded from '~/assets/images/intl-rounded.svg'
 import logoIcon from '~/assets/images/logo-icon.svg'
 import tapScreen from '~/assets/images/tap-screen.svg'
-import bgLoginBottom from '~/assets/images/bg-login-bottom.png'
 import logo from '~/assets/images/logo.png'
 import digitalTourist from '~/assets/images/digital-tourist.png'
 import { nextTick } from 'vue'
@@ -140,24 +138,13 @@ const USER = useCookie('USER')
 const VALID_PASSWORD = useCookie('VALID_PASSWORD')
 const langPanel = ref(false)
 
-// definePageMeta({
-//   middleware: async (to, from) => {
-//     const TOKEN = useCookie('TOKEN')
-//     const USER = useCookie('USER')
-
-//     if (TOKEN.value) {
-//       // Jika token ada, redirect ke dashboard
-//       return navigateTo('/dashboard')
-//     }
-//   },
-// })
-
 const handleShowModal = () => {
   hasModal.value = true
   setSourceFrom('top')
 }
 const handleDialog = async () => {
   isComplete.value = false
+  isFailed.value = false
   router.push('/')
   await nextTick()
   handleShowModal()
@@ -165,6 +152,7 @@ const handleDialog = async () => {
 
 const handleClose = () => {
   isComplete.value = false
+  isFailed.value = false
 }
 
 const form = ref({
@@ -185,20 +173,21 @@ const langPanelToggle = (event) => {
 }
 
 onMounted(() => {
-  if (window.location.hash === '#verification-completed') {
+  const hash = window.location.hash
+  const clearSession = () => {
+    localStorage.clear()
+    sessionStorage.clear()
+    TOKEN.value = null
+    USER.value = null
+    VALID_PASSWORD.value = null
+  }
+
+  if (hash === '#verification-completed') {
     isComplete.value = true
-    localStorage.clear()
-    sessionStorage.clear()
-    TOKEN.value = null
-    USER.value = null
-    VALID_PASSWORD.value = null
-  } else if (window.location.hash === '#verification-failed') {
+    clearSession()
+  } else if (hash === '#verification-failed') {
     isFailed.value = true
-    localStorage.clear()
-    sessionStorage.clear()
-    TOKEN.value = null
-    USER.value = null
-    VALID_PASSWORD.value = null
+    clearSession()
   } else if (TOKEN.value) {
     navigateTo('/dashboard')
   }

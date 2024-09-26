@@ -75,7 +75,9 @@
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
       @click="handleGoToHelp()"
     >
-      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-underline cursor-pointer">
+      <p
+        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer"
+      >
         {{ $t('helpAndInquiries') }}
         <span>
           <img :src="exportIcon" alt="export" width="20" height="20" preload
@@ -95,7 +97,9 @@
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
       @click="handleGoToDigitalMap()"
     >
-      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-underline cursor-pointer">
+      <p
+        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer"
+      >
         {{ $t('toTheDigitalMap') }}
         <span>
           <img :src="exportIcon" alt="export" width="20" height="20" preload
@@ -227,10 +231,10 @@ const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
 const profile = () => router.push('/profile')
 const handleGoToHelp = () => {
-  window.open("https://www.google.com", '_blank')
+  window.open('https://www.google.com', '_blank')
 }
 const handleGoToDigitalMap = () => {
-  window.open("https://nospot.new-ordinary.co.jp/maps/nagoya", '_blank');
+  window.open('https://nospot.new-ordinary.co.jp/maps/nagoya', '_blank')
 }
 
 const TOKEN = useCookie('TOKEN')
