@@ -139,5 +139,6 @@
   "ageRequired": "The Age field is required",
   "passwordRequired": "The password field is required",
   "passwordNotMatch": "The password field confirmation does not match.",
-  "minLengthPassword": "At least 8 alphanumeric characters"
+  "minLengthPassword": "At least 8 alphanumeric characters",
+  "questionRequired": "The questionnaire field is required"
 }

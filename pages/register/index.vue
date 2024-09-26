@@ -290,15 +290,29 @@
         >
           <InputTextArea
             :model="form.questionnaire1"
+            required
             :label="$t('questionnaire1')"
             @update:model="updateModel('questionnaire1', $event)"
             @validate="validateInput('questionnaire1', $event)"
+            :validate-on-submit="validateOnSubmit"
+            :error="
+              !form.questionnaire1 && validateOnSubmit
+                ? $t('questionRequired')
+                : ''
+            "
           />
           <InputTextArea
             :model="form.questionnaire2"
+            required
             :label="$t('questionnaire2')"
             @update:model="updateModel('questionnaire2', $event)"
             @validate="validateInput('questionnaire2', $event)"
+            :validate-on-submit="validateOnSubmit"
+            :error="
+              !form.questionnaire2 && validateOnSubmit
+                ? $t('questionRequired')
+                : ''
+            "
           />
         </div>
 

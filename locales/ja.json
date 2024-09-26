@@ -142,5 +142,6 @@
   "emailFormat": "emailは有効なメールアドレスでなければなりません。",
   "passwordRequired": "Passwordは必須です。",
   "passwordNotMatch": "パスワードフィールドの確認が一致しません。",
-  "minLengthPassword": "半角英数8文字以上"
+  "minLengthPassword": "半角英数8文字以上",
+  "questionRequired": "Questionnaireは必須です。"
 }
