@@ -94,15 +94,17 @@
             {{ $t('howToExchangePoints') }}
           </p>
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            {{ $t('here') }}
-            <img
-              src="/images/export.svg"
-              alt="export"
-              width="15"
-              height="15"
-              class="inline"
-              preload
-            />
+            <a href="https://www.google.com" target="_blank" class="cursor-pointer">
+              {{ $t('here') }}
+              <img
+                src="/images/export.svg"
+                alt="export"
+                width="15"
+                height="15"
+                class="inline"
+                preload
+              />
+            </a>
             {{ $t('pleaseSee') }}
           </p>
         </div>

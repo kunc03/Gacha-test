@@ -88,3 +88,7 @@
 .claim-img {
   max-height: 260px;
 }
+
+.text-underline {
+  text-decoration: underline;
+}

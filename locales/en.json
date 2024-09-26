@@ -104,7 +104,9 @@
   "registrationCompleteInformation2": "Please click the link in the email to complete your registration.",
   "passwordInput": "Password Input",
   "pleaseEnterPassword": "Please enter your password",
-  "passwordInputInformation": "The password is \"Nagoya Tourism Digital Map\" Search for this spot and get it!",
+  "passwordInputInformationInto": "The password is",
+  "passwordInputInformation": " \"Nagoya Tourism Digital Map\" ",
+  "passwordInputInformationOutro": "Search for this spot and get it!",
   "notes": "Notes",
   "errorHasOccurred": "An error has occurred",
   "pleaseTryAgain": "Please try again",
@@ -131,5 +133,6 @@
   "downloadImage": "Downloading Character Image",
   "shareCharacter": "Share Character",
   "no_available_data": "No Availabe Data",
-  "back_to_top": "Back to Top"
+  "back_to_top": "Back to Top",
+  "loginOrRegisterTop":"Log in or register as a new member to play the gacha"
 }

@@ -105,7 +105,9 @@
   "registrationCompleteInformation2": "メールに記載のリンクをクリックの上、登録を完了してください。",
   "passwordInput": "パスワード入力",
   "pleaseEnterPassword": "パスワードを入力してください",
-  "passwordInputInformation": "パスワードは「名古屋観光デジタルマップ」　 で このスポットを探してGET!",
+  "passwordInputInformationIntro": "パスワードは",
+  "passwordInputInformation": "「名古屋観光デジタルマップ」",
+  "passwordInputInformationOutro": "で このスポットを探してGET!",
   "notes": "注意事項",
   "errorHasOccurred": "エラーが発生しました",
   "pleaseTryAgain": " もう一度やりなおしてください",
@@ -132,5 +134,6 @@
   "downloadImage": "キャラの画像をダウンロードしています。",
   "shareCharacter": "キャラクターを共有する",
   "no_available_data": "No Availabe Data",
-  "back_to_top": "Back to Top"
+  "back_to_top": "Back to Top",
+  "loginOrRegisterTop":"ログイン・新規会員登録でガチャを回す"
 }
