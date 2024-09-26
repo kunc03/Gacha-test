@@ -5,6 +5,8 @@
         v-if="showGif"
         src="/video/spin-character.mp4"
         autoplay
+        muted
+        playsinline
         class="absolute z-20 inset-0 w-full h-full object-cover"
         @ended="goToCharacter"
       >

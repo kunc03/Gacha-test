@@ -1,5 +1,8 @@
 <template>
-  <div class="grow flex flex-col">
+  <div
+    class="grow flex flex-col overflow-hidden"
+    @touchmove="(e) => e.preventDefault()"
+  >
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
@@ -19,7 +22,14 @@
         <div
           class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
-          {{ $t('passwordInputInformation') }}
+        <span>{{ $t('passwordInputInformationIntro') }}</span>
+        <span>
+          <a href="https://nospot.new-ordinary.co.jp/maps/nagoya" target="_blank" class="cursor-pointer text-underline items-center" style="display:inline-flex">
+            <span>{{ $t('passwordInputInformation') }}</span>
+            <span><img :src="exportIcon" alt="export" width="20" height="20" preload/></span>
+          </a>
+        </span>
+        <span>{{ $t('passwordInputInformationOutro') }}</span>
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5">
@@ -76,6 +86,7 @@ import HeaderBar from '~/components/HeaderBar.vue'
 import Dialog from 'primevue/dialog'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import exportIcon from '~/assets/images/export.svg'
 
 const value = ref('')
 const route = useRoute()
