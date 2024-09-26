@@ -1,7 +1,8 @@
 <template>
   <header
-    class="pt-exd-15 bg-white pb-exd-15 flex justify-between items-center absolute top-0 left-0 right-0 z-40"
+    class="pt-exd-15 bg-white pb-exd-15 flex justify-between items-center top-0 left-0 right-0 z-40 fixed w-full max-w-md mx-auto"
     style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+    @touchmove="(e) => e.preventDefault()"
   >
     <div class="pl-5" v-if="hasBack">
       <img

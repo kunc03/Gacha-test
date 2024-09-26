@@ -1,5 +1,8 @@
 <template>
-  <div class="grow flex flex-col">
+  <div
+    class="grow flex flex-col overflow-hidden"
+    @touchmove="(e) => e.preventDefault()"
+  >
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"

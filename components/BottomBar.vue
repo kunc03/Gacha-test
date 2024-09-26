@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white bottom-0 left-0 right-0 absolute h-16 z-50">
+  <div
+    class="bg-white bottom-0 left-0 right-0 fixed h-16 z-50 w-full max-w-md mx-auto"
+  >
     <div class="inline-flex gap-3 w-full pt-3">
       <div
         class="absolute -top-10 bg-[url('assets/images/point_navbar.svg')] bg-cover bg-center w-[104px] h-[104px] flex flex-col justify-center items-center"

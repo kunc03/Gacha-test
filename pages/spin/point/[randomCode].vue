@@ -1,6 +1,7 @@
 <template>
   <div
     class="grow bg-[url('/images/bg-green.webp')] bg-cover bg-center relative flex flex-col justify-center items-center"
+    @touchmove="(e) => e.preventDefault()"
   >
     <img
       src="/images/gacha2.webp"
