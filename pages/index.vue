@@ -2,7 +2,6 @@
   <div
     @touchmove="(e) => e.preventDefault()"
     class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer overflow-hidden"
-    
   >
     <div class="absolute top-[10px] right-[10px] w-[50px] z-[1000]">
       <img
@@ -52,7 +51,7 @@
       >
         <img :src="tapScreen" alt="intl" class="h-auto small:w-40" preload />
         <p class="text-exd-1218">{{ $t('loginOrRegisterTop') }}</p>
-     </div>
+      </div>
 
       <img
         :src="character"
@@ -82,7 +81,9 @@
       />
     </div>
     <div class="absolute bottom-[30px] left-[0px] right-[0px]">
-      <p class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer">
+      <p
+        class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer"
+      >
         <a href="https://www.google.com" target="_blank">
           {{ $t('addToHomeScreen') }}
         </a>
@@ -98,16 +99,23 @@
     :has-button="true"
     :on-click-button="handleDialog"
     label-button="GO!"
-    modal-title=" 会員登録が完了しました。"
+    modal-title="会員登録が完了しました。"
+  />
+
+  <WarningPopUp
+    :is-open="isFailed"
+    :on-close="handleClose"
+    :has-button="true"
+    :on-click-button="handleDialog"
+    label-button="GO!"
+    modal-title="確認リンクが使用されました"
   />
 </template>
 
 <script setup>
-import bgHeader from '~/assets/images/login-header.png'
 import intlRounded from '~/assets/images/intl-rounded.svg'
 import logoIcon from '~/assets/images/logo-icon.svg'
 import tapScreen from '~/assets/images/tap-screen.svg'
-import bgLoginBottom from '~/assets/images/bg-login-bottom.png'
 import logo from '~/assets/images/logo.png'
 import digitalTourist from '~/assets/images/digital-tourist.png'
 import { nextTick } from 'vue'
@@ -123,23 +131,12 @@ const router = useRouter()
 const { setSourceFrom } = useRegister()
 const hasModal = ref(false)
 const isComplete = ref(false)
+const isFailed = ref(false)
 
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
 const VALID_PASSWORD = useCookie('VALID_PASSWORD')
 const langPanel = ref(false)
-
-// definePageMeta({
-//   middleware: async (to, from) => {
-//     const TOKEN = useCookie('TOKEN')
-//     const USER = useCookie('USER')
-
-//     if (TOKEN.value) {
-//       // Jika token ada, redirect ke dashboard
-//       return navigateTo('/dashboard')
-//     }
-//   },
-// })
 
 const handleShowModal = () => {
   hasModal.value = true
@@ -147,13 +144,15 @@ const handleShowModal = () => {
 }
 const handleDialog = async () => {
   isComplete.value = false
+  isFailed.value = false
   router.push('/')
-  await nextTick() // Memastikan reactivity update selesai sebelum lanjut
+  await nextTick()
   handleShowModal()
 }
 
 const handleClose = () => {
   isComplete.value = false
+  isFailed.value = false
 }
 
 const form = ref({
@@ -174,13 +173,21 @@ const langPanelToggle = (event) => {
 }
 
 onMounted(() => {
-  if (window.location.hash === '#verification-completed') {
-    isComplete.value = true
+  const hash = window.location.hash
+  const clearSession = () => {
     localStorage.clear()
     sessionStorage.clear()
     TOKEN.value = null
     USER.value = null
     VALID_PASSWORD.value = null
+  }
+
+  if (hash === '#verification-completed') {
+    isComplete.value = true
+    clearSession()
+  } else if (hash === '#verification-failed') {
+    isFailed.value = true
+    clearSession()
   } else if (TOKEN.value) {
     navigateTo('/dashboard')
   }
