@@ -2,7 +2,6 @@
   <div
     @touchmove="(e) => e.preventDefault()"
     class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer overflow-hidden"
-    
   >
     <div class="absolute top-[10px] right-[10px] w-[50px] z-[1000]">
       <img
@@ -52,7 +51,7 @@
       >
         <img :src="tapScreen" alt="intl" class="h-auto small:w-40" preload />
         <p class="text-exd-1218">{{ $t('loginOrRegisterTop') }}</p>
-     </div>
+      </div>
 
       <img
         :src="character"
@@ -82,7 +81,9 @@
       />
     </div>
     <div class="absolute bottom-[30px] left-[0px] right-[0px]">
-      <p class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer">
+      <p
+        class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer"
+      >
         <a href="https://www.google.com" target="_blank">
           {{ $t('addToHomeScreen') }}
         </a>
@@ -98,7 +99,16 @@
     :has-button="true"
     :on-click-button="handleDialog"
     label-button="GO!"
-    modal-title=" 会員登録が完了しました。"
+    modal-title="会員登録が完了しました。"
+  />
+
+  <WarningPopUp
+    :is-open="isFailed"
+    :on-close="handleClose"
+    :has-button="true"
+    :on-click-button="handleDialog"
+    label-button="GO!"
+    modal-title="確認リンクが使用されました"
   />
 </template>
 
@@ -123,6 +133,7 @@ const router = useRouter()
 const { setSourceFrom } = useRegister()
 const hasModal = ref(false)
 const isComplete = ref(false)
+const isFailed = ref(false)
 
 const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
@@ -148,7 +159,7 @@ const handleShowModal = () => {
 const handleDialog = async () => {
   isComplete.value = false
   router.push('/')
-  await nextTick() // Memastikan reactivity update selesai sebelum lanjut
+  await nextTick()
   handleShowModal()
 }
 
@@ -176,6 +187,13 @@ const langPanelToggle = (event) => {
 onMounted(() => {
   if (window.location.hash === '#verification-completed') {
     isComplete.value = true
+    localStorage.clear()
+    sessionStorage.clear()
+    TOKEN.value = null
+    USER.value = null
+    VALID_PASSWORD.value = null
+  } else if (window.location.hash === '#verification-failed') {
+    isFailed.value = true
     localStorage.clear()
     sessionStorage.clear()
     TOKEN.value = null
