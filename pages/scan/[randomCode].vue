@@ -22,14 +22,27 @@
         <div
           class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
-        <span>{{ $t('passwordInputInformationIntro') }}</span>
-        <span>
-          <a href="https://nospot.new-ordinary.co.jp/maps/nagoya" target="_blank" class="cursor-pointer text-underline items-center" style="display:inline-flex">
-            <span>{{ $t('passwordInputInformation') }}</span>
-            <span><img :src="exportIcon" alt="export" width="20" height="20" preload/></span>
-          </a>
-        </span>
-        <span>{{ $t('passwordInputInformationOutro') }}</span>
+          <span>{{ $t('passwordInputInformationIntro') }}</span>
+          {{ ' ' }}
+          <span>
+            <a
+              href="https://nospot.new-ordinary.co.jp/maps/nagoya"
+              target="_blank"
+              class="cursor-pointer items-center relative after:content-[''] after:absolute after:inset-x-0 after:ml-3 after:bottom-1 after:border-b after:border-b-gray-500"
+              style="display: inline-flex"
+            >
+              <span class="">{{ $t('passwordInputInformation') }}</span>
+              <span class="">
+                <img
+                  :src="exportIcon"
+                  alt="export"
+                  width="20"
+                  height="20"
+                  preload
+              /></span>
+            </a>
+          </span>
+          <span>{{ $t('passwordInputInformationOutro') }}</span>
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5">
