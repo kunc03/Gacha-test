@@ -1,8 +1,10 @@
 <template>
   <div
-    class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col"
+    class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col overflow-hidden"
   >
-    <div class="flex-1 items-center flex flex-col gap-11 mt-[15%] px-8">
+    <div
+      class="flex-1 items-center flex flex-col gap-11 pt-[15%] pb-20 px-8 overflow-auto"
+    >
       <div class="relative w-full text-right">
         <button type="button" aria-haspopup="true" @click="langPanelToggle">
           <img
