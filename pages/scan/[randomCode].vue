@@ -16,7 +16,7 @@
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
-        <InputOtp v-model="value" integerOnly class="!flex !flex-row !gap-3" />
+        <OtpInput v-model="value" :length="4" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
