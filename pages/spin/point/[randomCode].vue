@@ -36,12 +36,11 @@
 
 <script setup>
 const router = useRouter()
-const route = useRoute()
 
-const pointImageUrl = ref(null)
 const apiPoint = ref(null)
-const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
+const pointImageUrl = ref(null)
+const TOKEN = useCookie('TOKEN')
 const { encryptData, decryptData } = useEncryption()
 
 definePageMeta({

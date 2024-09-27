@@ -47,14 +47,11 @@
 </template>
 
 <script setup>
-const route = useRoute()
 const router = useRouter()
-
-const isLoading = ref(false)
-const isNotAllowed = ref(false)
 const errorMessages = ref('')
-const handleCloseDialog = () => (isNotAllowed.value = false)
+const isNotAllowed = ref(false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
+const handleCloseDialog = () => (isNotAllowed.value = false)
 
 definePageMeta({
   middleware: 'valid-password',
