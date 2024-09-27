@@ -6,7 +6,7 @@
     <img
       src="/images/gacha2.webp"
       alt="gacha2"
-      class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-55px)] h-full object-scale-down small:h-3/4"
+      class="absolute left-1/2 top-1 transform -translate-x-1/2 w-full h-auto max-h-[90vh] object-contain"
       preload
     />
     <img
@@ -36,12 +36,11 @@
 
 <script setup>
 const router = useRouter()
-const route = useRoute()
 
-const pointImageUrl = ref(null)
 const apiPoint = ref(null)
-const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
+const pointImageUrl = ref(null)
+const TOKEN = useCookie('TOKEN')
 const { encryptData, decryptData } = useEncryption()
 
 definePageMeta({

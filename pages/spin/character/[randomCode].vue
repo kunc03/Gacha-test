@@ -6,7 +6,7 @@
     <img
       src="/images/gacha2.webp"
       alt="gacha2"
-      class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-55px)] h-full object-scale-down small:h-3/4 small:w-[calc(100%-150px)]"
+      class="absolute left-1/2 top-1 transform -translate-x-1/2 w-full h-auto max-h-[90vh] object-contain"
       preload
     />
     <img
@@ -23,24 +23,6 @@
         height="100%"
       />
     </div>
-    <!-- <div
-      class="left-1/2 top-[30%] transform -translate-x-1/2 -translate-y-1/2 z-20 absolute bg-[url('assets/images/circle-white.svg')] bg-contain bg-center w-full h-full bg-no-repeat"
-    >
-      <div class="relative h-full w-full">
-        <img
-          :src="characterImageUrl"
-          alt="duck"
-          class="absolute w-3/4 object-fill max-h-80 left-1/2 top-[45%] md:top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-          preload
-        />
-        <img
-          :src="jackpot"
-          alt="jackpot"
-          preload
-          class="absolute -bottom-10 md:-bottom-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-1/4 object-scale-down small:h-3/4"
-        />
-      </div>
-    </div> -->
 
     <div class="absolute bottom-0 w-full">
       <SolidButton
@@ -155,41 +137,34 @@
 </template>
 
 <script setup>
-import gacha2 from '~/assets/images/gacha2.png'
-import sparkling from '~/assets/images/sparkling.svg'
-import duck from '~/assets/images/duck.svg'
-import jackpot from '~/assets/images/jackpot.svg'
-import arrow from '~/assets/images/arrow.svg'
-import close from '~/assets/images/close.svg'
-import exportImg from '~/assets/images/export.svg'
 import useRegister from '~/composables/useRegister'
-import warning from '~/assets/images/warning.svg'
-import SpinCharacter from '~/components/CircleSpinCharacter.vue'
+
+definePageMeta({
+  middleware: 'valid-password',
+})
+
+useHead({
+  title: 'Spin Character',
+})
 
 const { setSourceFrom } = useRegister()
 
 const router = useRouter()
 const hasModal = ref(false)
+const errorMessages = ref('')
 const modalLogin = ref(false)
 const isNotAllowed = ref(false)
-const route = useRoute()
-const isLoading = ref(false)
-const errorMessages = ref('')
 
-const characterImageUrl = ref(null)
-const TOKEN = useCookie('TOKEN')
 const USER = useCookie('USER')
+const TOKEN = useCookie('TOKEN')
+const characterImageUrl = ref(null)
 
-const handleCloseDialog = () => (hasModal.value = false)
-const handleShowDialog = () => (hasModal.value = true)
 const handleClose = () => (isNotAllowed.value = false)
+const handleShowDialog = () => (hasModal.value = true)
+const handleCloseDialog = () => (hasModal.value = false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 const isAlreadySpin = ref(null)
 const { decryptData } = useEncryption()
-
-definePageMeta({
-  middleware: 'valid-password',
-})
 
 const handleButton = async () => {
   if (!TOKEN.value && !USER.value) {

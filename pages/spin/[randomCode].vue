@@ -13,7 +13,7 @@
         <img
           src="/images/gacha2.webp"
           alt="gacha2"
-          class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-145px)] h-full object-scale-down small:h-3/4"
+          class="absolute left-1/2 top-[25px] transform -translate-x-1/2 w-full h-auto max-h-[88vh] object-contain"
           preload
         />
       </div>
@@ -47,14 +47,11 @@
 </template>
 
 <script setup>
-const route = useRoute()
 const router = useRouter()
-
-const isLoading = ref(false)
-const isNotAllowed = ref(false)
 const errorMessages = ref('')
-const handleCloseDialog = () => (isNotAllowed.value = false)
+const isNotAllowed = ref(false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
+const handleCloseDialog = () => (isNotAllowed.value = false)
 
 definePageMeta({
   middleware: 'valid-password',
