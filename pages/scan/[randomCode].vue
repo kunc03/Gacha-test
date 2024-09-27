@@ -16,23 +16,24 @@
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
-        <InputOtp v-model="value" integerOnly class="!flex !flex-row !gap-3" />
+        <OtpInput v-model="value" :length="4" />
       </div>
       <div class="grow w-full flex flex-col gap-5">
         <div
           class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
           <span>{{ $t('passwordInputInformationIntro') }}</span>
+          {{ ' ' }}
           <span>
             <a
               href="https://nospot.new-ordinary.co.jp/maps/nagoya"
               target="_blank"
-              class="cursor-pointer text-underline items-center"
+              class="cursor-pointer items-center relative after:content-[''] after:absolute after:inset-x-0 after:ml-3 after:bottom-1 after:border-b after:border-b-gray-500"
               style="display: inline-flex"
             >
-              <span>{{ $t('passwordInputInformation') }}</span>
-              <span
-                ><img
+              <span class="">{{ $t('passwordInputInformation') }}</span>
+              <span class="">
+                <img
                   :src="exportIcon"
                   alt="export"
                   width="20"

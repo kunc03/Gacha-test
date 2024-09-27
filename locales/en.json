@@ -101,7 +101,7 @@
   "registrationCompleteInformation2": "Please click the link in the email to complete your registration.",
   "passwordInput": "Password Input",
   "pleaseEnterPassword": "Please enter your password",
-  "passwordInputInformationInto": "The password is",
+  "passwordInputInformationIntro": "The password is",
   "passwordInputInformation": " \"Nagoya Tourism Digital Map\" ",
   "passwordInputInformationOutro": "Search for this spot and get it!",
   "notes": "Notes",
@@ -143,5 +143,7 @@
   "passwordNotMatch": "The password field confirmation does not match.",
   "minLengthPassword": "At least 8 alphanumeric characters",
   "questionRequired": "The questionnaire field is required",
-  "loginOrRegisterTop": "Log in or register as a new member to play the gacha"
+  "loginOrRegisterTop": "Log in or register as a new member to play the gacha",
+  "verificationFailed": "Verification link used",
+  "verificationCompleted": "Your registration has been completed."
 }
