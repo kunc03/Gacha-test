@@ -146,5 +146,7 @@
   "passwordNotMatch": "パスワードフィールドの確認が一致しません。",
   "minLengthPassword": "半角英数8文字以上",
   "questionRequired": "Questionnaireは必須です。",
-  "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す"
+  "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す",
+  "verificationFailed":"確認リンクが使用されました",
+  "verificationCompleted":"会員登録が完了しました。"
 }
