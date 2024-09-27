@@ -176,28 +176,6 @@ const getPassword = async (id) => {
 
 const radiusCheck = async () => {
   const location = route.params.randomCode
-  isLoading.value = true
-  try {
-    const { data } = await useFetchApi('POST', 'radius-check', {
-      body: {
-        lat: latitude.value,
-        long: longitude.value,
-        slug: location,
-      },
-    })
-
-    radiusCheckResult.value = data
-    radiusCheckResult.value = data
-
-    isLoading.value = false
-  } catch (error) {
-    checkRadiusFailed.value = true
-    checkRadiusMessage.value = error._data.message
-    isLoading.value = false
-    isNotAllowed.value = true
-
-    document.body.style.pointerEvents = 'none'
-  }
 }
 
 const checkingLocation = async () => {

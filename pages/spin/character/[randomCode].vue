@@ -6,7 +6,7 @@
     <img
       src="/images/gacha2.webp"
       alt="gacha2"
-      class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"
+      class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-55px)] h-full object-scale-down small:h-3/4 small:w-[calc(100%-150px)]"
       preload
     />
     <img
@@ -94,7 +94,11 @@
             {{ $t('howToExchangePoints') }}
           </p>
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            <a href="https://www.google.com" target="_blank" class="cursor-pointer">
+            <a
+              href="https://www.google.com"
+              target="_blank"
+              class="cursor-pointer"
+            >
               {{ $t('here') }}
               <img
                 src="/images/export.svg"

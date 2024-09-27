@@ -13,7 +13,7 @@
         <img
           src="/images/gacha2.webp"
           alt="gacha2"
-          class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-100px)] h-full object-scale-down small:h-3/4"
+          class="absolute inset-x-1/2 -translate-x-1/2 -translate-y-3 w-[calc(100%-145px)] h-full object-scale-down small:h-3/4"
           preload
         />
       </div>
