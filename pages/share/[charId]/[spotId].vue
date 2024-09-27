@@ -16,7 +16,9 @@
       class="min-h-dvh max-h-[calc(100dvh-30px)] overflow-y-auto pb-6"
       v-if="shareDetailData == null"
     >
-      <div class="flex flex-col bg-center text-black mt-[105px] px-8 gap-3">
+      <div
+        class="flex flex-col bg-center text-black mt-[105px] px-8 gap-3 mb-20"
+      >
         <div class="max-w-sm bg-white rounded-lg shadow">
           <div class="h-72 w-full overflow-hidden rounded-t-lg no-char-avail">
             <div class="p-5 flex flex-col gap-2 text-center">
@@ -35,7 +37,9 @@
       class="min-h-dvh max-h-[calc(100dvh-30px)] overflow-y-auto pb-6"
       v-else
     >
-      <div class="flex flex-col bg-center text-black mt-[105px] px-8 gap-3">
+      <div
+        class="flex flex-col bg-center text-black mt-[105px] px-8 gap-3 mb-20"
+      >
         <div class="max-w-sm bg-white rounded-lg shadow">
           <div class="h-72 w-full overflow-hidden rounded-t-lg">
             <Skeleton v-if="isFetching" class="!w-full !h-full" />
@@ -111,6 +115,24 @@
         </div>
       </div>
     </section>
+
+    <div class="fixed bottom-0 w-full max-w-md mx-auto px-8 mb-3 z-50">
+      <Button
+        class="!bg-exd-gold !py-4 !w-full !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
+        raised
+        @click="
+          () =>
+            navigateTo('https://google.com', {
+              external: true,
+              open: {
+                target: '_blank',
+              },
+            })
+        "
+      >
+        <span class="grow text-center">GO!</span>
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -139,7 +161,11 @@ const backToTop = () => {
 }
 
 const isValidPath = computed(() => {
-  return route.path.startsWith('/share') && route.query.char && route.query.spot
+  return (
+    route.path.startsWith('/share') &&
+    route.params.charId &&
+    route.params.spotId
+  )
 })
 
 const showSuccessPopup = ref(false)
@@ -148,8 +174,8 @@ const fetchingShareData = async () => {
   try {
     isFetching.value = true
     let payload = {
-      character_id: route.query.char,
-      location_id: route.query.spot,
+      character_id: route.params.charId,
+      location_id: route.params.spotId,
     }
 
     const { data, error } = await useAsyncData(() =>
@@ -161,15 +187,20 @@ const fetchingShareData = async () => {
       const url = window.location.href
       useServerSeoMeta({
         title: () => `${shareDetailData.value.character_name}`,
+        description: () => `${shareDetailData.value.character_description}`,
+        ogType: () => 'website',
         ogTitle: () => `${shareDetailData.value.character_name}`,
         ogImage: () => `${shareDetailData.value.character_image}`,
-        ogImageHeight: 600,
-        ogImageWidth: 600,
+        ogImageSecureUrl: () => `${shareDetailData.value.character_image}`,
+        ogImageHeight: () => 1200,
+        ogImageWidth: () => 630,
         ogDescription: () => `${shareDetailData.value.character_description}`,
         ogUrl: () => url,
-        twitterCard: 'summary',
+        twitterCard: () => 'summary_large_image',
         twitterTitle: () => `${shareDetailData.value.character_name}`,
         twitterImage: () => `${shareDetailData.value.character_image}`,
+        twitterImageHeight: () => 1200,
+        twitterImageWidth: () => 630,
         twitterDescription: () =>
           `${shareDetailData.value.character_description}`,
         twitterUrl: () => url,
@@ -177,15 +208,19 @@ const fetchingShareData = async () => {
 
       useSeoMeta({
         title: () => `${shareDetailData.value.character_name}`,
+        ogType: () => 'website',
         ogTitle: () => `${shareDetailData.value.character_name}`,
         ogImage: () => `${shareDetailData.value.character_image}`,
-        ogImageHeight: 600,
-        ogImageWidth: 600,
+        ogImageSecureUrl: () => `${shareDetailData.value.character_image}`,
+        ogImageHeight: () => 1200,
+        ogImageWidth: () => 630,
         ogDescription: () => `${shareDetailData.value.character_description}`,
         ogUrl: () => url,
-        twitterCard: 'summary',
+        twitterCard: () => 'summary_large_image',
         twitterTitle: () => `${shareDetailData.value.character_name}`,
         twitterImage: () => `${shareDetailData.value.character_image}`,
+        twitterImageHeight: () => 1200,
+        twitterImageWidth: () => 630,
         twitterDescription: () =>
           `${shareDetailData.value.character_description}`,
         twitterUrl: () => url,
