@@ -576,6 +576,7 @@ const handleSubmit = async () => {
     if (firstErrorElement) {
       firstErrorElement.style.paddingTop = '80px'
       firstErrorElement.style.marginTop = '-80px'
+
       firstErrorElement.scrollIntoView({ behavior: 'smooth' })
     }
   }
