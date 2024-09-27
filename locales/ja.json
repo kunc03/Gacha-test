@@ -106,7 +106,7 @@
   "pleaseEnterPassword": "パスワードを入力してください",
   "passwordInputInformationIntro": "パスワードは",
   "passwordInputInformation": "「名古屋観光デジタルマップ」",
-  "passwordInputInformationOutro": "で このスポットを探してGET!",
+  "passwordInputInformationOutro": "から 現在のスポットを探してGET!",
   "notes": "注意事項",
   "errorHasOccurred": "エラーが発生しました",
   "pleaseTryAgain": " もう一度やりなおしてください",
@@ -146,5 +146,7 @@
   "passwordNotMatch": "パスワードフィールドの確認が一致しません。",
   "minLengthPassword": "半角英数8文字以上",
   "questionRequired": "Questionnaireは必須です。",
-  "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す"
+  "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す",
+  "verificationFailed": "確認リンクが使用されました",
+  "verificationCompleted": "会員登録が完了しました。"
 }

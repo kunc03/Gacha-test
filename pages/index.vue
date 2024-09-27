@@ -99,7 +99,7 @@
     :has-button="true"
     :on-click-button="handleDialog"
     label-button="GO!"
-    modal-title="会員登録が完了しました。"
+    :modal-title="$t('verificationCompleted')"
   />
 
   <WarningPopUp
@@ -108,7 +108,7 @@
     :has-button="true"
     :on-click-button="handleDialog"
     label-button="GO!"
-    modal-title="確認リンクが使用されました"
+    :modal-title="$t('verificationFailed')"
   />
 </template>
 
