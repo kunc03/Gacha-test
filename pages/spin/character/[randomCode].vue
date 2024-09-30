@@ -79,7 +79,7 @@
             <a
               href="https://www.google.com"
               target="_blank"
-              class="cursor-pointer"
+              class="cursor-pointer inline-flex relative after:content-[''] after:absolute after:inset-x-0 after:mr-0.5 after:bottom-0.5 after:border-b after:border-b-gray-500"
             >
               {{ $t('here') }}
               <img

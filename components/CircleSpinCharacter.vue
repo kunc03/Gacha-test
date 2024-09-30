@@ -80,7 +80,7 @@ onMounted(() => {
     />
     <g filter="url(#filter0_b_19_69)" class="relative p-8">
       <!-- <ellipse cx="200" cy="198" rx="200" ry="198" fill="white" /> -->
-      <image height="220" width="220" :href="props.imageSrc" x="90" y="70" />
+      <image height="260" width="260" :href="props.imageSrc" x="70" y="40" />
     </g>
     <rect x="44" y="300" width="311" height="237" fill="url(#pattern0_19_69)" />
     <defs>
