@@ -193,5 +193,22 @@
   "verificationCompleted": "Your registration has been completed.",
   "wrongPassword": "Wrong password , please check again",
   "scanNotesTitle": "Please tap the button after agreeing to the following notes and terms of participation.",
-  "scanNotesDescription": "In front of the couple's art object on Hisaya Odori."
+  "scanNotesDescription": {
+    "note1": "The password for the day is updated at 0:00 every day. You can only tap the \"Nagoya Tour\" (hereinafter referred to as this campaign) game screen once per day at each participating spot. ",
+    "note2": "Even if you tap the game screen multiple times on the same day, points will not be added to the system. ",
+    "note3": "Please note that if you enter the password for the day of another participating spot, an error will occur. ",
+    "note4": "Please make sure that the password for the day is in half-width numbers and enter the correct password. ",
+    "note5": "Anyone can participate in this campaign by scanning the QR code installed at the participating spot with their smartphone. ",
+    "note6": "To accumulate points and win prizes in this campaign, you must register and log in to your My Page. ",
+    "note7": "The campaign period and prize exchange period are from 11:00 to 15:00 on Saturday, October 19, 2024, and from 11:00 to 19:00 on Sunday, October 20, 2024. Please note that the participating spots are different on the 19th (Sat) and 20th (Sun). ",
+    "note8": "Please check the business hours of the participating spots before visiting. If you are unable to participate in this campaign due to circumstances on the part of the participating spots, the Campaign Secretariat (hereinafter referred to as the Secretariat) will not be held responsible in any way. ",
+    "note9": "If there are any errors or deficiencies in the participant's application, or if the Secretariat deems the application content to be fraudulent, participation in this campaign may be invalidated. ",
+    "note10": "Benefits and points are not transferable. ",
+    "note11": "The membership information registered in the first campaign can be used in the second campaign as is. However, please note that the benefits and points acquired in the first campaign cannot be carried over to the second campaign. ",
+    "note12": "The Secretariat will not be held responsible for any disputes that arise between participants of this campaign and other third parties during the period, regardless of the cause. ",
+    "note13": "This campaign may be changed or suspended without prior notice if the Secretariat deems it necessary. ",
+    "note14": "Participants should contact the event secretariat with any inquiries. If you have set up domain-specific reception settings, please make sure that you can receive emails from the event secretariat's address {'(support@per-inc.com)'}.",
+    "note15": "Please refrain from contacting employees at the participating spots where the QR codes are set up."
+  },
+  "emailValidation": "Email must be a valid email address"
 }

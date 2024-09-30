@@ -49,11 +49,16 @@
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
               {{ $t('scanNotesTitle') }}
             </p>
-            <p
-              class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)]"
-            >
-              {{ $t('scanNotesDescription') }}
-            </p>
+
+            <ul class="list-disc list-inside overflow-y-auto max-h-36">
+              <li
+                v-for="i in 15"
+                :key="i"
+                class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)] text-justify"
+              >
+                {{ $t(`scanNotesDescription.note${i}`) }}
+              </li>
+            </ul>
           </div>
           <SolidButton
             label="GO!"
