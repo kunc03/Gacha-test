@@ -2,9 +2,11 @@
   <div class="rounded-xl max-w-sm overflow-hidden cursor-pointer">
     <div class="bg-exd-red-900 inline-flex justify-between w-full py-2 px-4">
       <template v-if="!isFetching">
-        <p class="text-white font-bold text-exd-1824.52">{{ keyBody }}pt</p>
+        <p class="text-white font-bold text-exd-1824">
+          {{ keyBody }}<span class="text-exd-1424">pt</span>
+        </p>
         <p
-          class="text-exd-yellow-300 font-medium text-exd-1824.52"
+          class="text-exd-yellow-300 font-medium text-exd-1224"
           v-if="currentPoint >= keyBody"
         >
           {{ $t('canBeExchanged') }}
@@ -25,10 +27,10 @@
         <template v-slot:text>
           <div class="inline-flex justify-between w-100">
             <div class="flex flex-col justify-center gap-1">
-              <p class="text-exd-gray-scorpion font-semibold text-exd-1320">
+              <p class="text-exd-gray-scorpion font-semibold text-exd-1218">
                 {{ item.name }}
               </p>
-              <p class="text-exd-red-500 text-exd-12520">
+              <p class="text-exd-red-500 text-exd-1014 font-medium">
                 {{ $t('availablePeriod') }}：{{ item.started_at }}〜
                 {{ item.expired_at }}
               </p>

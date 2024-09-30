@@ -8,8 +8,8 @@
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center">
-    <div class="flex flex-col mt-[21%] items-center">
-      <p class="text-white text-exd-2856 font-bold">
+    <div class="flex flex-col mt-[25%] items-center">
+      <p class="text-white text-exd-1530 font-bold">
         {{ $t('currentPoints') }}
       </p>
       <p class="text-white text-exd-56112 font-bold relative -top-10">
@@ -17,7 +17,7 @@
       </p>
     </div>
 
-    <div class="inline-flex gap-4 items-center justify-center">
+    <div class="inline-flex gap-4 items-center justify-center relative -top-12">
       <div
         class="bg-white rounded-xl p-6 w-exd-148 h-exd-130 flex flex-col justify-center items-center cursor-pointer"
         style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
@@ -31,9 +31,7 @@
           preload
           class="text-center cursor-pointer"
         />
-        <p
-          class="text-exd-gray-scorpion text-exd-1424 font-bold text-center font-bold"
-        >
+        <p class="text-exd-gray-scorpion text-exd-1424 font-bold text-center">
           {{ $t('listOfPrizesAndExchanges') }}
         </p>
       </div>
@@ -55,95 +53,97 @@
         </p>
       </div>
     </div>
-    <div
-      class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center cursor-pointer"
-      style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
-      @click="profile"
-    >
-      <p class="text-exd-gray-scorpion grow text-exd-1424 font-bold">
-        {{ $t('membershipInformation') }}
-      </p>
-      <img
-        :src="arrow"
-        alt="arrow"
-        width="12"
-        height="12"
-        preload
-        class="invert"
-      />
-    </div>
-    <div
-      class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
-      style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
-      @click="handleGoToHelp()"
-    >
-      <p
-        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer text-exd-1424 font-bold"
+    <div class="w-exd-312 mx-auto relative -top-12">
+      <div
+        class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center cursor-pointer"
+        style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+        @click="profile"
       >
-        {{ $t('helpAndInquiries') }}
-        <span>
-          <img :src="exportIcon" alt="export" width="20" height="20" preload
-        /></span>
-      </p>
-      <img
-        :src="arrow"
-        alt="arrow"
-        width="12"
-        height="12"
-        preload
-        class="invert"
-      />
-    </div>
-    <div
-      class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
-      style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
-      @click="handleGoToDigitalMap()"
-    >
-      <p
-        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer text-exd-1424 font-bold"
+        <p class="text-exd-gray-scorpion grow text-exd-1424 font-bold">
+          {{ $t('membershipInformation') }}
+        </p>
+        <img
+          :src="arrow"
+          alt="arrow"
+          width="12"
+          height="12"
+          preload
+          class="invert"
+        />
+      </div>
+      <div
+        class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
+        style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+        @click="handleGoToHelp()"
       >
-        {{ $t('toTheDigitalMap') }}
-        <span>
-          <img :src="exportIcon" alt="export" width="20" height="20" preload
-        /></span>
-      </p>
-      <img
-        :src="arrow"
-        alt="arrow"
-        width="12"
-        height="12"
-        preload
-        class="invert"
-      />
-    </div>
-    <div
-      class="bg-white w-exd-312 h-exd-50 mx-auto rounded-bl-xl rounded-br-xl px-5 inline-flex justify-between items-center cursor-pointer"
-      style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
-      @click="logout"
-    >
-      <p
-        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-exd-1424 font-bold"
+        <p
+          class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer text-exd-1424 font-bold"
+        >
+          {{ $t('helpAndInquiries') }}
+          <span>
+            <img :src="exportIcon" alt="export" width="20" height="20" preload
+          /></span>
+        </p>
+        <img
+          :src="arrow"
+          alt="arrow"
+          width="12"
+          height="12"
+          preload
+          class="invert"
+        />
+      </div>
+      <div
+        class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
+        style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+        @click="handleGoToDigitalMap()"
       >
-        {{ $t('logout') }}
-      </p>
-      <img
-        :src="arrow"
-        alt="arrow"
-        width="12"
-        height="12"
-        preload
-        class="invert"
-      />
+        <p
+          class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer text-exd-1424 font-bold"
+        >
+          {{ $t('toTheDigitalMap') }}
+          <span>
+            <img :src="exportIcon" alt="export" width="20" height="20" preload
+          /></span>
+        </p>
+        <img
+          :src="arrow"
+          alt="arrow"
+          width="12"
+          height="12"
+          preload
+          class="invert"
+        />
+      </div>
+      <div
+        class="bg-white w-exd-312 h-exd-50 mx-auto rounded-bl-xl rounded-br-xl px-5 inline-flex justify-between items-center cursor-pointer"
+        style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
+        @click="logout"
+      >
+        <p
+          class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-exd-1424 font-bold"
+        >
+          {{ $t('logout') }}
+        </p>
+        <img
+          :src="arrow"
+          alt="arrow"
+          width="12"
+          height="12"
+          preload
+          class="invert"
+        />
+      </div>
     </div>
     <p
-      class="underline text-white text-exd-1218 font-semibold text-center mt-5 text-underline cursor-pointer"
+      class="underline text-white text-exd-1218 font-semibold text-center mt-5 text-underline cursor-pointer relative -top-12"
     >
       <a href="https://www.google.com" target="_blank">
         {{ $t('addToHomeScreen') }}
       </a>
     </p>
     <div
-      class="w-exd-312 h-exd-50 mx-auto inline-flex justify-between items-center mt-7"
+      class="w-exd-312 h-exd-50 mx-auto inline-flex justify-between items-center mt-7 relative -top-12"
     >
       <!-- <p
         class="text-white grow inline-flex items-center justify-center font-bold text-exd-1424"
@@ -165,7 +165,7 @@
         :modules="[Autoplay, Pagination, Navigation]"
         class="mySwiper"
       >
-        <SwiperSlide v-for="item in bannerList">
+        <SwiperSlide v-for="(item, index) in bannerList" :key="index">
           <a :href="item.link" target="_blank">
             <img :src="item.image" />
           </a>
