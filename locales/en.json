@@ -146,5 +146,8 @@
   "questionRequired": "The questionnaire field is required",
   "loginOrRegisterTop": "Log in or register as a new member to play the gacha",
   "verificationFailed": "Verification link used",
-  "verificationCompleted": "Your registration has been completed."
+  "verificationCompleted": "Your registration has been completed.",
+  "wrongPassword": "Wrong password , please check again",
+  "scanNotesTitle": "Please tap the button after agreeing to the following notes and terms of participation.",
+  "scanNotesDescription": "In front of the couple's art object on Hisaya Odori."
 }

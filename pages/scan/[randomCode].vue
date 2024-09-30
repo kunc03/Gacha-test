@@ -47,12 +47,12 @@
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
-              {{ $t('notes') }}
+              {{ $t('scanNotesTitle') }}
             </p>
             <p
               class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)]"
             >
-              {{ description }}
+              {{ $t('scanNotesDescription') }}
             </p>
           </div>
           <SolidButton
@@ -136,6 +136,9 @@ const checkPassword = async (params) => {
     return status
   } catch (error) {
     console.log("Error: Can't check password")
+
+    errorLink.value = true
+    errorMessages.value = t('wrongPassword')
 
     isLoading.value = false
   }
