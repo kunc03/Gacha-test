@@ -27,24 +27,33 @@
     <div class="w-full absolute bottom-0">
       <SolidButton
         :label="$t('toTheNext')"
-        :on-click="handleGoToCharacter"
+        :on-click="() => (playVideo = true)"
         has-bottom
       />
     </div>
+
+    <AutoplayVideo
+      v-if="playVideo"
+      src="/video/spin-character.mp4"
+      @ended="handleGoToCharacter"
+    />
   </div>
 </template>
 
 <script setup>
 const router = useRouter()
+const route = useRoute()
 
 const apiPoint = ref(null)
 const USER = useCookie('USER')
 const pointImageUrl = ref(null)
 const TOKEN = useCookie('TOKEN')
+const playVideo = ref(false)
 const { encryptData, decryptData } = useEncryption()
 
 definePageMeta({
   middleware: 'valid-password',
+  layout: 'gacha-machine',
 })
 
 const fetchImageFromApi = async () => {
@@ -142,7 +151,7 @@ const reportMultipleSpin = async ({ point_id, character_id, location_id }) => {
 }
 
 const handleGoToCharacter = () => {
-  router.push(`/spin/character`)
+  router.push(`/spin/character/${route.params.randomCode}`)
 }
 
 onMounted(() => {

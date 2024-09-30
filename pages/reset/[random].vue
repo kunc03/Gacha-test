@@ -27,7 +27,7 @@
             <InputText
               type="password"
               :model="form.password"
-              :label="$t('password')"
+              :label="$t('loginPassword')"
               @validate="validateInput('password', $event)"
               @update:model="updateModel('password', $event)"
             />

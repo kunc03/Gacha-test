@@ -14,7 +14,7 @@
     >
       <div class="flex flex-col grow">
         <p
-          class="text-exd-gray-scorpion font-normal text-exd-1416 text-center mt-8"
+          class="text-exd-gray-scorpion font-bold text-exd-1416 text-center mt-8"
         >
           {{ $t('registrationComplete') }}
         </p>
@@ -32,6 +32,11 @@
 
 <script setup>
 import useRegister from '~/composables/useRegister'
+
+useHead({
+  title: 'Register Complete',
+})
+
 const { isSpin } = useRegister()
 const { decryptData } = useEncryption()
 

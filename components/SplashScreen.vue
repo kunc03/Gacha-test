@@ -44,7 +44,7 @@ const checkCaches = () => {
     '/images/back-button.svg',
   ]
   caches
-    .open('gacharary-v1')
+    .open('gacharary-v2')
     .then(function (cache) {
       return cache.keys()
     })

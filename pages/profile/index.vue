@@ -86,7 +86,7 @@
               @click="updateModel('gender', 'Male')"
               :label="$t('male')"
               :class="[
-                'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                'bg-white w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Male' && '!bg-exd-banana',
               ]"
             />
@@ -102,7 +102,7 @@
               @click="updateModel('gender', 'Non-Binary')"
               :label="$t('noAnswer')"
               :class="[
-                'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                'bg-white w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Non-Binary' && '!bg-exd-banana',
               ]"
             />
@@ -192,39 +192,6 @@
           </div>
         </div>
 
-        <!-- <div
-          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputText
-            :model="form.address"
-            required
-            :label="$t('address')"
-            @update:model="updateModel('address', $event)"
-            @validate="validateInput('address', $event)"
-            :validate-on-submit="validateOnSubmit"
-          />
-        </div>
-
-        <div
-          class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
-        >
-          <InputText
-            type="number"
-            :model="form.phoneNumber"
-            required
-            :label="$t('phoneNumber')"
-            @update:model="updateModel('phoneNumber', $event)"
-            @validate="validateInput('phoneNumber', $event)"
-            :minLength="11"
-            :validate-on-submit="validateOnSubmit"
-            :error="form.phoneNumber.length === 0 ? t('fieldRequired') : ''"
-            :class="{
-              'input-error':
-                form.phoneNumber.length > 0 && form.phoneNumber.length < 10,
-            }"
-          />
-        </div> -->
-
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
@@ -259,7 +226,7 @@
             :isPassword="true"
             required
             :minLength="8"
-            :label="$t('password')"
+            :label="$t('loginPassword')"
             inform="passwordMin"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"

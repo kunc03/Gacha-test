@@ -13,18 +13,24 @@
         <img
           src="/images/gacha2.webp"
           alt="gacha2"
-          class="absolute left-1/2 top-[25px] transform -translate-x-1/2 w-full h-auto max-h-[88vh] object-contain"
+          class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[47%] w-full h-auto max-h-[88%] object-contain"
           preload
         />
       </div>
 
       <SolidButton
         :label="$t('spinTheGacha')"
-        :on-click="goToSpinPoint"
+        :on-click="() => (playVideo = true)"
         has-bottom
       />
     </div>
   </div>
+
+  <AutoplayVideo
+    v-if="playVideo"
+    src="/video/spin-point.mp4"
+    @ended="goToSpinPoint"
+  />
 
   <Modal :is-open="isNotAllowed" :on-close="() => handleCloseDialog()">
     <template v-slot:body>
@@ -48,17 +54,20 @@
 
 <script setup>
 const router = useRouter()
+const route = useRoute()
 const errorMessages = ref('')
 const isNotAllowed = ref(false)
+const playVideo = ref(false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
 definePageMeta({
   middleware: 'valid-password',
+  layout: 'gacha-machine',
 })
 
 const goToSpinPoint = async () => {
-  router.push(`/spin/point`)
+  router.push(`/spin/point/${route.params.randomCode}`)
 }
 
 useHead({

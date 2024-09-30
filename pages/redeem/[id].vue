@@ -232,21 +232,6 @@ const loadGoogleMaps = () => {
   })
 }
 
-const getLocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // initializeMap(position.coords.latitude, position.coords.longitude)
-      },
-      (error) => {
-        console.error('Error Code = ' + error.code + ' - ' + error.message)
-      }
-    )
-  } else {
-    console.error('Geolocation is not supported by this browser.')
-  }
-}
-
 const fetchingPrizeData = async () => {
   try {
     isFetching.value = true
@@ -309,7 +294,6 @@ const openGoogleMaps = () => {
 }
 
 onMounted(async () => {
-  getLocation()
   await loadGoogleMaps()
   fetchingPrizeData()
 })

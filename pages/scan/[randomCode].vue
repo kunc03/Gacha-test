@@ -47,12 +47,12 @@
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
-              {{ $t('notes') }}
+              {{ $t('scanNotesTitle') }}
             </p>
             <p
               class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)]"
             >
-              {{ description }}
+              {{ $t('scanNotesDescription') }}
             </p>
           </div>
           <SolidButton
@@ -77,11 +77,6 @@
         <div v-if="errorLink" class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ errorMessages }}
-          </p>
-        </div>
-        <div v-else class="text-center w-10/12">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ checkRadiusMessage }}
           </p>
         </div>
       </div>
@@ -113,11 +108,7 @@ const errorMessages = ref('')
 const handleCloseDialog = () => (isNotAllowed.value = false)
 const { t } = useI18n()
 
-const radiusCheckResult = ref(null)
 const checkRadiusFailed = ref(false)
-const checkRadiusMessage = ref(null)
-const longitude = ref('')
-const latitude = ref('')
 
 const { encryptData } = useEncryption()
 
@@ -136,6 +127,9 @@ const checkPassword = async (params) => {
     return status
   } catch (error) {
     console.log("Error: Can't check password")
+
+    errorLink.value = true
+    errorMessages.value = t('wrongPassword')
 
     isLoading.value = false
   }
@@ -162,7 +156,6 @@ const getPassword = async (id) => {
 
     if (data) {
       description.value = data.description
-      await checkingLocation()
     }
 
     isLoading.value = false
@@ -171,75 +164,6 @@ const getPassword = async (id) => {
     errorMessages.value = error._data.message
 
     isNotAllowed.value = true
-  }
-}
-
-const radiusCheck = async () => {
-  const location = route.params.randomCode
-}
-
-const checkingLocation = async () => {
-  if ('permissions' in navigator) {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
-        if (permissionStatus.state === 'granted') {
-          isRequestingLocation.value = false
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              latitude.value = position.coords.latitude
-              longitude.value = position.coords.longitude
-              radiusCheck()
-            },
-            (error) => {
-              console.error(error)
-            }
-          )
-        } else if (permissionStatus.state === 'prompt') {
-          if ('geolocation' in navigator) {
-            isRequestingLocation.value = true
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                latitude.value = position.coords.latitude
-                longitude.value = position.coords.longitude
-                radiusCheck()
-                isRequestingLocation.value = false
-              },
-              () => {
-                isRequestingLocation.value = false
-              }
-            )
-          } else {
-            isRequestingLocation.value = false
-          }
-        } else if (permissionStatus.state === 'denied') {
-          isRequestingLocation.value = true
-        }
-
-        // Listen for changes to the permission status
-        permissionStatus.onchange = () => {
-          if (permissionStatus.state === 'granted') {
-            isRequestingLocation.value = false
-          } else if (permissionStatus.state === 'denied') {
-            isRequestingLocation.value = false
-          }
-        }
-      })
-  } else {
-    if ('geolocation' in navigator) {
-      isRequestingLocation.value = true
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          isRequestingLocation.value = false
-        },
-        () => {
-          isRequestingLocation.value = false
-        }
-      )
-    } else {
-      // Geolocation is not available, show a dialog or handle accordingly
-      isNotAllowed.value = true
-    }
   }
 }
 

@@ -10,19 +10,13 @@
     </HeaderBar>
 
     <div
-      class="flex flex-col grow px-3 mt-32 pb-3 justify-between gap-6 w-full"
+      class="flex flex-col grow px-3 mt-24 pb-3 justify-between gap-6 w-full"
     >
-      <h1
-        class="text-center flex flex-col text-1416 text-exd-gray-scorpion pt-6 pb-10 w-full max-w-[360px] mx-auto"
-      >
-        {{ $t('memberInformation1') }}
-        <span> {{ $t('memberInformation2') }}</span>
-      </h1>
       <div
         class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
       >
         <h1>{{ $t('member') }} <span class="font-bold">ID</span></h1>
-        <p class="font-bold">00000000000</p>
+        <p class="font-bold">0000000000</p>
       </div>
       <div class="flex flex-col grow">
         <div
@@ -37,7 +31,7 @@
             @validate="validateInput('nickName', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              !form.nickName && validateOnSubmit ? $t('nicknameRequired') : ''
+              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
             "
             :class="{
               'input-error': !form.nickName && validateOnSubmit,
@@ -72,7 +66,7 @@
               :placeholder="t('choice')"
               :hasHelper="true"
               :validate-on-submit="validateOnSubmit"
-              :error="!form.age && validateOnSubmit ? t('ageRequired') : ''"
+              :error="!form.age && validateOnSubmit ? t('fieldRequired') : ''"
               :class="{ 'input-error': !form.age && validateOnSubmit }"
             />
           </div>
@@ -97,7 +91,7 @@
               @click="updateModel('gender', 'Male')"
               :label="$t('male')"
               :class="[
-                'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                'bg-white w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Male' && '!bg-exd-banana',
               ]"
             />
@@ -113,7 +107,7 @@
               @click="updateModel('gender', 'Non-Binary')"
               :label="$t('noAnswer')"
               :class="[
-                'bg-exd-zinc-100 w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
+                'bg-white w-4/12 h-full border border-exd-stone-300 rounded-none !text-exd-gray-scorpion',
                 form.gender === 'Non-Binary' && '!bg-exd-banana',
               ]"
             />
@@ -172,7 +166,7 @@
               :validate-on-submit="validateOnSubmit"
               :error="
                 !form.postCode && validateOnSubmit
-                  ? $t('postCodeRequired')
+                  ? $t('fieldRequired')
                   : '' || (form.postCode.length > 0 && form.postCode.length < 7)
                   ? $t('minLengthPostalCode')
                   : '' || errorPostCodeMessage
@@ -208,7 +202,7 @@
                 :placeholder="t('choice')"
                 :error="
                   !form.countryCode && validateOnSubmit
-                    ? $t('countryRequired')
+                    ? $t('fieldRequired')
                     : ''
                 "
                 :hasHelper="true"
@@ -231,8 +225,13 @@
             :validate-on-submit="validateOnSubmit"
             :is-email-error="true"
             :error="
-              errorEmailMessage ||
-              (form.email && !emailRegex(form.email) ? t('emailFormat') : '')
+              !form.email && validateOnSubmit
+                ? t('fieldRequired')
+                : '' ||
+                  errorEmailMessage ||
+                  (form.email && !emailRegex(form.email)
+                    ? t('emailFormat')
+                    : '')
             "
             :class="{
               'input-error': errorEmailMessage || !emailRegex(form.email),
@@ -249,13 +248,13 @@
             :isPassword="true"
             required
             :minLength="8"
-            :label="$t('password')"
+            :label="$t('loginPassword')"
             inform="passwordMin"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.password && validateOnSubmit && t('passwordRequired')) ||
+              (!form.password && validateOnSubmit && t('fieldRequired')) ||
               errorPasswordMessage
             "
             :class="{
@@ -274,13 +273,11 @@
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.confPassword &&
-                validateOnSubmit &&
-                t('passwordRequired')) ||
+              (!form.confPassword && validateOnSubmit && t('fieldRequired')) ||
               errorConfPasswordMessage
             "
             :class="{
-              'input-error': errorPasswordMessage,
+              'input-error': errorConfPasswordMessage,
             }"
           />
         </div>
@@ -297,7 +294,7 @@
             :validate-on-submit="validateOnSubmit"
             :error="
               !form.questionnaire1 && validateOnSubmit
-                ? $t('questionRequired')
+                ? $t('fieldRequired')
                 : ''
             "
           />
@@ -310,7 +307,7 @@
             :validate-on-submit="validateOnSubmit"
             :error="
               !form.questionnaire2 && validateOnSubmit
-                ? $t('questionRequired')
+                ? $t('fieldRequired')
                 : ''
             "
           />
@@ -332,9 +329,19 @@
             <p class="text-exd-1424 font-bold text-center">
               {{ $t('termOfService') }}
             </p>
-            <p class="text-exd-1220 font-medium leading-relaxed h-[84px]">
-              {{ $t('dummyDummy') }}
-            </p>
+
+            <div
+              class="text-exd-1220 font-medium leading-relaxed h-[84px] flex flex-col gap-1"
+            >
+              <p
+                v-for="i in 20"
+                :key="i"
+                class="flex flex-col gap-1 text-justify"
+              >
+                <span>{{ t(`dummyDummy.subTitle.term${i}`) }}</span>
+                {{ t(`dummyDummy.detail.term${i}`) }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -460,8 +467,6 @@ const emailValidate = () => {
   const email = form.value.email
   if (!emailRegex(email)) {
     errorEmailMessage.value = t('emailFormat')
-  } else if (email.length === 0) {
-    errorEmailMessage.value = t('fieldRequired')
   } else {
     errorEmailMessage.value = ''
   }
@@ -471,7 +476,7 @@ const passwordValidate = () => {
   const password = form.value.password
 
   if (password.length > 0 && password.length < 8) {
-    errorPasswordMessage.value = t('minLengthPassword')
+    errorPasswordMessage.value = t('passwordMin')
   } else {
     errorPasswordMessage.value = ''
   }
@@ -514,22 +519,23 @@ const handleApiError = (error) => {
     // isErrorMessage.value = true
   }
 
-  const jaPassNotMatch = 'passwordが確認用の値と一致しません。'
-  const enPassNotMatch = 'The password field confirmation does not match.'
-
   errorNicknameMessage.value = response.nickname ? response.nickname[0] : ''
 
   errorAgeMessage.value = response.age ? response.age[0] : ''
 
   errorEmailMessage.value = response.email ? response.email[0] : ''
 
-  errorPasswordMessage.value = response.password ? response.password[0] : ''
-
-  if (
-    response.password[0] === jaPassNotMatch ||
-    response.password[0] === enPassNotMatch
-  ) {
-    errorPasswordMessage.value = ''
+  if (form.value.password.length < 8) {
+    errorPasswordMessage.value = t('passwordMin')
+  } else {
+    if (
+      response.password[0] === 'passwordが確認用の値と一致しません。' ||
+      response.password[0] === 'Password does not match the challenge value.'
+    ) {
+      errorPasswordMessage.value = ''
+    } else {
+      errorPasswordMessage.value = response.password ? response.password[0] : ''
+    }
   }
 }
 
@@ -570,6 +576,7 @@ const handleSubmit = async () => {
   const payload = buildPayload()
 
   await fetchRegister(payload)
+
   if (errorScroll.value.length > 0) {
     await nextTick()
     const firstErrorElement = document.querySelector('.input-error')
@@ -578,6 +585,11 @@ const handleSubmit = async () => {
       firstErrorElement.style.marginTop = '-80px'
 
       firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+
+      setTimeout(() => {
+        firstErrorElement.style.paddingTop = ''
+        firstErrorElement.style.marginTop = ''
+      }, 3000)
     }
   }
 }
