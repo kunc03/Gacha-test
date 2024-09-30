@@ -299,7 +299,7 @@ export default defineComponent({
 
 <style scoped>
 .slideunlock {
-  --su-size-text: 18px;
+  --su-size-text: 14px;
   --su-size-padding: 5px;
   --su-color-bg: #d7a237;
   --su-color-progress-normal-bg: #ffe9bc;
@@ -355,6 +355,8 @@ export default defineComponent({
   color: transparent;
   font-size: var(--su-size-text);
   user-select: none;
+  font-weight: bold;
+  line-height: 19px;
 }
 
 .slideunlock .slideunlock-text::before {
