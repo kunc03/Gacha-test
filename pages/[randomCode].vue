@@ -3,9 +3,9 @@
     class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col overflow-hidden"
   >
     <div
-      class="flex-1 items-center flex flex-col gap-11 pt-[15%] pb-20 px-8 overflow-auto"
+      class="flex-1 items-center flex flex-col pt-[15%] pb-20 px-8 overflow-y-auto overflow-x-hidden"
     >
-      <div class="relative w-full text-right">
+      <div class="relative w-full text-right -right-4">
         <button type="button" aria-haspopup="true" @click="langPanelToggle">
           <img
             src="/images/intl-icon.svg"
@@ -18,10 +18,17 @@
         </button>
         <LanguangePanel v-model:visible="langPanel" />
       </div>
-      <img src="/images/logo.webp" alt="logo" width="190" height="71" preload />
-      <div class="flex flex-col gap-8 mx-8 justify-start items-center w-full">
+      <img
+        src="/images/logo.webp"
+        alt="logo"
+        width="190"
+        height="71"
+        preload
+        class="mb-12"
+      />
+      <div class="flex flex-col mx-8 justify-start items-center w-full">
         <h1
-          class="text-center font-bold text-exd-1824.52 text-white"
+          class="text-center font-bold text-exd-1824.52 p-3 text-white"
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         >
           {{ $t('password') }}
@@ -40,20 +47,20 @@
             {{ responseData.password }}
           </p>
         </div>
-        <div class="text-white font-bold text-xs text-start">
+        <div class="text-white font-bold text-xs text-start p-3">
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
             ※ {{ $t('passwordIsOnlyForToday') }}
           </p>
         </div>
       </div>
       <div
-        class="bg-white text-center py-2 px-4 w-full text-exd-red font-bold"
+        class="bg-white text-center py-2 px-4 w-full text-exd-red font-bold mt-12"
         v-if="responseData.description && responseData.image"
       >
         {{ $t('qrCodeSpot') }}
       </div>
       <div
-        class="inline-flex justify-between bg w-full gap-3"
+        class="inline-flex justify-between bg w-full gap-3 mt-3"
         v-if="responseData.description"
       >
         <p
@@ -72,7 +79,16 @@
         </div>
       </div>
     </div>
-    <SolidButton label="close" has-bottom :has-icon="false" />
+    <SolidButton
+      label="close"
+      has-bottom
+      :has-icon="false"
+      @click="
+        navigateTo('https://nospot.new-ordinary.co.jp/maps/nagoya', {
+          external: true,
+        })
+      "
+    />
   </div>
 </template>
 
