@@ -45,6 +45,7 @@ const { encryptData, decryptData } = useEncryption()
 
 definePageMeta({
   middleware: 'valid-password',
+  layout: 'gacha-machine',
 })
 
 const fetchImageFromApi = async () => {

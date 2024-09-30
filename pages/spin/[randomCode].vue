@@ -13,7 +13,7 @@
         <img
           src="/images/gacha2.webp"
           alt="gacha2"
-          class="absolute left-1/2 top-[25px] transform -translate-x-1/2 w-full h-auto max-h-[88vh] object-contain"
+          class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[47%] w-full h-auto max-h-[88%] object-contain"
           preload
         />
       </div>
@@ -55,6 +55,7 @@ const handleCloseDialog = () => (isNotAllowed.value = false)
 
 definePageMeta({
   middleware: 'valid-password',
+  layout: 'gacha-machine',
 })
 
 const goToSpinPoint = async () => {

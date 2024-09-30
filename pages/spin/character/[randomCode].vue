@@ -141,6 +141,7 @@ import useRegister from '~/composables/useRegister'
 
 definePageMeta({
   middleware: 'valid-password',
+  layout: 'gacha-machine',
 })
 
 useHead({
