@@ -119,6 +119,66 @@
         >
           {{ $t('exchanged_message') }}
         </p>
+        <p class="text-exd-gray-scorpion font-bold text-center text-exd-1424">
+          {{ $t('1019') }}
+        </p>
+        <div class="w-8/12 flex flex-col items-center">
+          <p
+            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+            @click="openGoogleMapsEdison"
+          >
+            {{ $t('edisonHisayaSquare') }}
+            <img
+              src="~/assets/images/export-blue.svg"
+              alt="export"
+              width="15"
+              height="15"
+              class="inline ml-1"
+            />
+          </p>
+          <p
+            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+          >
+            {{ $t('address1') }}
+            <img
+              src="~/assets/images/export-blue.svg"
+              alt="export"
+              width="15"
+              height="15"
+              class="inline ml-1"
+            />
+          </p>
+        </div>
+        <p class="text-exd-gray-scorpion font-bold text-center text-exd-1424">
+          {{ $t('1020') }}
+        </p>
+        <div class="w-8/12 flex flex-col items-center">
+          <p
+            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+            @click="openGoogleMapsEdison"
+          >
+            {{ $t('edisonHisayaSquare') }}
+            <img
+              src="~/assets/images/export-blue.svg"
+              alt="export"
+              width="15"
+              height="15"
+              class="inline ml-1"
+            />
+          </p>
+          <p
+            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+          >
+            {{ $t('address2') }}
+            <img
+              src="~/assets/images/export-blue.svg"
+              alt="export"
+              width="15"
+              height="15"
+              class="inline ml-1"
+            />
+          </p>
+        </div>
       </div>
       <SolidButton
         :label="$t('arrived')"
@@ -195,6 +255,11 @@ const checkPoint = (point) => {
       disableRedeem.value = true
     }
   } catch (error) {}
+}
+
+const openGoogleMapsEdison = () => {
+  const googleMapsUrl = `https://maps.app.goo.gl/YfqmSJ6Azkbethyf6`
+  window.open(googleMapsUrl, '_blank')
 }
 
 const initializeMap = async (lat, long) => {
