@@ -248,7 +248,7 @@
             :isPassword="true"
             required
             :minLength="8"
-            :label="$t('password')"
+            :label="$t('loginPassword')"
             inform="passwordMin"
             @update:model="updateModel('password', $event)"
             @validate="validateInput('password', $event)"

@@ -31,12 +31,12 @@
   "login": "ログイン",
   "newMemberRegistration": "新規会員登録",
   "loginID": "ログインID（メールアドレス）",
-  "password": "ログインパスワード",
-  "emailValid": "メールは有効なメールアドレスである必要があります。",
+  "loginPassword": "ログインパスワード",
+  "password": "パスワード",
 
   "forgotYourPassword": "パスワードを忘れた方",
   "loginOrRegister": "ログイン／新規会員登録",
-  "passwordIsOnlyForToday": "ガチャラリーのパスワードは本日限り有効です",
+  "passwordIsOnlyForToday": "パスワードは本日限り有効です。",
   "resetPassword": "パスワード再設定",
   "enterYourNewPassword": "新しいパスワードを入力してください",
   "resetPasswordDescription": "パスワードの再設定手続きを行います。登録されたログインID（メールアドレス）をご入力の上「送信」ボタンをタップしてください。",
@@ -193,5 +193,8 @@
   "questionRequired": "Questionnaireは必須です。",
   "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す",
   "verificationFailed": "確認リンクが使用されました",
-  "verificationCompleted": "会員登録が完了しました。"
+  "verificationCompleted": "会員登録が完了しました。",
+  "wrongPassword": "パスワードが間違っています、もう一度確認してください",
+  "scanNotesTitle": "下記の注意事項・参加規約に同意の上ボタンをタップしてください。",
+  "scanNotesDescription": "久屋大通にあるカップルのオブジェの前です。"
 }

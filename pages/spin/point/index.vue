@@ -25,6 +25,10 @@ const showGif = ref(false)
 const router = useRouter()
 const { decryptData } = useEncryption()
 
+definePageMeta({
+  layout: 'gacha-machine',
+})
+
 const goToCharacter = async () => {
   const data = useCookie('VALID_PASSWORD')
   const value = decryptData(data.value)

@@ -31,12 +31,11 @@
   "login": "Login",
   "newMemberRegistration": "New Member Registration",
   "loginID": "Login ID（email address）",
-  "password": "Login password",
-  "emailValid": "The email must be a valid email address.",
-
+  "loginPassword": "Login password",
+  "password": "Password",
   "forgotYourPassword": "Forgot your password?",
   "loginOrRegister": "Login/Register",
-  "passwordIsOnlyForToday": "The Gacha Rally password is only valid today.",
+  "passwordIsOnlyForToday": "Password is valid only for today.",
   "resetPassword": "Reset Password",
   "enterYourNewPassword": "Enter your new password",
   "resetPasswordDescription": "We will carry out the procedure to reset your password. Please enter your registered login ID (email address) and tap the \"Send\" button.",
@@ -191,5 +190,8 @@
   "questionRequired": "The questionnaire field is required",
   "loginOrRegisterTop": "Log in or register as a new member to play the gacha",
   "verificationFailed": "Verification link used",
-  "verificationCompleted": "Your registration has been completed."
+  "verificationCompleted": "Your registration has been completed.",
+  "wrongPassword": "Wrong password , please check again",
+  "scanNotesTitle": "Please tap the button after agreeing to the following notes and terms of participation.",
+  "scanNotesDescription": "In front of the couple's art object on Hisaya Odori."
 }
