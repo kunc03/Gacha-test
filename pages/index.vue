@@ -3,7 +3,9 @@
     @touchmove="(e) => e.preventDefault()"
     class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer overflow-hidden"
   >
-    <div class="absolute top-[10px] right-[10px] w-[50px] z-[1000]">
+    <div
+      class="absolute top-[10px] small:-top-1 right-[10px] small:-right-1 w-[50px] z-[1000]"
+    >
       <img
         @click="langPanelToggle"
         :src="intlRounded"
@@ -23,45 +25,58 @@
           preload
           height="129"
           width="226"
-          class="absolute top-8 small:top-4 h-[129px] small:h-20 w-[226px] small:w-auto left-0 z-20"
+          class="absolute top-8 small:top-4 h-[129px] small:h-24 w-[226px] small:w-auto left-0 z-20"
         />
       </div>
       <div class="absolute inset-x-0 top-[96px] small:top-10">
         <img
           :src="picture1"
           alt="picture1"
-          class="absolute -left-2 w-auto small:w-auto"
+          class="absolute -left-2 w-auto small:w-[180px] small:top-3 extraSmall:w-36"
         />
         <img
           :src="picture2"
           alt="picture2"
-          class="absolute -right-[4.5rem] top-8 w-auto small:w-auto"
+          class="absolute -right-[4.5rem] top-8 w-auto small:w-auto extraSmall:w-60 extraSmall:-right-[3rem]"
         />
-        <img :src="get" alt="get" class="absolute right-4 top-4" />
+        <img
+          :src="get"
+          alt="get"
+          class="absolute right-4 top-6 extraSmall:w-32"
+        />
 
         <img
           :src="gacha"
           alt="gacha"
           preload
-          class="absolute left-5 top-40 w-[172px] small:w-[150px]"
+          class="absolute left-5 extraSmall:left-2 top-40 small:top-36 extraSmall:top-[108px] w-[172px] extraSmall:w-32"
         />
       </div>
       <div
         class="absolute bottom-[10%] small:pb-4 justify-center items-center w-full flex flex-col z-10"
       >
-        <img :src="tapScreen" alt="intl" class="h-auto small:w-40" preload />
-        <p class="text-exd-1218">{{ $t('loginOrRegisterTop') }}</p>
+        <img
+          :src="tapScreen"
+          alt="intl"
+          class="h-auto small:w-36 extraSmall:w-32 small:absolute small:top-[calc(52%-1.7rem)] extraSmall:top-[calc(95%-1.7rem)]"
+          preload
+        />
+        <p
+          class="text-exd-1218 small:text-exd-1020 small:absolute small:bottom-[calc(80%-1.7rem)] extraSmall:bottom-[calc(90%-1.7rem)] text-white"
+        >
+          {{ $t('loginOrRegisterTop') }}
+        </p>
       </div>
 
       <img
         :src="character"
         alt="character"
-        class="absolute right-28 small:right-24 top-[calc(50%-3rem)] small:top-[calc(52%-3.5rem)]"
+        class="absolute right-28 small:right-[98px] extraSmall:right-[68px] top-[calc(50%-3rem)] small:top-[calc(56.2%-3.5rem)] extraSmall:top-[calc(60%-3.5rem)] small:w-[100px] extraSmall:w-[70px]"
       />
       <img
         :src="intl"
         alt="intl"
-        class="absolute right-6 small:right-4 top-[calc(50%-1.2rem)] small:top-[calc(52%-1.7rem)]"
+        class="absolute right-6 small:right-4 extraSmall:right-3 top-[calc(50%-1.2rem)] small:top-[calc(55.5%-1.7rem)] extraSmall:top-[calc(57.5%-1.7rem)] small:w-[75px] extraSmall:w-[55px]"
       />
       <img
         :src="logo"
@@ -69,7 +84,7 @@
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(57%)] small:!h-auto small:!w-[20rem]"
+        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(62%)] small:!h-auto small:!w-[17rem] extraSmall:!w-[15rem]"
       />
       <img
         :src="digitalTourist"
@@ -77,10 +92,12 @@
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[calc(55%+140px)] small:top-[calc(57%+120px)] w-[363px] small:w-[19rem]"
+        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[calc(55%+140px)] small:top-[calc(60%+120px)] extraSmall:top-[calc(57.5%+120px)] w-[363px] small:w-[20rem] extraSmall:w-[14rem]"
       />
     </div>
-    <div class="absolute bottom-[30px] left-[0px] right-[0px]">
+    <div
+      class="absolute bottom-[30px] small:bottom-[20px] left-[0px] right-[0px]"
+    >
       <p
         class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer"
       >
