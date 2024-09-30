@@ -70,7 +70,7 @@
                 class="absolute bg-white inset-x-0 bottom-0 h-8 flex items-center z-20"
               >
                 <span
-                  class="text-exd-red-vermilion text-sm flex items-center cursor-pointer"
+                  class="text-exd-red-vermilion text-sm flex items-center cursor-pointer border-b border-b-exd-red-vermilion"
                   @click="openGoogleMaps"
                   >{{ $t('openGoogleMaps') }}
                   <img

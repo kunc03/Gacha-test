@@ -5,7 +5,7 @@
     <img
       :src="image"
       alt="character"
-      class="relative object-scale-down w-full max-w-[200px]"
+      class="relative w-full h-full object-fill"
       preload
       @error="handleImageError"
     />
