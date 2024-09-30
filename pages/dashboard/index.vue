@@ -8,12 +8,12 @@
     </p>
   </HeaderBar>
   <div class="flex flex-col bg-center">
-    <div class="flex flex-col mt-[40%] items-center">
+    <div class="flex flex-col mt-[21%] items-center">
       <p class="text-white text-exd-2856 font-bold">
         {{ $t('currentPoints') }}
       </p>
-      <p class="text-white text-exd-56112 font-bold relative -top-7">
-        {{ store.point }}<span class="text-exd-1020">pt</span>
+      <p class="text-white text-exd-56112 font-bold relative -top-10">
+        {{ store.point }}<span class="text-exd-1020 ml-1">pt</span>
       </p>
     </div>
 
@@ -31,7 +31,9 @@
           preload
           class="text-center cursor-pointer"
         />
-        <p class="text-exd-gray-scorpion text-exd-1424 font-bold text-center">
+        <p
+          class="text-exd-gray-scorpion text-exd-1424 font-bold text-center font-bold"
+        >
           {{ $t('listOfPrizesAndExchanges') }}
         </p>
       </div>
@@ -58,7 +60,7 @@
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
       @click="profile"
     >
-      <p class="text-exd-gray-scorpion grow">
+      <p class="text-exd-gray-scorpion grow text-exd-1424 font-bold">
         {{ $t('membershipInformation') }}
       </p>
       <img
@@ -76,7 +78,7 @@
       @click="handleGoToHelp()"
     >
       <p
-        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer"
+        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer text-exd-1424 font-bold"
       >
         {{ $t('helpAndInquiries') }}
         <span>
@@ -98,7 +100,7 @@
       @click="handleGoToDigitalMap()"
     >
       <p
-        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer"
+        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 cursor-pointer text-exd-1424 font-bold"
       >
         {{ $t('toTheDigitalMap') }}
         <span>
@@ -119,7 +121,9 @@
       style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
       @click="logout"
     >
-      <p class="text-exd-gray-scorpion grow inline-flex items-center gap-1">
+      <p
+        class="text-exd-gray-scorpion grow inline-flex items-center gap-1 text-exd-1424 font-bold"
+      >
         {{ $t('logout') }}
       </p>
       <img
