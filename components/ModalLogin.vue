@@ -81,16 +81,6 @@
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p
-            v-if="
-              errorMessages[0] ===
-              'emailは有効なメールアドレスでなければなりません。'
-            "
-            class="font-bold text-exd-1424 text-exd-gray-scorpion"
-          >
-            {{ t('emailValid') }}
-          </p>
-          <p
-            v-else
             v-for="(item, index) in errorMessages"
             class="font-bold text-exd-1424 text-exd-gray-scorpion"
             :key="index"
@@ -147,6 +137,11 @@ const handleToRegister = () => {
   navigateTo('/register')
 }
 
+const validateEmailFormat = (email) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return regex.test(email)
+}
+
 const updateSpinStatus = async () => {
   const storedData = useCookie('VALID_PASSWORD')
   const payload = decryptData(storedData.value || '{}')
@@ -171,6 +166,13 @@ const handleSubmit = async () => {
 
   if (isLoading.value) return
   isLoading.value = true
+
+  if (!validateEmailFormat(form.value.email)) {
+    errorMessages.value = [t('emailValidation')]
+    isErrorMessage.value = true
+    isLoading.value = false
+    return
+  }
 
   try {
     const response = await useFetchApi('POST', 'login', {
