@@ -84,7 +84,7 @@
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(62%)] small:!h-auto small:!w-[17rem] extraSmall:!w-[15rem]"
+        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(62%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
       />
       <img
         :src="digitalTourist"
@@ -92,7 +92,7 @@
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[calc(55%+140px)] small:top-[calc(60%+120px)] extraSmall:top-[calc(57.5%+120px)] w-[363px] small:w-[20rem] extraSmall:w-[14rem]"
+        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[calc(55%+140px)] small:top-[calc(62%+120px)] extraSmall:top-[calc(57.5%+120px)] w-[363px] small:w-[20rem] extraSmall:w-[14rem]"
       />
     </div>
     <div
