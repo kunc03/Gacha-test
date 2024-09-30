@@ -34,7 +34,7 @@
         <InputText
           type="password"
           :model="form.password"
-          :placeholder="$t('password')"
+          :placeholder="$t('loginPassword')"
           @update:model="updateModel('password', $event)"
           @validate="validateInput('password', $event)"
         />
