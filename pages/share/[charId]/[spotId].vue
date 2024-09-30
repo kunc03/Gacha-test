@@ -1,4 +1,54 @@
 <template>
+  <Head>
+    <Title> {{ shareDetailData?.character_name }}</Title>
+    <Meta
+      name="description"
+      :content="shareDetailData?.character_description"
+    />
+
+    <Meta name="og:url" :content="`${url}/${charId}/${spotId}`" />
+    <Meta name="og:type" content="website" />
+    <Meta name="og:title" :content="shareDetailData?.character_name" />
+    <Meta
+      name="og:description"
+      :content="shareDetailData?.character_description"
+    />
+    <Meta name="og:image" :content="shareDetailData?.character_image" />
+    <Meta
+      name="og:image:secure_url"
+      :content="shareDetailData?.character_image"
+    />
+    <Meta name="og:image:width" :content="200" />
+    <Meta name="og:image:height" :content="200" />
+    <Meta name="twitter:card" content="summary_large_image" />
+    <Meta name="twitter:title" :content="shareDetailData?.character_name" />
+    <Meta
+      name="twitter:description"
+      :content="shareDetailData?.character_description"
+    />
+    <Meta name="twitter:image" :content="shareDetailData?.character_image" />
+    <Meta
+      name="twitter:image:secure_url"
+      :content="shareDetailData?.character_image"
+    />
+    <Meta name="twitter:image:width" :content="900" />
+    <Meta name="twitter:image:height" :content="900" />
+
+    <Meta name="line:card" content="summary_large_image" />
+    <Meta name="line:title" :content="shareDetailData?.character_name" />
+    <Meta
+      name="line:description"
+      :content="shareDetailData?.character_description"
+    />
+    <Meta name="line:image" :content="shareDetailData?.character_image" />
+    <Meta
+      name="line:image:secure_url"
+      :content="shareDetailData?.character_image"
+    />
+    <Meta name="line:image:width" :content="1200" />
+    <Meta name="line:image:height" :content="630" />
+  </Head>
+
   <div
     v-if="isValidPath"
     class="w-full max-w-md mx-auto min-h-dvh max-h-full overflow-hidden bg-white flex flex-col relative bg-[url('/images/bg-red2.webp')] bg-cover bg-center"
@@ -139,14 +189,15 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 
-useHead({
-  title: 'Share',
+definePageMeta({
+  layout: 'dynamic-seo-meta',
 })
 
 const { t } = useI18n()
 const config = useRuntimeConfig()
 const route = useRoute()
-const id = route.params.id
+const charId = route.params.charId
+const spotId = route.params.spotId
 const title = config.public.META_TITLE
 const description = config.public.META_DESCRIPTION
 const image = config.public.META_IMAGE
@@ -161,11 +212,7 @@ const backToTop = () => {
 }
 
 const isValidPath = computed(() => {
-  return (
-    route.path.startsWith('/share') &&
-    route.params.charId &&
-    route.params.spotId
-  )
+  return route.path.startsWith('/share') && charId && spotId
 })
 
 const showSuccessPopup = ref(false)
@@ -174,8 +221,8 @@ const fetchingShareData = async () => {
   try {
     isFetching.value = true
     let payload = {
-      character_id: route.params.charId,
-      location_id: route.params.spotId,
+      character_id: charId,
+      location_id: spotId,
     }
 
     const { data, error } = await useAsyncData(() =>
@@ -184,47 +231,6 @@ const fetchingShareData = async () => {
 
     if (data.value) {
       shareDetailData.value = data.value.data
-      const url = window.location.href
-      useServerSeoMeta({
-        title: () => `${shareDetailData.value.character_name}`,
-        description: () => `${shareDetailData.value.character_description}`,
-        ogType: () => 'website',
-        ogTitle: () => `${shareDetailData.value.character_name}`,
-        ogImage: () => `${shareDetailData.value.character_image}`,
-        ogImageSecureUrl: () => `${shareDetailData.value.character_image}`,
-        ogImageHeight: () => 1200,
-        ogImageWidth: () => 630,
-        ogDescription: () => `${shareDetailData.value.character_description}`,
-        ogUrl: () => url,
-        twitterCard: () => 'summary_large_image',
-        twitterTitle: () => `${shareDetailData.value.character_name}`,
-        twitterImage: () => `${shareDetailData.value.character_image}`,
-        twitterImageHeight: () => 1200,
-        twitterImageWidth: () => 630,
-        twitterDescription: () =>
-          `${shareDetailData.value.character_description}`,
-        twitterUrl: () => url,
-      })
-
-      useSeoMeta({
-        title: () => `${shareDetailData.value.character_name}`,
-        ogType: () => 'website',
-        ogTitle: () => `${shareDetailData.value.character_name}`,
-        ogImage: () => `${shareDetailData.value.character_image}`,
-        ogImageSecureUrl: () => `${shareDetailData.value.character_image}`,
-        ogImageHeight: () => 1200,
-        ogImageWidth: () => 630,
-        ogDescription: () => `${shareDetailData.value.character_description}`,
-        ogUrl: () => url,
-        twitterCard: () => 'summary_large_image',
-        twitterTitle: () => `${shareDetailData.value.character_name}`,
-        twitterImage: () => `${shareDetailData.value.character_image}`,
-        twitterImageHeight: () => 1200,
-        twitterImageWidth: () => 630,
-        twitterDescription: () =>
-          `${shareDetailData.value.character_description}`,
-        twitterUrl: () => url,
-      })
     }
 
     if (error.value) {

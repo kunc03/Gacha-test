@@ -14,25 +14,6 @@ export default defineNuxtConfig({
         },
         { rel: 'icon', type: 'image/x-icon', href: '/logo-icon.ico' },
       ],
-      meta: [
-        { name: 'description', content: process.env.META_TITLE },
-        // Facebook
-        { name: 'og:title', content: process.env.META_TITLE },
-        { name: 'og:description', content: process.env.META_DESCRIPTION },
-        { name: 'og:image', content: process.env.META_IMAGE },
-        { name: 'og:url', content: process.env.META_URL },
-        { name: 'og:type', content: 'Website' },
-        // twitter
-        { name: 'twitter:title', content: process.env.META_TITLE },
-        { name: 'twitter:description', content: process.env.META_DESCRIPTION },
-        { name: 'twitter:image', content: process.env.META_IMAGE },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        // // LINE
-        { name: 'line:title', content: process.env.META_TITLE },
-        { name: 'line:description', content: process.env.META_DESCRIPTION },
-        { name: 'line:image', content: process.env.META_IMAGE },
-        { name: 'line:card', content: 'summary_large_image' },
-      ],
     },
   },
 
