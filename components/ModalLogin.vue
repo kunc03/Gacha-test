@@ -81,6 +81,16 @@
         <img :src="warning" alt="warning" width="40" height="40" preload />
         <div class="text-center w-10/12">
           <p
+            v-if="
+              errorMessages[0] ===
+              'emailは有効なメールアドレスでなければなりません。'
+            "
+            class="font-bold text-exd-1424 text-exd-gray-scorpion"
+          >
+            {{ t('emailValid') }}
+          </p>
+          <p
+            v-else
             v-for="(item, index) in errorMessages"
             class="font-bold text-exd-1424 text-exd-gray-scorpion"
             :key="index"
@@ -94,6 +104,7 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import close from '~/assets/images/close.svg'
 import arrow from '~/assets/images/arrow.svg'
 import warning from '~/assets/images/warning.svg'
@@ -103,6 +114,7 @@ import useRegister from '~/composables/useRegister'
 const register = useRegister()
 const { isSpin } = storeToRefs(register)
 const { setSourceFrom } = register
+const { t } = useI18n()
 
 const props = defineProps(['modelValue'])
 const emits = defineEmits(['update:modelValue', 'callback'])
