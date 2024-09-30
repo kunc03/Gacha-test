@@ -79,11 +79,6 @@
             {{ errorMessages }}
           </p>
         </div>
-        <div v-else class="text-center w-10/12">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ checkRadiusMessage }}
-          </p>
-        </div>
       </div>
     </template>
   </Modal>
@@ -113,11 +108,7 @@ const errorMessages = ref('')
 const handleCloseDialog = () => (isNotAllowed.value = false)
 const { t } = useI18n()
 
-const radiusCheckResult = ref(null)
 const checkRadiusFailed = ref(false)
-const checkRadiusMessage = ref(null)
-const longitude = ref('')
-const latitude = ref('')
 
 const { encryptData } = useEncryption()
 
@@ -165,7 +156,6 @@ const getPassword = async (id) => {
 
     if (data) {
       description.value = data.description
-      await checkingLocation()
     }
 
     isLoading.value = false
@@ -174,75 +164,6 @@ const getPassword = async (id) => {
     errorMessages.value = error._data.message
 
     isNotAllowed.value = true
-  }
-}
-
-const radiusCheck = async () => {
-  const location = route.params.randomCode
-}
-
-const checkingLocation = async () => {
-  if ('permissions' in navigator) {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
-        if (permissionStatus.state === 'granted') {
-          isRequestingLocation.value = false
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              latitude.value = position.coords.latitude
-              longitude.value = position.coords.longitude
-              radiusCheck()
-            },
-            (error) => {
-              console.error(error)
-            }
-          )
-        } else if (permissionStatus.state === 'prompt') {
-          if ('geolocation' in navigator) {
-            isRequestingLocation.value = true
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                latitude.value = position.coords.latitude
-                longitude.value = position.coords.longitude
-                radiusCheck()
-                isRequestingLocation.value = false
-              },
-              () => {
-                isRequestingLocation.value = false
-              }
-            )
-          } else {
-            isRequestingLocation.value = false
-          }
-        } else if (permissionStatus.state === 'denied') {
-          isRequestingLocation.value = true
-        }
-
-        // Listen for changes to the permission status
-        permissionStatus.onchange = () => {
-          if (permissionStatus.state === 'granted') {
-            isRequestingLocation.value = false
-          } else if (permissionStatus.state === 'denied') {
-            isRequestingLocation.value = false
-          }
-        }
-      })
-  } else {
-    if ('geolocation' in navigator) {
-      isRequestingLocation.value = true
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          isRequestingLocation.value = false
-        },
-        () => {
-          isRequestingLocation.value = false
-        }
-      )
-    } else {
-      // Geolocation is not available, show a dialog or handle accordingly
-      isNotAllowed.value = true
-    }
   }
 }
 
