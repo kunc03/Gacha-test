@@ -20,11 +20,17 @@
 
       <SolidButton
         :label="$t('spinTheGacha')"
-        :on-click="goToSpinPoint"
+        :on-click="() => (playVideo = true)"
         has-bottom
       />
     </div>
   </div>
+
+  <AutoplayVideo
+    v-if="playVideo"
+    src="/video/spin-point.mp4"
+    @ended="goToSpinPoint"
+  />
 
   <Modal :is-open="isNotAllowed" :on-close="() => handleCloseDialog()">
     <template v-slot:body>
@@ -48,8 +54,10 @@
 
 <script setup>
 const router = useRouter()
+const route = useRoute()
 const errorMessages = ref('')
 const isNotAllowed = ref(false)
+const playVideo = ref(false)
 const handleOpenDialog = () => (isNotAllowed.value = true)
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
@@ -59,7 +67,7 @@ definePageMeta({
 })
 
 const goToSpinPoint = async () => {
-  router.push(`/spin/point`)
+  router.push(`/spin/point/${route.params.randomCode}`)
 }
 
 useHead({
