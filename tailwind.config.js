@@ -120,6 +120,9 @@ module.exports = {
         'exd-green': {
           DEFAULT: 'hsla(var(--green))', //#2E7D32
         },
+        'exd-blue-link': {
+          DEFAULT: '#1f76c2', //#1f76c2
+        },
       },
       height: {
         ...height,
