@@ -8,7 +8,7 @@ const urlsToCache = [
   '/images/bg-red2.webp',
   '/images/sparkling.webp',
   '/images/bg-green.webp',
-  '/images/logo.webp',
+  '/images/logo.png',
   '/images/warning.svg',
   '/images/close.svg',
   '/images/export.svg',

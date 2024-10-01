@@ -19,7 +19,7 @@
         <LanguangePanel v-model:visible="langPanel" />
       </div>
       <img
-        src="/images/logo.webp"
+        src="/images/logo.png"
         alt="logo"
         width="190"
         height="71"
