@@ -33,20 +33,6 @@
     />
     <Meta name="twitter:image:width" :content="900" />
     <Meta name="twitter:image:height" :content="900" />
-
-    <Meta name="line:card" content="summary_large_image" />
-    <Meta name="line:title" :content="shareDetailData?.character_name" />
-    <Meta
-      name="line:description"
-      :content="shareDetailData?.character_description"
-    />
-    <Meta name="line:image" :content="shareDetailData?.character_image" />
-    <Meta
-      name="line:image:secure_url"
-      :content="shareDetailData?.character_image"
-    />
-    <Meta name="line:image:width" :content="1200" />
-    <Meta name="line:image:height" :content="630" />
   </Head>
 
   <div
