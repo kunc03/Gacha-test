@@ -14,7 +14,7 @@
         </p>
       </div>
 
-      <div class="inline-flex flex-row gap-7 ml-28 justify-evenly w-full">
+      <div class="inline-flex flex-row ml-[6.5rem] justify-around w-full">
         <BottomBarMenuIcon
           v-for="(item, index) in menuItems"
           :key="index"
