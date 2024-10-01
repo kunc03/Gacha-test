@@ -229,9 +229,9 @@ useHead({
   pointer-events: auto;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen {
   .uiHeight {
-    max-height: 100%;
+    max-height: 144px;
   }
 }
 
