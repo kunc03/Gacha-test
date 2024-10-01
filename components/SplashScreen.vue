@@ -4,17 +4,24 @@ let checkCachesInterval
 
 // Init service worker
 if (process.client && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then(
-    (registration) => {
-      console.log(
-        'ServiceWorker registration successful with scope: ',
-        registration.scope
+  navigator.serviceWorker.getRegistration().then((registration) => {
+    if (registration) {
+      registration.update()
+      console.log('ServiceWorker updated')
+    } else {
+      navigator.serviceWorker.register('/sw.js').then(
+        (registration) => {
+          console.log(
+            'ServiceWorker registration successful with scope: ',
+            registration.scope
+          )
+        },
+        (err) => {
+          console.log('ServiceWorker registration failed: ', err)
+        }
       )
-    },
-    (err) => {
-      console.log('ServiceWorker registration failed: ', err)
     }
-  )
+  })
 }
 
 onMounted(() => {
@@ -36,7 +43,7 @@ const checkCaches = () => {
     '/images/bg-red2.webp',
     '/images/sparkling.webp',
     '/images/bg-green.webp',
-    '/images/logo.webp',
+    '/images/logo.png',
     '/images/warning.svg',
     '/images/close.svg',
     '/images/export.svg',
