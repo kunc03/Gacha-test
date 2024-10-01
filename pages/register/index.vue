@@ -12,12 +12,6 @@
     <div
       class="flex flex-col grow px-3 mt-24 pb-3 justify-between gap-6 w-full"
     >
-      <div
-        class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4 text-exd-gray-scorpion justify-between items-center text-1416"
-      >
-        <h1>{{ $t('member') }} <span class="font-bold">ID</span></h1>
-        <p class="font-bold">0000000000</p>
-      </div>
       <div class="flex flex-col grow">
         <div
           class="inline-flex gap-4 border-b border-b-exd-light-grey pb-5 px-4"
