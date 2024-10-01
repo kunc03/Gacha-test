@@ -11,14 +11,16 @@
         {{ $t('passwordInput') }}
       </p>
     </HeaderBar>
-    <div class="flex flex-col grow items-center justify-center mt-20">
+    <div
+      class="flex flex-col grow items-center justify-center mt-20 small:mt-14"
+    >
       <div
         class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
         <OtpInput v-model="value" :length="4" />
       </div>
-      <div class="grow w-full flex flex-col gap-5">
+      <div class="grow w-full flex flex-col gap-5 small:gap-2">
         <div
           class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
@@ -45,15 +47,22 @@
           <span>{{ $t('passwordInputInformationOutro') }}</span>
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
-          <div class="grow p-5">
+          <div class="grow p-5 small:p-[15px]">
             <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
               {{ $t('scanNotesTitle') }}
             </p>
-            <p
-              class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)]"
+
+            <ul
+              class="list-disc list-inside overflow-y-auto max-h-36 small:h-[105px]"
             >
-              {{ $t('scanNotesDescription') }}
-            </p>
+              <li
+                v-for="i in 15"
+                :key="i"
+                class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)] text-justify"
+              >
+                {{ $t(`scanNotesDescription.note${i}`) }}
+              </li>
+            </ul>
           </div>
           <SolidButton
             label="GO!"

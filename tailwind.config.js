@@ -47,9 +47,11 @@ const fontSize = {
   'exd-1416': [pxToEm(14), { lineHeight: pxToEm(16) }],
   'exd-1424': [pxToEm(14), { lineHeight: pxToEm(24) }],
   'exd-1530': [pxToEm(15), { lineHeight: pxToEm(30) }],
+  'exd-1624': [pxToEm(16), { lineHeight: pxToEm(24) }],
   'exd-1724': [pxToEm(17), { lineHeight: pxToEm(24) }],
   'exd-1824': [pxToEm(18), { lineHeight: pxToEm(24) }],
   'exd-1824.52': [pxToEm(18), { lineHeight: pxToEm(24.52) }],
+  'exd-2238': [pxToEm(22), { lineHeight: pxToEm(38) }],
   'exd-2856': [pxToEm(28), { lineHeight: pxToEm(56) }],
   'exd-56112': [pxToEm(56), { lineHeight: pxToEm(112) }],
   'exd-6081.72': [pxToEm(60), { lineHeight: pxToEm(81.72) }],
@@ -72,6 +74,7 @@ module.exports = {
     extend: {
       screens: {
         small: { min: '150px', max: '380px' },
+        extraSmall: { max: '260px' },
       },
       padding: { ...padding },
       colors: {
@@ -123,6 +126,9 @@ module.exports = {
         },
         'exd-green': {
           DEFAULT: 'hsla(var(--green))', //#2E7D32
+        },
+        'exd-blue-link': {
+          DEFAULT: '#1f76c2', //#1f76c2
         },
       },
       height: {

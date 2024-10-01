@@ -6,11 +6,11 @@
     :is-fetching="isFetching"
   >
     <template v-slot:text v-if="!isFetching">
-      <div>
-        <p class="text-exd-gold text-exd-1724 font-bold">
-          {{ data.amount }}<span>pt</span>
+      <div class="flex gap-1 flex-col">
+        <p class="text-exd-gold text-exd-1624 font-bold">
+          {{ data.amount }}<span class="text-exd-1224">pt</span>
         </p>
-        <p lass="text-exd-gray-scorpion font-medium text-exd-1020">
+        <p class="text-exd-gray-scorpion font-medium text-exd-1014">
           {{ data.created_at }}
         </p>
         <p class="text-exd-gray-scorpion font-semibold text-exd-1218">
