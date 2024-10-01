@@ -7,17 +7,17 @@
       {{ $t('listOfPrizesAndExchanges') }}
     </p>
   </HeaderBar>
-  <div class="flex flex-col bg-center w-full px-8">
-    <div class="flex flex-col mt-[40%] items-center mb-4">
-      <p class="text-white text-exd-2856 font-bold">
+  <div class="flex flex-col bg-center w-full">
+    <div class="flex flex-col mt-[24%] items-center mb-4">
+      <p class="text-white text-exd-1530 font-bold">
         {{ $t('currentPoints') }}
       </p>
-      <p class="text-white text-exd-56112 font-bold relative -top-7">
-        {{ store.point }}<span class="text-exd-1020">pt</span>
+      <p class="text-white text-exd-56112 font-bold relative -top-10">
+        {{ store.point }}<span class="text-exd-1020 ml-1">pt</span>
       </p>
     </div>
 
-    <div class="flex flex-col gap-8">
+    <div class="flex flex-col gap-8 px-8 relative -top-14">
       <template v-if="isFetching">
         <PagesRedeemCard
           v-for="n in 1"
