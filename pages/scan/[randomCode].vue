@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="grow flex flex-col overflow-hidden"
-    @touchmove="(e) => e.preventDefault()"
-  >
+  <div class="grow flex flex-col overflow-hidden" @touchmove="onTouchmove">
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
@@ -53,12 +50,13 @@
             </p>
 
             <ul
+              ref="refsNotes"
               class="list-disc list-inside overflow-y-auto max-h-36 small:h-[105px]"
             >
               <li
                 v-for="i in 15"
                 :key="i"
-                class="overflow-y-auto text-exd-1220 text-exd-gray-scorpion font-medium max-h-[calc(100dvh-35.625rem)] text-justify"
+                class="text-exd-1220 text-exd-gray-scorpion font-medium text-justify"
               >
                 {{ $t(`scanNotesDescription.note${i}`) }}
               </li>
@@ -114,6 +112,7 @@ const isLoading = ref(false)
 const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
+const refsNotes = ref(null)
 const handleCloseDialog = () => (isNotAllowed.value = false)
 const { t } = useI18n()
 
@@ -173,6 +172,12 @@ const getPassword = async (id) => {
     errorMessages.value = error._data.message
 
     isNotAllowed.value = true
+  }
+}
+
+const onTouchmove = (event) => {
+  if (!refsNotes.value.contains(event.target)) {
+    event.preventDefault()
   }
 }
 
