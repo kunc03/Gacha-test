@@ -51,7 +51,7 @@
 
             <ul
               ref="refsNotes"
-              class="list-disc list-inside overflow-y-auto max-h-36 small:h-[105px]"
+              class="uiHeight list-disc list-inside overflow-y-auto"
             >
               <li
                 v-for="i in 15"
@@ -227,5 +227,89 @@ useHead({
 
 :global(body.modal-open .p-dialog) {
   pointer-events: auto;
+}
+
+@media screen {
+  .uiHeight {
+    max-height: 144px;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .uiHeight {
+    max-height: 700px;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .uiHeight {
+    max-height: 140px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .uiHeight {
+    max-height: 105px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .uiHeight {
+    max-height: 138px;
+  }
+}
+
+@media screen and (max-width: 480px) and (max-height: 940px) {
+  .uiHeight {
+    max-height: 345px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .uiHeight {
+    max-height: 305px;
+  }
+}
+
+@media screen and (max-width: 415px) and (max-height: 740px) {
+  .uiHeight {
+    max-height: 155px;
+  }
+}
+
+@media screen and (max-width: 395px) and (max-height: 850px) {
+  .uiHeight {
+    max-height: 200px;
+  }
+}
+
+@media screen and (max-width: 395px) and (max-height: 750px) {
+  .uiHeight {
+    max-height: 143px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .uiHeight {
+    max-height: 125px;
+  }
+}
+
+@media screen and (max-width: 360px) and (max-height: 740px) {
+  .uiHeight {
+    max-height: 177px;
+  }
+}
+
+@media screen and (max-width: 360px) and (max-height: 640px) {
+  .uiHeight {
+    max-height: 120px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .uiHeight {
+    max-height: 60px;
+  }
 }
 </style>
