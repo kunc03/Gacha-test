@@ -3,9 +3,7 @@
     @touchmove="(e) => e.preventDefault()"
     class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer overflow-hidden"
   >
-    <div
-      class="absolute top-[10px] small:-top-1 right-[10px] small:-right-1 w-[50px] z-[1000]"
-    >
+    <div class="absolute top-[10px] small:-top-1 -right-1 w-[50px] z-[1000]">
       <img
         @click="langPanelToggle"
         :src="intlRounded"
@@ -13,9 +11,11 @@
         preload
         height="48"
         width="48"
-        class="absolute top-14 right-10 small:right-6 small:!h-10 small:!w-10 small:!top-8"
+        class="absolute top-14 right-6 small:!h-10 small:!w-10 small:!top-8 z-[1000]"
       />
-      <LanguangePanel v-model:visible="langPanel" />
+      <div class="relative top-[6.5rem] right-6 small:!h-10 small:!top-[2rem]">
+        <LanguangePanel v-model:visible="langPanel" />
+      </div>
     </div>
     <div class="inner-container" @click="handleShowModal">
       <div class="relative grow">
@@ -84,16 +84,16 @@
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(62%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
+        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(61%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
       />
-      <img
+      <!-- <img
         :src="digitalTourist"
         alt="digital-tourist"
         preload
         height="135"
         width="363"
         class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[calc(55%+140px)] small:top-[calc(62%+120px)] extraSmall:top-[calc(57.5%+120px)] w-[363px] small:w-[20rem] extraSmall:w-[14rem]"
-      />
+      /> -->
     </div>
     <div
       class="absolute bottom-[30px] small:bottom-[20px] left-[0px] right-[0px]"
@@ -132,7 +132,7 @@
 <script setup>
 import intlRounded from '~/assets/images/intl-rounded.svg'
 import logoIcon from '~/assets/images/logo-icon.svg'
-import tapScreen from '~/assets/images/tap-screen.svg'
+import tapScreen from '~/assets/images/tap-screen.png'
 import logo from '~/assets/images/logo.png'
 import digitalTourist from '~/assets/images/digital-tourist.png'
 import { nextTick } from 'vue'
