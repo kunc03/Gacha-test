@@ -55,7 +55,7 @@
     </div>
     <div class="w-exd-312 mx-auto relative -top-12">
       <div
-        class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center cursor-pointer"
+        class="mt-5 bg-white w-exd-312 h-exd-50 mx-auto rounded-tl-xl rounded-tr-xl px-5 inline-flex justify-between items-center cursor-pointer border-b-2 border-b-exd-light-grey"
         style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         @click="profile"
       >
@@ -72,7 +72,7 @@
         />
       </div>
       <div
-        class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
+        class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center border-b-2 border-b-exd-light-grey"
         style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         @click="handleGoToHelp()"
       >
@@ -94,7 +94,7 @@
         />
       </div>
       <div
-        class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center"
+        class="bg-white w-exd-312 h-exd-50 mx-auto px-5 inline-flex justify-between items-center border-b-2 border-b-exd-light-grey"
         style="box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1608)"
         @click="handleGoToDigitalMap()"
       >
