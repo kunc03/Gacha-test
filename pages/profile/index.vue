@@ -37,6 +37,13 @@
             :is-nick-name="true"
             @update:model="updateModel('nickName', $event)"
             @validate="validateInput('nickName', $event)"
+            :validate-on-submit="validateOnSubmit"
+            :error="
+              !form.nickName && validateOnSubmit ? $t('fieldRequired') : ''
+            "
+            :class="{
+              'input-error': !form.nickName && validateOnSubmit,
+            }"
           />
         </div>
         <div
@@ -161,6 +168,21 @@
                   }
                 "
                 @validate="validateInput('postCode', $event)"
+                :validate-on-submit="validateOnSubmit"
+                :error="
+                  !form.postCode && validateOnSubmit
+                    ? $t('fieldRequired')
+                    : '' ||
+                      (form.postCode.length > 0 && form.postCode.length < 7)
+                    ? $t('minLengthPostalCode')
+                    : '' || errorPostCodeMessage
+                "
+                :class="{
+                  'input-error':
+                    (!form.postCode && validateOnSubmit) ||
+                    (form.postCode.length > 0 && form.postCode.length < 7) ||
+                    errorPostCodeMessage,
+                }"
               />
             </div>
 
@@ -187,6 +209,15 @@
                 optionLabel="name"
                 :placeholder="t('choice')"
                 :hasHelper="true"
+                :validate-on-submit="validateOnSubmit"
+                :error="
+                  !form.countryCode && validateOnSubmit
+                    ? $t('fieldRequired')
+                    : ''
+                "
+                :class="{
+                  'input-error': !form.countryCode && validateOnSubmit,
+                }"
               />
             </div>
           </div>
@@ -330,10 +361,11 @@ const { t } = useI18n()
 
 const validateOnSubmit = ref(false)
 
+const userId = ref(null)
 const isLoading = ref(false)
 const isErrorMessage = ref(false)
 const isButtonEnabled = ref(false)
-const userId = ref(null)
+const errorPostCodeMessage = ref('')
 
 const form = reactive({
   nickName: '',
@@ -519,8 +551,16 @@ const handleSubmit = async () => {
   if (errorScroll.value.length > 0) {
     await nextTick()
     const firstErrorElement = document.querySelector('.input-error')
-    if (firstErrorElement || errorScroll.value.length > 0) {
+    if (firstErrorElement) {
+      firstErrorElement.style.paddingTop = '80px'
+      firstErrorElement.style.marginTop = '-80px'
+
       firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+
+      setTimeout(() => {
+        firstErrorElement.style.paddingTop = ''
+        firstErrorElement.style.marginTop = ''
+      }, 3000)
     }
   }
   isLoading.value = false
@@ -544,8 +584,11 @@ const checkPostalCode = async (code) => {
     form.prefecture = address.prefecture
     form.city = address.city
     form.area = address.area
+
+    errorPostCodeMessage.value = ''
   } catch (error) {
-    console.log(error)
+    console.log('ada error', error)
+    errorPostCodeMessage.value = t('postalCodeNotFound')
   }
 }
 
