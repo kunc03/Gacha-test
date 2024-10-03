@@ -264,22 +264,6 @@ useHead({
   }
 }
 
-@media screen and (min-height: 610px) {
-  .scan-otp {
-    padding-top: 50px;
-    padding-bottom: 40px;
-  }
-
-  .password-inform {
-    padding: 10px;
-    font-size: 15px;
-  }
-
-  .uiHeight {
-    max-height: 97px;
-  }
-}
-
 @media screen and (min-height: 630px) {
   .uiHeight {
     max-height: 100px;
