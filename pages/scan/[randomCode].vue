@@ -56,7 +56,7 @@
               class="uiHeight list-disc list-inside overflow-y-auto"
             >
               <li
-                v-for="i in 15"
+                v-for="i in 16"
                 :key="i"
                 class="text-exd-1220 text-exd-gray-scorpion font-medium text-justify"
               >
@@ -265,6 +265,22 @@ useHead({
 }
 
 @media screen and (min-height: 610px) {
+  .scan-otp {
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+
+  .password-inform {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .uiHeight {
+    max-height: 97px;
+  }
+}
+
+@media screen and (min-height: 630px) {
   .uiHeight {
     max-height: 100px;
   }

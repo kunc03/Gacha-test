@@ -9,7 +9,7 @@
   </HeaderBar>
   <div class="flex flex-col bg-center text-black mt-24 px-8 gap-3">
     <div class="max-w-sm bg-white rounded-lg shadow">
-      <div class="h-72 w-full overflow-hidden rounded-t-lg">
+      <div class="w-full overflow-hidden rounded-t-lg">
         <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>
         <CharacterCard
           v-else
