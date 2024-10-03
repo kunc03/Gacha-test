@@ -5,7 +5,7 @@
   "currentPoints": "現在のポイント",
   "collection": "コレクション",
   "listOfPrizesAndExchanges": "景品一覧・交換",
-  "membershipInformation": "新規会員登録",
+  "membershipInformation": "会員情報",
   "helpAndInquiries": "ヘルプ・お問い合わせ",
   "toTheDigitalMap": "デジタルマップへ",
   "logout": "ログアウト",
@@ -101,8 +101,8 @@
   "reenterPassword": "ログインパスワード（再入力）",
   "questionnaire1": "このイベントを何で知りましたか？",
   "questionnaire2": "名古屋へ来た目的を教えてください",
-  "acceptTerm": "会員規約",
-  "termOfService": "利用規約",
+  "acceptTerm": "会員規約に同意する",
+  "termOfService": "会員規約",
   "dummyDummy": {
     "subTitle": {
       "term1": "第1条（会員規約）",
