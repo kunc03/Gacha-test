@@ -99,8 +99,8 @@
   "reenterPassword": "Login password (re-enter)",
   "questionnaire1": "How did you hear about this event?",
   "questionnaire2": "Please tell me the purpose of coming to Nagoya.",
-  "acceptTerm": "Membership Terms and Conditions",
-  "termOfService": "Term of Service",
+  "acceptTerm": "I agree to the membership terms and conditions",
+  "termOfService": "Membership Terms and Conditions",
   "dummyDummy": {
     "subTitle": {
       "term1": "Article 1 (Membership Terms and Conditions)",
@@ -199,7 +199,7 @@
   "wrongPassword": "Wrong password , please check again",
   "scanNotesTitle": "Please tap the button after agreeing to the following notes and terms of participation.",
   "scanNotesDescription": {
-    "note1": "The password for the day is updated at 0:00 every day. You can only tap the \"Nagoya Tour\" (hereinafter referred to as this campaign) game screen once per day at each participating spot. ",
+    "note1": "The password for that day will be updated every day at midnight. You can tap the \"Nagoya Gurotto Tour\" (hereinafter referred to as this campaign) game screen only once per day at each participating spot.",
     "note2": "Even if you tap the game screen multiple times on the same day, points will not be added to the system. ",
     "note3": "Please note that if you enter the password for the day of another participating spot, an error will occur. ",
     "note4": "Please make sure that the password for the day is in half-width numbers and enter the correct password. ",

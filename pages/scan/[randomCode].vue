@@ -3,23 +3,23 @@
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
-        class="text-black font-bold text-exd-1824.52"
+        class="header text-black font-bold text-exd-1824.52"
       >
         {{ $t('passwordInput') }}
       </p>
     </HeaderBar>
     <div
-      class="flex flex-col grow items-center justify-center mt-20 small:mt-14"
+      class="scan-content flex flex-col grow items-center justify-center mt-20 small:mt-14"
     >
       <div
-        class="flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
+        class="scan-otp flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
         <OtpInput v-model="value" :length="4" />
       </div>
       <div class="grow w-full flex flex-col gap-5 small:gap-2">
         <div
-          class="bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
+          class="password-inform bg-exd-banana mx-3 font-bold text-exd-gray-scorpion text-exd-1424 p-5"
         >
           <span>{{ $t('passwordInputInformationIntro') }}</span>
           {{ ' ' }}
@@ -45,7 +45,9 @@
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5 small:p-[15px]">
-            <p class="font-bold text-exd-1424 text-exd-gray-scorpion mb-1">
+            <p
+              class="scan-title font-bold text-exd-1424 text-exd-gray-scorpion mb-1"
+            >
               {{ $t('scanNotesTitle') }}
             </p>
 
@@ -229,87 +231,109 @@ useHead({
   pointer-events: auto;
 }
 
-@media screen {
+/* @media screen and (max-width: 460px) { */
+@media screen and (max-height: 600px) {
+  .header {
+    font-size: 15px;
+  }
+
+  .scan-content {
+    font-size: 12px;
+  }
+
+  .scan-otp {
+    padding-top: 50px;
+    padding-bottom: 30px;
+  }
+
+  .password-inform {
+    padding: 10px;
+    font-size: 8.5px;
+  }
+
+  .scan-title {
+    font-size: 13px;
+  }
+
   .uiHeight {
-    max-height: 144px;
+    max-height: 120px;
+  }
+
+  .uiHeight li {
+    font-size: 10px;
   }
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (min-height: 610px) {
   .uiHeight {
-    max-height: 700px;
+    max-height: 100px;
   }
 }
 
-@media screen and (max-width: 740px) {
+@media screen and (min-height: 700px) {
   .uiHeight {
     max-height: 140px;
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (min-height: 740px) {
   .uiHeight {
-    max-height: 105px;
+    max-height: 197px;
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (min-height: 800px) {
   .uiHeight {
-    max-height: 138px;
+    max-height: 237px;
   }
 }
 
-@media screen and (max-width: 480px) and (max-height: 940px) {
+@media screen and (min-height: 860px) {
   .uiHeight {
-    max-height: 345px;
+    max-height: 277px;
   }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (min-height: 900px) {
   .uiHeight {
-    max-height: 305px;
+    max-height: 320px;
   }
 }
 
-@media screen and (max-width: 415px) and (max-height: 740px) {
+@media screen and (min-height: 960px) {
   .uiHeight {
-    max-height: 155px;
+    max-height: 340px;
   }
 }
 
-@media screen and (max-width: 395px) and (max-height: 850px) {
+@media screen and (min-height: 1000px) {
   .uiHeight {
-    max-height: 200px;
+    max-height: 400px;
   }
 }
 
-@media screen and (max-width: 395px) and (max-height: 750px) {
+@media screen and (min-height: 1050px) {
   .uiHeight {
-    max-height: 143px;
+    max-height: 440px;
   }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (min-height: 1100px) {
   .uiHeight {
-    max-height: 125px;
+    max-height: 480px;
   }
 }
 
-@media screen and (max-width: 360px) and (max-height: 740px) {
+@media screen and (min-height: 1150px) {
   .uiHeight {
-    max-height: 177px;
+    max-height: 540px;
   }
 }
 
-@media screen and (max-width: 360px) and (max-height: 640px) {
+@media screen and (min-height: 1200px) {
   .uiHeight {
-    max-height: 120px;
+    max-height: 100%;
   }
 }
-
-@media screen and (max-width: 360px) {
-  .uiHeight {
-    max-height: 60px;
-  }
-}
+/* } */
 </style>
