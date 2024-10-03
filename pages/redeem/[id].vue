@@ -11,7 +11,7 @@
     <div
       class="max-w-sm bg-white border border-gray-200 rounded-lg shadow overflow-hidden"
     >
-      <div class="h-72 w-full overflow-hidden">
+      <div class="w-full overflow-hidden">
         <Skeleton v-if="isFetching" class="!w-full !h-full"></Skeleton>
         <CharacterCard v-else :image="prizeDetailData.image" />
       </div>

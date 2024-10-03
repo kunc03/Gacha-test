@@ -15,7 +15,7 @@
         class="scan-otp flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
-        <OtpInput v-model="value" :length="4" />
+        <OtpInput v-model="value" :length="4" :wrongPassword="wrongPassword" />
       </div>
       <div class="grow w-full flex flex-col gap-5 small:gap-2">
         <div
@@ -56,7 +56,7 @@
               class="uiHeight list-disc list-inside overflow-y-auto"
             >
               <li
-                v-for="i in 15"
+                v-for="i in 16"
                 :key="i"
                 class="text-exd-1220 text-exd-gray-scorpion font-medium text-justify"
               >
@@ -120,8 +120,11 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const refsNotes = ref(null)
+
 const handleCloseDialog = () => (isNotAllowed.value = false)
+
 const { t } = useI18n()
+const wrongPassword = ref(false)
 
 const radiusCheckResult = ref(null)
 const checkRadiusFailed = ref(false)
@@ -149,6 +152,12 @@ const checkPassword = async (params) => {
 
     errorLink.value = true
     errorMessages.value = t('wrongPassword')
+
+    wrongPassword.value = true
+
+    setTimeout(() => {
+      wrongPassword.value = false
+    }, 3000)
 
     isLoading.value = false
   }
@@ -343,7 +352,7 @@ useHead({
   }
 }
 
-@media screen and (min-height: 610px) {
+@media screen and (min-height: 630px) {
   .uiHeight {
     max-height: 100px;
   }

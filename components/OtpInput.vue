@@ -29,6 +29,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  wrongPassword: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -87,6 +91,16 @@ const isBlocked = (index) => {
   const otpLength = otp.value.join('').length
   return Math.min(otpLength, props.length - 1) !== index
 }
+
+watch(
+  () => props.wrongPassword,
+  (newValue) => {
+    if (newValue) {
+      otp.value = Array(props.length).fill('')
+      emit('update:modelValue', otp.value.join(''))
+    }
+  }
+)
 
 watch(
   () => props.modelValue,
