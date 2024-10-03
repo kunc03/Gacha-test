@@ -15,7 +15,7 @@
         class="scan-otp flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
-        <OtpInput v-model="value" :length="4" />
+        <OtpInput v-model="value" :length="4" :wrongPassword="wrongPassword" />
       </div>
       <div class="grow w-full flex flex-col gap-5 small:gap-2">
         <div
@@ -115,8 +115,11 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const refsNotes = ref(null)
+
 const handleCloseDialog = () => (isNotAllowed.value = false)
+
 const { t } = useI18n()
+const wrongPassword = ref(false)
 
 const checkRadiusFailed = ref(false)
 
@@ -140,6 +143,12 @@ const checkPassword = async (params) => {
 
     errorLink.value = true
     errorMessages.value = t('wrongPassword')
+
+    wrongPassword.value = true
+
+    setTimeout(() => {
+      wrongPassword.value = false
+    }, 3000)
 
     isLoading.value = false
   }
