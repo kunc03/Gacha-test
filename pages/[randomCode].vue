@@ -3,7 +3,7 @@
     class="grow bg-[url('assets/images/bg-red.webp')] bg-cover bg-center justify-between items-center flex flex-col overflow-hidden"
   >
     <div
-      class="flex-1 items-center flex flex-col pt-[2.75rem] pb-20 px-8 overflow-y-auto overflow-x-hidden"
+      class="flex-1 items-center flex flex-col pt-[2rem] pb-20 px-8 overflow-y-auto overflow-x-hidden"
     >
       <div class="relative w-full text-right -right-4">
         <button type="button" aria-haspopup="true" @click="langPanelToggle">

@@ -62,7 +62,7 @@ onUnmounted(() => {
             href="javascript:void(0)"
             :class="
               locale === lang.value
-                ? 'bg-exd-red text-white'
+                ? 'bg-exd-red text-white active-text'
                 : '!text-exd-gray-scorpion'
             "
             @click="changeLanguage(lang.value)"
@@ -119,5 +119,10 @@ onUnmounted(() => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.active-text {
+  -webkit-text-fill-color: rgba(255, 255, 255, 1);
+  -webkit-opacity: 1;
 }
 </style>
