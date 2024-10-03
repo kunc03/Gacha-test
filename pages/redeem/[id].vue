@@ -114,7 +114,7 @@
         class="w-full flex flex-col justify-center items-center gap-4 px-6 py-8 mt-2"
       >
         <p
-          class="text-exd-gray-scorpion font-bold text-center text-exd-1424"
+          class="text-exd-gray-scorpion font-bold text-center text-exd-1424 small:w-[105%] w-[93%] max-w-w-[93%]"
           style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         >
           {{ $t('exchanged_message') }}
@@ -125,7 +125,7 @@
         <div class="w-8/12 flex flex-col items-center">
           <p
             class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
-            @click="openGoogleMapsEdison"
+            @click="openMapA"
           >
             {{ $t('edisonHisayaSquare') }}
             <img
@@ -138,6 +138,7 @@
           </p>
           <p
             class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+            @click="openMapB"
           >
             {{ $t('address1') }}
             <img
@@ -155,7 +156,7 @@
         <div class="w-8/12 flex flex-col items-center">
           <p
             class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
-            @click="openGoogleMapsEdison"
+            @click="openMapA"
           >
             {{ $t('edisonHisayaSquare') }}
             <img
@@ -168,6 +169,7 @@
           </p>
           <p
             class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+            @click="openMapC"
           >
             {{ $t('address2') }}
             <img
@@ -272,8 +274,18 @@ const checkPoint = (point) => {
   } catch (error) {}
 }
 
-const openGoogleMapsEdison = () => {
+const openMapA = () => {
   const googleMapsUrl = `https://maps.app.goo.gl/YfqmSJ6Azkbethyf6`
+  window.open(googleMapsUrl, '_blank')
+}
+
+const openMapB = () => {
+  const googleMapsUrl = `https://maps.app.goo.gl/ZWaTkoyFa1orUyZC7`
+  window.open(googleMapsUrl, '_blank')
+}
+
+const openMapC = () => {
+  const googleMapsUrl = `https://maps.app.goo.gl/zGDwzTQpzZbgW6Yg6`
   window.open(googleMapsUrl, '_blank')
 }
 
