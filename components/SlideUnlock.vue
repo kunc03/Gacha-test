@@ -299,7 +299,7 @@ export default defineComponent({
 
 <style scoped>
 .slideunlock {
-  --su-size-text: 14px;
+  --su-size-text: 18px;
   --su-size-padding: 5px;
   --su-color-bg: #d7a237;
   --su-color-progress-normal-bg: #ffe9bc;
@@ -347,12 +347,12 @@ export default defineComponent({
   justify-content: center;
   width: 100%;
   transition: background 1s ease, color 1s ease;
-  animation: animated 2s linear infinite;
+  /* animation: animated 2s linear infinite; */
   background: var(--su-color-text-normal)
     linear-gradient(90deg, rgb(255 255 255 / 0%), white, rgb(255 255 255 / 0%))
     no-repeat;
   background-clip: text;
-  color: transparent;
+  color: white;
   font-size: var(--su-size-text);
   user-select: none;
   font-weight: bold;

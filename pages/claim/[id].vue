@@ -42,8 +42,8 @@
 
           <HeadingSection
             :is-fetching="isFetching"
-            :title="$t('howToGetPrizes')"
-            :body="prizeDetailData.how_to_win"
+            :title="$t('conditionsOfUse')"
+            :body="prizeDetailData.terms_of_use"
           />
         </div>
       </div>
