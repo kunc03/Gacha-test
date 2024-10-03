@@ -96,9 +96,8 @@ watch(
   () => props.wrongPassword,
   (newValue) => {
     if (newValue) {
-      otp.value = Array(props.length).fill('') // Clear OTP fields
+      otp.value = Array(props.length).fill('')
       emit('update:modelValue', otp.value.join(''))
-      otpRefs.value[0]?.focus() // Focus on the first field after clearing
     }
   }
 )
