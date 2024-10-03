@@ -278,13 +278,13 @@ useHead({
 
 @media screen and (min-height: 740px) {
   .uiHeight {
-    max-height: 197px;
+    max-height: 140px;
   }
 }
 
 @media screen and (min-height: 800px) {
   .uiHeight {
-    max-height: 237px;
+    max-height: 225px;
   }
 }
 
@@ -296,7 +296,7 @@ useHead({
 
 @media screen and (min-height: 900px) {
   .uiHeight {
-    max-height: 320px;
+    max-height: 300px;
   }
 }
 
