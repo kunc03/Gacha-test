@@ -476,6 +476,19 @@ const passwordValidate = () => {
   }
 }
 
+const validateForm = () => {
+  const requiredFields = ['questionnaire1', 'questionnaire2']
+
+  for (const field of requiredFields) {
+    if (!form.value[field]) {
+      console.log('Field harus diisi:', field)
+      return false
+    }
+  }
+
+  return true
+}
+
 const getAgeOptions = [
   { value: 1, label: t('10') },
   { value: 2, label: t('20') },
@@ -488,11 +501,20 @@ const getAgeOptions = [
 
 const fetchRegister = async (payload) => {
   errorMessages.value = []
+  isLoading.value = true
 
   try {
     const { data } = await useFetchApi('POST', 'register', { body: payload })
-    localStorage.setItem('USER_ID', data.user.id)
-    navigateTo('/register/complete')
+
+    if (!data || !data.user?.id) {
+      throw new Error(t('unexpectedResponse'))
+    }
+
+    if (validateForm()) {
+      localStorage.setItem('USER_ID', data.user.id)
+
+      navigateTo('/register/complete')
+    }
   } catch (error) {
     handleApiError(error)
   } finally {
@@ -503,32 +525,42 @@ const fetchRegister = async (payload) => {
 const handleApiError = (error) => {
   errorScroll.value = []
 
-  const response = error._data.errors
+  const response = error._data?.errors
 
   if (response) {
-    const message = Object.keys(response).map((item) => response[item][0])
+    const message = Object.keys(response).map((item) => {
+      return Array.isArray(response[item]) && response[item]?.[0]
+        ? response[item][0]
+        : 'Unknown error'
+    })
+
     errorScroll.value = message
     errorMessages.value.push(response)
     console.log('errorMessages', errorMessages.value)
-    // isErrorMessage.value = true
   }
 
-  errorNicknameMessage.value = response.nickname ? response.nickname[0] : ''
+  errorNicknameMessage.value = Array.isArray(response?.nickname)
+    ? response.nickname[0]
+    : ''
 
-  errorAgeMessage.value = response.age ? response.age[0] : ''
+  errorAgeMessage.value = Array.isArray(response?.age) ? response.age[0] : ''
 
-  errorEmailMessage.value = response.email ? response.email[0] : ''
+  errorEmailMessage.value = Array.isArray(response?.email)
+    ? response.email[0]
+    : ''
 
   if (form.value.password.length < 8) {
     errorPasswordMessage.value = t('passwordMin')
   } else {
     if (
-      response.password[0] === 'passwordが確認用の値と一致しません。' ||
-      response.password[0] === 'Password does not match the challenge value.'
+      response?.password?.[0] === 'passwordが確認用の値と一致しません。' ||
+      response?.password?.[0] === 'Password does not match the challenge value.'
     ) {
       errorPasswordMessage.value = ''
     } else {
-      errorPasswordMessage.value = response.password ? response.password[0] : ''
+      errorPasswordMessage.value = Array.isArray(response?.password)
+        ? response.password[0]
+        : ''
     }
   }
 }
