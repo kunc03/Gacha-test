@@ -98,7 +98,7 @@
   <Dialog
     v-model:visible="hasModal"
     modal
-    class="!bg-white w-11/12 md:!w-4/12 !max-w-sm border border-exd-gray-44"
+    class="!bg-white w-11/12 md:!w-5/12 !max-w-sm border border-exd-gray-44"
   >
     <template #container>
       <img
@@ -111,7 +111,7 @@
         @click="handleToggleModal"
       />
       <div
-        class="w-full flex flex-col justify-center items-center gap-4 px-6 py-8 mt-2"
+        class="w-full flex flex-col justify-center items-center gap-4 px-5 py-8 mt-2"
       >
         <p
           class="text-exd-gray-scorpion font-bold text-center text-exd-1424 small:w-[105%] w-[93%] max-w-w-[93%]"
