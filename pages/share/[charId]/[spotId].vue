@@ -44,7 +44,7 @@
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
         class="text-exd-gray-scorpion font-bold text-exd-1824.52"
       >
-        {{ t('shareCharacter') }}
+        {{ shareDetailData?.character_name }}
       </p>
     </HeaderBar>
 
@@ -132,7 +132,7 @@
                     class="absolute bg-white inset-x-0 bottom-0 h-8 flex items-center z-20"
                   >
                     <span
-                      class="text-exd-red-vermilion text-sm flex items-center cursor-pointer"
+                      class="text-exd-red-vermilion text-sm flex items-center cursor-pointer relative after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:border-b after:border-b-exd-red-vermilion"
                       @click="openGoogleMaps"
                       >{{ $t('openGoogleMaps') }}
                       <img
@@ -158,7 +158,7 @@
         raised
         @click="
           () =>
-            navigateTo('https://google.com', {
+            navigateTo('http://digital-gurutto.nagoya-info.jp/', {
               external: true,
               open: {
                 target: '_blank',
@@ -166,7 +166,7 @@
             })
         "
       >
-        <span class="grow text-center">GO!</span>
+        <span class="grow text-center">{{ $t('shareClickHere') }}</span>
       </Button>
     </div>
   </div>

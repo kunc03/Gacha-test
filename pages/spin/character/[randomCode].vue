@@ -49,7 +49,7 @@
         @click="handleCloseDialog"
       />
       <div
-        class="w-full flex flex-col justify-center items-center gap-4 py-6 relative"
+        class="w-full flex flex-col justify-center items-center gap-4 py-6 !pb-8 relative"
       >
         <div class="font-bold text-exd-1424 text-center text-exd-gray-scorpion">
           <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
@@ -68,32 +68,6 @@
           :on-click="handleToLogin"
           variant="red"
         />
-
-        <div
-          class="font-medium text-exd-1218 text-center text-exd-gray-scorpion"
-        >
-          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            {{ $t('howToExchangePoints') }}
-          </p>
-          <p style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)">
-            <a
-              href="https://www.google.com"
-              target="_blank"
-              class="cursor-pointer inline-flex relative after:content-[''] after:absolute after:inset-x-0 after:mr-0.5 after:bottom-0.5 after:border-b after:border-b-gray-500"
-            >
-              {{ $t('here') }}
-              <img
-                src="/images/export.svg"
-                alt="export"
-                width="15"
-                height="15"
-                class="inline"
-                preload
-              />
-            </a>
-            {{ $t('pleaseSee') }}
-          </p>
-        </div>
       </div>
     </template>
   </Dialog>

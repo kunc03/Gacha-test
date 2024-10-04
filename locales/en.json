@@ -7,7 +7,7 @@
   "listOfPrizesAndExchanges": "List of Prizes & Exchanges",
   "membershipInformation": "Membership Information",
   "helpAndInquiries": "Help & Inquiries",
-  "toTheDigitalMap": "To the Digital Map",
+  "toTheDigitalMap": "Nagoya Sightseeing Digital Map",
   "logout": "Logout",
   "addToHomeScreen": "Add to Home Screen",
   "bannerLink": "Banner Link",
@@ -217,5 +217,6 @@
     "note16": "QR Code is a registered trademark of DENSO WAVE Inc."
   },
   "emailValidation": "Email must be a valid email address",
-  "claimed": "Claimed"
+  "claimed": "Claimed",
+  "shareClickHere": "Click here for the campaign site!"
 }
