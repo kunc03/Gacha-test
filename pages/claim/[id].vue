@@ -55,7 +55,7 @@
         :width="400"
         :height="56"
         :text="$t('swipe')"
-        success-text="Claimed"
+        :success-text="$t('claimed')"
         name="slideunlock"
         @completed="handleSwipe()"
       />

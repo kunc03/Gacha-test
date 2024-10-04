@@ -119,67 +119,71 @@
         >
           {{ $t('exchanged_message') }}
         </p>
-        <p class="text-exd-gray-scorpion font-bold text-center text-exd-1424">
-          {{ $t('1019') }}
-        </p>
-        <div class="w-8/12 flex flex-col items-center">
-          <p
-            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
-            @click="openMapA"
-          >
-            {{ $t('edisonHisayaSquare') }}
-            <img
-              src="~/assets/images/export-blue.svg"
-              alt="export"
-              width="15"
-              height="15"
-              class="inline ml-1"
-            />
+        <div class="flex flex-col items-center w-full">
+          <p class="text-exd-gray-scorpion font-bold text-center text-exd-1424">
+            {{ $t('1019') }}
           </p>
-          <p
-            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
-            @click="openMapB"
-          >
-            {{ $t('address1') }}
-            <img
-              src="~/assets/images/export-blue.svg"
-              alt="export"
-              width="15"
-              height="15"
-              class="inline ml-1"
-            />
-          </p>
+          <div class="w-8/12 flex flex-col items-center">
+            <p
+              class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+              @click="openMapA"
+            >
+              {{ $t('edisonHisayaSquare') }}
+              <img
+                src="~/assets/images/export-blue.svg"
+                alt="export"
+                width="15"
+                height="15"
+                class="inline ml-1"
+              />
+            </p>
+            <p
+              class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+              @click="openMapB"
+            >
+              {{ $t('address1') }}
+              <img
+                src="~/assets/images/export-blue.svg"
+                alt="export"
+                width="15"
+                height="15"
+                class="inline ml-1"
+              />
+            </p>
+          </div>
         </div>
-        <p class="text-exd-gray-scorpion font-bold text-center text-exd-1424">
-          {{ $t('1020') }}
-        </p>
-        <div class="w-8/12 flex flex-col items-center">
-          <p
-            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
-            @click="openMapA"
-          >
-            {{ $t('edisonHisayaSquare') }}
-            <img
-              src="~/assets/images/export-blue.svg"
-              alt="export"
-              width="15"
-              height="15"
-              class="inline ml-1"
-            />
+        <div class="flex flex-col items-center w-full">
+          <p class="text-exd-gray-scorpion font-bold text-center text-exd-1424">
+            {{ $t('1020') }}
           </p>
-          <p
-            class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
-            @click="openMapC"
-          >
-            {{ $t('address2') }}
-            <img
-              src="~/assets/images/export-blue.svg"
-              alt="export"
-              width="15"
-              height="15"
-              class="inline ml-1"
-            />
-          </p>
+          <div class="w-8/12 flex flex-col items-center">
+            <p
+              class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+              @click="openMapA"
+            >
+              {{ $t('edisonHisayaSquare') }}
+              <img
+                src="~/assets/images/export-blue.svg"
+                alt="export"
+                width="15"
+                height="15"
+                class="inline ml-1"
+              />
+            </p>
+            <p
+              class="text-exd-blue-link text-center text-exd-1424 border-b border-b-exd-blue-link w-fit cursor-pointer"
+              @click="openMapC"
+            >
+              {{ $t('address2') }}
+              <img
+                src="~/assets/images/export-blue.svg"
+                alt="export"
+                width="15"
+                height="15"
+                class="inline ml-1"
+              />
+            </p>
+          </div>
         </div>
       </div>
       <SolidButton

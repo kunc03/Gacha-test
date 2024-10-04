@@ -45,16 +45,15 @@
         </div>
         <div class="w-full grow bg-gray-100 relative flex flex-col">
           <div class="grow p-5 small:p-[15px]">
-            <p
-              class="scan-title font-bold text-exd-1424 text-exd-gray-scorpion mb-1"
-            >
-              {{ $t('scanNotesTitle') }}
-            </p>
-
             <ul
               ref="refsNotes"
               class="uiHeight list-disc list-inside overflow-y-auto"
             >
+              <p
+                class="scan-title font-bold text-exd-1424 text-exd-gray-scorpion mb-1"
+              >
+                {{ $t('scanNotesTitle') }}
+              </p>
               <li
                 v-for="i in 16"
                 :key="i"
@@ -362,7 +361,7 @@ useHead({
   }
 
   .uiHeight {
-    max-height: 120px;
+    max-height: 170px;
   }
 
   .uiHeight li {
@@ -372,55 +371,55 @@ useHead({
 
 @media screen and (min-height: 630px) {
   .uiHeight {
-    max-height: 100px;
+    max-height: 150px;
   }
 }
 
 @media screen and (min-height: 700px) {
   .uiHeight {
-    max-height: 140px;
+    max-height: 190px;
   }
 }
 
 @media screen and (min-height: 740px) {
   .uiHeight {
-    max-height: 140px;
+    max-height: 190px;
   }
 }
 
 @media screen and (min-height: 800px) {
   .uiHeight {
-    max-height: 225px;
+    max-height: 270px;
   }
 }
 
 @media screen and (min-height: 860px) {
   .uiHeight {
-    max-height: 277px;
+    max-height: 330px;
   }
 }
 
 @media screen and (min-height: 900px) {
   .uiHeight {
-    max-height: 300px;
+    max-height: 370px;
   }
 }
 
 @media screen and (min-height: 960px) {
   .uiHeight {
-    max-height: 340px;
+    max-height: 390px;
   }
 }
 
 @media screen and (min-height: 1000px) {
   .uiHeight {
-    max-height: 400px;
+    max-height: 430px;
   }
 }
 
 @media screen and (min-height: 1050px) {
   .uiHeight {
-    max-height: 440px;
+    max-height: 450px;
   }
 }
 
@@ -432,13 +431,13 @@ useHead({
 
 @media screen and (min-height: 1150px) {
   .uiHeight {
-    max-height: 540px;
+    max-height: 570px;
   }
 }
 
 @media screen and (min-height: 1200px) {
   .uiHeight {
-    max-height: 100%;
+    max-height: 670px;
   }
 }
 /* } */
