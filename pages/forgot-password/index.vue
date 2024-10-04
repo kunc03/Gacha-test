@@ -51,23 +51,18 @@
       </template>
     </div>
     <div class="fixed bottom-0 w-full max-w-md mx-auto px-8 mb-3">
-      <Button
-        class="!bg-exd-gold !py-4 !w-full !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5"
-        raised
-        @click="handleSubmit"
-      >
-        <span class="grow text-center">{{
-          !isSuccessSendLinkResetPassword ? $t('send') : 'TOP'
-        }}</span>
-        <img :src="arrow" alt="warning" width="10" height="10" preload />
-      </Button>
+      <SolidButton
+        :label="!isSuccessSendLinkResetPassword ? $t('send') : 'TOP'"
+        :has-loading="isLoading"
+        :on-click="handleSubmit"
+        has-bottom
+      />
     </div>
   </div>
 </template>
 
 <script setup>
 import InputText from '~/components/InputText.vue'
-import arrow from '~/assets/images/arrow.svg'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -77,6 +72,7 @@ const form = ref({
 })
 
 const message = ref(null)
+const isLoading = ref(false)
 
 const isSuccessSendLinkResetPassword = ref(false)
 const updateModel = (field, value) => {
@@ -84,7 +80,7 @@ const updateModel = (field, value) => {
 }
 
 const validateInput = (field, value) => {
-  console.log(`Validated ${field}:`, value)
+  // console.log(`Validated ${field}:`, value)
 }
 
 const handleSubmit = async () => {
@@ -96,6 +92,7 @@ const handleSubmit = async () => {
     }
 
     try {
+      isLoading.value = true
       const { status, message } = await useFetchApi('POST', 'email/forgot', {
         body: payload,
       })
@@ -107,6 +104,8 @@ const handleSubmit = async () => {
       // console.log(response)
     } catch (error) {
       console.log(error)
+    } finally {
+      isLoading.value = false
     }
   }
 }
