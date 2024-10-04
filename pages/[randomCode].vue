@@ -79,16 +79,6 @@
         </div>
       </div>
     </div>
-    <SolidButton
-      label="close"
-      has-bottom
-      :has-icon="false"
-      @click="
-        navigateTo('https://nospot.new-ordinary.co.jp/maps/nagoya', {
-          external: true,
-        })
-      "
-    />
   </div>
 </template>
 
