@@ -4,7 +4,7 @@ export const countries = [
   { code: 'DZ', name: 'Algeria' },
   { code: 'AS', name: 'American Samoa' },
   { code: 'AD', name: 'Andorra' },
-  { code: 'AG', name: 'Angola' },
+  { code: 'AO', name: 'Angola' },
   { code: 'AI', name: 'Anguilla' },
   { code: 'AG', name: 'Antigua & Barbuda' },
   { code: 'AR', name: 'Argentina' },
