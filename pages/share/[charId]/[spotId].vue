@@ -158,7 +158,7 @@
         raised
         @click="
           () =>
-            navigateTo('https://google.com', {
+            navigateTo('http://digital-gurutto.nagoya-info.jp/', {
               external: true,
               open: {
                 target: '_blank',
@@ -166,7 +166,7 @@
             })
         "
       >
-        <span class="grow text-center">GO!</span>
+        <span class="grow text-center">{{ $t('shareClickHere') }}</span>
       </Button>
     </div>
   </div>

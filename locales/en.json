@@ -217,5 +217,6 @@
     "note16": "QR Code is a registered trademark of DENSO WAVE Inc."
   },
   "emailValidation": "Email must be a valid email address",
-  "claimed": "Claimed"
+  "claimed": "Claimed",
+  "shareClickHere": "Click here for the campaign site!"
 }
