@@ -481,7 +481,7 @@ const validateForm = () => {
 
   for (const field of requiredFields) {
     if (!form.value[field]) {
-      console.log('Field harus diisi:', field)
+      console.log('Field must be filled:', field)
       return false
     }
   }
