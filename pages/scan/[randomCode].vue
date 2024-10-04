@@ -204,6 +204,24 @@ const onTouchmove = (event) => {
 
 const radiusCheck = async () => {
   const location = route.params.randomCode
+  isLoading.value = true
+  try {
+    const { data } = await useFetchApi('POST', 'radius-check', {
+      body: {
+        lat: latitude.value,
+        long: longitude.value,
+        slug: location,
+      },
+    })
+    radiusCheckResult.value = data
+  } catch (error) {
+    checkRadiusMessage.value = error?._data.message
+    checkRadiusFailed.value = true
+    isNotAllowed.value = true
+    document.body.style.pointerEvents = 'none'
+  } finally {
+    isLoading.value = false
+  }
 }
 
 const checkingLocation = async () => {
