@@ -13,7 +13,7 @@
         {{ $t('currentPoints') }}
       </p>
       <p class="text-white text-exd-56112 font-bold relative -top-10">
-        {{ store.point }}<span class="text-exd-1020 ml-1">pt</span>
+        {{ store.point }}<span class="text-exd-1530 ml-1">pt</span>
       </p>
     </div>
 

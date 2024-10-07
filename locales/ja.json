@@ -7,7 +7,7 @@
   "listOfPrizesAndExchanges": "景品一覧・交換",
   "membershipInformation": "会員情報",
   "helpAndInquiries": "ヘルプ・お問い合わせ",
-  "toTheDigitalMap": "デジタルマップへ",
+  "toTheDigitalMap": "名古屋観光デジタルマップ",
   "logout": "ログアウト",
   "addToHomeScreen": "ホーム画面に追加",
   "bannerLink": "バナーリンク",
@@ -219,5 +219,6 @@
     "note16": "QRコードは(株)デンソーウェーブの登録商標です。"
   },
   "emailValidation": "メールは有効なメールアドレスである必要があります",
-  "claimed": "主張した"
+  "claimed": "主張した",
+  "shareClickHere": "キャンペーンサイトはこちら！"
 }
