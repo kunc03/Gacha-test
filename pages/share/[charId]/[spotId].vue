@@ -77,7 +77,7 @@
         class="flex flex-col bg-center text-black mt-[105px] px-8 gap-3 mb-20"
       >
         <div class="max-w-sm bg-white rounded-lg shadow">
-          <div class="h-72 w-full overflow-hidden rounded-t-lg">
+          <div class="w-full overflow-hidden rounded-t-lg">
             <Skeleton v-if="isFetching" class="!w-full !h-full" />
             <CharacterCard
               v-else-if="shareDetailData.is_valid_char"
