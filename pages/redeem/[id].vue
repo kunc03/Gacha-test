@@ -17,11 +17,11 @@
       </div>
       <div class="p-5 flex flex-col justify-between w-full">
         <div class="flex flex-col gap-4">
-          <div class="inline-flex justify-between w-full gap-3">
+          <div class="relative inline-flex justify-between w-full gap-3">
             <Skeleton v-if="isFetching" class="!h-3" width="15rem"></Skeleton>
             <p
               v-else
-              class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+              class="font-bold text-exd-1424 text-exd-gray-scorpion small:max-w-52 max-w-64"
             >
               {{ prizeDetailData.name }}
             </p>
@@ -32,7 +32,7 @@
             ></Skeleton>
             <p
               v-else
-              class="font-bold text-exd-1824.52 text-exd-orange-700 flex items-end"
+              class="absolute font-bold text-exd-1824.52 text-exd-orange-700 right-0 top-5"
             >
               {{ prizeDetailData.point }}pt
             </p>

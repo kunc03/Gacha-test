@@ -25,7 +25,7 @@
         :image-card="item.image"
       >
         <template v-slot:text>
-          <div class="inline-flex justify-between w-100">
+          <div class="inline-flex justify-between w-100 pr-4">
             <div class="flex flex-col justify-center gap-1">
               <p class="text-exd-gray-scorpion font-semibold text-exd-1218">
                 {{ item.name }}

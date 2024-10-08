@@ -22,7 +22,7 @@
             <Skeleton v-if="isFetching" class="!h-3" width="15rem"></Skeleton>
             <p
               v-else
-              class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+              class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-64"
             >
               {{ prizeDetailData.name }}
             </p>
