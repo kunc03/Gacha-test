@@ -138,22 +138,6 @@ useHead({
   title: 'Redeem',
 })
 
-const getLocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        fetchingPrizeData()
-        // initializeMap(position.coords.latitude, position.coords.longitude)
-      },
-      (error) => {
-        console.error('Error Code = ' + error.code + ' - ' + error.message)
-      }
-    )
-  } else {
-    console.error('Geolocation is not supported by this browser.')
-  }
-}
-
 const isFetching = ref(true)
 const route = useRoute()
 const router = useRouter()
@@ -216,8 +200,8 @@ const prizeDetailData = ref({})
 const id = route.params.id
 
 const fetchingPrizeData = async () => {
+  isFetching.value = true
   try {
-    isFetching.value = true
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
 
@@ -230,6 +214,6 @@ const fetchingPrizeData = async () => {
 }
 
 onMounted(() => {
-  getLocation()
+  fetchingPrizeData()
 })
 </script>
