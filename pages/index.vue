@@ -25,31 +25,37 @@
           preload
           height="129"
           width="226"
-          class="absolute top-8 small:top-4 h-[129px] small:h-24 w-[226px] small:w-auto left-0 z-20"
+          class="absolute top-8 small:top-2 h-[129px] small:h-24 w-[75%] small:w-auto left-0 z-20"
         />
       </div>
       <div class="absolute inset-x-0 top-[96px] small:top-10">
         <img
           :src="picture1"
           alt="picture1"
-          class="absolute -left-2 w-auto small:w-[180px] small:top-3 extraSmall:w-36"
+          class="absolute -left-2 -top-1 w-[220px] small:w-[180px] small:top-3 extraSmall:w-36"
         />
         <img
           :src="picture2"
           alt="picture2"
-          class="absolute -right-[4.5rem] top-8 w-auto small:w-auto extraSmall:w-60 extraSmall:-right-[3rem]"
+          class="absolute -right-[6rem] top-7 w-[480px] small:w-auto extraSmall:w-60 extraSmall:-right-[3rem]"
         />
+
         <img
           :src="get"
           alt="get"
-          class="absolute right-4 top-6 extraSmall:w-32"
+          class="absolute w-64 right-1 top-7 extraSmall:w-32"
         />
 
         <img
           :src="gacha"
           alt="gacha"
           preload
-          class="absolute left-5 extraSmall:left-2 top-40 small:top-36 extraSmall:top-[108px] w-[172px] extraSmall:w-32"
+          class="absolute left-5 extraSmall:left-2 top-40 small:top-36 extraSmall:top-[108px] w-[200px] extraSmall:w-32"
+        />
+        <img
+          :src="talk"
+          alt="talk"
+          class="absolute w-[90px] left-5 extraSmall:left-2 top-[350px] small:top-[325px] small:w-20 z-20"
         />
       </div>
       <div
@@ -78,13 +84,14 @@
         alt="intl"
         class="absolute right-6 small:right-4 extraSmall:right-3 top-[calc(50%-1.2rem)] small:top-[calc(55.5%-1.7rem)] extraSmall:top-[calc(57.5%-1.7rem)] small:w-[75px] extraSmall:w-[55px]"
       />
+
       <img
         :src="logo"
         alt="logo"
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[55%] small:top-[calc(61%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
+        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[58%] small:top-[calc(61%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
       />
       <!-- <img
         :src="digitalTourist"
@@ -131,7 +138,7 @@
 
 <script setup>
 import intlRounded from '~/assets/images/intl-rounded.svg'
-import logoIcon from '~/assets/images/logo-icon.svg'
+import logoIcon from '~/assets/images/logo-icon.png'
 import tapScreen from '~/assets/images/tap-screen.png'
 import logo from '~/assets/images/logo.png'
 import digitalTourist from '~/assets/images/digital-tourist.png'
@@ -143,6 +150,7 @@ import picture2 from '~/assets/images/picture2.png'
 import get from '~/assets/images/get.png'
 import intl from '~/assets/images/intl.png'
 import character from '~/assets/images/character.png'
+import talk from '~/assets/images/talk.png'
 
 const router = useRouter()
 const { setSourceFrom } = useRegister()
