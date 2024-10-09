@@ -101,8 +101,7 @@ const getPassword = async (id) => {
   try {
     isLoading.value = true
 
-    const { data } = await useFetchApi('GET', '/location/password/' + id)
-
+    const { status, data } = await useFetchApi('GET', '/location/password/' + id)
     if (data) {
       responseData.value = {
         password:
@@ -114,7 +113,7 @@ const getPassword = async (id) => {
 
     isLoading.value = false
   } catch (error) {
-    console.log("Error: Can't get password")
+    navigateTo('/');
   }
 }
 
