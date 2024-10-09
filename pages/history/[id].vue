@@ -29,7 +29,7 @@
           />
           <p
             v-else
-            class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+            class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-64"
           >
             {{ historyDetailData.character_name }}
           </p>

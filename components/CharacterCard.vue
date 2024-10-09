@@ -3,7 +3,7 @@
     :class="[variantClass, 'h-full w-full flex justify-center items-center']"
   >
     <img
-      :src="image"
+      :src="image || notImage"
       alt="character"
       class="relative w-full h-full object-fill"
       preload
@@ -14,6 +14,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import notImage from '~/assets/images/notimage.png'
 
 const props = defineProps({
   image: {

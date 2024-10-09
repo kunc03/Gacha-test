@@ -7,7 +7,7 @@
       ]"
       @click="handleClick"
     >
-      <div class="w-20 h-auto">
+      <div class="w-full max-w-20 max-h-20">
         <CharacterCard :image="imageCard" variant="without-background" />
       </div>
       <slot name="text"></slot>
