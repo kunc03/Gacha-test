@@ -90,7 +90,7 @@
 
               <p
                 v-else-if="shareDetailData.is_valid_char"
-                class="font-bold text-exd-1424 text-exd-gray-scorpion max-w-40"
+                class="font-bold text-exd-1424 text-exd-gray-scorpion w-full"
               >
                 {{ shareDetailData.character_name }}
               </p>
