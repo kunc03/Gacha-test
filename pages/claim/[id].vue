@@ -8,7 +8,7 @@
     </p>
     <div class="bg-exd-banana grow flex flex-col py-8 px-7 justify-between">
       <div class="flex flex-col gap-5">
-        <div class="h-64 bg-white w-80 rounded-lg relative mx-auto">
+        <div class="w-64 h-64 bg-white rounded-lg relative mx-auto">
           <Skeleton v-if="isFetching" class="!w-full !h-full" />
 
           <CharacterCard
