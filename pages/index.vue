@@ -83,7 +83,7 @@
       <img
         :src="talk"
         alt="talk"
-        class="absolute left-16 transform -translate-x-1/2 right-0 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[5rem] small:w-[4rem]"
+        class="absolute left-14 transform -translate-x-1/2 right-0 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[6.5rem] small:w-[5.5rem]"
       />
 
       <img
@@ -223,26 +223,3 @@ useHead({
   title: 'Welcome',
 })
 </script>
-
-<style scoped>
-/* @media screen and (max-width: 660px) {
-  .talk {
-    top: 300px;
-    left: 20px;
-  }
-} */
-
-@media screen and (min-height: 400px) {
-  .talk {
-    top: 300px;
-    left: 20px;
-  }
-}
-
-@media screen and (min-height: 460px) {
-  .talk {
-    top: 350px;
-    left: 20px;
-  }
-}
-</style>
