@@ -88,9 +88,7 @@
           </p>
         </div>
         <div v-else class="text-center w-10/12">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ checkRadiusMessage }}
-          </p>
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion" v-html="checkRadiusMessage"></p>
         </div>
       </div>
     </template>
@@ -258,7 +256,10 @@ const checkingLocation = async () => {
             isRequestingLocation.value = false
           }
         } else if (permissionStatus.state === 'denied') {
-          isRequestingLocation.value = true
+          isNotAllowed.value = true
+          checkRadiusMessage.value = t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
+          checkRadiusFailed.value = true
+
         }
 
         // Listen for changes to the permission status
@@ -266,7 +267,9 @@ const checkingLocation = async () => {
           if (permissionStatus.state === 'granted') {
             isRequestingLocation.value = false
           } else if (permissionStatus.state === 'denied') {
-            isRequestingLocation.value = false
+            isNotAllowed.value = true
+            checkRadiusMessage.value = t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
+            checkRadiusFailed.value = true
           }
         }
       })
