@@ -43,9 +43,8 @@ export default defineNuxtConfig({
   ],
 
   gtag: {
-    enabled: process.env.NODE_ENV === 'production',
+    // enabled: process.env.NODE_ENV === 'production',
     id: process.env.NUXT_PUBLIC_GTAG_ID,
-    // id: 'G-Q82KCCK9LV',
   },
 
   pinia: {
@@ -82,6 +81,7 @@ export default defineNuxtConfig({
       SECRET_KEY: process.env.SECRET_KEY,
       NUXT_PUBLIC_GTAG_ID: process.env.NUXT_PUBLIC_GTAG_ID,
       GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
+      NODE_ENV: process.env.NODE_ENV,
     },
   },
 
