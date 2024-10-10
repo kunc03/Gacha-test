@@ -152,7 +152,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'History Detail',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const config = useRuntimeConfig()

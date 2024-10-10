@@ -354,7 +354,7 @@ import { useI18n } from 'vue-i18n'
 import { countries } from '~/data/countries'
 
 useHead({
-  title: 'Profile',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const { t } = useI18n()

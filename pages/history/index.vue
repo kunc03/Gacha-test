@@ -36,7 +36,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'History',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const histories = ref([])

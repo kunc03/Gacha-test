@@ -302,7 +302,7 @@ watch(isNotAllowed, (newValue) => {
 })
 
 useHead({
-  title: 'Scan',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 </script>
 

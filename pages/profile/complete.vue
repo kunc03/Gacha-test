@@ -48,7 +48,7 @@ const router = useRouter()
 const isLoading = ref(false)
 
 useHead({
-  title: 'Completed',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const saveSpin = async () => {

@@ -204,7 +204,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Redeem',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const hasModal = ref(false)

@@ -43,7 +43,7 @@
         <img
           :src="get"
           alt="get"
-          class="absolute w-64 right-1 top-7 extraSmall:w-32"
+          class="absolute top-14 small:top-2 w-[65%] small:w-auto left-1/3 z-20"
         />
 
         <img
@@ -83,7 +83,7 @@
       <img
         :src="talk"
         alt="talk"
-        class="absolute left-14 transform -translate-x-1/2 right-0 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[6.5rem] small:w-[5.5rem]"
+        class="absolute left-14 transform -translate-x-1/2 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[6.5rem] small:w-[5.5rem]"
       />
 
       <img
@@ -220,6 +220,6 @@ onMounted(() => {
 })
 
 useHead({
-  title: 'Welcome',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 </script>

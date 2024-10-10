@@ -134,7 +134,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Redeem',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const isFetching = ref(true)

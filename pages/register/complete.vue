@@ -34,7 +34,7 @@
 import useRegister from '~/composables/useRegister'
 
 useHead({
-  title: 'Register Complete',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const { isSpin } = useRegister()

@@ -392,7 +392,7 @@ import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
 
 useHead({
-  title: 'Register',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const form = ref({

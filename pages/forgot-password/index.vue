@@ -111,6 +111,6 @@ const handleSubmit = async () => {
 }
 
 useHead({
-  title: 'Reset Password',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 </script>

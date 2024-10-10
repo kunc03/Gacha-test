@@ -57,6 +57,6 @@ const goTo = (type) => {
 }
 
 useHead({
-  title: 'Redeem',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 </script>

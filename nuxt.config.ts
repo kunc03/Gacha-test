@@ -14,6 +14,12 @@ export default defineNuxtConfig({
         },
         { rel: 'icon', type: 'image/x-icon', href: '/logo-icon.ico' },
       ],
+      meta: [
+        {
+          name: 'google-site-verification',
+          content: 'qPMcINvTopwSKTg-hyULhkmenhQsPoHXCN7OI6ksk2M',
+        },
+      ],
     },
   },
 
@@ -33,7 +39,13 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
+    'nuxt-gtag',
   ],
+
+  gtag: {
+    id: process.env.GTAG_ID,
+    enabled: process.env.NODE_ENV === 'production',
+  },
 
   pinia: {
     disableVuex: true,

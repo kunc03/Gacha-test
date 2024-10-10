@@ -228,7 +228,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Dashboard',
+  title: '名古屋ぐるっとツアー マイページ',
 })
 
 const handleGoToHistory = () => router.push('/history')
