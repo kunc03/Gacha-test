@@ -32,4 +32,9 @@ useHead({
     { name: 'twitter:image:height', content: '630' },
   ],
 })
+
+onMounted(() => {
+  console.log('Environment:', process.env.NODE_ENV)
+  console.log('GTAG ID:', process.env.NUXT_PUBLIC_GTAG_ID)
+})
 </script>
