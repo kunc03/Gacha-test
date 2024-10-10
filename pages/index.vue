@@ -52,11 +52,6 @@
           preload
           class="absolute left-5 extraSmall:left-2 top-40 small:top-36 extraSmall:top-[108px] w-[200px] extraSmall:w-32"
         />
-        <img
-          :src="talk"
-          alt="talk"
-          class="absolute w-[90px] left-5 extraSmall:left-2 top-[350px] small:top-[325px] small:w-20 z-20"
-        />
       </div>
       <div
         class="absolute bottom-[10%] small:pb-4 justify-center items-center w-full flex flex-col z-10"
@@ -83,6 +78,12 @@
         :src="intl"
         alt="intl"
         class="absolute right-6 small:right-4 extraSmall:right-3 top-[calc(50%-1.2rem)] small:top-[calc(55.5%-1.7rem)] extraSmall:top-[calc(57.5%-1.7rem)] small:w-[75px] extraSmall:w-[55px]"
+      />
+
+      <img
+        :src="talk"
+        alt="talk"
+        class="absolute left-14 transform -translate-x-1/2 right-0 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[6.5rem] small:w-[5.5rem]"
       />
 
       <img
