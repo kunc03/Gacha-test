@@ -129,8 +129,4 @@ onMounted(async () => {
 
   await getPassword(location)
 })
-
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
 </script>

@@ -151,10 +151,6 @@ definePageMeta({
   middleware: 'auth',
 })
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const config = useRuntimeConfig()
 const route = useRoute()
 const id = route.params.id

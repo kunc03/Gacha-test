@@ -133,10 +133,6 @@ definePageMeta({
   layout: 'default',
 })
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const isFetching = ref(true)
 const route = useRoute()
 const router = useRouter()

@@ -109,8 +109,4 @@ const handleSubmit = async () => {
     }
   }
 }
-
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
 </script>

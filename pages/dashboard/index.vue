@@ -227,10 +227,6 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
 const profile = () => router.push('/profile')

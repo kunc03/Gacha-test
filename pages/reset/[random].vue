@@ -146,10 +146,6 @@ const handleSubmit = async () => {
   }
 }
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const fetchingEmailData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'email/decrypt?token=' + token)

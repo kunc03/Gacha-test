@@ -21,14 +21,18 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 const layoutCustomProps = useAttrs()
 
 const hasBack = ref(layoutCustomProps.hasBack ?? false)
 const title = ref(layoutCustomProps.title)
 
 const config = useRuntimeConfig()
+const { t } = useI18n()
 
 useHead({
+  title: t('headTitle'),
   meta: [
     { name: 'description', content: config.public.META_TITLE },
     // Facebook

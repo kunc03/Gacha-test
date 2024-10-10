@@ -33,10 +33,6 @@
 <script setup>
 import useRegister from '~/composables/useRegister'
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const { isSpin } = useRegister()
 const { decryptData } = useEncryption()
 

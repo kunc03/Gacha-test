@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       meta: [
         {
           name: 'google-site-verification',
-          content: 'qPMcINvTopwSKTg-hyULhkmenhQsPoHXCN7OI6ksk2M',
+          content: process.env.GOOGLE_SITE_VERIFICATION,
         },
       ],
     },

@@ -6,8 +6,13 @@
   </main>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 const config = useRuntimeConfig()
+const { t } = useI18n()
+
 useHead({
+  title: t('headTitle'),
   meta: [
     { name: 'description', content: config.public.META_TITLE },
     // Facebook

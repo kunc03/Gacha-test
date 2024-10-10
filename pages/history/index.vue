@@ -35,10 +35,6 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const histories = ref([])
 const character_count = ref(0)
 const master_count = ref(0)

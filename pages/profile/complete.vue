@@ -47,10 +47,6 @@ const { decryptData } = useEncryption()
 const router = useRouter()
 const isLoading = ref(false)
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const saveSpin = async () => {
   if (!isSpin) return
   const storedData = useCookie('VALID_PASSWORD')

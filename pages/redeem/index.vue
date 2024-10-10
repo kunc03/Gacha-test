@@ -50,10 +50,6 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-useHead({
-  title: '名古屋ぐるっとツアー マイページ',
-})
-
 const prizes = ref([])
 const isFetching = ref(false)
 
