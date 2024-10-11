@@ -231,8 +231,6 @@ const initializeMap = async (lat, long) => {
 
 const updateMetaHead = () => {
   useHead({
-    title: computed(() => config.public.APP_NAME),
-
     meta: [
       { name: 'description', content: description },
       // Facebook
