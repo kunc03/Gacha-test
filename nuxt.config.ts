@@ -39,13 +39,13 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
-    process.env.NODE_ENV === 'production' && 'nuxt-gtag',
+    'nuxt-gtag',
   ],
 
-  // gtag: {
-  //   id: process.env.NUXT_PUBLIC_GTAG_ID,
-  //   disabled: process.env.NODE_ENV !== 'production',
-  // },
+  gtag: {
+    id: process.env.NUXT_PUBLIC_GTAG_ID,
+    enabled: process.env.NODE_ENV === 'production',
+  },
 
   pinia: {
     disableVuex: true,
@@ -79,6 +79,9 @@ export default defineNuxtConfig({
       META_URL: process.env.META_URL,
       META_QUOTE: process.env.META_QUOTE,
       SECRET_KEY: process.env.SECRET_KEY,
+      NUXT_PUBLIC_GTAG_ID: process.env.NUXT_PUBLIC_GTAG_ID,
+      GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
+      NODE_ENV: process.env.NODE_ENV,
     },
   },
 
