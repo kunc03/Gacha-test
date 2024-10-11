@@ -88,7 +88,10 @@
           </p>
         </div>
         <div v-else class="text-center w-10/12">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion" v-html="checkRadiusMessage"></p>
+          <p
+            class="font-bold text-exd-1424 text-exd-gray-scorpion"
+            v-html="checkRadiusMessage"
+          ></p>
         </div>
       </div>
     </template>
@@ -257,9 +260,9 @@ const checkingLocation = async () => {
           }
         } else if (permissionStatus.state === 'denied') {
           isNotAllowed.value = true
-          checkRadiusMessage.value = t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
+          checkRadiusMessage.value =
+            t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
           checkRadiusFailed.value = true
-
         }
 
         // Listen for changes to the permission status
@@ -268,7 +271,8 @@ const checkingLocation = async () => {
             isRequestingLocation.value = false
           } else if (permissionStatus.state === 'denied') {
             isNotAllowed.value = true
-            checkRadiusMessage.value = t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
+            checkRadiusMessage.value =
+              t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
             checkRadiusFailed.value = true
           }
         }
@@ -302,10 +306,6 @@ watch(isNotAllowed, (newValue) => {
   } else {
     document.body.classList.remove('modal-open')
   }
-})
-
-useHead({
-  title: 'Scan',
 })
 </script>
 

@@ -69,8 +69,4 @@ definePageMeta({
 const goToSpinPoint = async () => {
   router.push(`/spin/point/${route.params.randomCode}`)
 }
-
-useHead({
-  title: 'Spin',
-})
 </script>

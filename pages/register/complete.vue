@@ -33,10 +33,6 @@
 <script setup>
 import useRegister from '~/composables/useRegister'
 
-useHead({
-  title: 'Register Complete',
-})
-
 const { isSpin } = useRegister()
 const { decryptData } = useEncryption()
 

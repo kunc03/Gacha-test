@@ -133,10 +133,6 @@ definePageMeta({
   layout: 'default',
 })
 
-useHead({
-  title: 'Redeem',
-})
-
 const isFetching = ref(true)
 const route = useRoute()
 const router = useRouter()

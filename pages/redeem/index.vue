@@ -50,10 +50,6 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-useHead({
-  title: 'Redeem',
-})
-
 const prizes = ref([])
 const isFetching = ref(false)
 

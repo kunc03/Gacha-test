@@ -109,8 +109,4 @@ const handleSubmit = async () => {
     }
   }
 }
-
-useHead({
-  title: 'Reset Password',
-})
 </script>

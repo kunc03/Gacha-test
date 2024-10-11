@@ -146,10 +146,6 @@ const handleSubmit = async () => {
   }
 }
 
-useHead({
-  title: 'Reset Password',
-})
-
 const fetchingEmailData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'email/decrypt?token=' + token)

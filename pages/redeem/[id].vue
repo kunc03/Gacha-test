@@ -203,10 +203,6 @@ definePageMeta({
   layout: 'with-bottom-bar',
 })
 
-useHead({
-  title: 'Redeem',
-})
-
 const hasModal = ref(false)
 const route = useRoute()
 const router = useRouter()

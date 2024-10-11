@@ -118,10 +118,6 @@ definePageMeta({
   layout: 'gacha-machine',
 })
 
-useHead({
-  title: 'Spin Character',
-})
-
 const { setSourceFrom } = useRegister()
 
 const router = useRouter()

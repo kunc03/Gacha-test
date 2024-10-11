@@ -391,10 +391,6 @@ import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
 
-useHead({
-  title: 'Register',
-})
-
 const form = ref({
   nickName: '',
   age: '',

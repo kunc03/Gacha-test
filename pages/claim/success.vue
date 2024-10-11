@@ -55,8 +55,4 @@ const goTo = (type) => {
       break
   }
 }
-
-useHead({
-  title: 'Redeem',
-})
 </script>

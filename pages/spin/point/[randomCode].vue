@@ -157,10 +157,6 @@ const handleGoToCharacter = () => {
 onMounted(() => {
   fetchImageFromApi()
 })
-
-useHead({
-  title: 'Spin Point',
-})
 </script>
 
 <style scoped>

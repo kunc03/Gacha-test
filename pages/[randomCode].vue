@@ -101,7 +101,10 @@ const getPassword = async (id) => {
   try {
     isLoading.value = true
 
-    const { status, data } = await useFetchApi('GET', '/location/password/' + id)
+    const { status, data } = await useFetchApi(
+      'GET',
+      '/location/password/' + id
+    )
     if (data) {
       responseData.value = {
         password:
@@ -113,7 +116,7 @@ const getPassword = async (id) => {
 
     isLoading.value = false
   } catch (error) {
-    navigateTo('/');
+    navigateTo('/')
   }
 }
 
@@ -125,9 +128,5 @@ onMounted(async () => {
   const location = route.params.randomCode
 
   await getPassword(location)
-})
-
-useHead({
-  title: 'Password',
 })
 </script>

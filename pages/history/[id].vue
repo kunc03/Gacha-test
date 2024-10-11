@@ -151,10 +151,6 @@ definePageMeta({
   middleware: 'auth',
 })
 
-useHead({
-  title: 'History Detail',
-})
-
 const config = useRuntimeConfig()
 const route = useRoute()
 const id = route.params.id
@@ -235,8 +231,6 @@ const initializeMap = async (lat, long) => {
 
 const updateMetaHead = () => {
   useHead({
-    title: computed(() => config.public.APP_NAME),
-
     meta: [
       { name: 'description', content: description },
       // Facebook

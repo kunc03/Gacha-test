@@ -27,6 +27,7 @@
     "mapbox-gl": "^3.5.2",
     "moment": "^2.29.4",
     "nuxt": "^3.12.4",
+    "nuxt-gtag": "^3.0.1",
     "nuxt-icon": "^0.2.11",
     "nuxt-lodash": "^2.4.1",
     "pinia": "^2.1.7",

@@ -353,10 +353,6 @@ import JapanPostalCode from 'japan-postal-code'
 import { useI18n } from 'vue-i18n'
 import { countries } from '~/data/countries'
 
-useHead({
-  title: 'Profile',
-})
-
 const { t } = useI18n()
 
 const validateOnSubmit = ref(false)
