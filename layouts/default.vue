@@ -31,6 +31,24 @@ useHead({
     { name: 'twitter:image:width', content: '1200' },
     { name: 'twitter:image:height', content: '630' },
   ],
+  script:
+    process.env.NODE_ENV === 'production'
+      ? [
+          {
+            src: `https://www.googletagmanager.com/gtag/js?id=${config.public.NUXT_PUBLIC_GTAG_ID}`,
+            async: true,
+          },
+          {
+            children: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${config.public.NUXT_PUBLIC_GTAG_ID}');
+      `,
+            type: 'text/javascript',
+          },
+        ]
+      : [],
 })
 
 onMounted(() => {
