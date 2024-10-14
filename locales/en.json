@@ -31,6 +31,7 @@
   "login": "Login",
   "newMemberRegistration": "New Member Registration",
   "loginID": "Login ID（email address）",
+  "emailIsAlreadyRegistered": "The email has already been taken",
   "loginPassword": "Login password",
   "password": "Password",
   "forgotYourPassword": "Forgot your password?",
