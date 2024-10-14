@@ -30,6 +30,7 @@
           <InputText
             :model="form.email"
             :label="$t('loginID')"
+            :error="emailError"
             @update:model="updateModel('email', $event)"
             @validate="validateInput('email', $event)"
           />
@@ -56,6 +57,7 @@
         :has-loading="isLoading"
         :on-click="handleSubmit"
         has-bottom
+        :disabled="emailError !== ''"
       />
     </div>
   </div>
@@ -63,27 +65,43 @@
 
 <script setup>
 import InputText from '~/components/InputText.vue'
-import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
-const router = useRouter()
-// tobe used composable
+const { t } = useI18n()
+
 const form = ref({
   email: '',
 })
 
 const message = ref(null)
 const isLoading = ref(false)
-
+const emailError = ref('')
 const isSuccessSendLinkResetPassword = ref(false)
 const updateModel = (field, value) => {
   form.value[field] = value
 }
 
+const validateEmail = (value) => {
+  if (!value) {
+    return t('emailRequired')
+  } else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
+    return t('emailFormat')
+  }
+  return ''
+}
 const validateInput = (field, value) => {
-  // console.log(`Validated ${field}:`, value)
+  if (field === 'email') {
+    emailError.value = validateEmail(value)
+  }
 }
 
 const handleSubmit = async () => {
+  const validate = validateEmail(form.value.email)
+  if (emailError.value || validate) {
+    if (validate) emailError.value = validate
+    return
+  }
+
   if (isSuccessSendLinkResetPassword.value) {
     navigateTo('/')
   } else {
@@ -93,17 +111,15 @@ const handleSubmit = async () => {
 
     try {
       isLoading.value = true
-      const { status, message } = await useFetchApi('POST', 'email/forgot', {
+      const { status } = await useFetchApi('POST', 'email/forgot', {
         body: payload,
       })
 
       if (status) {
         isSuccessSendLinkResetPassword.value = true
       }
-
-      // console.log(response)
     } catch (error) {
-      console.log(error)
+      emailError.value = error._data.message
     } finally {
       isLoading.value = false
     }
