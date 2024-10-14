@@ -219,5 +219,6 @@
   "emailValidation": "Email must be a valid email address",
   "claimed": "Claimed",
   "shareClickHere": "Click here for the campaign site!",
-  "headTitle": "Nagoya Tour My Page"
+  "headTitle": "Nagoya Tour My Page",
+  "locationPermissionRequired": "Please allow location access"
 }

@@ -15,7 +15,12 @@
         class="scan-otp flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
-        <OtpInput v-model="value" :length="4" :wrongPassword="wrongPassword" />
+        <OtpInput
+          v-model="value"
+          :length="4"
+          :wrongPassword="wrongPassword"
+          :disabled="isNotAllowed || locationBlocked"
+        />
       </div>
       <div class="grow w-full flex flex-col gap-5 small:gap-2">
         <div
@@ -77,16 +82,21 @@
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
-    :is-hidden-close="checkRadiusFailed"
+    :is-hidden-close="checkRadiusFailed || locationBlocked"
   >
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
-        <div v-if="errorLink" class="text-center w-10/12">
+        <div v-if="errorLink || locationBlocked" class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ errorMessages }}
           </p>
         </div>
+        <!-- <div v-else-if="locationBlocked" class="text-center w-10/12">
+          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
+            {{ $t('locationPermissionRequired') }}
+          </p>
+        </div> -->
         <div v-else class="text-center w-10/12">
           <p
             class="font-bold text-exd-1424 text-exd-gray-scorpion"
@@ -120,8 +130,20 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const refsNotes = ref(null)
+const locationBlocked = ref(false)
 
-const handleCloseDialog = () => (isNotAllowed.value = false)
+const handleCloseDialog = () => {
+  isNotAllowed.value = false
+  if (locationBlocked.value) {
+    checkingLocation()
+  }
+}
+
+const handleLocationError = () => {
+  isNotAllowed.value = true
+  locationBlocked.value = true
+  errorMessages.value = t('locationPermissionRequired')
+}
 
 const { t } = useI18n()
 const wrongPassword = ref(false)
@@ -231,6 +253,7 @@ const checkingLocation = async () => {
       .then((permissionStatus) => {
         if (permissionStatus.state === 'granted') {
           isRequestingLocation.value = false
+          locationBlocked.value = false
           navigator.geolocation.getCurrentPosition(
             (position) => {
               latitude.value = position.coords.latitude
@@ -239,6 +262,7 @@ const checkingLocation = async () => {
             },
             (error) => {
               console.error(error)
+              handleLocationError()
             }
           )
         } else if (permissionStatus.state === 'prompt') {
@@ -250,18 +274,20 @@ const checkingLocation = async () => {
                 longitude.value = position.coords.longitude
                 radiusCheck()
                 isRequestingLocation.value = false
+                locationBlocked.value = false
               },
               () => {
                 isRequestingLocation.value = false
+                handleLocationError()
               }
             )
           } else {
             isRequestingLocation.value = false
+            handleLocationError()
           }
         } else if (permissionStatus.state === 'denied') {
-          isNotAllowed.value = true
-          checkRadiusMessage.value =
-            t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
+          // isNotAllowed.value = true
+          handleLocationError()
           checkRadiusFailed.value = true
         }
 
@@ -269,11 +295,14 @@ const checkingLocation = async () => {
         permissionStatus.onchange = () => {
           if (permissionStatus.state === 'granted') {
             isRequestingLocation.value = false
+            locationBlocked.value = false
+            checkingLocation()
           } else if (permissionStatus.state === 'denied') {
-            isNotAllowed.value = true
-            checkRadiusMessage.value =
-              t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
-            checkRadiusFailed.value = true
+            // isNotAllowed.value = true
+            // checkRadiusMessage.value =
+            //   t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
+            // checkRadiusFailed.value = true
+            handleLocationError()
           }
         }
       })
@@ -283,14 +312,17 @@ const checkingLocation = async () => {
       navigator.geolocation.getCurrentPosition(
         () => {
           isRequestingLocation.value = false
+          locationBlocked.value = false
         },
         () => {
           isRequestingLocation.value = false
+          handleLocationError()
         }
       )
     } else {
       // Geolocation is not available, show a dialog or handle accordingly
       isNotAllowed.value = true
+      handleLocationError()
     }
   }
 }
@@ -298,6 +330,7 @@ const checkingLocation = async () => {
 onMounted(async () => {
   const location = route.params.randomCode
   await getPassword(location)
+  await checkingLocation()
 })
 
 watch(isNotAllowed, (newValue) => {
