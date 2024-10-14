@@ -77,7 +77,7 @@
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
-    :is-hidden-close="checkRadiusFailed"
+    :is-hidden-close="checkRadiusFailed || isHiddenClose"
   >
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
@@ -120,6 +120,7 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const refsNotes = ref(null)
+const isHiddenClose = ref(false)
 
 const handleCloseDialog = () => (isNotAllowed.value = false)
 
@@ -190,6 +191,7 @@ const getPassword = async (id) => {
     isLoading.value = false
   } catch (error) {
     errorLink.value = true
+    isHiddenClose.value = true
     errorMessages.value = error._data.message
 
     isNotAllowed.value = true
