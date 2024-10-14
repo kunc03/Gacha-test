@@ -325,7 +325,6 @@ const checkingLocation = async () => {
 onMounted(async () => {
   const location = route.params.randomCode
   await getPassword(location)
-  await checkingLocation()
 })
 
 watch(isNotAllowed, (newValue) => {
