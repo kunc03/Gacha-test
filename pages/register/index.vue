@@ -338,17 +338,17 @@
           </div>
         </div>
       </div>
-      <div class="mt-24" />
-      <div class="fixed bottom-0 w-full max-w-md mx-auto mb-5 z-50">
-        <SolidButton
-          :label="$t('register')"
-          :has-loading="isLoading"
-          :disabled="!form.checked"
-          :on-click="handleSubmit"
-          class="!-inset-x-1/4 !-translate-x-3"
-          has-bottom
-        />
-      </div>
+      <div class="mt-1" />
+      <!-- <div class="fixed bottom-0 w-full max-w-md mx-auto mb-5 z-50"> -->
+      <SolidButton
+        :label="$t('register')"
+        :has-loading="isLoading"
+        :disabled="!form.checked"
+        :on-click="handleSubmit"
+        has-bottom
+      />
+      <!-- class="!-inset-x-1/4 !-translate-x-3" -->
+      <!-- </div> -->
     </div>
   </div>
 
