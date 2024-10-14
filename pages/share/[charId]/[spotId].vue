@@ -100,9 +100,8 @@
             <p
               v-else-if="shareDetailData.is_valid_char"
               class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
-            >
-              {{ shareDetailData.character_description }}
-            </p>
+              v-html="shareDetailData.character_description"
+            />
 
             <!-- Check if has location data -->
             <div v-if="shareDetailData.is_valid_spot">
