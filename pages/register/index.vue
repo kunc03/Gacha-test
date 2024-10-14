@@ -221,14 +221,13 @@
             :error="
               !form.email && validateOnSubmit
                 ? t('fieldRequired')
-                : '' ||
-                  errorEmailMessage ||
-                  (form.email && !emailRegex(form.email)
-                    ? t('emailFormat')
-                    : '')
+                : form.email && !emailRegex(form.email)
+                ? t('emailFormat')
+                : errorEmailMessage
             "
             :class="{
-              'input-error': errorEmailMessage || !emailRegex(form.email),
+              'input-error':
+                (!emailRegex(form.email) && form.email) || errorEmailMessage,
             }"
           />
         </div>
@@ -339,14 +338,17 @@
           </div>
         </div>
       </div>
-      <div class="mt-1" />
-      <SolidButton
-        :label="$t('register')"
-        :has-loading="isLoading"
-        :disabled="!form.checked"
-        :on-click="handleSubmit"
-        has-bottom
-      />
+      <div class="mt-24" />
+      <div class="fixed bottom-0 w-full max-w-md mx-auto mb-5 z-50">
+        <SolidButton
+          :label="$t('register')"
+          :has-loading="isLoading"
+          :disabled="!form.checked"
+          :on-click="handleSubmit"
+          class="!-inset-x-1/4 !-translate-x-3"
+          has-bottom
+        />
+      </div>
     </div>
   </div>
 
@@ -415,7 +417,8 @@ const errorScroll = ref([])
 const isLoading = ref(false)
 const errorMessages = ref([])
 const errorAgeMessage = ref('')
-const errorEmailMessage = ref('')
+const emailErrorKey = ref('')
+const errorEmailMessage = computed(() => t(emailErrorKey.value))
 const isErrorMessage = ref(false)
 const validateOnSubmit = ref(false)
 const errorNicknameMessage = ref('')
@@ -430,10 +433,6 @@ const updateModel = (field, value) => {
   const password = form.value.password
   const confPassword = form.value.confPassword
 
-  if (field === 'email') {
-    emailValidate()
-  }
-
   if (field === 'password') {
     passwordValidate()
   }
@@ -447,19 +446,6 @@ const updateModel = (field, value) => {
 
 const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
-}
-
-const emailRegex = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
-
-const emailValidate = () => {
-  const email = form.value.email
-  if (!emailRegex(email)) {
-    errorEmailMessage.value = t('emailFormat')
-  } else {
-    errorEmailMessage.value = ''
-  }
 }
 
 const passwordValidate = () => {
@@ -497,6 +483,7 @@ const getAgeOptions = [
 
 const fetchRegister = async (payload) => {
   errorMessages.value = []
+
   isLoading.value = true
 
   try {
@@ -516,6 +503,10 @@ const fetchRegister = async (payload) => {
   } finally {
     isLoading.value = false
   }
+}
+
+const emailRegex = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 const handleApiError = (error) => {
@@ -541,9 +532,14 @@ const handleApiError = (error) => {
 
   errorAgeMessage.value = Array.isArray(response?.age) ? response.age[0] : ''
 
-  errorEmailMessage.value = Array.isArray(response?.email)
-    ? response.email[0]
-    : ''
+  if (response.email) {
+    if (
+      response?.email[0] === 'emailはすでに使用されています。' ||
+      response?.email[0] === 'The email has already been taken.'
+    ) {
+      emailErrorKey.value = 'emailIsAlreadyRegistered'
+    }
+  }
 
   if (form.value.password.length < 8) {
     errorPasswordMessage.value = t('passwordMin')
