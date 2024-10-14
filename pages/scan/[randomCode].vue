@@ -1,5 +1,9 @@
 <template>
-  <div class="grow flex flex-col overflow-hidden" @touchmove="onTouchmove">
+  <div
+    class="grow flex flex-col overflow-hidden"
+    @touchmove="onTouchmove"
+    style="touch-action: none"
+  >
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
@@ -68,6 +72,7 @@
             :has-loading="isLoading"
             :on-click="goToScan"
             :has-bottom="true"
+            class="flex-none h-[56px]"
           />
         </div>
       </div>
@@ -372,7 +377,13 @@ watch(isNotAllowed, (newValue) => {
   }
 }
 
-@media screen and (min-height: 630px) {
+@media screen and (min-height: 600px) and (max-width: 360px) {
+  .uiHeight {
+    max-height: 110px !important;
+  }
+}
+
+@media screen and (min-height: 600px) {
   .uiHeight {
     max-height: 150px;
   }
