@@ -222,5 +222,5 @@
   "claimed": "完了",
   "shareClickHere": "キャンペーンサイトはこちら！",
   "headTitle": "名古屋ぐるっとツアー マイページ",
-  "locationPermissionRequired": "位置情報へのアクセスを許可してください"
+  "locationPermissionRequired": "続行するには、位置情報にアクセスする必要があります。位置情報へのアクセスを許可してください。"
 }

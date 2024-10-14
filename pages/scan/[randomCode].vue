@@ -92,11 +92,6 @@
             {{ errorMessages }}
           </p>
         </div>
-        <!-- <div v-else-if="locationBlocked" class="text-center w-10/12">
-          <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
-            {{ $t('locationPermissionRequired') }}
-          </p>
-        </div> -->
         <div v-else class="text-center w-10/12">
           <p
             class="font-bold text-exd-1424 text-exd-gray-scorpion"
