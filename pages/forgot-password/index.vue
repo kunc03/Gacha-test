@@ -83,7 +83,7 @@ const updateModel = (field, value) => {
 
 const validateEmail = (value) => {
   if (!value) {
-    return t('emailRequired')
+    return t('fieldRequired')
   } else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
     return t('emailFormat')
   }
