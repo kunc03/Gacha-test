@@ -344,6 +344,16 @@ watch(isNotAllowed, (newValue) => {
 </script>
 
 <style scoped>
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+
 ::v-deep(.p-inputtext) {
   @apply border border-exd-gray-44 bg-white w-exd-40 h-exd-50 text-exd-gray-scorpion;
 }

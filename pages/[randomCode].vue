@@ -129,3 +129,15 @@ onMounted(async () => {
   await getPassword(location)
 })
 </script>
+
+<style scoped>
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+</style>
