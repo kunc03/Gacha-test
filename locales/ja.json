@@ -58,7 +58,7 @@
   "minLength": "{number}文字以上で作成してください。",
   "fieldRequired": "必須項目です",
   "validEmail": "正しい形式でメールアドレスを入力してください。",
-  "emailIsAlreadyRegistered": "このメールアドレスはすでに使用されています。",
+  "emailIsAlreadyRegistered": "emailはすでに使用されています。",
   "validPassword": "半角英数字のみ使用できます。",
   "surname": "姓",
   "givenName": "名",
@@ -221,5 +221,6 @@
   "emailValidation": "メールは有効なメールアドレスである必要があります",
   "claimed": "完了",
   "shareClickHere": "キャンペーンサイトはこちら！",
-  "headTitle": "名古屋ぐるっとツアー マイページ"
+  "headTitle": "名古屋ぐるっとツアー マイページ",
+  "locationPermissionRequired": "続行するには、位置情報にアクセスする必要があります。位置情報へのアクセスを許可してください。"
 }

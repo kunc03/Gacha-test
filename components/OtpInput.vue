@@ -6,6 +6,7 @@
       type="text"
       inputmode="numeric"
       maxlength="1"
+      :disabled="disabled"
       v-model="otp[index]"
       :class="{ 'pointer-events-none': isBlocked(index) }"
       @input="onInput(index, $event)"
@@ -30,6 +31,10 @@ const props = defineProps({
     default: '',
   },
   wrongPassword: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },
