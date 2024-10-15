@@ -40,6 +40,10 @@ ul {
   padding-left: 20px;
 }
 
+li {
+  text-align: justify;
+}
+
 ol {
   list-style-type: decimal;
   padding-left: 20px;
