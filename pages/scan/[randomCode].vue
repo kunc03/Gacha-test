@@ -15,7 +15,11 @@
         class="scan-otp flex flex-col gap-4 pt-exd-81 pb-exd-60 justify-center items-center"
       >
         <p class="text-exd-gray-scorpion">{{ $t('pleaseEnterPassword') }}</p>
-        <OtpInput v-model="value" :length="4" :wrongPassword="wrongPassword" />
+        <OtpInput
+          v-model="value"
+          :length="4"
+          :clear-field="isNotAllowed || wrongPassword"
+        />
       </div>
       <div class="grow w-full flex flex-col gap-5 small:gap-2">
         <div
@@ -67,6 +71,7 @@
             label="GO!"
             :has-loading="isLoading"
             :on-click="goToScan"
+            :disabled="isLoading"
             :has-bottom="true"
           />
         </div>
@@ -226,73 +231,104 @@ const radiusCheck = async () => {
 
 const checkingLocation = async () => {
   if ('permissions' in navigator) {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
+    try {
+      const permissionStatus = await navigator.permissions.query({
+        name: 'geolocation',
+      })
+
+      if (permissionStatus.state === 'granted') {
+        await getLocationAndCheck()
+      } else if (permissionStatus.state === 'prompt') {
+        isRequestingLocation.value = true
+        await requestLocationWithTimeout()
+      } else if (permissionStatus.state === 'denied') {
+        handleLocationDenied()
+      }
+
+      permissionStatus.onchange = () => {
         if (permissionStatus.state === 'granted') {
           isRequestingLocation.value = false
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              latitude.value = position.coords.latitude
-              longitude.value = position.coords.longitude
-              radiusCheck()
-            },
-            (error) => {
-              console.error(error)
-            }
-          )
-        } else if (permissionStatus.state === 'prompt') {
-          if ('geolocation' in navigator) {
-            isRequestingLocation.value = true
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                latitude.value = position.coords.latitude
-                longitude.value = position.coords.longitude
-                radiusCheck()
-                isRequestingLocation.value = false
-              },
-              () => {
-                isRequestingLocation.value = false
-              }
-            )
-          } else {
-            isRequestingLocation.value = false
-          }
+          getLocationAndCheck()
         } else if (permissionStatus.state === 'denied') {
-          isNotAllowed.value = true
-          checkRadiusMessage.value =
-            t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
-          checkRadiusFailed.value = true
+          handleLocationDenied()
         }
-
-        // Listen for changes to the permission status
-        permissionStatus.onchange = () => {
-          if (permissionStatus.state === 'granted') {
-            isRequestingLocation.value = false
-          } else if (permissionStatus.state === 'denied') {
-            isNotAllowed.value = true
-            checkRadiusMessage.value =
-              t('errorHasOccurred') + '<br/>' + t('pleaseTryAgain')
-            checkRadiusFailed.value = true
-          }
-        }
-      })
-  } else {
-    if ('geolocation' in navigator) {
-      isRequestingLocation.value = true
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          isRequestingLocation.value = false
-        },
-        () => {
-          isRequestingLocation.value = false
-        }
-      )
-    } else {
-      // Geolocation is not available, show a dialog or handle accordingly
-      isNotAllowed.value = true
+      }
+    } catch (error) {
+      console.error('Error querying geolocation permission:', error)
+      handleLocationError()
     }
+  } else {
+    // Fallback for browsers that don't support permissions API
+    isRequestingLocation.value = true
   }
+}
+
+const getLocationAndCheck = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        latitude.value = position.coords.latitude
+        longitude.value = position.coords.longitude
+        radiusCheck()
+        resolve()
+      },
+      (error) => {
+        console.error('Error getting location:', error)
+        handleLocationError()
+        reject(error)
+      }
+    )
+  })
+}
+
+const requestLocationWithTimeout = () => {
+  return new Promise((resolve) => {
+    const timeoutDuration = 30000 // 10 seconds timeout
+    let timeoutId
+
+    const clearTimeoutAndResolve = () => {
+      clearTimeout(timeoutId)
+      isRequestingLocation.value = false
+      resolve()
+    }
+
+    timeoutId = setTimeout(() => {
+      handleLocationTimeout()
+      clearTimeoutAndResolve()
+    }, timeoutDuration)
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        latitude.value = position.coords.latitude
+        longitude.value = position.coords.longitude
+        radiusCheck()
+        clearTimeoutAndResolve()
+      },
+      (error) => {
+        console.error('Error getting location:', error)
+        handleLocationError()
+        clearTimeoutAndResolve()
+      }
+    )
+  })
+}
+
+const handleLocationDenied = () => {
+  isNotAllowed.value = true
+  checkRadiusMessage.value = t('locationAccessBlocked')
+  checkRadiusFailed.value = true
+}
+
+const handleLocationError = () => {
+  isNotAllowed.value = true
+  checkRadiusFailed.value = true
+  checkRadiusMessage.value = t('enableLocationAccess')
+}
+
+const handleLocationTimeout = () => {
+  isNotAllowed.value = true
+  checkRadiusFailed.value = true
+  checkRadiusMessage.value = t('enableLocationAccess')
 }
 
 onMounted(async () => {
