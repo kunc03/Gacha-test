@@ -64,7 +64,7 @@
         v-if="responseData.description"
       >
         <p
-          class="text-white text-justify text-xs basis-1/2"
+          class="text-white text-justify text-xs basis-1/2 vhtml-desc"
           style="overflow-wrap: break-word; inline-size: 180px"
           v-html="responseData.description"
         ></p>

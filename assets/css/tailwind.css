@@ -93,3 +93,17 @@
 .text-underline {
   text-decoration: underline;
 }
+
+.vhtml-desc ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.vhtml-desc li {
+  text-align: justify;
+}
+
+.vhtml-desc ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+}

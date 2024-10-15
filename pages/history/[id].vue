@@ -49,7 +49,7 @@
         />
         <p
           v-else
-          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
+          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap vhtml-desc"
           v-html="historyDetailData.character_description"
         />
         <div class="inline-flex gap-3 w-full justify-center my-2">
