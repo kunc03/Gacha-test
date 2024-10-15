@@ -20,7 +20,7 @@
           "
         />
       </div>
-      <div class="p-5 flex flex-col gap-2 vhtml-desc">
+      <div class="p-5 flex flex-col gap-2">
         <div class="inline-flex justify-between w-full gap-5">
           <Skeleton
             v-if="isFetching"
@@ -49,7 +49,7 @@
         />
         <p
           v-else
-          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
+          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap vhtml-desc"
           v-html="historyDetailData.character_description"
         />
         <div class="inline-flex gap-3 w-full justify-center my-2">

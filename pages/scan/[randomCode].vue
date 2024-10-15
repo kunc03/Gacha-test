@@ -97,7 +97,7 @@
             {{ errorMessages }}
           </p>
         </div>
-        <div v-else class="text-center w-10/12 vhtml-desc">
+        <div v-else class="text-center w-10/12">
           <p
             class="font-bold text-exd-1424 text-exd-gray-scorpion vhtml-desc"
             v-html="checkRadiusMessage"

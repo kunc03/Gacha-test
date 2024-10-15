@@ -60,11 +60,11 @@
         {{ $t('qrCodeSpot') }}
       </div>
       <div
-        class="inline-flex justify-between bg w-full gap-3 mt-3 vhtml-desc"
+        class="inline-flex justify-between bg w-full gap-3 mt-3"
         v-if="responseData.description"
       >
         <p
-          class="text-white text-justify text-xs basis-1/2"
+          class="text-white text-justify text-xs basis-1/2 vhtml-desc"
           style="overflow-wrap: break-word; inline-size: 180px"
           v-html="responseData.description"
         ></p>
@@ -129,19 +129,3 @@ onMounted(async () => {
   await getPassword(location)
 })
 </script>
-
-<style scoped>
-ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-li {
-  text-align: justify;
-}
-
-ol {
-  list-style-type: decimal;
-  padding-left: 20px;
-}
-</style>

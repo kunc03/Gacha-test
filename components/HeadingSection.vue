@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-2 mb-2 vhtml-desc">
+  <div class="flex flex-col gap-2 mb-2">
     <div class="w-full bg-exd-gray-44 p-1">
       <Skeleton v-if="isFetching" width="5rem" class="!h-2"></Skeleton>
       <p v-else class="text-white text-exd-1220 font-bold">{{ title }}</p>
@@ -11,7 +11,7 @@
     </div>
     <div
       v-else
-      class="text-exd-gray-scorpion font-medium text-exd-1218"
+      class="text-exd-gray-scorpion font-medium text-exd-1218 vhtml-desc"
       v-html="body"
     />
   </div>

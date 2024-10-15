@@ -99,7 +99,7 @@
             <Skeleton v-if="isFetching" class="!h-3" width="15rem"></Skeleton>
             <p
               v-else-if="shareDetailData.is_valid_char"
-              class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
+              class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap vhtml-desc"
               v-html="shareDetailData.character_description"
             />
 
@@ -302,20 +302,6 @@ const openGoogleMaps = () => {
 </script>
 
 <style scoped>
-ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-li {
-  text-align: justify;
-}
-
-ol {
-  list-style-type: decimal;
-  padding-left: 20px;
-}
-
 .no-char-avail {
   display: flex;
   flex-direction: column;
