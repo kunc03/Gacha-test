@@ -20,7 +20,7 @@
           "
         />
       </div>
-      <div class="p-5 flex flex-col gap-2">
+      <div class="p-5 flex flex-col gap-2 vhtml-desc">
         <div class="inline-flex justify-between w-full gap-5">
           <Skeleton
             v-if="isFetching"
@@ -402,20 +402,6 @@ watch(LOCALE, async (val) => {
 </script>
 
 <style scoped>
-ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-li {
-  text-align: justify;
-}
-
-ol {
-  list-style-type: decimal;
-  padding-left: 20px;
-}
-
 .popup-success {
   position: absolute;
   top: 15px;

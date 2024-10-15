@@ -60,7 +60,7 @@
         {{ $t('qrCodeSpot') }}
       </div>
       <div
-        class="inline-flex justify-between bg w-full gap-3 mt-3"
+        class="inline-flex justify-between bg w-full gap-3 mt-3 vhtml-desc"
         v-if="responseData.description"
       >
         <p

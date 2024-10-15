@@ -97,9 +97,9 @@
             {{ errorMessages }}
           </p>
         </div>
-        <div v-else class="text-center w-10/12">
+        <div v-else class="text-center w-10/12 vhtml-desc">
           <p
-            class="font-bold text-exd-1424 text-exd-gray-scorpion"
+            class="font-bold text-exd-1424 text-exd-gray-scorpion vhtml-desc"
             v-html="checkRadiusMessage"
           ></p>
         </div>
@@ -344,20 +344,6 @@ watch(isNotAllowed, (newValue) => {
 </script>
 
 <style scoped>
-ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-li {
-  text-align: justify;
-}
-
-ol {
-  list-style-type: decimal;
-  padding-left: 20px;
-}
-
 ::v-deep(.p-inputtext) {
   @apply border border-exd-gray-44 bg-white w-exd-40 h-exd-50 text-exd-gray-scorpion;
 }
