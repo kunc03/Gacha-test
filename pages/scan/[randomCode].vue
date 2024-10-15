@@ -230,87 +230,91 @@ const radiusCheck = async () => {
 }
 
 const checkingLocation = async () => {
+  if (typeof window === 'undefined' || !window.navigator) {
+    console.warn(
+      'Navigator tidak tersedia. Kemungkinan berjalan di lingkungan server.'
+    )
+    return
+  }
+
+  if (!('geolocation' in navigator)) {
+    console.error('Geolocation tidak didukung oleh browser ini')
+    handleLocationError()
+    return
+  }
+
   if ('permissions' in navigator) {
     try {
       const permissionStatus = await navigator.permissions.query({
         name: 'geolocation',
       })
+      handlePermissionStatus(permissionStatus)
 
-      if (permissionStatus.state === 'granted') {
-        await getLocationAndCheck()
-      } else if (permissionStatus.state === 'prompt') {
-        isRequestingLocation.value = true
-        await requestLocationWithTimeout()
-      } else if (permissionStatus.state === 'denied') {
-        handleLocationDenied()
-      }
-
-      permissionStatus.onchange = () => {
-        if (permissionStatus.state === 'granted') {
-          isRequestingLocation.value = false
-          getLocationAndCheck()
-        } else if (permissionStatus.state === 'denied') {
-          handleLocationDenied()
-        }
-      }
+      permissionStatus.onchange = () => handlePermissionStatus(permissionStatus)
     } catch (error) {
       console.error('Error querying geolocation permission:', error)
-      handleLocationError()
+      await requestLocationWithTimeout()
     }
   } else {
-    // Fallback for browsers that don't support permissions API
-    isRequestingLocation.value = true
+    // Fallback untuk browser yang tidak mendukung API permissions
+    await requestLocationWithTimeout()
   }
 }
 
-const getLocationAndCheck = () => {
+const handlePermissionStatus = (status) => {
+  switch (status.state) {
+    case 'granted':
+      isRequestingLocation.value = false
+      getLocationAndCheck()
+      break
+    case 'prompt':
+      isRequestingLocation.value = true
+      requestLocationWithTimeout()
+      break
+    case 'denied':
+      handleLocationDenied()
+      break
+    default:
+      console.warn('Permit status unknown:', status.state)
+  }
+}
+
+const getLocationAndCheck = async () => {
+  try {
+    const position = await getCurrentPosition()
+    latitude.value = position.coords.latitude
+    longitude.value = position.coords.longitude
+    await radiusCheck()
+  } catch (error) {
+    console.error('Error getting location:', error)
+    handleLocationError()
+  }
+}
+
+const getCurrentPosition = () => {
   return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        latitude.value = position.coords.latitude
-        longitude.value = position.coords.longitude
-        radiusCheck()
-        resolve()
-      },
-      (error) => {
-        console.error('Error getting location:', error)
-        handleLocationError()
-        reject(error)
-      }
-    )
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      timeout: 30000,
+      maximumAge: 0,
+      enableHighAccuracy: true,
+    })
   })
 }
 
-const requestLocationWithTimeout = () => {
-  return new Promise((resolve) => {
-    const timeoutDuration = 30000 // 10 seconds timeout
-    let timeoutId
-
-    const clearTimeoutAndResolve = () => {
-      clearTimeout(timeoutId)
-      isRequestingLocation.value = false
-      resolve()
-    }
-
-    timeoutId = setTimeout(() => {
-      handleLocationTimeout()
-      clearTimeoutAndResolve()
-    }, timeoutDuration)
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        latitude.value = position.coords.latitude
-        longitude.value = position.coords.longitude
-        radiusCheck()
-        clearTimeoutAndResolve()
-      },
-      (error) => {
-        console.error('Error getting location:', error)
-        handleLocationError()
-        clearTimeoutAndResolve()
-      }
-    )
-  })
+const requestLocationWithTimeout = async () => {
+  try {
+    await Promise.race([
+      getCurrentPosition(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout')), 30000)
+      ),
+    ])
+    await getLocationAndCheck()
+  } catch (error) {
+    handleLocationError()
+  } finally {
+    isRequestingLocation.value = false
+  }
 }
 
 const handleLocationDenied = () => {
@@ -321,14 +325,14 @@ const handleLocationDenied = () => {
 
 const handleLocationError = () => {
   isNotAllowed.value = true
-  checkRadiusFailed.value = true
   checkRadiusMessage.value = t('enableLocationAccess')
+  checkRadiusFailed.value = true
 }
 
 const handleLocationTimeout = () => {
   isNotAllowed.value = true
   checkRadiusFailed.value = true
-  checkRadiusMessage.value = t('enableLocationAccess')
+  checkRadiusMessage.value = t('locationRequestTimeout')
 }
 
 onMounted(async () => {

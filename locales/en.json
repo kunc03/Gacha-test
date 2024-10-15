@@ -223,5 +223,6 @@
   "turnOnLocation": "You are outside the spot area. Please return to the area and try again",
   "gettingLocation": "Allow your location to continue",
   "enableLocationAccess": "Please enable location access and try again",
-  "locationAccessBlocked": "Location access blocked, please allow location access"
+  "locationAccessBlocked": "Location access blocked, please allow location access",
+  "locationRequestTimeout": "Location request timeout, please try again"
 }

@@ -225,5 +225,6 @@
   "turnOnLocation": "スポットエリア外です。エリア内に戻ってから再度お試しください。",
   "gettingLocation": "位置情報の継続を許可する",
   "enableLocationAccess": "位置情報へのアクセスを有効にしてもう一度お試しください",
-  "locationAccessBlocked": "位置情報へのアクセスがブロックされています。位置情報へのアクセスを許可してください"
+  "locationAccessBlocked": "位置情報へのアクセスがブロックされています。位置情報へのアクセスを許可してください",
+  "locationRequestTimeout": "位置情報リクエストがタイムアウトしました。もう一度お試しください"
 }
