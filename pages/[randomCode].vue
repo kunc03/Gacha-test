@@ -66,9 +66,8 @@
         <p
           class="text-white text-justify text-xs basis-1/2"
           style="overflow-wrap: break-word; inline-size: 180px"
-        >
-          {{ responseData.description }}
-        </p>
+          v-html="responseData.description"
+        ></p>
         <div class="basis-1/2 overflow-hidden flex-0">
           <img
             :src="displayImage"
