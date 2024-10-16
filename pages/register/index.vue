@@ -279,31 +279,24 @@
         <div
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
-          <InputTextArea
-            :model="form.questionnaire1"
-            required
+          <RadioButton
             :label="$t('questionnaire1')"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.questionnaire1 && validateOnSubmit
-                ? $t('fieldRequired')
-                : ''
-            "
+            required
+            v-model="form.questionnaire1"
+            :options="questionnaire1Options"
+            name="questionnaire1"
           />
-          <InputTextArea
-            :model="form.questionnaire2"
+        </div>
+
+        <div
+          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <RadioButton
             required
             :label="$t('questionnaire2')"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
-            :validate-on-submit="validateOnSubmit"
-            :error="
-              !form.questionnaire2 && validateOnSubmit
-                ? $t('fieldRequired')
-                : ''
-            "
+            v-model="form.questionnaire2"
+            :options="questionnaire2Options"
+            name="questionnaire2"
           />
         </div>
 
@@ -384,12 +377,17 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { countries } from '~/data/countries'
+import {
+  questionnaire1Options,
+  questionnaire2Options,
+} from '~/data/questionnaire'
 import close from '~/assets/images/close.svg'
 import JapanPostalCode from 'japan-postal-code'
 import Dropdown from '~/components/Dropdown.vue'
 import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
+import RadioButton from '~/components/RadioButton.vue'
 
 const form = ref({
   nickName: '',
