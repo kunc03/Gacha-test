@@ -1,5 +1,9 @@
 <template>
-  <div class="grow flex flex-col overflow-hidden" @touchmove="onTouchmove">
+  <div
+    class="grow flex flex-col overflow-hidden"
+    @touchmove="onTouchmove"
+    style="touch-action: none"
+  >
     <HeaderBar>
       <p
         style="text-shadow: 0 3px 3px rgba(0, 0, 0, 0.16)"
@@ -73,6 +77,7 @@
             :on-click="goToScan"
             :disabled="isLoading"
             :has-bottom="true"
+            class="flex-none h-[56px]"
           />
         </div>
       </div>
@@ -82,19 +87,19 @@
   <Modal
     :is-open="isNotAllowed"
     :on-close="() => handleCloseDialog()"
-    :is-hidden-close="checkRadiusFailed"
+    :is-hidden-close="checkRadiusFailed || locationBlocked || isHiddenClose"
   >
     <template v-slot:body>
       <div class="w-full flex flex-col justify-center items-center gap-4 py-6">
         <img :src="warning" alt="warning" width="40" height="40" preload />
-        <div v-if="errorLink" class="text-center w-10/12">
+        <div v-if="errorLink || locationBlocked" class="text-center w-10/12">
           <p class="font-bold text-exd-1424 text-exd-gray-scorpion">
             {{ errorMessages }}
           </p>
         </div>
         <div v-else class="text-center w-10/12">
           <p
-            class="font-bold text-exd-1424 text-exd-gray-scorpion"
+            class="font-bold text-exd-1424 text-exd-gray-scorpion vhtml-desc"
             v-html="checkRadiusMessage"
           ></p>
         </div>
@@ -125,8 +130,21 @@ const description = ref(null)
 const errorLink = ref(false)
 const errorMessages = ref('')
 const refsNotes = ref(null)
+const isHiddenClose = ref(false)
+const locationBlocked = ref(false)
 
-const handleCloseDialog = () => (isNotAllowed.value = false)
+const handleCloseDialog = () => {
+  isNotAllowed.value = false
+  if (locationBlocked.value) {
+    checkingLocation()
+  }
+}
+
+const handleLocationError = () => {
+  isNotAllowed.value = true
+  locationBlocked.value = true
+  errorMessages.value = t('locationPermissionRequired')
+}
 
 const { t } = useI18n()
 const wrongPassword = ref(false)
@@ -195,6 +213,7 @@ const getPassword = async (id) => {
     isLoading.value = false
   } catch (error) {
     errorLink.value = true
+    isHiddenClose.value = true
     errorMessages.value = error._data.message
 
     isNotAllowed.value = true
@@ -323,12 +342,6 @@ const handleLocationDenied = () => {
   checkRadiusFailed.value = true
 }
 
-const handleLocationError = () => {
-  isNotAllowed.value = true
-  checkRadiusMessage.value = t('enableLocationAccess')
-  checkRadiusFailed.value = true
-}
-
 const handleLocationTimeout = () => {
   isNotAllowed.value = true
   checkRadiusFailed.value = true
@@ -412,7 +425,13 @@ watch(isNotAllowed, (newValue) => {
   }
 }
 
-@media screen and (min-height: 630px) {
+@media screen and (min-height: 600px) and (max-width: 360px) {
+  .uiHeight {
+    max-height: 110px !important;
+  }
+}
+
+@media screen and (min-height: 600px) {
   .uiHeight {
     max-height: 150px;
   }

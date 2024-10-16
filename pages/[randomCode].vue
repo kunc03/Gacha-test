@@ -64,11 +64,10 @@
         v-if="responseData.description"
       >
         <p
-          class="text-white text-justify text-xs basis-1/2"
+          class="text-white text-justify text-xs basis-1/2 vhtml-desc"
           style="overflow-wrap: break-word; inline-size: 180px"
-        >
-          {{ responseData.description }}
-        </p>
+          v-html="responseData.description"
+        ></p>
         <div class="basis-1/2 overflow-hidden flex-0">
           <img
             :src="displayImage"

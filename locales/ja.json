@@ -58,7 +58,7 @@
   "minLength": "{number}文字以上で作成してください。",
   "fieldRequired": "必須項目です",
   "validEmail": "正しい形式でメールアドレスを入力してください。",
-  "emailIsAlreadyRegistered": "このメールアドレスはすでに使用されています。",
+  "emailIsAlreadyRegistered": "emailはすでに使用されています。",
   "validPassword": "半角英数字のみ使用できます。",
   "surname": "姓",
   "givenName": "名",
@@ -226,5 +226,6 @@
   "gettingLocation": "位置情報の継続を許可する",
   "enableLocationAccess": "位置情報へのアクセスを有効にしてもう一度お試しください",
   "locationAccessBlocked": "位置情報へのアクセスがブロックされています。位置情報へのアクセスを許可してください",
-  "locationRequestTimeout": "位置情報リクエストがタイムアウトしました。もう一度お試しください"
+  "locationRequestTimeout": "位置情報リクエストがタイムアウトしました。もう一度お試しください",
+  "locationPermissionRequired": "続行するには、位置情報にアクセスする必要があります。位置情報へのアクセスを許可してください。"
 }

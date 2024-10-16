@@ -31,6 +31,7 @@
   "login": "Login",
   "newMemberRegistration": "New Member Registration",
   "loginID": "Login ID（email address）",
+  "emailIsAlreadyRegistered": "The email has already been taken",
   "loginPassword": "Login password",
   "password": "Password",
   "forgotYourPassword": "Forgot your password?",
@@ -160,7 +161,7 @@
   "pleaseTryAgain": "Please try again",
   "loadingAllAssets": "Loading all assets",
   "pleaseWaitMoment": "Please wait a moment...",
-  "spinTheGacha": "Spin the Gacha",
+  "spinTheGacha": "Play the Game!",
   "toTheNext": "To the Next",
   "toWinPrizes": "To win prizes",
   "membershipRegistrationRequired": "Membership registration required",
@@ -224,5 +225,6 @@
   "gettingLocation": "Allow your location to continue",
   "enableLocationAccess": "Please enable location access and try again",
   "locationAccessBlocked": "Location access blocked, please allow location access",
-  "locationRequestTimeout": "Location request timeout, please try again"
+  "locationRequestTimeout": "Location request timeout, please try again",
+  "locationPermissionRequired": "To continue, we need access to your location. Please allow location access"
 }

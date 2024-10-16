@@ -199,8 +199,6 @@ const fetchingPrizeData = async () => {
   try {
     const { data } = await useFetchApi('GET', 'prizes/' + id)
     prizeDetailData.value = data
-
-    console.log('prize:', prizeDetailData.value)
   } catch (error) {
     console.log(error)
   } finally {
