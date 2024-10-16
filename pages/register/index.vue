@@ -227,7 +227,11 @@
             "
             :class="{
               'input-error':
-                (!emailRegex(form.email) && form.email) || errorEmailMessage,
+                !form.email && validateOnSubmit
+                  ? t('fieldRequired')
+                  : form.email && !emailRegex(form.email)
+                  ? t('emailFormat')
+                  : errorEmailMessage,
             }"
           />
         </div>
