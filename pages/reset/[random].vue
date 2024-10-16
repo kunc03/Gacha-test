@@ -46,16 +46,14 @@
           {{ $t('passwordResetCompleted') }}
         </h1>
       </template>
-      <Button
-        class="!bg-exd-gold !py-4 !w-full !uppercase !font-bold !text-exd-1424 !rounded-full !text-white !flex !flex-row !justify-between !px-5 mx-auto"
-        raised
-        @click="handleSubmit"
-      >
-        <span class="grow text-center">{{
-          !isSuccessSendResetPassword ? $t('send') : $t('myPage')
-        }}</span>
-        <img :src="arrow" alt="warning" width="10" height="10" preload />
-      </Button>
+
+      <SolidButton
+        :label="!isSuccessSendResetPassword ? $t('send') : $t('myPage')"
+        :has-loading="isLoading"
+        :disabled="isLoading"
+        :on-click="handleSubmit"
+        has-bottom
+      />
     </div>
   </div>
   <Dialog
@@ -86,19 +84,21 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import arrow from '~/assets/images/arrow.svg'
+import close from '~/assets/images/close.svg'
+import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import HeaderBar from '~/components/HeaderBar.vue'
-import { useRouter } from 'vue-router'
-import warning from '~/assets/images/warning.svg'
-import close from '~/assets/images/close.svg'
-import arrow from '~/assets/images/arrow.svg'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const isLoading = ref(false)
-const token = route.params.random
-const isErrorMessage = ref(false)
 const errorMessage = ref(null)
+const isErrorMessage = ref(false)
+const token = route.params.random
 
 const isSuccessSendResetPassword = ref(false)
 const handleCloseDialog = () => (isErrorMessage.value = false)
@@ -114,6 +114,8 @@ const updateModel = (field, value) => {
 }
 
 const handleSubmit = async () => {
+  isLoading.value = true
+
   if (isSuccessSendResetPassword.value) {
     navigateTo('/')
   } else {
@@ -135,13 +137,22 @@ const handleSubmit = async () => {
 
       // console.log(response)
     } catch (error) {
+      isLoading.value = false
       const message = error._data.message
-      console.log(errorMessage.value)
-
-      if (error) {
-        errorMessage.value = message
-        isErrorMessage.value = true
+      const password = form.value.password
+      const confirmPassword = form.value.confirmPassword
+      if (password === null) {
+        errorMessage.value = t('passwordRequired')
+      } else {
+        if (password.length < 8) {
+          errorMessage.value = t('minLength', { number: 8 })
+        } else if (confirmPassword !== password) {
+          errorMessage.value = t('passwordNotMatch')
+        } else {
+          errorMessage.value = message
+        }
       }
+      isErrorMessage.value = true
     }
   }
 }

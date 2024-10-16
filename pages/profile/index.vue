@@ -236,14 +236,19 @@
             :validate-on-submit="validateOnSubmit"
             :is-email-error="true"
             :error="
-              (!form.email && validateOnSubmit && $t('fieldRequired')) ||
-              errorEmailMessage
+              !form.email && validateOnSubmit
+                ? t('fieldRequired')
+                : form.email && !emailRegex(form.email)
+                ? t('emailFormat')
+                : errorEmailMessage
             "
             :class="{
-              'input-error': form.email !== '' && validateOnSubmit,
               'input-error':
-                (errorEmailMessage && validateOnSubmit) ||
-                (form.email.length < 3 && validateOnSubmit),
+                !form.email && validateOnSubmit
+                  ? t('fieldRequired')
+                  : form.email && !emailRegex(form.email)
+                  ? t('emailFormat')
+                  : errorEmailMessage,
             }"
           />
         </div>
@@ -263,16 +268,11 @@
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!isAlphanumeric(form.password) &&
-                form.password.length > 0 &&
-                $t('validPassword')) ||
-              errorPasswordMessage
+              (!form.password && validateOnSubmit && t('fieldRequired')) ||
+              errorPasswordMessage === ''
+                ? ''
+                : t(errorPasswordMessage)
             "
-            :class="{
-              'input-error':
-                (form.password.length < 8 && validateOnSubmit) ||
-                (!isAlphanumeric(form.password) && validateOnSubmit),
-            }"
           />
           <InputText
             type="password"
@@ -282,22 +282,15 @@
             :isConfPassword="true"
             :minLength="8"
             :label="$t('reenterPassword')"
-            :error="
-              form.confPassword !== form.password && validateOnSubmit
-                ? $t('passwordNotMatch')
-                : ''
-            "
             @update:model="updateModel('confPassword', $event)"
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
-            :class="{
-              'input-error':
-                (form.password !== form.confPassword &&
-                  form.confPassword >= 8 &&
-                  validateOnSubmit) ||
-                (!isAlphanumeric(form.confPassword) && validateOnSubmit) ||
-                (form.confPassword.length < 8 && validateOnSubmit),
-            }"
+            :error="
+              (!form.confPassword && validateOnSubmit && t('fieldRequired')) ||
+              errorConfPasswordMessage === ''
+                ? ''
+                : t(errorConfPasswordMessage)
+            "
           />
         </div>
       </div>
@@ -387,6 +380,7 @@ const errorScroll = ref([])
 const errorEmailMessage = ref('')
 const errorNicknameMessage = ref('')
 const errorPasswordMessage = ref('')
+const errorConfPasswordMessage = ref('')
 
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
@@ -401,6 +395,21 @@ const getAgeOptions = () => [
 ]
 
 const updateModel = (field, value) => {
+  form[field] = value
+
+  const password = form.password
+  const confPassword = form.confPassword
+
+  if (field === 'password') {
+    passwordValidate()
+  }
+
+  if (confPassword !== password) {
+    errorConfPasswordMessage.value = 'passwordNotMatch'
+  } else {
+    errorConfPasswordMessage.value = ''
+  }
+
   if (field in form) {
     form[field] = value
   } else {
@@ -408,18 +417,46 @@ const updateModel = (field, value) => {
   }
 }
 
+const passwordValidate = () => {
+  const password = form.password
+
+  if (password.length > 0 && password.length < 8) {
+    errorPasswordMessage.value = 'passwordMin'
+  } else {
+    errorPasswordMessage.value = ''
+  }
+}
+
 const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
 }
 
-const isAlphanumeric = (str) => {
-  return /^[a-zA-Z0-9]+$/.test(str)
+const emailRegex = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 let initialForm = {}
 
 const isFormChanged = () => {
   return JSON.stringify(form) !== JSON.stringify(initialForm)
+}
+
+const validateForm = () => {
+  const firstErrorElement = document.querySelector('.input-error')
+
+  if (errorEmailMessage.value) {
+    firstErrorElement.style.paddingTop = '80px'
+    firstErrorElement.style.marginTop = '-80px'
+
+    firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+
+    setTimeout(() => {
+      firstErrorElement.style.paddingTop = ''
+      firstErrorElement.style.marginTop = ''
+    }, 3000)
+
+    return false
+  }
 }
 
 const populateForm = (data) => {
@@ -469,7 +506,9 @@ const fetchPostUserData = async (payload) => {
 
   try {
     const { data } = await useFetchApi('POST', 'user', { body: payload })
-    navigateTo('/profile/complete')
+    if (validateForm()) {
+      navigateTo('/profile/complete')
+    }
   } catch (error) {
     handleApiError(error)
   } finally {
@@ -483,24 +522,27 @@ const handleApiError = (error) => {
   const response = error._data?.errors
 
   if (response) {
-    const message = Object.keys(response).map((item) => response[item][0])
+    const message = Object.keys(response).map((item) => {
+      return Array.isArray(response[item]) && response[item]?.[0]
+        ? response[item][0]
+        : 'Unknown error'
+    })
+
     errorScroll.value = message
     errorMessages.value.push(response)
     console.log('errorMessages', errorMessages.value)
-    // isErrorMessage.value = true
   }
+
+  errorNicknameMessage.value = Array.isArray(response?.nickname)
+    ? response.nickname[0]
+    : ''
 
   if (response.email) {
     if (
-      response.email[0] === 'emailは有効なメールアドレスでなければなりません。'
+      response?.email[0] === 'emailはすでに使用されています。' ||
+      response?.email[0] === 'The email has already been taken.'
     ) {
-      errorEmailMessage.value = t('validEmail')
-    }
-  } else {
-    if (!form.email) {
-      errorEmailMessage.value = t('fieldRequired')
-    } else {
-      errorEmailMessage.value = ''
+      emailErrorKey.value = 'emailIsAlreadyRegistered'
     }
   }
 }

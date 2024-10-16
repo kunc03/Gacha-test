@@ -30,7 +30,7 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  wrongPassword: {
+  clearField: {
     type: Boolean,
     default: false,
   },
@@ -98,7 +98,7 @@ const isBlocked = (index) => {
 }
 
 watch(
-  () => props.wrongPassword,
+  () => props.clearField,
   (newValue) => {
     if (newValue) {
       otp.value = Array(props.length).fill('')

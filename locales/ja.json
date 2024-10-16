@@ -192,8 +192,8 @@
   "postCodeRequired": "Postcodeは必須です。",
   "emailRequired": "Emailは必須です。",
   "emailFormat": "emailは有効なメールアドレスでなければなりません。",
-  "passwordRequired": "Passwordは必須です。",
-  "passwordNotMatch": "パスワードフィールドの確認が一致しません。",
+  "passwordRequired": "パスワードが必要です。",
+  "passwordNotMatch": "パスワードが一致していません。",
   "questionRequired": "Questionnaireは必須です。",
   "loginOrRegisterTop": "ログイン・新規会員登録でガチャを回す",
   "verificationFailed": "確認リンクが使用されました",
@@ -240,5 +240,10 @@
   "goingToSchool": "通学",
   "businessTrip": "出張",
   "returningHome": "帰省",
+  "turnOnLocation": "スポットエリア外です。エリア内に戻ってから再度お試しください。",
+  "gettingLocation": "位置情報の継続を許可する",
+  "enableLocationAccess": "位置情報へのアクセスを有効にしてもう一度お試しください",
+  "locationAccessBlocked": "位置情報へのアクセスがブロックされています。位置情報へのアクセスを許可してください",
+  "locationRequestTimeout": "位置情報リクエストがタイムアウトしました。もう一度お試しください",
   "locationPermissionRequired": "続行するには、位置情報にアクセスする必要があります。位置情報へのアクセスを許可してください。"
 }
