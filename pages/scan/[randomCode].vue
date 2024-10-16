@@ -232,13 +232,13 @@ const radiusCheck = async () => {
 const checkingLocation = async () => {
   if (typeof window === 'undefined' || !window.navigator) {
     console.warn(
-      'Navigator tidak tersedia. Kemungkinan berjalan di lingkungan server.'
+      'Navigator is not available. Possibly running in a server environment.'
     )
     return
   }
 
   if (!('geolocation' in navigator)) {
-    console.error('Geolocation tidak didukung oleh browser ini')
+    console.error('Geolocation is not supported by this browser')
     handleLocationError()
     return
   }
