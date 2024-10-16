@@ -178,7 +178,7 @@
   "replaced": "Replaced",
   "openGoogleMaps": "Open Google Maps",
   "validNickname": "The nickname must contain only lowercase letters and digits without spaces.",
-  "locationValidate": "You are too far from this spot location , please get closer",
+  "locationValidate": "You are too far from this spot location, please get closer",
   "downloadImage": "Downloading Character Image",
   "shareCharacter": "Share Character",
   "no_available_data": "No Availabe Data",
@@ -221,5 +221,10 @@
   "claimed": "Claimed",
   "shareClickHere": "Click here for the campaign site!",
   "headTitle": "Nagoya Tour My Page",
+  "turnOnLocation": "You are outside the spot area. Please return to the area and try again",
+  "gettingLocation": "Allow your location to continue",
+  "enableLocationAccess": "Please enable location access and try again",
+  "locationAccessBlocked": "Location access blocked, please allow location access",
+  "locationRequestTimeout": "Location request timeout, please try again",
   "locationPermissionRequired": "To continue, we need access to your location. Please allow location access"
 }
