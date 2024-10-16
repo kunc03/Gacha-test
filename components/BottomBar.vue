@@ -30,7 +30,7 @@
 <script setup>
 import iconPin from '~/assets/images/icon-pin.svg'
 import iconStar from '~/assets/images/icon-star.svg'
-import iconPerson from '~/assets/images/icon-person.svg'
+import iconPerson from '~/assets/images/icon-person.png'
 import { store } from '~/stores/dashboard.js'
 import { useRouter } from 'vue-router'
 
