@@ -472,6 +472,21 @@ const passwordValidate = () => {
 
 const validateForm = () => {
   const requiredFields = ['questionnaire1', 'questionnaire2']
+  const firstErrorElement = document.querySelector('.input-error')
+
+  if (errorEmailMessage.value) {
+    firstErrorElement.style.paddingTop = '80px'
+    firstErrorElement.style.marginTop = '-80px'
+
+    firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+
+    setTimeout(() => {
+      firstErrorElement.style.paddingTop = ''
+      firstErrorElement.style.marginTop = ''
+    }, 3000)
+
+    return false
+  }
 
   for (const field of requiredFields) {
     if (!form.value[field]) {
