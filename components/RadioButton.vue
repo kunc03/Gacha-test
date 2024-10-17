@@ -11,7 +11,7 @@
         >{{ $t('required') }}</span
       >
     </label>
-    <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-3 pb-3">
       <div
         v-for="(option, index) in options"
         :key="index"
@@ -22,6 +22,7 @@
           @update:model-value="updateValue"
           :inputId="option.value"
           :name="name"
+          @blur="validate"
           :value="option.value"
           class="custom-radio"
           pt:root="bg-white cursor-pointer w-[20px] h-[20px] rounded-full border-[1px] border-exd-red-vermilion flex items-center justify-center"
@@ -34,6 +35,13 @@
         </label>
       </div>
     </div>
+    <small
+      v-if="error !== ''"
+      :id="`${model}-${label}--${prefix}-${suffix}-error`"
+      :class="['p-error']"
+    >
+      {{ error }}
+    </small>
   </div>
 </template>
 
@@ -66,6 +74,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  error: {
+    type: String,
+    default: '',
+  },
+  validateOnSubmit: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -73,6 +89,19 @@ const emit = defineEmits(['update:modelValue'])
 const updateValue = (newValue) => {
   emit('update:modelValue', newValue)
 }
+
+const validate = () => {
+  emit('validate', modelValue.value)
+}
+
+watch(
+  () => props.validateOnSubmit,
+  (newValue) => {
+    if (newValue) {
+      validate()
+    }
+  }
+)
 </script>
 
 <style>

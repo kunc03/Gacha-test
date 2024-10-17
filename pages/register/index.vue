@@ -288,6 +288,11 @@
             v-model="form.questionnaire1"
             :options="questionnaire1Options"
             name="questionnaire1"
+            :error="
+              !form.questionnaire1 && validateOnSubmit
+                ? $t('fieldRequired')
+                : ''
+            "
           />
         </div>
 
@@ -300,6 +305,11 @@
             v-model="form.questionnaire2"
             :options="questionnaire2Options"
             name="questionnaire2"
+            :error="
+              !form.questionnaire2 && validateOnSubmit
+                ? $t('fieldRequired')
+                : ''
+            "
           />
         </div>
 
