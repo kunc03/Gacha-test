@@ -11,11 +11,12 @@ export const questionnaire1Options = [
 ]
 
 export const questionnaire2Options = [
-  { label: 'participating', value: 'participating' },
+  { label: 'participatingThisEvent', value: 'participatingThisEvent' },
   { label: 'shopping', value: 'shopping' },
   { label: 'gourmet', value: 'gourmet' },
   { label: 'sightseeing', value: 'sightseeing' },
   { label: 'accommodation', value: 'accommodation' },
+  { label: 'participatingOtherEvent', value: 'participatingOtherEvent' },
   { label: 'commuting', value: 'commuting' },
   { label: 'goingToSchool', value: 'goingToSchool' },
   { label: 'businessTrip', value: 'businessTrip' },
