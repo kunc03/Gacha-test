@@ -1,9 +1,11 @@
 <script setup>
 const loading = ref(true)
+const isSupportSerWroker = ref(false)
 let checkCachesInterval
 
 // Init service worker
 if (process.client && 'serviceWorker' in navigator) {
+  isSupportSerWroker.value = true
   navigator.serviceWorker.getRegistration().then((registration) => {
     if (registration) {
       registration.update()
@@ -22,11 +24,18 @@ if (process.client && 'serviceWorker' in navigator) {
       )
     }
   })
+} else {
+  isSupportSerWroker.value = false
 }
 
 onMounted(() => {
   checkCachesInterval = setInterval(() => {
-    checkCaches()
+    if (isSupportSerWroker.value) {
+      checkCaches()
+    } else {
+      clearInterval(checkCachesInterval)
+      completeLoading()
+    }
   }, 1500)
 })
 
