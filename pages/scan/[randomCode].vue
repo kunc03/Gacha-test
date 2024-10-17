@@ -56,6 +56,7 @@
             <ul
               ref="refsNotes"
               class="uiHeight list-disc list-inside overflow-y-auto"
+              style="touch-action: pan-y"
             >
               <p
                 class="scan-title font-bold text-exd-1424 text-exd-gray-scorpion mb-1"
