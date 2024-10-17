@@ -33,6 +33,7 @@ onMounted(() => {
     if (isSupportSerWroker.value) {
       checkCaches()
     } else {
+      clearInterval(checkCachesInterval)
       completeLoading()
     }
   }, 1500)
