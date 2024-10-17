@@ -11,7 +11,7 @@ export const questionnaire1Options = [
 ]
 
 export const questionnaire2Options = [
-  { label: 'participatingThisEvent', value: 'participatingThisEvent' },
+  { label: 'participatingThisEvent', value: 'participating' },
   { label: 'shopping', value: 'shopping' },
   { label: 'gourmet', value: 'gourmet' },
   { label: 'sightseeing', value: 'sightseeing' },
