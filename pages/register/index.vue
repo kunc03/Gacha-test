@@ -227,7 +227,11 @@
             "
             :class="{
               'input-error':
-                (!emailRegex(form.email) && form.email) || errorEmailMessage,
+                !form.email && validateOnSubmit
+                  ? t('fieldRequired')
+                  : form.email && !emailRegex(form.email)
+                  ? t('emailFormat')
+                  : errorEmailMessage,
             }"
           />
         </div>
@@ -278,26 +282,29 @@
         <div
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
-          <InputTextArea
-            :model="form.questionnaire1"
-            required
+          <RadioButton
             :label="$t('questionnaire1')"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-            :validate-on-submit="validateOnSubmit"
+            required
+            v-model="form.questionnaire1"
+            :options="questionnaire1Options"
+            name="questionnaire1"
             :error="
               !form.questionnaire1 && validateOnSubmit
                 ? $t('fieldRequired')
                 : ''
             "
           />
-          <InputTextArea
-            :model="form.questionnaire2"
+        </div>
+
+        <div
+          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <RadioButton
             required
             :label="$t('questionnaire2')"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
-            :validate-on-submit="validateOnSubmit"
+            v-model="form.questionnaire2"
+            :options="questionnaire2Options"
+            name="questionnaire2"
             :error="
               !form.questionnaire2 && validateOnSubmit
                 ? $t('fieldRequired')
@@ -386,12 +393,17 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { countries } from '~/data/countries'
+import {
+  questionnaire1Options,
+  questionnaire2Options,
+} from '~/data/questionnaire'
 import close from '~/assets/images/close.svg'
 import JapanPostalCode from 'japan-postal-code'
 import Dropdown from '~/components/Dropdown.vue'
 import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
+import RadioButton from '~/components/RadioButton.vue'
 
 const form = ref({
   nickName: '',
@@ -460,6 +472,21 @@ const passwordValidate = () => {
 
 const validateForm = () => {
   const requiredFields = ['questionnaire1', 'questionnaire2']
+  const firstErrorElement = document.querySelector('.input-error')
+
+  if (errorEmailMessage.value) {
+    firstErrorElement.style.paddingTop = '80px'
+    firstErrorElement.style.marginTop = '-80px'
+
+    firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+
+    setTimeout(() => {
+      firstErrorElement.style.paddingTop = ''
+      firstErrorElement.style.marginTop = ''
+    }, 3000)
+
+    return false
+  }
 
   for (const field of requiredFields) {
     if (!form.value[field]) {
