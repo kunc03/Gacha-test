@@ -49,10 +49,9 @@
         />
         <p
           v-else
-          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap"
-        >
-          {{ historyDetailData.character_description }}
-        </p>
+          class="font-medium text-exd-1218 text-exd-gray-scorpion mb-4 text-word-wrap vhtml-desc"
+          v-html="historyDetailData.character_description"
+        />
         <div class="inline-flex gap-3 w-full justify-center my-2">
           <img
             :src="download"
@@ -231,8 +230,6 @@ const initializeMap = async (lat, long) => {
 
 const updateMetaHead = () => {
   useHead({
-    title: computed(() => config.public.APP_NAME),
-
     meta: [
       { name: 'description', content: description },
       // Facebook

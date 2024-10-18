@@ -11,7 +11,7 @@
     </div>
     <div
       v-else
-      class="text-exd-gray-scorpion font-medium text-exd-1218"
+      class="text-exd-gray-scorpion font-medium text-exd-1218 vhtml-desc"
       v-html="body"
     />
   </div>

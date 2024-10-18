@@ -221,14 +221,17 @@
             :error="
               !form.email && validateOnSubmit
                 ? t('fieldRequired')
-                : '' ||
-                  errorEmailMessage ||
-                  (form.email && !emailRegex(form.email)
-                    ? t('emailFormat')
-                    : '')
+                : form.email && !emailRegex(form.email)
+                ? t('emailFormat')
+                : errorEmailMessage
             "
             :class="{
-              'input-error': errorEmailMessage || !emailRegex(form.email),
+              'input-error':
+                !form.email && validateOnSubmit
+                  ? t('fieldRequired')
+                  : form.email && !emailRegex(form.email)
+                  ? t('emailFormat')
+                  : errorEmailMessage,
             }"
           />
         </div>
@@ -279,26 +282,29 @@
         <div
           class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
         >
-          <InputTextArea
-            :model="form.questionnaire1"
-            required
+          <RadioButton
             :label="$t('questionnaire1')"
-            @update:model="updateModel('questionnaire1', $event)"
-            @validate="validateInput('questionnaire1', $event)"
-            :validate-on-submit="validateOnSubmit"
+            required
+            v-model="form.questionnaire1"
+            :options="questionnaire1Options"
+            name="questionnaire1"
             :error="
               !form.questionnaire1 && validateOnSubmit
                 ? $t('fieldRequired')
                 : ''
             "
           />
-          <InputTextArea
-            :model="form.questionnaire2"
+        </div>
+
+        <div
+          class="flex flex-col gap-4 border-b border-b-exd-light-grey py-5 px-4"
+        >
+          <RadioButton
             required
             :label="$t('questionnaire2')"
-            @update:model="updateModel('questionnaire2', $event)"
-            @validate="validateInput('questionnaire2', $event)"
-            :validate-on-submit="validateOnSubmit"
+            v-model="form.questionnaire2"
+            :options="questionnaire2Options"
+            name="questionnaire2"
             :error="
               !form.questionnaire2 && validateOnSubmit
                 ? $t('fieldRequired')
@@ -340,6 +346,7 @@
         </div>
       </div>
       <div class="mt-1" />
+      <!-- <div class="fixed bottom-0 w-full max-w-md mx-auto mb-5 z-50"> -->
       <SolidButton
         :label="$t('register')"
         :has-loading="isLoading"
@@ -347,6 +354,8 @@
         :on-click="handleSubmit"
         has-bottom
       />
+      <!-- class="!-inset-x-1/4 !-translate-x-3" -->
+      <!-- </div> -->
     </div>
   </div>
 
@@ -384,12 +393,17 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { countries } from '~/data/countries'
+import {
+  questionnaire1Options,
+  questionnaire2Options,
+} from '~/data/questionnaire'
 import close from '~/assets/images/close.svg'
 import JapanPostalCode from 'japan-postal-code'
 import Dropdown from '~/components/Dropdown.vue'
 import warning from '~/assets/images/warning.svg'
 import InputText from '~/components/InputText.vue'
 import InputTextArea from '~/components/InputTextArea.vue'
+import RadioButton from '~/components/RadioButton.vue'
 
 const form = ref({
   nickName: '',
@@ -415,7 +429,8 @@ const errorScroll = ref([])
 const isLoading = ref(false)
 const errorMessages = ref([])
 const errorAgeMessage = ref('')
-const errorEmailMessage = ref('')
+const emailErrorKey = ref('')
+const errorEmailMessage = computed(() => t(emailErrorKey.value))
 const isErrorMessage = ref(false)
 const validateOnSubmit = ref(false)
 const errorNicknameMessage = ref('')
@@ -429,10 +444,6 @@ const updateModel = (field, value) => {
 
   const password = form.value.password
   const confPassword = form.value.confPassword
-
-  if (field === 'email') {
-    emailValidate()
-  }
 
   if (field === 'password') {
     passwordValidate()
@@ -449,19 +460,6 @@ const validateInput = (field, value) => {
   //console.log(`Validated ${field}:`, value)
 }
 
-const emailRegex = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
-
-const emailValidate = () => {
-  const email = form.value.email
-  if (!emailRegex(email)) {
-    errorEmailMessage.value = t('emailFormat')
-  } else {
-    errorEmailMessage.value = ''
-  }
-}
-
 const passwordValidate = () => {
   const password = form.value.password
 
@@ -474,6 +472,21 @@ const passwordValidate = () => {
 
 const validateForm = () => {
   const requiredFields = ['questionnaire1', 'questionnaire2']
+  const firstErrorElement = document.querySelector('.input-error')
+
+  if (errorEmailMessage.value) {
+    firstErrorElement.style.paddingTop = '80px'
+    firstErrorElement.style.marginTop = '-80px'
+
+    firstErrorElement.scrollIntoView({ behavior: 'smooth' })
+
+    setTimeout(() => {
+      firstErrorElement.style.paddingTop = ''
+      firstErrorElement.style.marginTop = ''
+    }, 3000)
+
+    return false
+  }
 
   for (const field of requiredFields) {
     if (!form.value[field]) {
@@ -497,6 +510,7 @@ const getAgeOptions = [
 
 const fetchRegister = async (payload) => {
   errorMessages.value = []
+
   isLoading.value = true
 
   try {
@@ -516,6 +530,10 @@ const fetchRegister = async (payload) => {
   } finally {
     isLoading.value = false
   }
+}
+
+const emailRegex = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 const handleApiError = (error) => {
@@ -541,9 +559,14 @@ const handleApiError = (error) => {
 
   errorAgeMessage.value = Array.isArray(response?.age) ? response.age[0] : ''
 
-  errorEmailMessage.value = Array.isArray(response?.email)
-    ? response.email[0]
-    : ''
+  if (response.email) {
+    if (
+      response?.email[0] === 'emailはすでに使用されています。' ||
+      response?.email[0] === 'The email has already been taken.'
+    ) {
+      emailErrorKey.value = 'emailIsAlreadyRegistered'
+    }
+  }
 
   if (form.value.password.length < 8) {
     errorPasswordMessage.value = t('passwordMin')

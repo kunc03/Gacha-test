@@ -6,6 +6,7 @@
       type="text"
       inputmode="numeric"
       maxlength="1"
+      :disabled="disabled"
       v-model="otp[index]"
       :class="{ 'pointer-events-none': isBlocked(index) }"
       @input="onInput(index, $event)"
@@ -29,7 +30,11 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  wrongPassword: {
+  clearField: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },
@@ -93,7 +98,7 @@ const isBlocked = (index) => {
 }
 
 watch(
-  () => props.wrongPassword,
+  () => props.clearField,
   (newValue) => {
     if (newValue) {
       otp.value = Array(props.length).fill('')

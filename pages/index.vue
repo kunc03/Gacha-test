@@ -32,25 +32,25 @@
         <img
           :src="picture1"
           alt="picture1"
-          class="absolute -left-2 -top-1 w-[220px] small:w-[180px] small:top-3 extraSmall:w-36"
+          class="picture1-small absolute -left-2 -top-1 w-[220px] small:w-[180px] small:top-3 extraSmall:w-36"
         />
         <img
           :src="picture2"
           alt="picture2"
-          class="absolute -right-[6rem] top-7 w-[480px] small:w-auto extraSmall:w-60 extraSmall:-right-[3rem]"
+          class="picture2-small absolute -right-[6rem] top-7 w-[480px] small:w-auto extraSmall:w-60 extraSmall:-right-[3rem]"
         />
 
         <img
           :src="get"
           alt="get"
-          class="absolute top-14 small:top-2 w-[65%] small:w-auto left-1/3 z-20"
+          class="get-small absolute top-14 small:top-2 w-[65%] small:w-auto left-1/3 z-20"
         />
 
         <img
           :src="gacha"
           alt="gacha"
           preload
-          class="absolute left-5 extraSmall:left-2 top-40 small:top-36 extraSmall:top-[108px] w-[200px] extraSmall:w-32"
+          class="gacha-small absolute left-5 extraSmall:left-2 top-40 small:top-36 extraSmall:top-[108px] w-[200px] extraSmall:w-32"
         />
       </div>
       <div
@@ -59,7 +59,7 @@
         <img
           :src="tapScreen"
           alt="intl"
-          class="h-auto small:w-36 extraSmall:w-32 small:absolute small:top-[calc(52%-1.7rem)] extraSmall:top-[calc(95%-1.7rem)]"
+          class="tap-small h-auto small:w-36 extraSmall:w-32 small:absolute small:top-[calc(52%-1.7rem)] extraSmall:top-[calc(95%-1.7rem)]"
           preload
         />
         <p
@@ -72,18 +72,18 @@
       <img
         :src="character"
         alt="character"
-        class="absolute right-28 small:right-[98px] extraSmall:right-[68px] top-[calc(50%-3rem)] small:top-[calc(56.2%-3.5rem)] extraSmall:top-[calc(60%-3.5rem)] small:w-[100px] extraSmall:w-[70px]"
+        class="character-small absolute right-28 small:right-[98px] extraSmall:right-[68px] top-[calc(50%-3rem)] small:top-[calc(56.2%-3.5rem)] extraSmall:top-[calc(60%-3.5rem)] small:w-[100px] extraSmall:w-[70px]"
       />
       <img
         :src="intl"
         alt="intl"
-        class="absolute right-6 small:right-4 extraSmall:right-3 top-[calc(50%-1.2rem)] small:top-[calc(55.5%-1.7rem)] extraSmall:top-[calc(57.5%-1.7rem)] small:w-[75px] extraSmall:w-[55px]"
+        class="intl-small absolute right-6 small:right-4 extraSmall:right-3 top-[calc(50%-1.2rem)] small:top-[calc(55.5%-1.7rem)] extraSmall:top-[calc(57.5%-1.7rem)] small:w-[75px] extraSmall:w-[55px]"
       />
 
       <img
         :src="talk"
         alt="talk"
-        class="absolute left-14 transform -translate-x-1/2 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[6.5rem] small:w-[5.5rem]"
+        class="talk-small absolute left-14 transform -translate-x-1/2 z-10 top-[52%] small:top-[calc(55%)] small:!h-auto w-[6.5rem] small:w-[5.5rem]"
       />
 
       <img
@@ -92,7 +92,7 @@
         preload
         height="135"
         width="363"
-        class="absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[58%] small:top-[calc(61%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
+        class="logo-small absolute left-1/2 transform -translate-x-1/2 right-0 z-10 top-[58%] small:top-[calc(61%)] small:!h-auto small:!w-[20rem] extraSmall:!w-[15rem]"
       />
       <!-- <img
         :src="digitalTourist"
@@ -105,13 +105,12 @@
     </div>
     <div
       class="absolute bottom-[30px] small:bottom-[20px] left-[0px] right-[0px]"
+      @click="handleShowModal"
     >
       <p
-        class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer"
+        class="text-white text-center text-exd-1218 font-semibold cursor-pointer"
       >
-        <a href="https://www.google.com" target="_blank">
-          {{ $t('addToHomeScreen') }}
-        </a>
+        {{ $t('addToBookmarks') }}
       </p>
     </div>
   </div>
@@ -219,3 +218,48 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped>
+@media screen and (max-width: 380px) and (max-height: 570px) {
+  .picture1-small {
+    width: 40%;
+    left: 1%;
+  }
+
+  .picture2-small {
+    width: 80%;
+    left: 35%;
+  }
+
+  .get-small {
+    width: 65%;
+    top: 45px;
+  }
+  .gacha-small {
+    width: 40%;
+    top: 120px;
+  }
+
+  .tap-small {
+    width: 35%;
+  }
+
+  .talk-small {
+    top: 52%;
+    width: 20%;
+  }
+
+  .logo-small {
+    top: 59%;
+    width: 75% !important;
+  }
+
+  .character-small {
+    width: 25%;
+  }
+
+  .intl-small {
+    width: 18%;
+  }
+}
+</style>
