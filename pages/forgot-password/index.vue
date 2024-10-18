@@ -57,7 +57,7 @@
         :has-loading="isLoading"
         :on-click="handleSubmit"
         has-bottom
-        :disabled="emailError !== ''"
+        :disabled="emailError !== '' || isLoading"
       />
     </div>
   </div>
