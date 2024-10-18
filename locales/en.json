@@ -245,5 +245,6 @@
   "enableLocationAccess": "Please enable location access and try again",
   "locationAccessBlocked": "Location access blocked, please allow location access",
   "locationRequestTimeout": "Location request timeout, please try again",
-  "locationPermissionRequired": "To continue, we need access to your location. Please allow location access"
+  "locationPermissionRequired": "To continue, we need access to your location. Please allow location access",
+  "addToBookmarks": "Add it to your bookmarks or home screen!"
 }

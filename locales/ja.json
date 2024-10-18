@@ -246,5 +246,6 @@
   "enableLocationAccess": "位置情報へのアクセスを有効にしてもう一度お試しください",
   "locationAccessBlocked": "位置情報へのアクセスがブロックされています。位置情報へのアクセスを許可してください",
   "locationRequestTimeout": "位置情報リクエストがタイムアウトしました。もう一度お試しください",
-  "locationPermissionRequired": "続行するには、位置情報にアクセスする必要があります。位置情報へのアクセスを許可してください。"
+  "locationPermissionRequired": "続行するには、位置情報にアクセスする必要があります。位置情報へのアクセスを許可してください。",
+  "addToBookmarks": "ブックマークやホーム画面に追加してね！"
 }

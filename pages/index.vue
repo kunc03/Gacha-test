@@ -105,13 +105,12 @@
     </div>
     <div
       class="absolute bottom-[30px] small:bottom-[20px] left-[0px] right-[0px]"
+      @click="handleShowModal"
     >
       <p
-        class="text-white text-center text-exd-1218 font-semibold text-underline cursor-pointer"
+        class="text-white text-center text-exd-1218 font-semibold cursor-pointer"
       >
-        <a href="https://www.google.com" target="_blank">
-          {{ $t('addToHomeScreen') }}
-        </a>
+        {{ $t('addToBookmarks') }}
       </p>
     </div>
   </div>
