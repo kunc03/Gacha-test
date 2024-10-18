@@ -1,7 +1,6 @@
 <template>
   <div
     @touchmove="(e) => e.preventDefault()"
-    @click="handleShowModal"
     class="flex flex-col grow bg-[url('assets/images/bg-red3.webp')] bg-cover bg-center justify-between relative cursor-pointer overflow-hidden"
   >
     <div class="absolute top-[10px] small:-top-1 -right-1 w-[50px] z-[1000]">
@@ -18,7 +17,7 @@
         <LanguangePanel v-model:visible="langPanel" />
       </div>
     </div>
-    <div class="inner-container">
+    <div class="inner-container" @click="handleShowModal">
       <div class="relative grow">
         <img
           :src="logoIcon"
@@ -106,6 +105,7 @@
     </div>
     <div
       class="absolute bottom-[30px] small:bottom-[20px] left-[0px] right-[0px]"
+      @click="handleShowModal"
     >
       <p
         class="text-white text-center text-exd-1218 font-semibold cursor-pointer"
