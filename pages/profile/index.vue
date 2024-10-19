@@ -298,7 +298,7 @@
       </div>
       <div class="mt-1" />
       <SolidButton
-        :label="$t('update')"
+        :label="$t('change')"
         :has-loading="isLoading"
         :disabled="!isButtonEnabled"
         :on-click="handleSubmit"
