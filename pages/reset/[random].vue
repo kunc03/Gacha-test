@@ -100,7 +100,7 @@ const errorMessage = ref(null)
 const isErrorMessage = ref(false)
 const token = route.params.random
 
-const isSuccessSendResetPassword = ref(true)
+const isSuccessSendResetPassword = ref(false)
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const form = ref({
