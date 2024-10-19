@@ -354,6 +354,26 @@ watch(isNotAllowed, (newValue) => {
 }
 
 /* @media screen and (max-width: 460px) { */
+
+@media screen and (max-height: 500px) and (max-width: 320px) {
+  /* .header {
+    font-size: 15px;
+  } */
+  /* 
+  .scan-content {
+    font-size: 12px;
+  } */
+
+  .scan-otp {
+    padding-top: 40px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .uiHeight {
+    max-height: 98px !important;
+  }
+}
+
 @media screen and (max-height: 600px) {
   .header {
     font-size: 15px;
