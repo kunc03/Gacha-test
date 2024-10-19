@@ -251,8 +251,11 @@
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.password && validateOnSubmit && t('fieldRequired')) ||
-              errorPasswordMessage
+              !form.password && validateOnSubmit
+                ? t('fieldRequired')
+                : '' || errorPasswordMessage === ''
+                ? ''
+                : t(errorPasswordMessage)
             "
             :class="{
               'input-error': errorPasswordMessage,
@@ -270,8 +273,11 @@
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.confPassword && validateOnSubmit && t('fieldRequired')) ||
-              errorConfPasswordMessage
+              !form.confPassword && validateOnSubmit
+                ? t('fieldRequired')
+                : '' || errorConfPasswordMessage === ''
+                ? ''
+                : t(errorConfPasswordMessage)
             "
             :class="{
               'input-error': errorConfPasswordMessage,
@@ -452,7 +458,7 @@ const updateModel = (field, value) => {
   if (password === confPassword) {
     errorConfPasswordMessage.value = ''
   } else {
-    errorConfPasswordMessage.value = t('passwordNotMatch')
+    errorConfPasswordMessage.value = 'passwordNotMatch'
   }
 }
 
@@ -462,9 +468,12 @@ const validateInput = (field, value) => {
 
 const passwordValidate = () => {
   const password = form.value.password
+  const alphanumericRegex = /^[a-zA-Z0-9]{8,}$/
 
   if (password.length > 0 && password.length < 8) {
-    errorPasswordMessage.value = t('passwordMin')
+    errorPasswordMessage.value = 'passwordMin'
+  } else if (!alphanumericRegex.test(password)) {
+    errorPasswordMessage.value = 'validPassword'
   } else {
     errorPasswordMessage.value = ''
   }
@@ -539,18 +548,16 @@ const emailRegex = (email) => {
 const handleApiError = (error) => {
   errorScroll.value = []
 
-  const response = error._data?.errors
+  const response = error?._data?.errors || {}
 
-  if (response) {
+  if (Object.keys(response).length) {
     const message = Object.keys(response).map((item) => {
       return Array.isArray(response[item]) && response[item]?.[0]
         ? response[item][0]
         : 'Unknown error'
     })
-
     errorScroll.value = message
     errorMessages.value.push(response)
-    console.log('errorMessages', errorMessages.value)
   }
 
   errorNicknameMessage.value = Array.isArray(response?.nickname)
@@ -565,21 +572,6 @@ const handleApiError = (error) => {
       response?.email[0] === 'The email has already been taken.'
     ) {
       emailErrorKey.value = 'emailIsAlreadyRegistered'
-    }
-  }
-
-  if (form.value.password.length < 8) {
-    errorPasswordMessage.value = t('passwordMin')
-  } else {
-    if (
-      response?.password?.[0] === 'passwordが確認用の値と一致しません。' ||
-      response?.password?.[0] === 'Password does not match the challenge value.'
-    ) {
-      errorPasswordMessage.value = ''
-    } else {
-      errorPasswordMessage.value = Array.isArray(response?.password)
-        ? response.password[0]
-        : ''
     }
   }
 }
