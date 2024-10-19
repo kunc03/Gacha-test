@@ -421,9 +421,12 @@ const updateModel = (field, value) => {
 
 const passwordValidate = () => {
   const password = form.password
+  const alphanumericRegex = /^[a-zA-Z0-9]{8,}$/
 
   if (password.length > 0 && password.length < 8) {
     errorPasswordMessage.value = 'passwordMin'
+  } else if (!alphanumericRegex.test(password)) {
+    errorPasswordMessage.value = 'validPassword'
   } else {
     errorPasswordMessage.value = ''
   }
@@ -534,18 +537,16 @@ const fetchPostUserData = async (payload) => {
 const handleApiError = (error) => {
   errorScroll.value = []
 
-  const response = error._data?.errors
+  const response = error?._data?.errors || {}
 
-  if (response) {
+  if (Object.keys(response).length) {
     const message = Object.keys(response).map((item) => {
       return Array.isArray(response[item]) && response[item]?.[0]
         ? response[item][0]
         : 'Unknown error'
     })
-
     errorScroll.value = message
     errorMessages.value.push(response)
-    console.log('errorMessages', errorMessages.value)
   }
 
   errorNicknameMessage.value = Array.isArray(response?.nickname)
