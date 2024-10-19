@@ -132,6 +132,7 @@ const handleSubmit = async () => {
       })
 
       if (status) {
+        isLoading.value = false
         isSuccessSendResetPassword.value = true
       }
 
