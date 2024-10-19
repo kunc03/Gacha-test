@@ -224,7 +224,7 @@ const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
 const profile = () => router.push('/profile')
 const handleGoToHelp = () => {
-  window.open('https://digital-gurutto.nagoya-info.jp/manual', '_blank')
+  window.open('https://digital-gurutto.dela-kuji.jp/manual', '_blank')
 }
 const handleGoToDigitalMap = () => {
   window.open('https://nospot.new-ordinary.co.jp/maps/nagoya', '_blank')

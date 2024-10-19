@@ -268,8 +268,9 @@
             @validate="validateInput('password', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.password && validateOnSubmit && t('fieldRequired')) ||
-              errorPasswordMessage === ''
+              !form.password && validateOnSubmit
+                ? t('fieldRequired')
+                : '' || errorPasswordMessage === ''
                 ? ''
                 : t(errorPasswordMessage)
             "
@@ -286,8 +287,9 @@
             @validate="validateInput('confPassword', $event)"
             :validate-on-submit="validateOnSubmit"
             :error="
-              (!form.confPassword && validateOnSubmit && t('fieldRequired')) ||
-              errorConfPasswordMessage === ''
+              !form.confPassword && validateOnSubmit
+                ? t('fieldRequired')
+                : '' || errorConfPasswordMessage === ''
                 ? ''
                 : t(errorConfPasswordMessage)
             "
