@@ -49,8 +49,8 @@
 
       <SolidButton
         :label="!isSuccessSendResetPassword ? $t('send') : $t('myPage')"
-        :has-loading="isLoading"
-        :disabled="isLoading"
+        :has-loading="!isSuccessSendResetPassword && isLoading"
+        :disabled="!isSuccessSendResetPassword && isLoading"
         :on-click="handleSubmit"
         has-bottom
       />
