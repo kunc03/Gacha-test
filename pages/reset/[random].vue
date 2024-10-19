@@ -49,8 +49,8 @@
 
       <SolidButton
         :label="!isSuccessSendResetPassword ? $t('send') : $t('myPage')"
-        :has-loading="!isSuccessSendResetPassword && isLoading"
-        :disabled="!isSuccessSendResetPassword && isLoading"
+        :has-loading="isLoading"
+        :disabled="isLoading"
         :on-click="handleSubmit"
         has-bottom
       />
@@ -100,7 +100,7 @@ const errorMessage = ref(null)
 const isErrorMessage = ref(false)
 const token = route.params.random
 
-const isSuccessSendResetPassword = ref(false)
+const isSuccessSendResetPassword = ref(true)
 const handleCloseDialog = () => (isErrorMessage.value = false)
 
 const form = ref({
@@ -132,6 +132,7 @@ const handleSubmit = async () => {
       })
 
       if (status) {
+        isLoading.value = false
         isSuccessSendResetPassword.value = true
       }
 

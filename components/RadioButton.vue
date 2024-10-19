@@ -20,15 +20,15 @@
         <RadioButton
           :model-value="modelValue"
           @update:model-value="updateValue"
-          :inputId="option.value"
+          :inputId="option.label"
           :name="name"
           @blur="validate"
-          :value="option.value"
+          :value="option.label"
           class="custom-radio"
           pt:root="bg-white cursor-pointer w-[20px] h-[20px] rounded-full border-[1px] border-exd-red-vermilion flex items-center justify-center"
         />
         <label
-          :for="option.value"
+          :for="option.label"
           class="ml-1 text-exd-gray-scorpion text-exd-1424 font-bold cursor-pointer"
         >
           {{ t(option.label) }}

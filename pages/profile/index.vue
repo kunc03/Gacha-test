@@ -296,7 +296,7 @@
       </div>
       <div class="mt-1" />
       <SolidButton
-        :label="$t('register')"
+        :label="$t('update')"
         :has-loading="isLoading"
         :disabled="!isButtonEnabled"
         :on-click="handleSubmit"
@@ -442,9 +442,17 @@ const isFormChanged = () => {
 }
 
 const validateForm = () => {
-  const firstErrorElement = document.querySelector('.input-error')
+  let isValid = true
 
-  if (errorEmailMessage.value) {
+  if (!emailRegex(form.email)) {
+    isValid = false
+  } else {
+    errorEmailMessage.value = ''
+  }
+
+  // Pastikan email valid
+  if (!isValid) {
+    const firstErrorElement = document.querySelector('.input-error')
     firstErrorElement.style.paddingTop = '80px'
     firstErrorElement.style.marginTop = '-80px'
 
@@ -454,13 +462,14 @@ const validateForm = () => {
       firstErrorElement.style.paddingTop = ''
       firstErrorElement.style.marginTop = ''
     }, 3000)
-
     return false
   }
+
+  return true
 }
 
 const populateForm = (data) => {
-  form.nickName = data.nickname || data.first_name || ''
+  form.nickName = data.nickname || ''
   form.age = data.age || null
   form.gender = data.gender || ''
   form.email = data.email || ''
@@ -505,8 +514,12 @@ const fetchPostUserData = async (payload) => {
   isLoading.value = true
 
   try {
-    const { data } = await useFetchApi('POST', 'user', { body: payload })
+    const { data } = await useFetchApi('POST', 'user', {
+      body: payload,
+    })
     if (validateForm()) {
+      localStorage.setItem('USER_ID', data.user.id)
+
       navigateTo('/profile/complete')
     }
   } catch (error) {
@@ -550,7 +563,7 @@ const handleApiError = (error) => {
 const buildPayload = () => {
   const payload = {
     nickname: form.nickName,
-    first_name: form.nickName,
+    // first_name: form.nickName,
     age: form.age,
     gender: form.gender,
     email: form.email,
@@ -578,9 +591,11 @@ const buildPayload = () => {
 const handleSubmit = async () => {
   errorScroll.value = []
 
-  isLoading.value = true
-
   validateOnSubmit.value = true
+
+  if (!validateForm()) return
+
+  isLoading.value = true
 
   const payload = buildPayload()
 
