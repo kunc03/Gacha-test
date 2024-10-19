@@ -30,7 +30,9 @@ const useFetchApi = async (method: any, url: string, opts = {}) => {
         USER.value = null
         VALID_PASSWORD.value = null
         await navigateTo('/')
-      } else {
+      }
+
+      if (response?.status === 401 && url === 'gacha/spin') {
         localStorage.clear()
         sessionStorage.clear()
         TOKEN.value = null
