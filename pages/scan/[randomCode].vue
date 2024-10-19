@@ -72,14 +72,16 @@
               </li>
             </ul>
           </div>
-          <SolidButton
-            label="GO!"
-            :has-loading="isLoading"
-            :on-click="goToScan"
-            :disabled="isLoading"
-            :has-bottom="true"
-            class="flex-none h-[56px]"
-          />
+          <div class="fixed bottom-0 w-full max-w-md mx-auto px-8 mb-1 z-50">
+            <SolidButton
+              label="GO!"
+              :has-loading="isLoading"
+              :on-click="goToScan"
+              :disabled="isLoading"
+              :has-bottom="true"
+              class="flex-none h-[56px]"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -356,14 +358,6 @@ watch(isNotAllowed, (newValue) => {
 /* @media screen and (max-width: 460px) { */
 
 @media screen and (max-height: 500px) and (max-width: 320px) {
-  /* .header {
-    font-size: 15px;
-  } */
-  /* 
-  .scan-content {
-    font-size: 12px;
-  } */
-
   .scan-otp {
     padding-top: 40px !important;
     padding-bottom: 20px !important;
