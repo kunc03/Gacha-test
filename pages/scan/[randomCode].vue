@@ -72,14 +72,16 @@
               </li>
             </ul>
           </div>
-          <SolidButton
-            label="GO!"
-            :has-loading="isLoading"
-            :on-click="goToScan"
-            :disabled="isLoading"
-            :has-bottom="true"
-            class="flex-none h-[56px]"
-          />
+          <div class="fixed bottom-0 w-full max-w-md mx-auto px-8 mb-1 z-50">
+            <SolidButton
+              label="GO!"
+              :has-loading="isLoading"
+              :on-click="goToScan"
+              :disabled="isLoading"
+              :has-bottom="true"
+              class="flex-none h-[56px]"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -251,16 +253,53 @@ const checkingLocation = async () => {
     radiusCheck()
     isRequestingLocation.value = false
   }
-
   const handleError = (error) => {
-    console.error(error)
+    console.error('Geolocation error:', error)
     isRequestingLocation.value = false
+
+    const isIOS = () => {
+      return (
+        [
+          'iPad Simulator',
+          'iPhone Simulator',
+          'iPod Simulator',
+          'iPad',
+          'iPhone',
+          'iPod',
+        ].includes(navigator.platform) ||
+        (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+      )
+    }
+
+    switch (error.code) {
+      case 1: // PERMISSION_DENIED
+        isNotAllowed.value = true
+        checkRadiusMessage.value = isIOS
+          ? t('locationAccessDenied') // "Buka Settings > Privacy > Location Services"
+          : t('locationAccessDeniedIOS')
+        break
+
+      case 2: // POSITION_UNAVAILABLE
+        checkRadiusFailed.value = true
+        checkRadiusMessage.value = isIOS
+          ? t('locationDisabledIOS') // "Aktifkan Location Services di Settings"
+          : t('locationDisabled')
+        break
+      case 3: // TIMEOUT
+        checkRadiusFailed.value = true
+        checkRadiusMessage.value = t('locationTimeout') // "Waktu mendapatkan lokasi habis"
+        break
+
+      default:
+        checkRadiusFailed.value = true
+        checkRadiusMessage.value = t('locationError') // "Gagal mendapatkan lokasi"
+    }
   }
 
   const handleDenied = () => {
     isNotAllowed.value = true
     checkRadiusFailed.value = true
-    checkRadiusMessage.value = `${t('locationAccessBlocked')}`
+    checkRadiusMessage.value = t('locationBlocked') // "Akses lokasi diblokir di browser"
   }
 
   const checkGeolocationSupport = () => {
@@ -354,6 +393,18 @@ watch(isNotAllowed, (newValue) => {
 }
 
 /* @media screen and (max-width: 460px) { */
+
+@media screen and (max-height: 500px) and (max-width: 320px) {
+  .scan-otp {
+    padding-top: 40px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .uiHeight {
+    max-height: 98px !important;
+  }
+}
+
 @media screen and (max-height: 600px) {
   .header {
     font-size: 15px;

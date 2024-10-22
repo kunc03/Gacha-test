@@ -1,4 +1,4 @@
-const useFetchApi = (method: any, url: string, opts = {}) => {
+const useFetchApi = async (method: any, url: string, opts = {}) => {
   const config = useRuntimeConfig()
 
   const TOKEN = useCookie('TOKEN')
@@ -23,7 +23,7 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
       return response
     },
     async onResponseError({ request, response, options }) {
-      if (response?.status === 401) {
+      if (response?.status === 401 && url !== 'gacha/spin') {
         localStorage.clear()
         sessionStorage.clear()
         TOKEN.value = null
@@ -31,6 +31,16 @@ const useFetchApi = (method: any, url: string, opts = {}) => {
         VALID_PASSWORD.value = null
         await navigateTo('/')
       }
+
+      if (response?.status === 401 && url === 'gacha/spin') {
+        localStorage.clear()
+        sessionStorage.clear()
+        TOKEN.value = null
+        USER.value = null
+
+        return Promise.reject('refetch')
+      }
+
       return Promise.reject(response)
     },
   })

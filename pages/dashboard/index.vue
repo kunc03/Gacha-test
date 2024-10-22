@@ -135,13 +135,6 @@
         />
       </div>
     </div>
-    <p
-      class="underline text-white text-exd-1218 font-semibold text-center mt-5 text-underline cursor-pointer relative -top-12"
-    >
-      <a href="https://www.google.com" target="_blank">
-        {{ $t('addToHomeScreen') }}
-      </a>
-    </p>
     <div
       class="w-exd-312 h-exd-50 mx-auto inline-flex justify-between items-center mt-7 relative -top-12"
     >
@@ -231,7 +224,7 @@ const handleGoToHistory = () => router.push('/history')
 const handleGoToRedeem = () => router.push('/redeem')
 const profile = () => router.push('/profile')
 const handleGoToHelp = () => {
-  window.open('https://www.google.com', '_blank')
+  window.open('https://digital-gurutto.dela-kuji.jp/manual', '_blank')
 }
 const handleGoToDigitalMap = () => {
   window.open('https://nospot.new-ordinary.co.jp/maps/nagoya', '_blank')

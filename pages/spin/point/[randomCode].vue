@@ -135,6 +135,11 @@ const fetchImageFromApi = async () => {
       return
     }
   } catch (e) {
+    if (e === 'refetch') {
+      TOKEN.value = null
+      USER.value = null
+      fetchImageFromApi()
+    }
     console.error('Unexpected error:', e)
   }
 }
